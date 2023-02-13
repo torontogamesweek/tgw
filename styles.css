@@ -1829,3 +1829,10 @@ footer {
   width: 100vw;
   opacity: .5;
 }
+
+.repeat {
+  margin-top: 5rem;
+height: 20rem;
+background-repeat: round;
+background: url(images/wallpaper.png);
+}
