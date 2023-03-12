@@ -214,6 +214,10 @@ a {
     padding: 2rem 10%;
   }
 
+  li {
+    margin-left: 4rem;
+  }
+
   
 }
 
@@ -379,7 +383,9 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 3rem;
+  margin: 2rem;
+  /* text-align: left;  */
   /* font-weight: 400; */
   color: var(--accentDark);
 }
