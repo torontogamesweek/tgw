@@ -417,35 +417,19 @@ ul {
 }
 
 li {
-  /* text-align: left; */
-  /* margin-right: 1.5em; */
-  /* margin-left: 2em; */
-  /* line-height: 1.5; */
-  /* margin-bottom: 0.5em; */
-  /* list-style-type: disc; */
-  /* font-size: 1.15rem; */
-  /* line-height: 1.25; */
-}
-
-li {
-  /* list-style-position: outside; */
-  /* list-style-image: url(/controller.svg); */
-  /* OR */
-  /* list-style-type: '🎮'; */
-  /* padding: 20px; */
-  /* font-size: 2rem; */
-
+  text-align: left;
+  margin-left: 3em;
+  padding: 1rem;
+  list-style-type: disc;
 }
 
 .controllerList {
   list-style: none;
-  /* padding: 0; */
-  /* margin: 0; */
 }
 
 .controllerList li {
-  /* padding-left: 1rem; */
-  /* text-indent: -.1rem; */
+  list-style: none;
+
 }
 
 .controllerList li::before {
@@ -455,12 +439,9 @@ li {
 @media screen and (min-width: 900px) {
   .controllerList {
     list-style: none;
-    /* padding: 0; */
-    /* margin: 0; */
   }
   
   .controllerList li {
-    /* padding-left: 1rem; */
     text-indent: -3.4rem;
   }
   
