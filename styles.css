@@ -300,6 +300,8 @@ btn:focus {
 
 img {
   max-width: 100vw;
+  padding: 0;
+  margin: 0;
   /* max-height: auto; */
   /* max-height: 50vh; */
 }
@@ -316,8 +318,12 @@ img {
 }
 
 .footerImg {
+  height: auto;
+  max-width: 100vw;
   margin-top: 10rem;
   border-top: 5px solid purple;
+  padding: 0;
+  margin: 0;
 }
 
 @media (min-width: 60rem) {
@@ -385,8 +391,8 @@ h2 {
 }
 
 h3 {
-  font-size: 2.4rem;
-  margin: 2rem;
+  font-size: 1.5rem;
+  /* margin: 1rem; */
   text-align: left;
   padding-left: 5%;
   text-transform: uppercase;
@@ -416,6 +422,17 @@ h5 {
   h2 {
     font-size: 4rem;
   }
+
+  h3 {
+    font-size: 2.4rem;
+    margin: 2rem;
+    text-align: left;
+    padding-left: 5%;
+    text-transform: uppercase;
+    /* text-align: left;  */
+    /* font-weight: 400; */
+    color: var(--darkGrey);
+  }
 }
 
 
@@ -429,7 +446,7 @@ ul {
 
 li {
   text-align: left;
-  margin-left: 3em;
+  /* margin-left: 3em; */
   padding: 1rem;
   list-style-type: disc;
 }
@@ -458,6 +475,13 @@ li {
   
   .controllerList li::before {
     content: '🎮 ';
+  }
+
+  li {
+    text-align: left;
+    margin-left: 3em;
+    padding: 1rem;
+    list-style-type: disc;
   }
 }
 
@@ -863,7 +887,7 @@ footer {
 }
 
 .item img {
-  animation-iteration-count: infinite;
+  /* animation-iteration-count: infinite; */
 }
 
 .item a {
@@ -1846,8 +1870,8 @@ background: url(images/wallpaper.png);
 
 .date {
   font-weight: bold;
-  margin: 2rem;
-  width: 100vw;
+  margin: 1rem;
+  width: 50vw;
   border-bottom: 1px dashed #007aff;  
   padding-top: 5rem
   /* background-color: #8f8ff4; */
@@ -1860,15 +1884,12 @@ background: url(images/wallpaper.png);
 }
 
 .title {
-  margin-top: 4rem;
-  font-size: 2.6rem;
+  margin-top: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  /* color: green */
-  /* margin-bottom: 10px; */
 }
 
 .host {
-  /* margin-bottom: 10px; */
   font-style: italic;
 }
 
@@ -1887,12 +1908,20 @@ background: url(images/wallpaper.png);
   text-decoration: none;
 }
 
-@media (max-width: 767px) {
-  .event {
-    /* font-size: 14px; */
+@media screen and (min-width: 900px) {
+  .date {
+    font-weight: bold;
+    margin: 2rem;
+    width: 100vw;
+    border-bottom: 1px dashed #007aff;  
+    padding-top: 5rem
+    /* background-color: #8f8ff4; */
   }
 
-  .event h2 {
-    /* font-size: 18px; */
+  .title {
+    margin-top: 4rem;
+    font-size: 2.6rem;
+    font-weight: bold;
   }
+  
 }
