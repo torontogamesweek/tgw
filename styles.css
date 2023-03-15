@@ -183,6 +183,10 @@ body {
   text-align: center;
 }
 
+.contentContainer {
+  padding: 2rem;
+}
+
 @media screen and (min-width: 900px) {
   body {
     font-size: 2.8rem;
@@ -306,19 +310,20 @@ img {
   }
 }
 
-#landingImg {
-  opacity: 80%;
+.landingImg {
+  height: auto;
   max-width: 100vw;
-  padding: 0;
-  margin: 0;
-  /* max-height: auto; */
-  /* max-height: 50vh; */
+}
+
+.footerImg {
+  margin-top: 10rem;
+  border-top: 5px solid purple;
 }
 
 @media (min-width: 60rem) {
-  #landingImg {
+  .landingImg {
+    height: auto;
     min-width: 100vw;
-    overflow: hidden;
   }
 }
 
@@ -346,10 +351,7 @@ img {
 /***********************/
 
 h1,
-h2,
-h3,
-h4,
-h5 {
+h2 {
   font-family: 'Major Mono Display', monospace;
 }
 
@@ -383,11 +385,14 @@ h2 {
 }
 
 h3 {
-  font-size: 3rem;
+  font-size: 2.4rem;
   margin: 2rem;
+  text-align: left;
+  padding-left: 5%;
+  text-transform: uppercase;
   /* text-align: left;  */
   /* font-weight: 400; */
-  color: var(--accentDark);
+  color: var(--darkGrey);
 }
 
 h4 {
@@ -1822,4 +1827,72 @@ footer {
 height: 20rem;
 background-repeat: round;
 background: url(images/wallpaper.png);
+}
+
+
+/* calendar */
+
+.calendar {
+  /* display: flex; */
+}
+
+.event {
+  /* background-color: #fff; */
+  /* border: 1px solid #ddd; */
+  /* border-radius: 5px; */
+  /* padding: 2rem; */
+  /* margin: 2rem; */
+}
+
+.date {
+  font-weight: bold;
+  margin: 2rem;
+  width: 100vw;
+  border-bottom: 1px dashed #007aff;  
+  padding-top: 5rem
+  /* background-color: #8f8ff4; */
+}
+
+.title, .host, .location, .details, .category, .title {
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.title {
+  margin-top: 4rem;
+  font-size: 2.6rem;
+  font-weight: bold;
+  /* color: green */
+  /* margin-bottom: 10px; */
+}
+
+.host {
+  /* margin-bottom: 10px; */
+  font-style: italic;
+}
+
+.location {
+  /* margin-bottom: 10px; */
+}
+.details {
+  margin-top: 2rem;
+}
+.category {
+  /* margin-bottom: 10px; */
+}
+
+.event a {
+  color: #007aff;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .event {
+    /* font-size: 14px; */
+  }
+
+  .event h2 {
+    /* font-size: 18px; */
+  }
 }
