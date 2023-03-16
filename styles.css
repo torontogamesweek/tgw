@@ -319,11 +319,12 @@ img {
 
 .footerImg {
   height: auto;
-  max-width: 100vw;
-  margin-top: 10rem;
-  border-top: 5px solid purple;
+  max-width: 90vw;
   padding: 0;
   margin: 0;
+  margin-left: -1rem;
+  margin-top: 7rem;
+
 }
 
 @media (min-width: 60rem) {
@@ -1924,4 +1925,12 @@ background: url(images/wallpaper.png);
     font-weight: bold;
   }
   
+}
+
+.sponsorbox{
+  display: flex;
+}
+
+.logo{
+
 }
