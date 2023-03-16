@@ -184,13 +184,23 @@ body {
 }
 
 .contentContainer {
-  padding: 2rem;
+  padding: .5rem;
 }
+
+
 
 @media screen and (min-width: 900px) {
   body {
     font-size: 2.8rem;
     line-height: 1.15;
+  }
+
+  .contentContainer {
+    padding: 2rem;
+  }
+
+  .content {
+    padding: 0 12%;
   }
 }
 
@@ -299,7 +309,7 @@ btn:focus {
 /***********************/
 
 img {
-  max-width: 100vw;
+  /* max-width: 100vw; */
   padding: 0;
   margin: 0;
   /* max-height: auto; */
@@ -313,25 +323,32 @@ img {
 }
 
 .landingImg {
-  height: auto;
-  max-width: 100vw;
+  background-size: cover;
+  width: 100vw;
 }
 
 .footerImg {
-  height: auto;
-  max-width: 90vw;
-  padding: 0;
-  margin: 0;
-  margin-left: -1rem;
+  background-size: cover;
   margin-top: 7rem;
+  width: 100vw;
+
 
 }
 
 @media (min-width: 60rem) {
   .landingImg {
-    height: auto;
-    min-width: 100vw;
+    background-size: cover;
   }
+
+  .footerImg {
+    padding: 0;
+    margin: 0;
+    margin-top: 7rem;
+    background-size: cover;
+
+  
+  }
+  
 }
 
 .logo {
@@ -375,7 +392,7 @@ h1 {
 
 h1:hover {
   /* letter-spacing: 0.2em; */
-  font-size: 5rem;
+  /* font-size: 5rem; */
 
 }
 
@@ -418,6 +435,8 @@ h5 {
 @media screen and (min-width: 900px) {
   h1 {
     font-size: 5rem;
+    margin-top: 0;
+
   }
 
   h2 {
@@ -1871,8 +1890,8 @@ background: url(images/wallpaper.png);
 
 .date {
   font-weight: bold;
-  margin: 1rem;
-  width: 50vw;
+  margin: 0rem;
+  width: 90vw;
   border-bottom: 1px dashed #007aff;  
   padding-top: 5rem
   /* background-color: #8f8ff4; */
@@ -1885,7 +1904,8 @@ background: url(images/wallpaper.png);
 }
 
 .title {
-  margin-top: 2rem;
+  margin: 2rem 0 1rem 0;
+
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -1920,7 +1940,7 @@ background: url(images/wallpaper.png);
   }
 
   .title {
-    margin-top: 4rem;
+    margin: 4rem 0 1.7rem 0;
     font-size: 2.6rem;
     font-weight: bold;
   }
@@ -1929,6 +1949,9 @@ background: url(images/wallpaper.png);
 
 .sponsorbox{
   display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo{
