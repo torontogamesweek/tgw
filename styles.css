@@ -490,7 +490,7 @@ li {
   }
   
   .controllerList li {
-    text-indent: -3.4rem;
+    /* text-indent: -3.4rem; */
   }
   
   .controllerList li::before {
