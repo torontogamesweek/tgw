@@ -1881,19 +1881,19 @@ background: url(images/wallpaper.png);
 }
 
 .event {
-  /* background-color: #fff; */
-  /* border: 1px solid #ddd; */
-  /* border-radius: 5px; */
-  /* padding: 2rem; */
-  /* margin: 2rem; */
+  background-color: #fff;
+    /* border: 1px solid #ddd; */
+    border-radius: 1rem;
+    padding: .5rem 0 2rem 0;
+    margin: 1.5rem 0.5rem;
 }
 
 .date {
   font-weight: bold;
   margin: 0rem;
-  width: 90vw;
+  width: 85%;
   border-bottom: 1px dashed #007aff;  
-  padding-top: 5rem
+  padding-top: 2rem
   /* background-color: #8f8ff4; */
 }
 
@@ -1930,12 +1930,21 @@ background: url(images/wallpaper.png);
 }
 
 @media screen and (min-width: 900px) {
+
+  .event {
+    background-color: #fff;
+      /* border: 1px solid #ddd; */
+      border-radius: 1rem;
+      padding: 1rem 0 6rem 0;
+      margin: 3rem 0;
+  }
+
   .date {
     font-weight: bold;
     margin: 2rem;
-    width: 100vw;
+    width: 85%;
     border-bottom: 1px dashed #007aff;  
-    padding-top: 5rem
+    padding-top: 3rem
     /* background-color: #8f8ff4; */
   }
 
