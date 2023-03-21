@@ -1894,6 +1894,7 @@ background: url(images/wallpaper.png);
   width: 90vw;
   border-bottom: 1px dashed #007aff;  
   padding-top: 5rem
+  font-family: 'Major Mono Display', monospace;
   /* background-color: #8f8ff4; */
 }
 
