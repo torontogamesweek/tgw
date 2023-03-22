@@ -184,7 +184,7 @@ body {
 }
 
 .contentContainer {
-  padding: .5rem;
+  padding: 1.5rem;
 }
 
 
@@ -1893,7 +1893,8 @@ background: url(images/wallpaper.png);
   margin: 0rem;
   width: 85%;
   border-bottom: 1px dashed #007aff;  
-  padding-top: 2rem
+  font-family: 'Major Mono Display', monospace;
+  padding-top: 2rem;
   /* background-color: #8f8ff4; */
 }
 
@@ -1911,7 +1912,7 @@ background: url(images/wallpaper.png);
 }
 
 .host {
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .location {
@@ -1921,12 +1922,21 @@ background: url(images/wallpaper.png);
   margin-top: 2rem;
 }
 .category {
-  /* margin-bottom: 10px; */
+     /* margin-bottom: 10px; */
+     text-transform: lowercase;
+     margin-top: 20px;
+     /* background: aliceblue; */
+     /* display: inline-table; */
+     color: blueviolet;
+     /* border-radius: 13px; */
+     /* font-style: italic; */
+     font-size: 25px;
+     font-family: 'Major Mono Display', monospace;
 }
 
 .event a {
   color: #007aff;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 @media screen and (min-width: 900px) {
@@ -1944,7 +1954,8 @@ background: url(images/wallpaper.png);
     margin: 2rem;
     width: 85%;
     border-bottom: 1px dashed #007aff;  
-    padding-top: 3rem
+    font-family: 'Major Mono Display', monospace;
+    padding-top: 3rem;
     /* background-color: #8f8ff4; */
   }
 
