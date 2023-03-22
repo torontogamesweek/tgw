@@ -1893,7 +1893,7 @@ background: url(images/wallpaper.png);
   margin: 0rem;
   width: 90vw;
   border-bottom: 1px dashed #007aff;  
-  padding-top: 5rem
+  padding-top: 5rem;
   font-family: 'Major Mono Display', monospace;
   /* background-color: #8f8ff4; */
 }
@@ -1922,12 +1922,16 @@ background: url(images/wallpaper.png);
   margin-top: 2rem;
 }
 .category {
-  /* margin-bottom: 10px; */
-    font-family: 'Major Mono Display', monospace;
-    text-transform: lowercase;
-    margin-top: 20px;
-    background: lightcyan;
-    display: -webkit-inline-box;
+     /* margin-bottom: 10px; */
+     text-transform: lowercase;
+     margin-top: 20px;
+     /* background: aliceblue; */
+     /* display: inline-table; */
+     color: blueviolet;
+     /* border-radius: 13px; */
+     /* font-style: italic; */
+     font-size: 25px;
+     font-family: 'Major Mono Display', monospace;
 }
 
 .event a {
@@ -1941,7 +1945,8 @@ background: url(images/wallpaper.png);
     margin: 2rem;
     width: 100vw;
     border-bottom: 1px dashed #007aff;  
-    padding-top: 5rem
+    padding-top: 5rem;
+    font-family: 'Major Mono Display', monospace;
     /* background-color: #8f8ff4; */
   }
 
