@@ -1912,7 +1912,7 @@ background: url(images/wallpaper.png);
 }
 
 .host {
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .location {
@@ -1923,11 +1923,16 @@ background: url(images/wallpaper.png);
 }
 .category {
   /* margin-bottom: 10px; */
+    font-family: 'Major Mono Display', monospace;
+    text-transform: lowercase;
+    margin-top: 20px;
+    background: lightcyan;
+    display: -webkit-inline-box;
 }
 
 .event a {
   color: #007aff;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 @media screen and (min-width: 900px) {
