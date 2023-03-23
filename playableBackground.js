@@ -128,3 +128,20 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+// get the canvas element
+const canvas = document.getElementById('myCanvas');
+
+// add an event listener for the 'resize' event
+window.addEventListener('resize', () => {
+  // get the new dimensions of the screen
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  // set the dimensions of the canvas to match the new screen dimensions
+  canvas.width = width;
+  canvas.height = height;
+
+  // reload the canvas
+  location.reload();
+});

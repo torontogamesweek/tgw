@@ -438,8 +438,11 @@ h5 {
 
 @media screen and (min-width: 900px) {
   h1 {
-    font-size: 7rem;
-    margin: 2rem 0.2rem;
+    font-size: 7vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* margin: 2rem 0.2rem; */
   }
 
   h2 {
