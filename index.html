@@ -52,6 +52,7 @@
 
     <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
 
+
     <script id="vertexShader" type="x-shader/x-vertex">
       varying vec2 vUv;
 
@@ -97,6 +98,9 @@
         gl_FragColor = vec4(color * strength, 0.8 * strength);
       }
     </script>
+
+    <script src="playableBackground.js"></script>
+
     
     <main class="">
       <img
@@ -106,8 +110,10 @@
         class=""
       />
       <div class="contentContainer" id="landingPage">
+        <h1 id="">Toronto Games Week</h1>
+
         <div class="content">
-          <h1 id="">Toronto Games Week</h1>
+          <section class="intro">
           <p>
             Toronto Games Week (TGW) is a new celebration of videogame arts and
             culture in the city.
@@ -127,6 +133,7 @@
             <li>Talk on ancient artifacts of Nintendo!</li>
           </ul>
         </p>
+      </section>
           <h2>Schedule</h2>
 
           <div class="calendar">
@@ -166,7 +173,7 @@
                 >Ontario Creates</a
               > 
               </p>
-              <p class="category">Invitation only</p>
+              <p class="category">by invitation only</p>
             </div>
 
             <div class="event">
