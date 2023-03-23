@@ -1,5 +1,5 @@
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xC2D1DD);
+scene.background = new THREE.Color(0xD2DFEA);
 
 const camera = new THREE.PerspectiveCamera(
   75,

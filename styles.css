@@ -188,8 +188,10 @@ body {
   padding: 0.5rem 0.25rem;
 }
 
-.intro {
-  /* background-color: rgba(230, 242, 255, 0.47); */
+.textBox {
+  background-color: rgba(209, 223, 234, 0.76);
+  /* border-radius: 1rem; */
+  padding-top:1rem
 }
 
 canvas {
@@ -247,6 +249,10 @@ a {
 
   li {
     /* margin-left: 4rem; */
+  }
+
+  .textBox {
+    padding-top:2rem
   }
 }
 
