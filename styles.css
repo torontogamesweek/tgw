@@ -184,7 +184,7 @@ body {
 }
 
 .contentContainer {
-  padding: 1.5rem;
+  padding: .5rem .25rem;
 }
 
 
@@ -402,21 +402,14 @@ h2 {
   font-size: 2.5rem;
   /* font-size: 3rem; */
   /* font-weight: 400; */
-  margin: 2em 0em 0.75em 0em;
+  margin: 1.5em 0em 0.75em 0em;
   background: linear-gradient(to right, #5e5ef0, #6928d8, #490f90, #2247ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 h3 {
-  font-size: 1.5rem;
-  /* margin: 1rem; */
-  text-align: left;
-  padding-left: 5%;
-  text-transform: uppercase;
-  /* text-align: left;  */
-  /* font-weight: 400; */
-  color: var(--darkGrey);
+  
 }
 
 h4 {
@@ -461,13 +454,13 @@ h5 {
 /***********************/
 
 ul {
-  /* padding-top: 0.15em; */
+  padding-top: 1.2rem;
 }
 
 li {
   text-align: left;
-  /* margin-left: 3em; */
-  padding: 1rem;
+  margin-left: .9rem;
+  padding: .5rem 0;
   list-style-type: disc;
 }
 
@@ -485,6 +478,10 @@ li {
 }
 
 @media screen and (min-width: 900px) {
+  li {
+    padding: 1rem;
+  }
+
   .controllerList {
     list-style: none;
   }
@@ -1878,15 +1875,54 @@ background: url(images/wallpaper.png);
 
 .calendar {
   /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* align-content: center;
+  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start; */
 }
 
 .event {
+  /* flex: 1; */
+  /* min-width: 40%; */
   background-color: #fff;
-    /* border: 1px solid #ddd; */
-    border-radius: 1rem;
-    padding: .5rem 0 2rem 0;
-    margin: 1.5rem 0.5rem;
+  padding: 0.5rem 0 2rem 0;
+  margin: 1.5rem 0.1rem;
+  border: .6rem solid;
+  border-radius: 2rem;
+  border-image: conic-gradient(
+      rgba(13, 147, 185, 0.3),
+      rgba(62, 73, 172, 0.3),
+      rgba(108, 66, 215, 0.3),
+      rgba(62, 198, 223, 0.3),
+      rgba(13, 147, 185, 0.3)
+   )
+    .5;
+
+    outline: .3rem solid rgba(255, 255, 255, .8);border-radius: 1rem;
+
 }
+
+
+/* .event {
+  background-color: #fff;
+  padding: 0.5rem 0 2rem 0;
+  margin: 1.5rem 0.5rem;
+  border: .6rem solid;
+  border-radius: 2rem;
+  border-image: conic-gradient(
+      rgba(13, 147, 185, 0.3),
+      rgba(62, 73, 172, 0.3),
+      rgba(108, 66, 215, 0.3),
+      rgba(62, 198, 223, 0.3),
+      rgba(13, 147, 185, 0.3)
+   )
+    .5;
+
+    outline: .3rem solid rgba(255, 255, 255, .8);border-radius: 1rem;
+
+} */
+
 
 .date {
   font-weight: bold;
@@ -1895,7 +1931,13 @@ background: url(images/wallpaper.png);
   border-bottom: 1px dashed #007aff;  
   font-family: 'Major Mono Display', monospace;
   padding-top: 2rem;
-  /* background-color: #8f8ff4; */
+  font-size: 1.7rem;
+  /* letter-spacing: 1px; */
+  text-align: left;
+  padding-left: 5%;
+  text-transform: uppercase;
+  color: var(--medGrey);
+
 }
 
 .title, .host, .location, .details, .category, .title {
@@ -1906,9 +1948,11 @@ background: url(images/wallpaper.png);
 
 .title {
   margin: 2rem 0 1rem 0;
-
-  font-size: 1.5rem;
+/* font-family: 'Major Mono Display', monospace; */
+  font-size: 2rem;
   font-weight: bold;
+    color: rgba(85, 45, 155, 0.919);
+
 }
 
 .host {
@@ -1919,24 +1963,33 @@ background: url(images/wallpaper.png);
   /* margin-bottom: 10px; */
 }
 .details {
-  margin-top: 2rem;
-}
-.category {
-     /* margin-bottom: 10px; */
-     text-transform: lowercase;
-     margin-top: 20px;
-     /* background: aliceblue; */
-     /* display: inline-table; */
-     color: blueviolet;
-     /* border-radius: 13px; */
-     /* font-style: italic; */
-     font-size: 25px;
-     font-family: 'Major Mono Display', monospace;
+  margin: 2rem 0 1rem 0;
 }
 
-.event a {
-  color: #007aff;
+.categoryBox {
+  display: flex;
+  text-align: left;
+}
+
+.category {
+     text-transform: lowercase;
+     /* margin: 2rem 0 1rem 1rem; */
+     background: rgba(221, 213, 230, 0.3);
+     color: blueviolet;
+     padding: .45rem .5rem;
+     border-radius: 13px;
+     font-size: 1.25rem;
+     font-family: 'Major Mono Display', monospace;
+     display: inline-block; /* keep the background color wrapped tight */
+}
+
+
+
+
+.details a {
+  color: #5f32f3;
   /* text-decoration: none; */
+  font-weight: 300;
 }
 
 @media screen and (min-width: 900px) {
@@ -1945,18 +1998,20 @@ background: url(images/wallpaper.png);
     background-color: #fff;
       /* border: 1px solid #ddd; */
       border-radius: 1rem;
-      padding: 1rem 0 6rem 0;
+      /* padding: 1rem 0 6rem 0; */
       margin: 3rem 0;
   }
 
   .date {
     font-weight: bold;
-    margin: 2rem;
+    margin: 1rem 0 0 4rem;
     width: 85%;
     border-bottom: 1px dashed #007aff;  
     font-family: 'Major Mono Display', monospace;
     padding-top: 3rem;
     /* background-color: #8f8ff4; */
+    font-size: 2.5rem;
+
   }
 
   .title {
@@ -1964,6 +2019,10 @@ background: url(images/wallpaper.png);
     font-size: 2.6rem;
     font-weight: bold;
   }
+
+  .category {
+    margin: 2rem 0 1rem 1rem;
+}
   
 }
 
