@@ -175,19 +175,32 @@ body {
   height: 100vh;
   letter-spacing: 0.15rem;
   font-size: 2.5rem;
-  background-color: var(--white);
+  /* background-color: var(--white); */
   overflow-x: hidden;
   overflow-y: auto;
   line-height: 1.25;
   background: hsl(200 20% 88%);
   text-align: center;
+  position: relative;
 }
 
 .contentContainer {
   padding: .5rem .25rem;
 }
 
+canvas {
+  z-index: -99;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
 @media screen and (min-width: 900px) {
   body {
@@ -1885,7 +1898,7 @@ background: url(images/wallpaper.png);
 .event {
   /* flex: 1; */
   /* min-width: 40%; */
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.812);
   padding: 0.5rem 0 2rem 0;
   margin: 1.5rem 0.1rem;
   border: .6rem solid;
@@ -1995,10 +2008,7 @@ background: url(images/wallpaper.png);
 @media screen and (min-width: 900px) {
 
   .event {
-    background-color: #fff;
-      /* border: 1px solid #ddd; */
       border-radius: 1rem;
-      /* padding: 1rem 0 6rem 0; */
       margin: 3rem 0;
   }
 
