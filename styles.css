@@ -418,10 +418,48 @@ h1:hover {
 h2 {
   color: var(--accentMed);
   font-size: 2.5rem;
-  /* font-size: 3rem; */
-  /* font-weight: 400; */
+  margin: 1.5em 0em 0.75em 0em;
+  background: linear-gradient(to right, #af11bd, #a328d8, #6708ba, #6a04ad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2:nth-child(1) {
+  color: var(--accentMed);
+  margin: 1.5em 0em 0.75em 0em;
+  background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2:nth-child(2) {
+  color: var(--accentMed);
   margin: 1.5em 0em 0.75em 0em;
   background: linear-gradient(to right, #5e5ef0, #6928d8, #490f90, #2247ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2:nth-child(3) {
+  color: var(--accentMed);
+  margin: 1.5em 0em 0.75em 0em;
+  background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2:nth-child(4) {
+  color: var(--accentMed);
+  margin: 1.5em 0em 0.75em 0em;
+  background: linear-gradient(to right, #5e5ef0, #6928d8, #490f90, #2247ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2:nth-child(5) {
+  color: var(--accentMed);
+  margin: 1.5em 0em 0.75em 0em;
+  background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

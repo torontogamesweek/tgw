@@ -1,59 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="styles.css" rel="stylesheet" type="text/css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
-      rel="stylesheet"
-    />
-    <title>Toronto Games Week</title>
 
-    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
-    <meta name="description" content="Celebrating games in Toronto, Canada" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+  <title>Toronto Games Week</title>
 
-    <meta property="og:title" content="Toronto Games Week" />
-    <meta
-      property="og:description"
-      content="Celebrating games in Toronto, Canada"
-    />
+  <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+  <meta name="description" content="Celebrating games in Toronto, Canada" />
 
-    <meta
-      property="og:image"
-      content="https://torontogamesweek.com/images/TGWHeader.png"
-    />
+  <meta property="og:title" content="Toronto Games Week" />
+  <meta property="og:description" content="Celebrating games in Toronto, Canada" />
 
-    <meta property="og:url" content="https://torontogamesweek.com" />
-    <meta property="og:type" content="webpage" />
+  <meta property="og:image" content="https://torontogamesweek.com/images/TGWHeader.png" />
 
-    <meta name="twitter:title" content="Toronto Games Week" />
-    <meta
-      name="twitter:description"
-      content="Celebrating games in Toronto, Canada"
-    />
-    <meta name="twitter:image" content="images/TGWHeader.png" id="indexImage" />
-    <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://torontogamesweek.com" />
+  <meta property="og:type" content="webpage" />
 
-    
-  </head>
-
-  <header>
-    <nav>
-      <ul>
-        <!-- <li><a href="#">Home</a></li> -->
-        <!-- <li><a href="about.html" id="aboutNav">About</a></li> -->
-        <!-- <li><a href="accessiblity.html" id="accessiblityNav">Accessibility</a></li> -->
-      </ul>
-    </nav>
-  </header>
-
-  <body>
-
-    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+  <meta name="twitter:title" content="Toronto Games Week" />
+  <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+  <meta name="twitter:image" content="images/TGWHeader.png" id="indexImage" />
+  <meta name="twitter:card" content="summary_large_image" />
 
 
-    <script id="vertexShader" type="x-shader/x-vertex">
+</head>
+
+<header>
+  <nav>
+    <ul>
+      <!-- <li><a href="#">Home</a></li> -->
+      <!-- <li><a href="about.html" id="aboutNav">About</a></li> -->
+      <!-- <li><a href="accessiblity.html" id="accessiblityNav">Accessibility</a></li> -->
+    </ul>
+  </nav>
+</header>
+
+<body>
+
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+
+
+  <script id="vertexShader" type="x-shader/x-vertex">
       varying vec2 vUv;
 
       void main() {
@@ -62,7 +51,7 @@
       }
     </script>
 
-    <script id="fragmentShader" type="x-shader/x-fragment">
+  <script id="fragmentShader" type="x-shader/x-fragment">
       uniform float time;
       uniform vec3 color;
     
@@ -99,28 +88,24 @@
       }
     </script>
 
-    <script src="playableBackground.js"></script>
+  <script src="playableBackground.js"></script>
 
-    
-    <main class="">
-      <img
-        class="landingImg"
-        src="images/TGWHeader.png"
-        alt="An abstract illustration of the toronto cityline and some controllers"
-        class=""
-      />
-      <div class="contentContainer" id="landingPage">
-        <h1 id="">Toronto Games Week</h1>
 
-        <div class="content">
-          <section class="textBox">
+  <main class="">
+    <img class="landingImg" src="images/TGWHeader.png"
+      alt="An abstract illustration of the toronto cityline and some controllers" class="" />
+    <div class="contentContainer" id="landingPage">
+      <h1 id="">Toronto Games Week</h1>
+
+      <div class="content">
+        <section class="textBox">
           <p>
             Toronto Games Week (TGW) is a new celebration of videogame arts and
             culture in the city.
           </p>
           <p>
-            The first TGW will be<span class="emphasis"> June 1-7th 2023 </span
-            >and is a collective coordination of events organized independently
+            The first TGW will be<span class="emphasis"> June 1-7th 2023 </span>and is a collective coordination of
+            events organized independently
             by dozens of organizations, creators, curators, and companies.
           <ul class="controllerList">
             <li>Arcade games around the city!</li>
@@ -132,210 +117,211 @@
             <li>Think tank on Indigenous game creation!</li>
             <li>Talk on ancient artifacts of Nintendo!</li>
           </ul>
-        </p>
-      </section>
-          <h2>Schedule</h2>
+          </p>
+        </section>
+        <h2>Schedule</h2>
 
-          <div class="calendar">
-            <div class="event">
-              <h3 class="date">Thursday June 1, 7pm</h3>
-              <p class="title">Toronto Games Week Kick-off</p>              
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/GxK4FWYwFPKVe8Gt8" target="blank">See-scape</a></p>
-              <p class="details">
-                Special guest Ryan Clark (Crypt of the Necrodancer, Industries
-                of Titan) will be doing a talk about market fit and 20 years of
-                making indie games, followed by a social. Hosted by
-                <a href="https://www.dirty-rectangles.com/" target="blank"
-                  >Dirty Rectangles.</a
-                >
-              </p>
-              <p class="category">Industry</p>
-              <p class="category">Enthusiasts</p>
+        <div class="calendar">
+          <div class="event">
+            <h3 class="date">Thursday June 1, 7pm</h3>
+            <p class="title">Toronto Games Week Kick-off</p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/GxK4FWYwFPKVe8Gt8"
+                target="blank">See-scape</a></p>
+            <p class="details">
+              Special guest Ryan Clark (Crypt of the Necrodancer, Industries
+              of Titan) will be doing a talk about market fit and 20 years of
+              making indie games, followed by a social. Hosted by
+              <a href="https://www.dirty-rectangles.com/" target="blank">Dirty Rectangles.</a>
+            </p>
+            <p class="category">Industry</p>
+            <p class="category">Enthusiasts</p>
 
-            </div>
-
-            <div class="event">
-              <h3 class="date">Friday June 2, 9-5pm</h3>
-              <p class="title">Indigenous Games Think Tank</p>
-              <p class="details">
-                Workshop for Indigenous creators to learn about the
-                possibilities of the game medium, led by Indigenous game
-                developers. Hosted by
-                <a href="https://achimogames.ca/" target="blank">Meagan Byrne</a
-                >,
-                <a
-                  href="https://www.toronto.ca/business-economy/industry-sector-support/interactive-digital-media/"
-                  target="blank"
-                  >The City of Toronto</a
-                >, POV,  <a
-                href="https://www.ontariocreates.ca/"
-                target="blank"
-                >Ontario Creates</a
-              > 
-              </p>
-              <p class="category">by invitation only</p>
-            </div>
-
-            <div class="event">
-              <h3 class="date">Friday June 2, 7pm</h3>
-              <p class="title">NextGen Showcase</p>
-              <p class="details">
-                A showcase of some of the most promising grads from York
-                University, U of T, OCAD and others, selected by a visiting
-                curator. Hosted by <a href="https://ampd.yorku.ca/profile/yifat-shaik/" target="blank"
-                >Yifat Shaik</a
-              > and various universities.</p>
-              <p class="category">NextGen Creators</p>
-              <p class="category">Industry</p>
-            </div>
-
-            <div class="event">
-              <h3 class="date">Saturday June 3, 1pm</h3>
-              <p class="title">
-                Preservation Through Play: Different ways to save video game
-                history and context
-              </p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/K8HxeCd8nCDXAHkbA" target="blank">TPL (Fort York branch)</a></p>
-              <p class="details">
-                Collector and preservationist Derek Quenneville will give a talk
-                on various approaches to keeping video game history alive,
-                including: 3D scanning, cultural context, and hands-on play.
-                <br />Attendees will get to try ancient artifacts of Nintendo,
-                including the Game Boy Sewing Machine (2000), Game Boy Camera
-                and Printer (1998), the Family BASIC keyboard, (1984), and the
-                Nintendo Virtual Boy game system (1995). Hosted by Derek Quenneville.</p>
-
-              <p class="category">Enthusiasts</p>
-              <p class="category">Academics</p>
-
-            </div>
-
-            <div class="event">
-              <h3 class="date">Saturday, June 3, 1-4pm</h3>
-              <p class="title">
-                Intro to Web-Based Game Design: From Creation to Presentation
-              </p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/pYiybMt7A34PYPrn7" target="blank">InterAccess</a></p>
-              <p class="details">
-                A web based game workshop/workshop series followed by a
-                presentation of the created games during Vector Festival 2023. Hosted by <a href="https://interaccess.org/" target="blank">InterAccess.</a>
-                </p>    
-                <p class="category">NextGen Creators</p>
-            </div>
-            <div class="event">
-              <h3 class="date">Saturday June 3, 4-6pm</h3>
-              <p class="title">Refining Your Game Hook Workshop</p>
-              <p class="details">
-                Members of the indie dev community are invited to bring their
-                game ideas and trailers to this interactive workshop where Ryan
-                Clark will walk people through his thoughts on market fit and
-                game hooks, and then invite them into the Clark Tank where he
-                will offer a critique on how to make them better. Hosted by <a href="https://braceyourselfgames.com/" target="blank">Brace Yourselves Games.</a></p>
-
-                <p class="category">Industry</p>
-            </div>
-
-
-         
-        
-            <div class="event">
-              <h3 class="date">Sunday June 4, 3pm</h3>
-              <p class="title">Torontron Hunt</p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/y5XvTZJdjzKytbMz8" target="blank">Grange Park</a></p>
-              <p class="details">
-                There’s an exhibition of local games in indie arcade cabinets
-                (Torontrons) installed in locations throughout the city. Pick up
-                a paper version of the map here from Hand Eye executive director
-                Len Predko and hunt them down and play ‘em all throughout
-                Toronto Games Week! Hosted by
-                <a href="https://www.handeyesociety.com/" target="blank"
-                  >The Hand Eye Society.</a>
-              </p>
-                <p class="category">Industry</p>
-                <p class="category">Enthusiasts</p>
-
-                  
-            </div>
-
-            <div class="event">
-              <h3 class="date">Sunday June 4, 9:30pm</h3>
-              <p class="title">Saturnalia and Italian Giallo Horror</p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/5Cuat591nwF8dpfW6" target="blank">Revue Cinema</a></p>
-              <p class="details">
-                A talk and conversation with Pietro Righi Riva, the Italian director of the survival horror videogame Saturnalia, followed by a screening of a classic of giallo Italian cinema that influenced its visual style. Supported by the Italian Cultural Institute of Toronto. Hosted by <a href="https://www.handeyesociety.com/" target="blank">Rue Morgue and Stompbox.</a>
-                </p>
-                <p class="category">Industry</p>
-                <p class="category">Enthusiasts</p>
-
-            </div>
-
-            <div class="event">
-              <h3 class="date">Mon June 5 - 7th (10-4pm)</h3>
-              <p class="title">
-               Game Arts International Assembly (GAIA)
-              </p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/PGzeu9wqSXujGLncA" target="blank">OCAD Game:Play Lab</a></p>
-              <p class="details">
-                GAIA is a 3 Day professional development symposium for
-                international game curators, fest directors, and community
-                organizers. In-person programming is invite only with some open
-                online sessions. Hosted by <a href="https://gameartsinternational.network/" target="blank"
-                  >Game Arts International Network (GAIN).</a></p>
-  
-                <p class="category">Event Organizers</p>
-                <p class="category">Curators</p>
-
-
-            </div>
-            <div class="event">
-              <h3 class="date">Monday June 5, 6:30pm</h3>
-              <p class="title">
-                “If you don't like the game, change the rules” comic launch
-              </p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XM6oG9f6PrXUfLbA9" target="blank">Palmerston Public Library Theatre</a></p>
-
-              <p class="details">
-                At the launch of a comic exploring alternative labour modes like
-                co-ops and unions, attendees will read the comic and then
-                participate in a panel discussion with co-op studio workers and
-                union organizers. Hosted by Marie LeBlanc Flanagan and Game Arts International Network.</p>
-
-                <p class="category">Academics</p>
-                <p class="category">Industry</p>
-
-              <!-- <a href="https://twitter.com/GWU_Toronto" target="blank"
-                >Game Workers Unite</a
-              > -->
-            </div>
-            <div class="event">
-              <h3 class="date">Tuesday June 6, 7pm</h3>
-              <p class="title">IGDA Panel and Social</p>
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/2E37bs4rwWmRTNNN9" target="blank">George Brown</a></p>
-              <p class="details">
-                A panel on narrative design followed by a lively social. Hosted by IGDA Toronto.</p>
-                <p class="category">Industry</p>
-            </div>
-            <div class="event">
-              <h3 class="date">Wednesday June 7, 7pm</h3>
-              <p class="title">
-                Toronto Games Week Closing Party and
-                <a href="https://interactiveontario.com/programs/io-connect/" target="blank">IO Connect</a>
-              </p>
-              
-              <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="" target="blank">TBD</a></p>
-              <p class="details">
-                A playtesting BBQ featuring unreleased games by Ontario
-                creators, food and drink, and mingling! Hosted by
-                  <a href="https://interactiveontario.com/" target="blank"
-                    >Interactive Ontario.</a
-                  >
-                </p>
-                <p class="category">Industry</p>
-            </div>
           </div>
 
-          <h2>Who's organizing Toronto Games Week?</h2>
-          <section class="textBox">
+          <div class="event">
+            <h3 class="date">Friday June 2, 9-5pm</h3>
+            <p class="title">Indigenous Games Think Tank</p>
+            <p class="details">
+              Workshop for Indigenous creators to learn about the
+              possibilities of the game medium, led by Indigenous game
+              developers. Hosted by
+              <a href="https://achimogames.ca/" target="blank">Meagan Byrne</a>,
+              <a href="https://www.toronto.ca/business-economy/industry-sector-support/interactive-digital-media/"
+                target="blank">The City of Toronto</a>, POV, <a href="https://www.ontariocreates.ca/"
+                target="blank">Ontario Creates</a>
+            </p>
+            <p class="category">by invitation only</p>
+          </div>
+
+          <div class="event">
+            <h3 class="date">Friday June 2, 7pm</h3>
+            <p class="title">NextGen Showcase</p>
+            <p class="details">
+              A showcase of some of the most promising grads from York
+              University, U of T, OCAD and others, selected by a visiting
+              curator. Hosted by <a href="https://ampd.yorku.ca/profile/yifat-shaik/" target="blank">Yifat Shaik</a> and
+              various universities.</p>
+            <p class="category">NextGen Creators</p>
+            <p class="category">Industry</p>
+          </div>
+
+          <div class="event">
+            <h3 class="date">Saturday June 3, 1pm</h3>
+            <p class="title">
+              Preservation Through Play: Different ways to save video game
+              history and context
+            </p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/K8HxeCd8nCDXAHkbA"
+                target="blank">TPL (Fort York branch)</a></p>
+            <p class="details">
+              Collector and preservationist Derek Quenneville will give a talk
+              on various approaches to keeping video game history alive,
+              including: 3D scanning, cultural context, and hands-on play.
+              <br />Attendees will get to try ancient artifacts of Nintendo,
+              including the Game Boy Sewing Machine (2000), Game Boy Camera
+              and Printer (1998), the Family BASIC keyboard, (1984), and the
+              Nintendo Virtual Boy game system (1995). Hosted by Derek Quenneville.
+            </p>
+
+            <p class="category">Enthusiasts</p>
+            <p class="category">Academics</p>
+
+          </div>
+
+          <div class="event">
+            <h3 class="date">Saturday, June 3, 1-4pm</h3>
+            <p class="title">
+              Intro to Web-Based Game Design: From Creation to Presentation
+            </p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/pYiybMt7A34PYPrn7"
+                target="blank">InterAccess</a></p>
+            <p class="details">
+              A web based game workshop/workshop series followed by a
+              presentation of the created games during Vector Festival 2023. Hosted by <a
+                href="https://interaccess.org/" target="blank">InterAccess.</a>
+            </p>
+            <p class="category">NextGen Creators</p>
+          </div>
+          <div class="event">
+            <h3 class="date">Saturday June 3, 4-6pm</h3>
+            <p class="title">Refining Your Game Hook Workshop</p>
+            <p class="details">
+              Members of the indie dev community are invited to bring their
+              game ideas and trailers to this interactive workshop where Ryan
+              Clark will walk people through his thoughts on market fit and
+              game hooks, and then invite them into the Clark Tank where he
+              will offer a critique on how to make them better. Hosted by <a href="https://braceyourselfgames.com/"
+                target="blank">Brace Yourselves Games.</a></p>
+
+            <p class="category">Industry</p>
+          </div>
+
+
+
+
+          <div class="event">
+            <h3 class="date">Sunday June 4, 3pm</h3>
+            <p class="title">Torontron Hunt</p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/y5XvTZJdjzKytbMz8"
+                target="blank">Grange Park</a></p>
+            <p class="details">
+              There’s an exhibition of local games in indie arcade cabinets
+              (Torontrons) installed in locations throughout the city. Pick up
+              a paper version of the map here from Hand Eye executive director
+              Len Predko and hunt them down and play ‘em all throughout
+              Toronto Games Week! Hosted by
+              <a href="https://www.handeyesociety.com/" target="blank">The Hand Eye Society.</a>
+            </p>
+            <p class="category">Industry</p>
+            <p class="category">Enthusiasts</p>
+
+
+          </div>
+
+          <div class="event">
+            <h3 class="date">Sunday June 4, 9:30pm</h3>
+            <p class="title">Saturnalia and Italian Giallo Horror</p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/5Cuat591nwF8dpfW6"
+                target="blank">Revue Cinema</a></p>
+            <p class="details">
+              A talk and conversation with Pietro Righi Riva, the Italian director of the survival horror videogame
+              Saturnalia, followed by a screening of a classic of giallo Italian cinema that influenced its visual
+              style. Supported by the Italian Cultural Institute of Toronto and the Sardegna Film Commission Foundation.
+              Hosted by <a href="https://www.handeyesociety.com/" target="blank">Rue Morgue and Stompbox.</a>
+            </p>
+            <p class="category">Industry</p>
+            <p class="category">Enthusiasts</p>
+
+          </div>
+
+          <div class="event">
+            <h3 class="date">Mon June 5 - 7th (10-4pm)</h3>
+            <p class="title">
+              Game Arts International Assembly (GAIA)
+            </p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/PGzeu9wqSXujGLncA"
+                target="blank">OCAD Game:Play Lab</a></p>
+            <p class="details">
+              GAIA is a 3 Day professional development symposium for
+              international game curators, fest directors, and community
+              organizers. In-person programming is invite only with some open
+              online sessions. Hosted by <a href="https://gameartsinternational.network/" target="blank">Game Arts
+                International Network (GAIN).</a></p>
+
+            <p class="category">Event Organizers</p>
+            <p class="category">Curators</p>
+
+
+          </div>
+          <div class="event">
+            <h3 class="date">Monday June 5, 6:30pm</h3>
+            <p class="title">
+              “If you don't like the game, change the rules” comic launch
+            </p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XM6oG9f6PrXUfLbA9"
+                target="blank">Palmerston Public Library Theatre</a></p>
+
+            <p class="details">
+              At the launch of a comic exploring alternative labour modes like
+              co-ops and unions, attendees will read the comic and then
+              participate in a panel discussion with co-op studio workers and
+              union organizers. Hosted by Marie LeBlanc Flanagan and Game Arts International Network.</p>
+
+            <p class="category">Academics</p>
+            <p class="category">Industry</p>
+
+            <!-- <a href="https://twitter.com/GWU_Toronto" target="blank"
+                >Game Workers Unite</a
+              > -->
+          </div>
+          <div class="event">
+            <h3 class="date">Tuesday June 6, 7pm</h3>
+            <p class="title">IGDA Panel and Social</p>
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/2E37bs4rwWmRTNNN9"
+                target="blank">George Brown</a></p>
+            <p class="details">
+              A panel on narrative design followed by a lively social. Hosted by IGDA Toronto.</p>
+            <p class="category">Industry</p>
+          </div>
+          <div class="event">
+            <h3 class="date">Wednesday June 7, 7pm</h3>
+            <p class="title">
+              Toronto Games Week Closing Party and
+              <a href="https://interactiveontario.com/programs/io-connect/" target="blank">IO Connect</a>
+            </p>
+
+            <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="" target="blank">TBD</a></p>
+            <p class="details">
+              A playtesting BBQ featuring unreleased games by Ontario
+              creators, food and drink, and mingling! Hosted by
+              <a href="https://interactiveontario.com/" target="blank">Interactive Ontario.</a>
+            </p>
+            <p class="category">Industry</p>
+          </div>
+        </div>
+
+        <h2>Who's organizing Toronto Games Week?</h2>
+        <section class="textBox">
 
           <p>
             Each event is independently organized by your favourite local game
@@ -343,52 +329,64 @@
           </p>
           <p>
             Toronto Games Week is coordinated by
-            <a href="https://marieflanagan.com/" target="blank"
-              >Marie LeBlanc Flanagan</a
-            >
+            <a href="https://marieflanagan.com/" target="blank">Marie LeBlanc Flanagan</a>
             and
             <a href="https://jimmunroe.net/" target="blank">Jim Munroe</a>
-            (<a href="https://gameartsinternational.network/" target="blank"
-              >Game Arts International Network</a
-            >
+            (<a href="https://gameartsinternational.network/" target="blank">Game Arts International Network</a>
             executive director and co-founder of the Hand Eye Society).
           </p>
           <p>
             TGW came to life with our original group of advisors, a supergroup
             of game community organizations, including representatives from
             <a href="http://www.tojam.ca/" target="blank">Toronto Game Jam</a>,
-            <a href="https://interactiveontario.com/" target="blank"
-              >Interactive Ontario</a
-            >,
-            <a href="https://bufferfestival.com/" target="blank"
-              >Buffer Festival</a
-            >,
-            <a href="https://vectorfestival.org/" target="blank"
-              >Vector Festival</a
-            >, <a href="https://dmg.to/" target="blank">DMG</a>,
-            <a href="https://www.dirty-rectangles.com/" target="blank"
-              >Dirty Rectangles</a
-            >,
-            <a href="https://www.handeyesociety.com/" target="blank"
-              >Hand Eye Society</a
-            >, and
-            <a href="https://twitter.com/FunlandMag" target="blank"
-              >Funland Magazine</a
-            >. Additional input was given by representatives of
-            <a href="https://www.arts.on.ca/home" target="blank"
-              >the Ontario Arts Council</a
-            >, <a href="https://www.ocadu.ca/  " target="blank">OCAD</a>,
+            <a href="https://interactiveontario.com/" target="blank">Interactive Ontario</a>,
+            <a href="https://bufferfestival.com/" target="blank">Buffer Festival</a>,
+            <a href="https://vectorfestival.org/" target="blank">Vector Festival</a>, <a href="https://dmg.to/"
+              target="blank">DMG</a>,
+            <a href="https://www.dirty-rectangles.com/" target="blank">Dirty Rectangles</a>,
+            <a href="https://www.handeyesociety.com/" target="blank">Hand Eye Society</a>, and
+            <a href="https://twitter.com/FunlandMag" target="blank">Funland Magazine</a>. Additional input was given by
+            representatives of
+            <a href="https://www.arts.on.ca/home" target="blank">the Ontario Arts Council</a>, <a
+              href="https://www.ocadu.ca/  " target="blank">OCAD</a>,
             <a href="https://www.tiff.net/" target="blank">TIFF</a>, and
-            <a
-              href="https://www.toronto.ca/business-economy/industry-sector-support/interactive-digital-media/"
-              target="blank"
-              >the City of Toronto IDM Office</a
-            >.
+            <a href="https://www.toronto.ca/business-economy/industry-sector-support/interactive-digital-media/"
+              target="blank">the City of Toronto IDM Office</a>.
           </p>
-          </section>
+        </section>
 
-          <h2>COVID Policy</h2>
-          <section class="textBox">
+
+
+
+
+
+
+        <h2>Want to volunteer? Or host a visiting artist or curator?</h2>
+        <section class="textBox">
+
+          <p>
+            We're looking for volunteers! If you are interested, please fill in <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfd9F57i_GTzwOULDSuNVgXjkYBa5YSawvOLcgABTla2XNOnQ/viewform?usp=sf_link"
+              target="blank">this form.</a> We're also looking for hosts to billet visiting curators. It's a huge
+            support to us if you have room to share with them. You can express you interest and learn more by filling in
+            <a href="https://forms.gle/xUdkYjCuCSzCtuJn6" target="blank">this short form</a>.
+
+          </p>
+        </section>
+
+
+
+        <h2>Code of Conduct and Covid Policy</h2>
+        <section class="textBox">
+
+          <p>
+            We want people to come to TGW and participate and thrive no matter
+            their experience, gender identity and expression, disability sexual
+            orientation, personal appearance, race, ethnicity, body size, age,
+            nationality, or religion. Our
+            <a href="coc.html" target="blank">code of conduct</a> is here.
+          </p>
+ 
           <p>
             Toronto Games Week strongly recommends that attendees bring and wear
             masks. We will have some masks at the door of all events. Each TGW
@@ -402,45 +400,27 @@
           </p>
         </section>
 
-
-          <h2>Code of Conduct</h2>
-          <section class="textBox">
-
-          <p>
-            We want people to come to TGW and participate and thrive no matter
-            their experience, gender identity and expression, disability sexual
-            orientation, personal appearance, race, ethnicity, body size, age,
-            nationality, or religion. Our
-            <a href="coc.html" target="blank">code of conduct</a> is here.
-          </p>
-        </section>
-
-
-          <h2>Contact</h2>
-          <section class="textBox">
+        <h2>Contact</h2>
+        <section class="textBox">
 
           <p>
             Interested in getting involved? Have questions? Please reach out
             with any questions to marie @ gameartsinternational . network.
           </p>
         </section>
-
-
-          <h2>Our Sponsors</h2>
-          <div class="sponsorbox">
-            <img src="images/DBLogo.png" alt="Drinkbox logo" class="logo" />
-          </div>
-          <!-- <a href="home/" class="btn">Begin</a> -->
-          <!-- </div> -->
+        <h2>Our Sponsors</h2>
+        <div class="sponsorbox">
+          <img src="images/DBLogo.png" alt="Drinkbox logo" class="logo" />
         </div>
-        <img
-          class="footerImg"
-          src="images/wallpaper.png"
-          alt="Some repeating illustrations of controllers in purple and orange"
-        />
+        <!-- <a href="home/" class="btn">Begin</a> -->
+        <!-- </div> -->
       </div>
-    </main>
-    <script src="play.js"></script>
-    <script src="connectionTest.js"></script>
-  </body>
+      <img class="footerImg" src="images/wallpaper.png"
+        alt="Some repeating illustrations of controllers in purple and orange" />
+    </div>
+  </main>
+  <script src="play.js"></script>
+  <script src="connectionTest.js"></script>
+</body>
+
 </html>

@@ -98,6 +98,33 @@ function onClick(event) {
 }
 window.addEventListener("click", onClick);
 
+
+
+// Set up the click/touch event listener
+// function onClick(event) {
+//   event.preventDefault();
+//   let x, y;
+
+//   // Check if the event is a touch event
+//   if (event.changedTouches) {
+//     x = (event.changedTouches[0].pageX / window.innerWidth) * 2 - 1;
+//     y = -(event.changedTouches[0].pageY / window.innerHeight) * 2 + 1;
+//   } else {
+//     x = (event.clientX / window.innerWidth) * 2 - 1;
+//     y = -(event.clientY / window.innerHeight) * 2 + 1;
+//   }
+
+//   raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
+//   const intersects = raycaster.intersectObjects(objects);
+//   if (intersects.length > 0) {
+//     const object = intersects[0].object;
+//     scene.remove(object);
+//   }
+// }
+// window.addEventListener("mousedown", onClick);
+// window.addEventListener("touchstart", onClick, { passive: false });
+
+
 // Set up the render loop
 function animate() {
   requestAnimationFrame(animate);
