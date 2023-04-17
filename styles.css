@@ -263,7 +263,7 @@ a {
 a {
   color: var(--accentDark);
   text-decoration: rgba(0, 23, 128, 0.088) wavy underline;
-  text-decoration: dotted underline rgba(128, 0, 128, 0.203) 3px;
+  text-decoration: dotted underline rgba(128, 0, 128, 0.703) 3px;
 }
 
 a:hover {
