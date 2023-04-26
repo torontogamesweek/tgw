@@ -373,8 +373,9 @@ img {
 
 .logo {
   max-width: 15rem;
-  max-height: auto;
-  margin: 1rem;
+  /* max-height: auto; */
+  margin: 1.3rem;
+  padding: 0 10px;
 }
 
 .logoBox {
@@ -2073,6 +2074,7 @@ footer {
   align-content: center;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
