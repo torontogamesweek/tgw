@@ -372,10 +372,19 @@ img {
 }
 
 .logo {
-  max-width: 15rem;
+  max-width: 7rem;
   /* max-height: auto; */
-  margin: 1.3rem;
+  margin: .5rem;
   padding: 0 10px;
+}
+
+@media (min-width: 60rem) {
+  .logo {
+    max-width: 15rem;
+    /* max-height: auto; */
+    margin: 1.3rem;
+    padding: 0 10px;
+  }
 }
 
 .logoBox {
@@ -2075,7 +2084,4 @@ footer {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-}
-
-.logo {
 }
