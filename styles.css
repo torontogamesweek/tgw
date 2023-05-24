@@ -385,6 +385,10 @@ img {
   }
 }
 
+p#schedule {
+  text-align: center;
+}
+
 .logo {
   max-width: 7rem;
   /* max-height: auto; */
@@ -2114,6 +2118,7 @@ footer {
   align-content: center;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
