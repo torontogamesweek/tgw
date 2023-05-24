@@ -167,6 +167,10 @@ table {
 /***** FOUNDATIONS *****/
 /***********************/
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   /* font-family: monospace; */
   width: 100vw;
@@ -191,7 +195,15 @@ body {
 .textBox {
   background-color: rgba(209, 223, 234, 0.76);
   /* border-radius: 1rem; */
-  padding-top:1rem
+  padding-top:1rem;
+}
+
+.textBox-btn {
+  /* background-color: rgb(203 221 235 / 52%);
+  border: 2px dashed #490f90;
+  border-radius: 1rem; */
+  padding-top:1rem;
+  padding-bottom: 1rem;
 }
 
 canvas {
@@ -465,6 +477,16 @@ h2:nth-child(5) {
 }
 
 h3 {
+  font-size: 1.5rem;
+  margin: 2rem;
+  text-align: left;
+  padding-left: 5%;
+  text-transform: uppercase;
+  /* text-align: left;  */
+  /* font-weight: 400; */
+  color: var(--darkGrey);
+  text-align: center;
+  font-family: "Major Mono Display", monospace;
 }
 
 h4 {
@@ -502,6 +524,8 @@ h5 {
     /* text-align: left;  */
     /* font-weight: 400; */
     color: var(--darkGrey);
+    text-align: center;
+    font-family: "Major Mono Display", monospace;
   }
 }
 
@@ -2076,4 +2100,71 @@ footer {
 }
 
 .logo {
+}
+
+.btn-d1,
+.btn-d2,
+.btn-d3,
+.btn-d4,
+.btn-d5,
+.btn-d6,
+.btn-d7
+ {
+  border: #490f90 solid 3px;
+  background: #efedf4;
+  font-family: "Major Mono Display", monospace;
+  color: black;
+  /* padding: 15px 63px; */
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  text-transform: capitalize;
+}
+
+.btn-d1:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d2:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d3:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d4:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d5:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d6:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
+}
+
+.btn-d7:hover {
+  /* background: rgb(237, 255, 200); */
+  background-color: lightcyan;
+  color: black;
 }
