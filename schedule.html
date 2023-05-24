@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <title>Toronto Games Week Schedule</title>
+
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <meta property="og:title" content="Toronto Games Week Schedule" />
+    <meta
+      property="og:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+
+    <meta
+      property="og:image"
+      content="https://torontogamesweek.com/images/TGWHeader.png"
+    />
+
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <meta name="twitter:title" content="Toronto Games Week Schedule" />
+    <meta
+      name="twitter:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta name="twitter:image" content="images/TGWHeader.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <header>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span></span>
+    </label>
+    <div>
+      <a href=""><img /></a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
+        <li><a href="about.html" id="aboutNav">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+      uniform float time;
+      uniform vec3 color;
+
+      varying vec2 vUv;
+
+      void main() {
+        vec3 red = vec3(1.1, 0.0, 0.0);
+        vec3 orange = vec3(0.7, 0.5, 0.0);
+        vec3 yellow = vec3(0.3, 1.3, 0.0);
+        vec3 green = vec3(0.0, 0.5, 0.0);
+        vec3 blue = vec3(0.0, 0.0, 0.5);
+        vec3 purple = vec3(0.5, 0.0, 1.0);
+
+        float colorMix = clamp(vUv.y, 0.0, 1.0);
+        vec3 color;
+
+        if (colorMix < 0.2) {
+          color = mix(red, orange, (colorMix / 0.4));
+        } else if (colorMix < 0.4) {
+          color = mix(orange, yellow, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.6) {
+          color = mix(yellow, green, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.8) {
+          color = mix(green, blue, (colorMix - 0.6) / 0.2);
+        } else {
+          color = mix(blue, purple, (colorMix - 0.8) / 0.2);
+        }
+
+        float pulse = abs(sin(time * 1.0));
+        float strength = pow(pulse, 3.0) * 0.6;
+
+        // Increase the alpha value to turn up the opacity
+        gl_FragColor = vec4(color * strength, 0.8 * strength);
+      }
+    </script>
+
+    <script src="playableBackground.js"></script>
+
+    <main class="">
+      <img
+        class="landingImg"
+        src="images/TGWHeader.png"
+        alt="An abstract illustration of the toronto cityline and some controllers"
+      />
+      <img
+        class="letterImg"
+        src="images/TorontoGamesWeek2023.png"
+        alt="A type treatment of Toronto Games Week="
+      />
+      <div class="contentContainer" id="landingPage">
+        <div class="content">
+          <h2>Schedule</h2>
+
+          <section class="textBox">
+            <p id="schedule">
+              All the events are synced to this handy
+              <a
+                href="https://calendar.google.com/calendar/u/0?cid=NjQyMDk0Zjc1MTk3YjNiODExM2QxNzQ3Nzc5N2Q1ZGZkNzRkYjMyMTZlODhkMGE2ZjA5YTdkMWM1NTgwYjU3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+                target="blank"
+                >Google calendar.</a
+              >
+            
+            </p>
+          </section>
+
+          <section class="textBox-btn" id="daySelector">
+            <a role="button" href="#day1" class="btn-d1">June 1</a>
+            <a role="button" href="#day2" class="btn-d2">June 2</a>
+            <a role="button" href="#day3" class="btn-d3">June 3</a>
+            <a role="button" href="#day4" class="btn-d4">June 4</a>
+            <a role="button" href="#day5" class="btn-d5">June 5</a>
+            <a role="button" href="#day6" class="btn-d6">June 6</a>
+            <a role="button" href="#day7" class="btn-d7">June 7</a>
+          </section>
+
+          <h3 id="day1">Day 1</h3>
+          <div class="calendar">
+            <div class="event">
+              <h3 class="date">Thursday June 1, 8pm-10:30pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/KICKOFF.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">Toronto Games Week Kick-off</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/GxK4FWYwFPKVe8Gt8"
+                      target="blank"
+                      >See-Scape</a
+                    >
+                  </p>
+                  <p class="details">
+                    Special guest
+                    <a href="https://braceyourselfgames.com/ryan-bio/"
+                      >Ryan Clark</a
+                    >
+                    (Crypt of the Necrodancer, Phantom Brigade) will be doing a
+                    talk about market fit and 20 years of making indie games,
+                    followed by a social. Hosted by
+                    <a href="https://www.dirty-rectangles.com/" target="blank"
+                      >Dirty Rectangles.</a
+                    >
+                    FREE!
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <h3 id="day2">Day 2</h3>
+            <div class="event">
+              <h3 class="date">Friday June 2, 9-10:30pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/NIGHT.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">Night Parkcade</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/iBUHWR9ggdHKE5RX9"
+                      target="blank"
+                      >Trinity Bellwoods</a
+                    >
+                  </p>
+                  <p class="details">
+                    Pop-up arcade in a park after dark! We'll be projecting
+                    videogames for people to play near on the tennis courts
+                    close to the Queen St. W. Entrance of Trinity Bellwoods.
+                    We'll start at sundown and go until our batteries run dry!
+                    Featuring queer games curated by
+                    <a href="https://saganyee.com/" target="blank">Sagan Yee</a>
+                    and
+                    <a href="https://leecyb.org/" target="blank">Lee Wilkins</a
+                    >. FREE.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <h3 id="day3">Day 3</h3>
+            <div class="event">
+              <h3 class="date">Saturday June 3, 1pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/PRESERVE.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    Preservation Through Play: Different Ways to Save Videogame
+                    History and Context
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/K8HxeCd8nCDXAHkbA"
+                      target="blank"
+                      >Toronto Public Library (Fort York branch)</a
+                    >
+                  </p>
+                  <p class="details">
+                    Collector and preservationist Derek Quenneville and game
+                    curator Chris Young will give a talk on various approaches
+                    to keeping videogame history alive, including 3D scanning,
+                    cultural context, and hands-on play.
+                    <br /><br />Attendees will get to try ancient artifacts of
+                    Nintendo, including the Game Boy Sewing Machine (2000), Game
+                    Boy Camera and Printer (1998), the Family BASIC keyboard
+                    (1984), and the Nintendo Virtual Boy game system (1995).
+                    Hosted by Derek Quenneville.
+                    <a
+                      href="https://www.torontopubliclibrary.ca/detail.jsp?Entt=RDMEVT480542&R=EVT480542"
+                      target="blank"
+                      >FREE, but registration is required.</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <p class="category">Enthusiasts</p>
+              <p class="category">Academics</p>
+            </div>
+
+            <div class="event">
+              <h3 class="date">Saturday, June 3, 1-4pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/WORKSHOP.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    Walking on the Web: An Introduction to Unity through
+                    Personal Walking Sims
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/pYiybMt7A34PYPrn7"
+                      target="blank"
+                      >InterAccess</a
+                    >
+                  </p>
+                  <p class="details">
+                    We'll discuss the tools Unity has to offer, as well as games
+                    as a form of autobiographical expression. No game
+                    development experience necessary, you'll leave this workshop
+                    with a personal digital museum created by you & playable in
+                    a browser. Participants will have the opportunity to
+                    showcase their creations in an online exhibition during
+                    Vector Festival 2023.
+                    <a
+                      href="https://www.eventbrite.ca/e/walking-on-the-web-an-introduction-to-unity-through-persona-tickets-637563839607"
+                      target="blank"
+                      >Tickets required</a
+                    >. Hosted by
+                    <a href="https://interaccess.org/" target="blank"
+                      >InterAccess.</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="category">NextGen Creators</p>
+            </div>
+
+            <div class="event">
+              <h3 class="date">Saturday June 3, 3-6pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/HOOK.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    Indie Superboost: Refining Your Game Hook Workshop
+                    (Interactive Ontario)
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/jfPFG89WnzDHSWxk9"
+                      target="blank"
+                      >OCAD Game:Play Lab, 3rd Floor</a
+                    >
+                  </p>
+                  <p class="details">
+                    <a href="https://braceyourselfgames.com/ryan-bio/"
+                      >Ryan Clark</a
+                    >
+                    (Founder & CEO at Brace Yourself Games) will be joining us
+                    to discuss refining your game hook. Members of the indie dev
+                    community are invited to bring their game ideas and trailers
+                    to this interactive workshop where Ryan Clark will walk
+                    people through his thoughts on market fit and game hooks,
+                    offering critiques on how to improve. Hosted by
+                    <a
+                      href="https://interactiveontario.com/programs/indie-superboost/"
+                      target="blank"
+                      >Interactive Ontario</a
+                    >. Supported by CMF and Ubisoft Toronto.
+                    <a
+                      href="https://www.eventbrite.ca/e/indie-superboost-refining-your-game-hook-tickets-636630698557?aff=ebdsoporgprofile"
+                      target="blank"
+                      >Register here.</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <h3 class="date">Saturday June 3, 7pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/NEXTGEN.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">NextGen Showcase</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/brdAzipcwbFjDASN7"
+                      target="blank"
+                      >OCAD</a
+                    >
+                  </p>
+                  <p class="details">
+                    A showcase of some of the most promising young creators from
+                    York University, Sheridan, OCAD, and others, selected by
+                    visiting curator
+                    <a
+                      href="https://www.linkedin.com/in/susie-buchan-b52789220/?originalSubdomain=uk"
+                      >Susie Buchan</a
+                    >. Hosted by
+                    <a
+                      href="https://ampd.yorku.ca/profile/yifat-shaik/"
+                      target="blank"
+                      >Yifat Shaik</a
+                    >
+                    and various universities.
+                  </p>
+                </div>
+              </div>
+              <p class="category">NextGen Creators</p>
+              <p class="category">Industry</p>
+            </div>
+
+            <h3 id="day4">Day 4</h3>
+            <div class="event">
+              <h3 class="date">Sunday June 4, 1pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/WALK.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">Nuville Augmented Walking Game</p>
+                  <!-- <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/y5XvTZJdjzKytbMz8"
+                target="blank">Nuville Augmented Walking Game</a></p> -->
+                  <p class="details">
+                    Nuville is an augmented walking game for smartphones with a
+                    cyberpunk twist. You are a hacker (obviously), disguised as
+                    a tourist (?!), scrambling the data of the AI building the
+                    megapolis Nuville. This process is a no-code operation. Use
+                    your whole body and observational wits as you execute a
+                    series of whimsical prompts hidden in an out-of-this-world
+                    podcast. <br /><br />
+                    Nuville is a Raaralab production, made in partnership with
+                    the Toronto Council Fire Native Cultural Center and
+                    supported by the Canada Council for the Arts and Myseum of
+                    Toronto. Find out more at
+                    <a href="https://www.nuville.net/" target="blank"
+                      >nuville.net/</a
+                    >
+                    and
+                    <a href="https://forms.gle/R5gy7aqag2WD1dg16" target="blank"
+                      >sign up here.</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <h3 class="date">Sunday June 4, 3-5pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/TEA.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">Pekoe Tea Party & Cribbage with Grandpas</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/dCce4xxRhdTQcBPY7"
+                      target="blank"
+                      >Grange Park</a
+                    >
+                  </p>
+                  <p class="details">
+                    Come meet the creators of two of Canada's coziest
+                    videogames, the upcoming
+                    <a href="https://store.steampowered.com/app/1626350/Pekoe/"
+                      >Pekoe</a
+                    >
+                    releasing at the end of June (stay tuned!!) and Vancouver's
+                    <a href="http://cribbagewithgrandpas.com/"
+                      >Cribbage With Grandpas</a
+                    >! <br /><br />Bring a blanket and some tea (literally
+                    and/or figuratively), we’ll dish on a variety of cozy
+                    subjects and even play some cribbage together!
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <h3 class="date">Sunday June 4, 7-9pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/RACCOONS.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    WE ARE RACCOONS Book Launch with International Game Pals
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/GwPKUSyZoL1DruXB6"
+                      target="blank"
+                      >The Local</a
+                    >
+                  </p>
+                  <p class="details">
+                    Six game designer friends get a non-player character to work
+                    in each of their very different games—and accidentally
+                    create the first superintelligence in the process. Sci-fi
+                    novelist Jim Munroe will be launching his seventh book
+                    <a href="https://jimmunroe.net/WAR/" target="blank"
+                      >WE ARE RACCOONS</a
+                    >
+                    and signing copies. (Conveniently located right next door to
+                    the following screening event!)
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+            <div class="event">
+              <h3 class="date">Sunday June 4, 9:30pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/SAT2.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    Saturnalia talk and Blood & Black Lace screening
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/5Cuat591nwF8dpfW6"
+                      target="blank"
+                      >Revue Cinema</a
+                    >
+                  </p>
+                  <p class="details">
+                    A talk by Pietro Righi Riva, the Italian director of the
+                    survival horror videogame Saturnalia, followed by a
+                    screening of a classic of Italian Giallo cinema that
+                    influenced its visual style, Blood & Black Lace. Supported
+                    by the Italian Cultural Institute of Toronto and the
+                    Sardegna Film Commission Foundation. Hosted by Rue Morgue
+                    and Stompbox. Click here for more
+                    <a
+                      href="https://revuecinema.ca/films/blood-and-black-lace/"
+                      target="blank"
+                      >information</a
+                    >
+                    and
+                    <a
+                      href="https://www.eventbrite.ca/e/blood-black-lace-presented-by-toronto-games-week-rue-morgue-stompbox-tickets-611416712847"
+                      target="blank"
+                      >tickets</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <h3 id="day5">Day 5</h3>
+            <div class="event">
+              <h3 class="date">Monday June 5-7, 10-4pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/GAIA.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">Game Arts International Assembly (GAIA)</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/jfPFG89WnzDHSWxk9"
+                      target="blank"
+                      >OCAD Game:Play Lab, 3rd Floor</a
+                    >
+                  </p>
+                  <p class="details">
+                    <a href="https://GAIASymposium.net/" target="blank">GAIA</a>
+                    is a three day professional development symposium serving
+                    20+ international game curators, festival directors, and
+                    community organizers hailing from almost a dozen countries.
+                    Hosted by Game Arts International Network and supported by
+                    the Canada Council for the Arts. Hosted by
+                    <a
+                      href="https://gameartsinternational.network/"
+                      target="blank"
+                      >Game Arts International Network (GAIN)</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Event Organizers</p>
+              <p class="category">Curators</p>
+            </div>
+            <div class="event">
+              <h3 class="date">Monday June 5, 6:30pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/CTR.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    “If You Don't Like the Game, Change the Rules” Comic Launch
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/XM6oG9f6PrXUfLbA9"
+                      target="blank"
+                      >Palmerston Public Library Theatre</a
+                    >
+                  </p>
+
+                  <p class="details">
+                    Join us for a lively conversation about games and work! At
+                    the launch of a comic exploring alternative labour modes
+                    like co-ops and unions, attendees will read the comic and
+                    then participate in a panel discussion with co-op studio
+                    workers and union organizers.<br /><br />
+                    Hosted by Marie LeBlanc Flanagan (<a
+                      href="http://gameartsinternational.network"
+                      >Game Arts International Network</a
+                    >) and featuring Pablo F. Quarta (<a
+                      href="https://matajuegos.itch.io/"
+                      >Matajuegos Coop</a
+                    >, Argentina), Michael Iantorno (Concordia University), D.
+                    Squinkifer (<a href="https://softchaos.games/"
+                      >Soft Chaos cooperative</a
+                    >, Montreal), Skylar Hinnant (<a
+                      href="https://twitter.com/ZeniMaxWorkers"
+                      >Zenimax Workers United - CWA</a
+                    >, USA), and Daniel Korn (<a
+                      href="https://twitter.com/GWU_Toronto"
+                      >Game Workers Unite Toronto</a
+                    >). Supported by
+                    <a href="https://cmf-fmc.ca/" target="_blank">CMF</a>.
+                  </p>
+                </div>
+              </div>
+
+              <p class="category">Academics</p>
+              <p class="category">Industry</p>
+
+              <!-- <a href="https://twitter.com/GWU_Toronto" target="blank"
+                >Game Workers Unite</a
+              > -->
+            </div>
+            <h3 id="day6">Day 6</h3>
+            <div class="event">
+              <h3 class="date">Tuesday June 6, 7pm</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/IGDA.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">
+                    Branching Stories: Unraveling Narrative Design (IGDA Panel +
+                    Meet & Mingle)
+                  </p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/Ezsjggs3WQdwskQy5"
+                      target="blank"
+                      >George Brown College, Room 240</a
+                    >
+                  </p>
+                  <p class="details">
+                    Discover the captivating stories behind your favourite games
+                    as we bring together a stellar panel of esteemed narrative
+                    designers!
+                    <a href="https://www.linkedin.com/in/nuha-alkadi-b493a3106/"
+                      >Nuha Alkadi
+                    </a>
+                    (she/her),
+                    <a href="https://www.linkedin.com/in/josh-m-labelle/"
+                      >Josh Labelle</a
+                    >
+                    (he/him), and
+                    <a
+                      href="https://www.linkedin.com/in/kaitlin-tremblay-22a18a67/"
+                      >Kait Tremblay</a
+                    >
+                    (they/she) will delve into the realm of narrative design and
+                    its many permutations and processes across different studios
+                    and games. We'll then move across the street for drinks and
+                    snacks, our usual monthly meet and mingle.<br /><br />
+
+                    Moderated by narrative designer
+                    <a href="https://www.linkedin.com/in/fdimitrovska/"
+                      >Franci Dimitrovska</a
+                    >, we're excited to bring you an engaging exploration of the
+                    storytelling craft that shapes the very fabric of gaming.
+                    Whether you're an industry veteran, an aspiring narrative
+                    designer, or curious about the magic behind unforgettable
+                    stories, this panel is not to be missed! Join us for a
+                    celebration of the rich narratives that make gaming an art
+                    form.<br /><br />
+
+                    Don't be shy. First-timers are definitely welcome! These
+                    events are FREE to attend and YOU DON'T NEED TO BE AN IGDA
+                    MEMBER. If you're planning to come, please
+                    <a
+                      href="https://www.meetup.com/igda-toronto/events/293466555/"
+                      >RSVP in advance</a
+                    >
+                    so we can prepare our headcount and after-drinks venue.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+            <h3 id="day7">Day 7</h3>
+            <div class="event">
+              <h3 class="date">Wednesday June 7, 6:30pm-12am</h3>
+              <div class="DescAndImg">
+                <img src="images/icons/CLOSING.png" alt="" class="eventIcon" />
+                <div class="desc">
+                  <p class="title">IO Connect: Summer Showcase</p>
+                  <p class="location">
+                    <span aria-hidden="true">&#x1f4cd;</span
+                    ><a
+                      href="https://goo.gl/maps/jrt7ZeRG82bhEGDW9"
+                      target="blank"
+                      >Artscape Daniels Launchpad, 4th Floor</a
+                    >
+                  </p>
+                  <p class="details">
+                    Join the Ontario video game industry for the IO Connect:
+                    Summer Showcase closing off Toronto Games Week. The event
+                    includes food, drink, networking, and the showcasing of a
+                    selection of Ontario Indies, including several 2023 Toronto
+                    Game Jam participants. The event will also feature the
+                    launch of Endlight, from Toronto's Bigpants Studio. Hosted
+                    by
+                    <a href="https://interactiveontario.com/" target="blank"
+                      >Interactive Ontario</a
+                    >.
+                    <a
+                      href="https://www.eventbrite.ca/e/io-connect-summer-showcase-tickets-636605914427?aff=ebdsoporgprofile"
+                      target="blank"
+                      >Tickets here</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+          </div>
+        </div>
+        <img
+          class="footerImg"
+          src="images/wallpaper.png"
+          alt="Some repeating illustrations of controllers in purple and orange"
+        />
+      </div>
+    </main>
+    <script src="play.js"></script>
+    <script src="connectionTest.js"></script>
+  </body>
+</html>
