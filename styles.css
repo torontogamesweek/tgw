@@ -1984,6 +1984,7 @@ footer {
 
 .eventIcon {
   margin-top: 2rem;
+  border: 2px solid;
   /* max-width: 9vw; */
 }
 
