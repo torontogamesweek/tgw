@@ -143,10 +143,12 @@ table {
   --medGrey: rgb(147, 147, 147);
   --darkGrey: rgb(101, 101, 101);
   --black: rgb(79, 79, 79);
-  --accentLight: rgb(232, 187, 255);
+  /* --accentLight: rgb(232, 187, 255); */
+  --accentLight:  rgb(64 205 214);
   --accentMed: rgb(65 104 107);
   --accentDark: rgb(33 57 78);
-  --accentTwo: rgb(89, 56, 255);
+  --accentTwo: rgb(47 107 207);
+  --accentOrange: rgb(255 110 110);
 }
 
 /***********************/
@@ -244,8 +246,8 @@ a {
 }
 
 .emphasis {
-  /* background-color: rgba(255, 255, 0, 0.111); */
-  /* font-weight: bold; */
+  background-color: rgba(255, 255, 0, 0.628);
+  font-weight: bold;
 }
 
 @media screen and (min-width: 900px) {
@@ -293,26 +295,22 @@ a:hover {
 btn,
 .btn {
   display: inline-block;
-  background-color: var(--darkGrey);
-  color: var(--lightGrey);
-  font-size: 1.11rem;
+  background-color: var(--accentLight);
+  color: var(--accentTwo);
   text-decoration: none;
-  text-transform: uppercase;
-  margin: 3rem;
-  padding: 0.6em 4em;
+  margin-bottom: 3rem;
+  padding: .4em 2em;
+  border: 2px solid var(--accentLight);
+  border-radius: 30px;
   outline: none;
-  border: none;
   cursor: pointer;
 }
 
 .btn:hover,
 .btn:focus,
 btn:focus {
-  background: var(--accentDark);
-  color: var(--white);
-  outline: none;
-  border: var(--white);
-  border-width: 0px;
+  background: var(--accentLight);
+  border: 2px solid var(--accentOrange);
 }
 
 @media (min-width: 60rem) {
@@ -412,7 +410,7 @@ p#schedule {
 
 @media (min-width: 60rem) {
   .logo {
-    max-width: 15rem;
+    max-width: 10rem;
     /* max-height: auto; */
     margin: 1.3rem;
     padding: 0 10px;
@@ -2206,4 +2204,32 @@ footer {
   /* background: rgb(237, 255, 200); */
   background-color: lightcyan;
   color: black;
+}
+
+#googleCalendar{
+  display:none;
+}
+
+@media screen and (min-width: 900px) {
+
+#googleCalendar{
+  display: block;
+  margin: 1rem;
+  position: relative;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 100%;
+  }
+  
+  .googleCalendar iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  overflow: hidden;
+  padding-bottom: 100%;
+  }
 }
