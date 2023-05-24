@@ -223,7 +223,7 @@ canvas {
   }
 
   .contentContainer {
-    padding: 2rem 0;
+    padding: 0 0 2rem 0;
   }
 
   .content {
@@ -362,6 +362,13 @@ img {
 .landingImg {
   background-size: cover;
   width: 100vw;
+  margin-top: 4.5rem;
+}
+
+.letterImg {
+  background-size: cover;
+  width: 100vw;
+  margin-top: -1.5rem;
 }
 
 .footerImg {
@@ -375,6 +382,13 @@ img {
 @media (min-width: 60rem) {
   .landingImg {
     background-size: cover;
+    margin-top: 0;
+  }
+
+  .letterImg {
+    background-size: cover;
+    width: 100vw;
+    margin-top: -5rem;
   }
 
   .footerImg {
@@ -723,7 +737,9 @@ header {
   flex-direction: row;
   justify-content: flex-end;
   box-sizing: border-box;
-  /* justify-content: space-between; */
+  align-items: center;
+  justify-content: space-between;
+
 }
 
 @media screen and (min-width: 900px) {
@@ -796,7 +812,7 @@ nav {
   text-align: right;
   top: 100%;
   /* left: 0; */
-  background-color: var(--lightGrey);
+  background-color: rgb(209 223 234);
   width: 100%;
   transform: scale(1, 0);
   transform-origin: top;
@@ -918,8 +934,8 @@ nav a {
 .nav-toggle-label span::before,
 .nav-toggle-label span::after {
   display: block;
-  background-color: var(--accentLight);
-  height: 3px;
+  background-color: rgb(255 110 110);
+  height: 4px;
   width: 50px;
   border-radius: 2px;
   position: relative;
