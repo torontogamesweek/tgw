@@ -223,7 +223,7 @@ canvas {
   }
 
   .contentContainer {
-    padding: 2rem;
+    padding: 2rem 0;
   }
 
   .content {
@@ -368,6 +368,8 @@ img {
   background-size: cover;
   margin-top: 7rem;
   width: 100vw;
+  border-top: 4px dashed #8a2ca5;
+  background-color: #b2c6d5;
 }
 
 @media (min-width: 60rem) {
@@ -384,9 +386,19 @@ img {
 }
 
 .logo {
-  max-width: 15rem;
-  max-height: auto;
-  margin: 1rem;
+  max-width: 7rem;
+  /* max-height: auto; */
+  margin: .5rem;
+  padding: 0 10px;
+}
+
+@media (min-width: 60rem) {
+  .logo {
+    max-width: 15rem;
+    /* max-height: auto; */
+    margin: 1.3rem;
+    padding: 0 10px;
+  }
 }
 
 .logoBox {
@@ -1964,6 +1976,11 @@ footer {
   margin: 1rem 0.1rem;
   border: 0.2rem solid rgba(51, 51, 137, 0.4);
   border-radius: 2rem;
+}
+
+.eventIcon {
+  margin-top: 2rem;
+  /* max-width: 9vw; */
 }
 
 /* .event {
