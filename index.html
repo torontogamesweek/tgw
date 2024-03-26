@@ -45,7 +45,9 @@
 </header>
 
 <body>
+  <canvas id="myCanvas" width="500" height="400"></canvas>
 
+<!-- 
   <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
 
 
@@ -93,15 +95,173 @@
         // Increase the alpha value to turn up the opacity
         gl_FragColor = vec4(color * strength, 0.8 * strength);
       }
-    </script>
+    </script> -->
+
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
+
+<script id="vertexShader" type="x-shader/x-vertex">
+  // This can remain the same as you might not need it for sprites, but it's here in case you want to create custom materials or shaders later on.
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+</script>
+
+<script>
+  // Scene setup
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xD2DFEA);
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Sprite creation
+  const loader = new THREE.TextureLoader();
+  const objects = []; // This will store our sprites
+
+  let clickSound = new Audio('images/hit.mp3');
+
+  // Array of image URLs
+  let imageUrls = [
+    // 'images/creatures/1.png', 
+    // 'images/creatures/2.png',
+    // 'images/creatures/3.png',
+    // 'images/creatures/4.png',
+    // 'images/creatures/5.png',
+    // 'images/creatures/6.png',
+    // 'images/creatures/7.png',
+    // 'images/creatures/8.png',
+    // 'images/creatures/9.png',
+    // 'images/creatures/10.png',
+    // 'images/creatures/11.png',
+
+    // Add more images as needed
+  ];
+
+  imageUrls.forEach(url => {
+    loader.load(url, function(texture) {
+      const material = new THREE.SpriteMaterial({ map: texture });
+
+      // Create the sprite and set its scale to maintain aspect ratio
+      const sprite = new THREE.Sprite(material);
+      const imageAspect = texture.image.width / texture.image.height;
+      sprite.scale.set(imageAspect, 1, 1); // This keeps the sprite's aspect ratio
+
+      sprite.position.x = Math.random() * 10 - 5;
+      sprite.position.y = Math.random() * 10 - 5;
+      sprite.position.z = Math.random() * 10 - 5;
+      sprite.velocity = new THREE.Vector3(Math.random() * 0.01 - 0.005, Math.random() * 0.01 - 0.005, 0);
+      scene.add(sprite);
+      objects.push(sprite);
+    });
+  });
+
+  // Raycaster for click events
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  window.addEventListener("click", onClick);
+
+function onClick(event) {
+  clickSound.play();
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(objects);
+    if (intersects.length > 0) {
+        const object = intersects[0].object;
+
+        object.material.transparent = true;
+
+        new TWEEN.Tween(object.scale)
+    .to({ x: object.scale.x * 1.8, y: object.scale.y * 1.8, z: object.scale.z * 1.8 }, 200)
+    .easing(TWEEN.Easing.Elastic.Out)
+    .onComplete(() => {
+        new TWEEN.Tween(object.material)
+            .to({ opacity: 0 }, 500)
+            .onComplete(() => {
+                // Further actions after fade-out, like removing the object
+                addToInventory(object.material.map.image.src); // Add to inventory after the effect
+                scene.remove(object);
+            })
+            .start();
+    })
+    .start();
+
+// // Add a rotation effect
+// new TWEEN.Tween(object.rotation)
+//   .to({ z: object.rotation.z + Math.PI * 2 }, 500) // Complete spin
+//   .easing(TWEEN.Easing.Quadratic.Out)
+//   .start();
+    }
+}
+ 
+
+  function addToInventory(imageSrc) {
+    const inventory = document.getElementById('inventory');
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.style.height = '50px'; // Tiny version
+    img.style.width = 'auto';
+    inventory.appendChild(img);
+}
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    TWEEN.update(); // Add this to update TWEEN animations
+
+
+    objects.forEach(sprite => {
+      sprite.position.add(sprite.velocity);
+      sprite.material.rotation += 0.005; // Adjusted for slower rotation
+
+
+      if (sprite.position.x > 5 || sprite.position.x < -5) {
+        sprite.velocity.x *= -1;
+      }
+      if (sprite.position.y > 5 || sprite.position.y < -5) {
+        sprite.velocity.y *= -1;
+      }
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Handle window resize
+  window.addEventListener('resize', onWindowResize, false);
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+</script>
+
 
   <script src="playableBackground.js"></script>
 
 
   <main>
-    <img class="landingImg" src="images/TGWHeader.png"
-      alt="An abstract illustration of the toronto cityline and some controllers" />
-    <img class="letterImg" src="images/TorontoGamesWeek2023.png" alt="A type treatment of Toronto Games Week" />
+
+    <div id="inventory">
+      <!-- <p>Inventory</p> -->
+    </div>
+    <!-- <img class="landingImg" src="images/TGWHeader.png"
+      alt="An abstract illustration of the toronto cityline and some controllers" /> -->
+    <img class="letterImg" src="images/TGWLogo2024.png" alt="A type treatment of Toronto Games Week" />
     <div class="contentContainer" id="landingPage">
       <div class="content">
         <section class="textBox">
@@ -141,7 +301,7 @@
               target="blank">Submit an Event</a>
             </p>
 
-          <p>Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There’s lots of interesting things to do!</p>
+               <p>Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There’s lots of interesting things to do!</p>
             <p class="btn">
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSewmAgjQA_NeaaAGC0GNJvEnpUphgQlK6WwzBuYj5VBEtpxcA/viewform"
               target="blank">Volunteer</a>
@@ -183,16 +343,11 @@
             class="logo" /></a>
         <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo"
             class="logo" /></a>
-
-                  </p>
                 </div>
               </div>
 
             </div>
-          </div>
-        </div>
-        <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" />
-      </div>
+        <!-- <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" /> -->
     </main>
     <script src="play.js"></script>
     <script src="connectionTest.js"></script>
