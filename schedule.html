@@ -45,18 +45,20 @@
   </header>
 
   <body>
-    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <!-- <canvas id="myCanvas" width="500" height="400"></canvas> -->
 
-    <script id="vertexShader" type="x-shader/x-vertex">
+    <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script> -->
+
+    <!-- <script id="vertexShader" type="x-shader/x-vertex">
       varying vec2 vUv;
 
       void main() {
         vUv = uv;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
-    </script>
+    </script> -->
 
-    <script id="fragmentShader" type="x-shader/x-fragment">
+    <!-- <script id="fragmentShader" type="x-shader/x-fragment">
       uniform float time;
       uniform vec3 color;
 
@@ -91,7 +93,7 @@
         // Increase the alpha value to turn up the opacity
         gl_FragColor = vec4(color * strength, 0.8 * strength);
       }
-    </script>
+    </script> -->
 
     <script src="playableBackground.js"></script>
 
@@ -100,8 +102,7 @@
 
       <div class="contentContainer" id="landingPage">
         <div class="content">
-
-<!--
+          <!--
           <h2>Calendar</h2>
 
           <section class="textBox">
@@ -122,13 +123,13 @@
           </section>
 -->
 
-<p class="btn">
+          <p class="btn">
             <a href="2023schedule.html">See last year's full schedule!</a>
           </p>
-           <p class="btn">
+          <p class="btn">
             <a href="https://gameartsinternational.network/toronto-games-week/">See pictures from last year!</a>
           </p>
-          
+
           <h2 id="fullSchedule">In-Progress 2024 Schedule</h2>
 
           <section class="textBox-btn" id="daySelector">
