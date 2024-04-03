@@ -536,7 +536,8 @@ btn:focus {
 @media screen and (min-width: 768px) {
   .btn-d1, .btn-d2, .btn-d3, .btn-d4, .btn-d5, .btn-d6, .btn-d7 {
     font-size: 0; /* Hides the original text */
-    padding: 15px 63px; /* Adjust padding to fit the full day name */
+    padding: 15px 23px; /* Adjust padding to fit the full day name */
+    margin: 10px 10px;
   }
   
   .btn-d1::after, .btn-d2::after, .btn-d3::after, .btn-d4::after, .btn-d5::after, .btn-d6::after, .btn-d7::after {
@@ -2302,7 +2303,7 @@ footer {
 
   /* margin: 0rem; */
   padding-top: 1.5rem;
-  font-size: .8rem;
+  font-size: .95rem;
   /* letter-spacing: 1px; */
   text-align: left;
   /* padding-left: 5%; */
