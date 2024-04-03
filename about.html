@@ -1,195 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&amp;display=swap" rel="stylesheet" />
+    <title>Toronto Games Week</title>
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+    <meta property="og:image" content="https://torontogamesweek.com/images/TGWSocial.png" />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="styles.css" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
-  <title>About Toronto Games Week</title>
-
-  <meta name="author" content="Marie Claire LeBlanc Flanagan" />
-  <meta name="description" content="Celebrating games in Toronto, Canada" />
-
-  <meta property="og:title" content="About Toronto Games Week" />
-  <meta property="og:description" content="Celebrating games in Toronto, Canada" />
-
-  <meta property="og:image" content="https://torontogamesweek.com/images/TGWSocial.png" />
-
-  <meta property="og:url" content="https://torontogamesweek.com" />
-  <meta property="og:type" content="webpage" />
-
-  <meta name="twitter:title" content="About Toronto Games Week" />
-  <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-  <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-
-</head>
-
-<header>
-  <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-  <label for="nav-toggle" class="nav-toggle-label">
-    <span></span>
-  </label>
-  <div>
-    <a href=""><img /></a>
-  </div>
-  <nav>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-      <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
-      <li><a href="about.html" id="aboutNav">About</a></li>
-    </ul>
-  </nav>
-</header>
-
-<body>
-
-  <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
-
-
-  <script id="vertexShader" type="x-shader/x-vertex">
-      varying vec2 vUv;
-
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    </script>
-
-  <script id="fragmentShader" type="x-shader/x-fragment">
-      uniform float time;
-      uniform vec3 color;
-    
-      varying vec2 vUv;
-    
-      void main() {
-        vec3 red = vec3(1.1, 0.0, 0.0);
-        vec3 orange = vec3(0.7, 0.5, 0.0);
-        vec3 yellow = vec3(0.3, 1.3, 0.0);
-        vec3 green = vec3(0.0, 0.5, 0.0);
-        vec3 blue = vec3(0.0, 0.0, 0.5);
-        vec3 purple = vec3(0.5, 0.0, 1.0);
-    
-        float colorMix = clamp(vUv.y, 0.0, 1.0);
-        vec3 color;
-    
-        if (colorMix < 0.2) {
-          color = mix(red, orange, (colorMix / 0.4));
-        } else if (colorMix < 0.4) {
-          color = mix(orange, yellow, (colorMix - 0.4) / 0.2);
-        } else if (colorMix < 0.6) {
-          color = mix(yellow, green, (colorMix - 0.4) / 0.2);
-        } else if (colorMix < 0.8) {
-          color = mix(green, blue, (colorMix - 0.6) / 0.2);
-        } else {
-          color = mix(blue, purple, (colorMix - 0.8) / 0.2);
-        }
-    
-        float pulse = abs(sin(time * 1.0));
-        float strength = pow(pulse, 3.0) * 0.6;
-    
-        // Increase the alpha value to turn up the opacity
-        gl_FragColor = vec4(color * strength, 0.8 * strength);
-      }
-    </script>
-
-  <script src="playableBackground.js"></script> -->
+  <body>
+    <header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="schedule.html" id="scheduleNav">Schedule</a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <script src="playableBackground.js"></script>
+    <main>
+      <div class="headerImgDiv">
+        <img id="letterImg" src="images/TGWLogo2024wCap.png" alt="A type treatment of Toronto Games Week" />
+        <p id="caption">A celebration of playable arts & culture</p>
+        <br />
+      </div>
+      <div class="contentContainer" id="landingPage">
+        <!-- <div class="content">
+          <section class="textBox">
+            <p id="aboutTGW">
+            </p>
+          </section>
+        </div> -->
 
 
-  <main class="">
-    <img class="landingImg" src="images/about.png"
-      alt="An abstract illustration of the toronto cityline and some controllers" />
-    <div class="contentContainer" id="landingPage">
+
+        <div class="content">
+          <section class="textBox">
+            <h2>About</h2>
+            <p>
+              Toronto Games Week (June 13-19, 2024) is a collective coordination of events organized independently by dozens of organizations,
+              curators, companies, creators, and communities</p>
+              <br />
+
+              <p>Toronto Games Week is coordinated by <a href="https://marieflanagan.com/" target="blank">Marie LeBlanc Flanagan</a> (previously at A MAZE.
+                / Berlin) and <a href="https://jimmunroe.net/" target="blank">Jim Munroe</a> (<a
+                  href="https://gameartsinternational.network/"
+                  target="blank"
+                  >Game Arts International Network</a
+                >
+                executive director and co-founder of the Hand Eye Society).
+              </p>
+<br>    
+              <p>
+                TGW emerged with great delight from a number of local people, communities, and organizations. It came to life with the support of our original group of advisors: a supergroup of game community organizations, including representatives from
+                <a href="http://www.tojam.ca/" target="blank">Toronto Game Jam</a>,
+                <a href="https://interactiveontario.com/" target="blank">Interactive Ontario</a>,
+                <a href="https://bufferfestival.com/" target="blank">Buffer Festival</a>,
+                <a href="https://vectorfestival.org/" target="blank">Vector Festival</a>, <a href="https://twitter.com/DMGToronto" target="blank">DMG</a>,
+                <a href="https://www.dirty-rectangles.com/" target="blank">Dirty Rectangles</a>,
+                <a href="https://www.handeyesociety.com/" target="blank">Hand Eye Society</a>,
+                <a href="https://continueagency.com/" target="blank">Continue Agency</a>, and
+                <a href="https://twitter.com/FunlandMag" target="blank">Funland Magazine</a>. Additional input was given by representatives of
+                <a href="https://www.arts.on.ca/home" target="blank">the Ontario Arts Council</a>,
+                <a href="https://www.ocadu.ca/" target="blank">OCAD</a>, <a href="https://www.tiff.net/" target="blank">TIFF</a>, and
+                <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
+                  >the City of Toronto Creative Technology Office</a
+                >.
+              </p>
+              <br>
+              <p>
+                Thanks to: Mary Lau (copy editing), Elif Boyacioglu (icon creation), Juan Sebastian Callejas Rodriguez (print schedule design), Matt
+                Hammill (TGW logo), Nneka Nnagbo (website assistance), Samira Soltani (social media).
+              </p>
+          </section>
+        </div>
+
+      <!-- <div class="content">
+        <section class="textBox">
+          <h2>Who organizes Toronto Games Week?</h2>
+
+          <p>Each event is independently organized by individual game curators and organizers.</p>
+          <br>
+
+      
+          
+        </section>
+      </div> -->
+
       <div class="content">
         <section class="textBox">
-          <p>
-            Toronto Games Week is a celebration of playable arts and culture! The first Toronto Games Week will be on <span
-              class="">June 1-7, 2023 </span>and is a collective coordination of
-            events organized independently
-            by dozens of organizations, creators, curators, and companies.
-          </p>
-        </section>
-    
-        <h2>Who's organizing Toronto Games Week?</h2>
-        <section class="textBox">
+          <h2>Code of Conduct and COVID-19 Policy</h2>
 
           <p>
-            Each event is independently organized by individual game curators and organizers.
-          </p>
-          <p>
-            Toronto Games Week is coordinated by
-            <a href="https://marieflanagan.com/" target="blank">Marie LeBlanc Flanagan</a> (previously at A MAZE. / Berlin)
-            and
-            <a href="https://jimmunroe.net/" target="blank">Jim Munroe</a>
-            (<a href="https://gameartsinternational.network/" target="blank">Game Arts International Network</a>
-            executive director and co-founder of the Hand Eye Society).
-          </p>
-          <p>Thanks to: Mary Lau (copy editing), Elif Boyacioglu (icon creation), Juan Sebastian Callejas Rodriguez
-            (print schedule design), Matt Hammill (TGW logo), Nneka Nnagbo (website assistance), Samira Soltani (social
-            media).</p>
-          <p>
-            TGW came to life with our original group of advisors: a supergroup
-            of game community organizations, including representatives from
-            <a href="http://www.tojam.ca/" target="blank">Toronto Game Jam</a>,
-            <a href="https://interactiveontario.com/" target="blank">Interactive Ontario</a>,
-            <a href="https://bufferfestival.com/" target="blank">Buffer Festival</a>,
-            <a href="https://vectorfestival.org/" target="blank">Vector Festival</a>, <a
-              href="https://twitter.com/DMGToronto" target="blank">DMG</a>,
-            <a href="https://www.dirty-rectangles.com/" target="blank">Dirty Rectangles</a>,
-            <a href="https://www.handeyesociety.com/" target="blank">Hand Eye Society</a>, <a
-              href="https://continueagency.com/" target="blank">Continue Agency</a>, and
-            <a href="https://twitter.com/FunlandMag" target="blank">Funland Magazine</a>. Additional input was given by
-            representatives of
-            <a href="https://www.arts.on.ca/home" target="blank">the Ontario Arts Council</a>, <a
-              href="https://www.ocadu.ca/  " target="blank">OCAD</a>,
-            <a href="https://www.tiff.net/" target="blank">TIFF</a>, and
-            <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/"
-              target="blank">the City of Toronto Creative Technology Office</a>.
-          </p>
-        </section>
-
-
-        <h2>Code of Conduct and COVID-19 Policy</h2>
-        <section class="textBox">
-
-          <p>
-            We want people to come to TGW and participate and thrive no matter
-            their experience, gender identity and expression, disability, sexual
-            orientation, personal appearance, race, ethnicity, body size, age,
-            nationality, or religion. Our
+            We want people to come to TGW and participate and thrive no matter their experience, gender identity and expression, disability, sexual
+            orientation, personal appearance, race, ethnicity, body size, age, nationality, or religion. Our
             <a href="coc.html" target="blank">Code of Conduct</a> is here.
           </p>
+          <br>
+          <p>
+            Toronto Games Week strongly recommends that attendees bring and wear masks. We will have some masks at the door of all events. Each TGW
+            event will have its own rules around COVID-19, and that information will be clearly communicated in advance on this website so people can
+            make informed choices.
+          </p>
+          <br>
 
-          <p>
-            Toronto Games Week strongly recommends that attendees bring and wear
-            masks. We will have some masks at the door of all events. Each TGW
-            event will have its own rules around COVID-19, and that
-            information will be clearly communicated in advance on this website
-            so people can make informed choices.
-          </p>
-          <p>
-            We welcome donations of masks, tests, or loans of air filters to
-            make events safer for everyone.
-          </p>
+          <p>We welcome donations of masks, tests, or loans of air filters to make events safer for everyone.</p>
+          <!-- <p class="btn floatingBtn">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScjGji3TB0zzj6nC58a31jfvoJIUtbqkPU0Up6BH154-YwHkA/viewform" target="blank"
+              >Submit an Event</a
+            >
+          </p> -->
         </section>
+      </div>
 
-        <h2>Contact</h2>
+      <div class="content">
         <section class="textBox">
+          <h2>Contact</h2>
 
           <p>
-            Interested in getting involved? Have questions? Please reach out
-            with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a>.
+            Interested in getting involved? Have questions? Please reach out with any questions to
+            <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a>.
           </p>
         </section>
-    </div>
-      <img class="footerImg" src="images/wallpaper.png"
-        alt="Some repeating illustrations of controllers in purple and orange" />
-    </div>
-  </main>
-  <script src="play.js"></script>
-  <script src="connectionTest.js"></script>
-</body>
+      </div>
 
+      <div id="inventory"></div>
+    </main>
+    <script src="play.js"></script>
+    <script src="connectionTest.js"></script>
+  </body>
 </html>

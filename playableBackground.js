@@ -117,12 +117,12 @@ function addSprite(url) {
 }
 
 // Initially load only the first 5 images
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 2; i++) {
   addSprite(imageUrls[i]);
 }
 
 // Keep track of how many images have been loaded
-let loadedImagesCount = 5;
+let loadedImagesCount = 2;
 
 // Raycaster for click events
 const raycaster = new THREE.Raycaster();
@@ -137,7 +137,7 @@ function onClick(event) {
   const intersects = raycaster.intersectObjects(objects);
   if (intersects.length > 0) {
     const sound = new Audio("images/hit.mp3");
-    sound.play();
+    // sound.play();
 
     const object = intersects[0].object;
     object.material.transparent = true;

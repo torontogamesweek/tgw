@@ -24,43 +24,62 @@
     <meta name="twitter:card" content="summary_large_image" />
   </head>
 
-  <header>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-    <label for="nav-toggle" class="nav-toggle-label">
-      <span></span>
-    </label>
-    <div>
-      <a href=""><img /></a>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
-        <li><a href="about.html" id="aboutNav">About</a></li>
-      </ul>
-    </nav>
-  </header>
-
   <body>
-    <canvas id="myCanvas" width="500" height="400"></canvas>
+    <header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+      </label>
 
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="schedule.html" id="scheduleNav">Schedule</a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
     <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
     <script src="playableBackground.js"></script>
-
     <main>
-      <div class="contentContainer" id="landingPage">
+      <div class="headerImgDiv">
         <img id="letterImg" src="images/TGWLogo2024wCap.png" alt="A type treatment of Toronto Games Week" />
+        <p id="caption">A celebration of playable arts & culture</p>
+        <br />
+      </div>
+      <div class="contentContainer" id="landingPage">
+        <!-- <div class="content">
+          <section class="textBox">
+            <p id="aboutTGW">
+            </p>
+          </section>
+        </div> -->
+
+
 
         <div class="content">
           <section class="textBox">
+            <h2></h2>
+            <br>
             <p>
-              A celebration of playable arts and culture!</p> 
-              <p>Toronto Games Week 2024 will be on
-              <span class="">June 13-19</span> and is a collective coordination of events organized independently by dozens of organizations,
-              creators, curators, and companies.
+              Toronto Games Week (June 13-19, 2024) is a collective coordination of events organized independently by dozens of organizations,
+              curators, companies, creators, and communities.
+              <br />
+              <br />
+
+              At Toronto Games Week this year, you might:
             </p>
-            <p>At Toronto Games Week this year, you might:</p>
             <ul class="controllerList">
               <li>Frolic in a flickering forest pop-up arcade after dark!</li>
               <li>Learn open source game tools at a workshop!</li>
@@ -69,11 +88,17 @@
               <li>Sip or stroll the East End Barcade Crawl!</li>
               <li>Install your game on a Gameboy cartridge!</li>
             </ul>
+            <p class="btn floatingBtn"><a href="schedule.html">See the schedule!</a></p>
+          </section>
+        </div>
+        <div class="content">
+          <section class="textBox">
+            <h2>Special guests</h2>
+
             <p>
-              The week is being kicked off by the XP Summit, a two day industry event that brings together international and local game development
-              talent to learn from each other.
+              We're kicking off Toronto Games Week 2024 with XP Summit, a two day industry event that brings together international and local game
+              development talent to learn from each other. And we’re excited to be bringing special guests to town:
             </p>
-            <p>We’re excited to be bringing a few special guests to town that will be appearing in XP and TGW events:</p>
             <ul class="controllerList">
               <li>
                 <a target="_blank" href="https://www.linkedin.com/in/trey-smith-3825aa1/?originalSubdomain=ca">Trey Smith</a>, veteran creative
@@ -88,52 +113,71 @@
                 History Foundation)
               </li>
             </ul>
-            <p class="btn"><a href="schedule.html">See the in-progress schedule!</a></p>
-            <p class="btn"><a href="https://gameartsinternational.network/toronto-games-week/">See pictures from last year!</a></p>
+          </section>
+        </div>
+        <div class="content">
+          <section class="textBox">
+            <h2>Organize an event!</h2>
+
             <p>
               If you’d like to run a TGW event yourself, there’s still time to get in on the fun! We’re open to including board/escape
               room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
             </p>
-            <p class="btn">
+
+            <p class="btn floatingBtn">
               <a href="https://docs.google.com/forms/d/e/1FAIpQLScjGji3TB0zzj6nC58a31jfvoJIUtbqkPU0Up6BH154-YwHkA/viewform" target="blank"
                 >Submit an Event</a
               >
             </p>
+          </section>
+        </div>
+        <div class="content">
+          <section class="textBox">
+            <h2>Help out</h2>
             <p>
               Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There’s lots of
               interesting things to do!
             </p>
-            <p class="btn">
+            <p class="btn floatingBtn floatingBtnBlue">
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSewmAgjQA_NeaaAGC0GNJvEnpUphgQlK6WwzBuYj5VBEtpxcA/viewform" target="blank"
                 >Volunteer</a
               >
             </p>
           </section>
-          <h2>Keep Updated</h2>
+        </div>
+
+        <div class="content">
           <section class="textBox">
+            <h2>Keep Updated</h2>
             <p>You can follow us on <a href="https://twitter.com/torontogameswk" target="blank">Twitter</a> and subscribe to our newsletter:</p>
-            <p class="btn">
+            <p class="btn floatingBtn floatingBtnBlue">
               <a href="https://network.us10.list-manage.com/subscribe?u=726ae558eee1507dbb40e6571&amp;id=c673ed1420" target="blank">Subscribe</a>
             </p>
           </section>
-          <h2>Contact</h2>
+        </div>
+
+        <p class="btn floatingBtn"><a href="https://gameartsinternational.network/toronto-games-week/">See pics from last year?</a></p>
+
+        <div class="content">
           <section class="textBox">
+            <h2>Contact</h2>
             <p>
               Have questions? Reach out with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or
               <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
             </p>
           </section>
-          <h2>Our Sponsors</h2>
-          <div class="sponsorbox">
-            <a href="https://www.ontariocreates.ca/" target="blank"><img src="images/logos/OCLogo.png" alt="Ontario Creates logo" class="logo" /></a>
-            <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
-              ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo" /></a
-            ><br />
-            <a href="https://www.drinkboxstudios.com/" target="blank"><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo" /></a>
-            <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo" /></a>
-            <a href="https://www.continueagency.com/" target="blank"><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo" /></a>
-            <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo" /></a>
-          </div>
+        </div>
+
+        <h2>Our Sponsors</h2>
+        <div class="sponsorbox">
+          <a href="https://www.ontariocreates.ca/" target="blank"><img src="images/logos/OCLogo.png" alt="Ontario Creates logo" class="logo" /></a>
+          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
+            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo" /></a
+          ><br />
+          <a href="https://www.drinkboxstudios.com/" target="blank"><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo" /></a>
+          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo" /></a>
+          <a href="https://www.continueagency.com/" target="blank"><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo" /></a>
+          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo" /></a>
         </div>
       </div>
       <div id="inventory">

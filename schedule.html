@@ -4,103 +4,58 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
-    <title>Toronto Games Week Schedule</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&amp;display=swap" rel="stylesheet" />
+    <title>Toronto Games Week</title>
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
     <meta name="description" content="Celebrating games in Toronto, Canada" />
-
-    <meta property="og:title" content="Toronto Games Week Schedule" />
+    <meta property="og:title" content="Toronto Games Week" />
     <meta property="og:description" content="Celebrating games in Toronto, Canada" />
-
     <meta property="og:image" content="https://torontogamesweek.com/images/TGWSocial.png" />
-
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
-
-    <meta name="twitter:title" content="Toronto Games Week Schedule" />
+    <meta name="twitter:title" content="Toronto Games Week" />
     <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="images/TGWSocialSmall.png" />
-    <!-- <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" /> -->
-    <!-- <meta name="twitter:card" content="summary" /> -->
-    <meta name="twitter:site" content="@omarieclaire" />
   </head>
 
-  <header>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-    <label for="nav-toggle" class="nav-toggle-label">
-      <span></span>
-    </label>
-    <div>
-      <a href=""><img /></a>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
-        <li><a href="about.html" id="aboutNav">About</a></li>
-      </ul>
-    </nav>
-  </header>
-
   <body>
-    <!-- <canvas id="myCanvas" width="500" height="400"></canvas> -->
-
-    <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script> -->
-
-    <!-- <script id="vertexShader" type="x-shader/x-vertex">
-      varying vec2 vUv;
-
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    </script> -->
-
-    <!-- <script id="fragmentShader" type="x-shader/x-fragment">
-      uniform float time;
-      uniform vec3 color;
-
-      varying vec2 vUv;
-
-      void main() {
-        vec3 red = vec3(1.1, 0.0, 0.0);
-        vec3 orange = vec3(0.7, 0.5, 0.0);
-        vec3 yellow = vec3(0.3, 1.3, 0.0);
-        vec3 green = vec3(0.0, 0.5, 0.0);
-        vec3 blue = vec3(0.0, 0.0, 0.5);
-        vec3 purple = vec3(0.5, 0.0, 1.0);
-
-        float colorMix = clamp(vUv.y, 0.0, 1.0);
-        vec3 color;
-
-        if (colorMix < 0.2) {
-          color = mix(red, orange, (colorMix / 0.4));
-        } else if (colorMix < 0.4) {
-          color = mix(orange, yellow, (colorMix - 0.4) / 0.2);
-        } else if (colorMix < 0.6) {
-          color = mix(yellow, green, (colorMix - 0.4) / 0.2);
-        } else if (colorMix < 0.8) {
-          color = mix(green, blue, (colorMix - 0.6) / 0.2);
-        } else {
-          color = mix(blue, purple, (colorMix - 0.8) / 0.2);
-        }
-
-        float pulse = abs(sin(time * 1.0));
-        float strength = pow(pulse, 3.0) * 0.6;
-
-        // Increase the alpha value to turn up the opacity
-        gl_FragColor = vec4(color * strength, 0.8 * strength);
-      }
-    </script> -->
-
+    <header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="schedule.html" id="scheduleNav">Schedule</a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
     <script src="playableBackground.js"></script>
-
-    <main class="">
-      <img class="landingImg" src="images/schedule.png" alt="An abstract illustration of the toronto cityline and some controllers" />
-
+    <main>
+      <div class="headerImgDiv">
+        <img id="letterImg" src="images/TGWLogo2024wCap.png" alt="A type treatment of Toronto Games Week" />
+        <p id="caption">A celebration of playable arts & culture</p>
+        <br />
+      </div>
       <div class="contentContainer" id="landingPage">
+        <!-- <div class="content">
+          <section class="textBox">
+            <p id="aboutTGW">
+            </p>
+          </section>
+        </div> -->
         <div class="content">
           <!--
           <h2>Calendar</h2>
@@ -122,53 +77,49 @@
             </div>
           </section>
 -->
-
-          <p class="btn">
+          <!-- <p class="btn">
             <a href="2023schedule.html">See last year's full schedule!</a>
-          </p>
-          <p class="btn">
-            <a href="https://gameartsinternational.network/toronto-games-week/">See pictures from last year!</a>
-          </p>
-
-          <h2 id="fullSchedule">In-Progress 2024 Schedule</h2>
-
+          </p> -->
+          <!-- <p class="btn">
+            <a href="https://gameartsinternational.network/toronto-games-week/">See photos from last year!</a>
+          </p> -->
+          <h2 id="fullSchedule">June 13-19 2024</h2>
+          <p>(Updates and more events to come!)</p>
           <section class="textBox-btn" id="daySelector">
-            <a role="button" href="#day1" class="btn-d1">Thu June 13</a>
-            <a role="button" href="#day2" class="btn-d2">Fri June 14</a>
-            <a role="button" href="#day3" class="btn-d3">Sat June 15</a>
-            <a role="button" href="#day4" class="btn-d4">Sun June 16</a>
-            <a role="button" href="#day5" class="btn-d5">Mon June 17</a>
-            <a role="button" href="#day6" class="btn-d6">Tue June 18</a>
-            <a role="button" href="#day7" class="btn-d7">Wed June 19</a>
+            <a role="button" href="#day1" class="btn-d1" data-day="Thu 13">Th<br />13</a>
+            <a role="button" href="#day2" class="btn-d2" data-day="Fri 14">Fr<br />14</a>
+            <a role="button" href="#day3" class="btn-d3" data-day="Sat 15">Sa<br />15</a>
+            <a role="button" href="#day4" class="btn-d4" data-day="Sun 16">Su<br />16</a>
+            <a role="button" href="#day5" class="btn-d5" data-day="Mon 17">Mo<br />17</a>
+            <a role="button" href="#day6" class="btn-d6" data-day="Tue 18">Tu<br />18</a>
+            <a role="button" href="#day7" class="btn-d7" data-day="Wed 19">We<br />19</a>
           </section>
-
+      </div>
+          
+      <div class="content">
           <div class="calendar">
             <!-- Event: Toronto Games Week Opening Party -->
-            <div class="event">
-              <img src="images/icons/KICKOFF.png" alt="" class="eventIcon" />
+            <div class="event" id="day1">
+              <img src="images/creatures/46.png" alt="KICKOFF" class="eventIcon" />
               <h3 class="date">Thursday June 13, 6:30pm-11pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Toronto Games Week Opening Party</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span>Location TBD</p>
+                  <h2 class="title">Toronto Games Week Opening Party</h2>
                   <p class="details">
                     Interactive Ontario’s IO Connect Mixer kicks off the second Toronto Games Week with mingling and mouthwatering food and drink!
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span>Location TBD</p>
               <p class="category">Industry</p>
             </div>
-
             <!-- Event: XP Game Summit -->
             <div class="event">
-              <img src="images/icons/CONFERENCE.png" alt="" class="eventIcon" />
-              <h3 class="date">Thursday - Friday, June 13-14, 10am-5pm</h3>
+              <img src="images/creatures/12.png" alt="CONFERENCE" class="eventIcon" />
+              <h3 class="date">Thursday June 13 & FRI 14, 10am-5pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">XP Game Summit</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/J7GpR" target="blank">Hyatt Regency Toronto</a>
-                  </p>
+                  <h2 class="title">XP Game Summit</h2>
                   <p class="details">
                     Over two days, connect with global industry professionals to explore crucial industry trends, develop new and innovative
                     business-building opportunities, and help shape the future of gaming and video game Intellectual Property (IP).
@@ -176,37 +127,31 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/J7GpR" target="blank">Hyatt Regency Toronto</a></p>
               <p class="category">Industry</p>
             </div>
-
             <!-- Event: Killer Combo! Games X Movies -->
-            <div class="event">
-              <img src="images/icons/MOVIE.png" alt="" class="eventIcon" />
+            <div class="event" id="day2">
+              <img src="images/creatures/43.png" alt="MOVIE" class="eventIcon" />
               <h3 class="date">Friday June 14, 7-11pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Killer Combo! Games X Movies with Moon and Double Dragon</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/v6n6E" target="blank">Revue Theatre</a>
-                  </p>
+                  <h2 class="title">Killer Combo! Games X Movies with Moon and Double Dragon</h2>
                   <p class="details">
                     Working class sci-fi flick Moon is followed by a presentation by Trey Smith, creative director of working class sci-fi game
                     Hardspace: Shipbreaker. Then Blackbelt Cinema presents 1994’s Double Dragon.
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/v6n6E" target="blank">Revue Theatre</a></p>
               <p class="category">Enthusiasts</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/PRESERVE.png" alt="" class="eventIcon" />
+            <div class="event" id="day3">
+              <img src="images/creatures/1.png" alt="PRESERVE" class="eventIcon" />
               <h3 class="date">Saturday June 15, 12-5pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Retro Games Play and Preserve Forum</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">Toronto Reference Library</a>
-                  </p>
+                  <h2 class="title">Retro Games Play and Preserve Forum</h2>
                   <p class="details">
                     Join us to play rare retro games and enjoy a fireside chat with Phil Salvador, Library Director at the Video Game History
                     Foundation and author of 2023's groundbreaking Game Availability Study. Plus: Bring your game cartridges and we'll help you to
@@ -214,48 +159,45 @@
                   </p>
                 </div>
               </div>
+              <p class="location">
+                <span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">Toronto Reference Library</a>
+              </p>
               <p class="category">Enthusiasts</p>
               <p class="category">Academics</p>
             </div>
-
             <div class="event">
-              <img src="images/icons/WALK.png" alt="" class="eventIcon" />
+              <img src="images/creatures/32.png" alt="WALK" class="eventIcon" />
               <h3 class="date">Saturday June 15, 7-9pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">East End Barcade Crawl</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span>Starting at Zed-80 and heading to Mom’s Basement</p>
+                  <h2 class="title">East End Barcade Crawl</h2>
                   <p class="details">Socialize and partake in classic arcade games, burgers and craft beer!</p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span>Starting at Zed-80 and heading to Mom’s Basement</p>
               <p class="category">Enthusiasts</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/NIGHT.png" alt="" class="eventIcon" />
+            <div class="event" id="">
+              <img src="images/creatures/31.png" alt="NIGHT" class="eventIcon" />
               <h3 class="date">Saturday June 15, Sundown to ?</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Night Parkcade: Forest Frolick</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span>~???????~</p>
+                  <h2 class="title">Night Parkcade: Forest Frolick</h2>
                   <p class="details">
                     The sequel to last year’s game projection party in Trinity Bellwoods, in a new secret location! In a city blessed with many
                     glorious ravines, where could it be? Only TGW newsletter subscribers will get the treasure map!
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span>~???????~</p>
               <p class="category">Enthusiasts</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/WORKSHOP.png" alt="" class="eventIcon" />
+            <div class="event" id="day4">
+              <img src="images/creatures/.png" alt="WORKSHOP" class="eventIcon" />
               <h3 class="date">Sunday June 16, 11-4pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Games Made Open</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">TTL Makerspace</a>
-                  </p>
+                  <h2 class="title">Games Made Open</h2>
                   <p class="details">
                     Interested in open source game engines and hardware? Come down to the TTLMakerspace for a day of hands-on hacking and learning
                     about free open-source tools like Godot. Make and flash your own Gameboy game on a cartridge with GBStudio, an open source
@@ -263,18 +205,15 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">TTL Makerspace</a></p>
               <p class="category">NextGen Creators</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/HOOK.png" alt="" class="eventIcon" />
+            <div class="event" id="">
+              <img src="images/creatures/24.png" alt="HOOK" class="eventIcon" />
               <h3 class="date">Sunday June 16, 4-6pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Writing a New World</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">TTL Makerspace</a>
-                  </p>
+                  <h2 class="title">Writing a New World</h2>
                   <p class="details">
                     The writing workshop hosted by Tanya Kan (Solace State, @vividfoundry) emphasizes designing for positive change and care that you
                     want to see in the world. There will be writing prompts and an introduction to game tools and pipelines. No computer required,
@@ -282,16 +221,15 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">TTL Makerspace</a></p>
               <p class="category">NextGen Creators</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/NEXTGEN.png" alt="" class="eventIcon" />
+            <div class="event" id="">
+              <img src="images/creatures/20.png" alt="NEXTGEN" class="eventIcon" />
               <h3 class="date">Sunday June 16, 7-9pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">NextGen Showcase</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">CSI Spadina</a></p>
+                  <h2 class="title">NextGen Showcase</h2>
                   <p class="details">
                     A curated showcase, handpicked by an esteemed international curator, featuring games crafted by emerging talents in Toronto's
                     vibrant game development scene. Immerse yourself in an evening of extraordinary gaming experiences accompanied by delectable
@@ -299,17 +237,16 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">CSI Spadina</a></p>
               <p class="category">NextGen Creators</p>
               <p class="category">Industry</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/CONFERENCE.png" alt="" class="eventIcon" />
+            <div class="event" id="day5">
+              <img src="images/creatures/19.png" alt="CONFERENCE" class="eventIcon" />
               <h3 class="date">Monday June 17, 7-11pm</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Bonus Stage</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">Club 693</a></p>
+                  <h2 class="title">Bonus Stage</h2>
                   <p class="details">
                     The long-running, free social features multiple talks, with headliner Xalavier Nelson Jr. -- a BAFTA-nominated studio head,
                     narrative director, writer, and Forbes 30 Under 30 luminary, with dozens of titles under his belt including Stranger Things VR,
@@ -317,16 +254,15 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">Club 693</a></p>
               <p class="category">Industry</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/TEA.png" alt="" class="eventIcon" />
+            <div class="event" id="day6">
+              <img src="images/creatures/18.png" alt="TEA" class="eventIcon" />
               <h3 class="date">Tuesday June 18, 12pm-2am (Time TBD)</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Lady Arcaders: Out of Bounds Toronto</p>
-                  <p class="location"><span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">See-scape</a></p>
+                  <h2 class="title">Lady Arcaders: Out of Bounds Toronto</h2>
                   <p class="details">
                     Out of Bounds is a women & femme speedrunning event hosted by the Lady Arcaders. Folks will play games as quickly as possible,
                     showing off their talents and challenging themselves! You can also watch online at twitch.tv/ladyarcaders! Everyone’s welcome to
@@ -334,29 +270,27 @@
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">See-scape</a></p>
               <p class="category">Community</p>
             </div>
-
-            <div class="event">
-              <img src="images/icons/CLOSING.png" alt="" class="eventIcon" />
+            <div class="event" id="day7">
+              <img src="images/creatures/25.png" alt="CLOSING" class="eventIcon" />
               <h3 class="date">Wednesday June 19, 7pm-12am</h3>
               <div class="DescAndImg">
                 <div class="desc">
-                  <p class="title">Toronto Games Week Closing Celebration</p>
-                  <p class="location">
-                    <span aria-hidden="true">&#x1f4cd;</span><a href="https://goo.gl/maps/XXXXX" target="blank">St. Anne’s Parish Hall</a>
-                  </p>
+                  <h2 class="title">Toronto Games Week Closing Celebration</h2>
                   <p class="details">
                     The final event of the week features a select showcase from Toronto Game Jam 2024 and performances by Hypergamestorytime and the
                     Suspicious EXE Files.
                   </p>
                 </div>
               </div>
+              <p class="location"><span aria-hidden="true">📍</span><a href="https://goo.gl/maps/XXXXX" target="blank">St. Anne’s Parish Hall</a></p>
               <p class="category">Celebration</p>
             </div>
+            <div id="inventory"></div>
           </div>
         </div>
-        <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" />
       </div>
     </main>
     <script src="play.js"></script>
