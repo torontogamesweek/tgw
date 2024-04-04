@@ -395,12 +395,12 @@ a {
 
 @media screen and (min-width: 900px) {
   p {
-    font-size: 1.9rem;
+    font-size: 1.7rem;
     /* padding: 2rem 10%; */
   }
 
   li {
-    font-size: 1.9rem;
+    font-size: 1.7rem;
     /* padding: 2rem 10%; */
   }
 
@@ -875,7 +875,7 @@ li {
   }
   
   .controllerList li p, .controllerList li {
-    font-size: 2rem;
+    font-size: 1.6rem;
     padding: 1rem;
     margin-left: 3rem; /* Offset to align with the bullet point */
   }
@@ -2332,7 +2332,7 @@ footer {
   font-family: 'Alegreya', sans-serif;
 
   margin: 2rem 0 1rem 0;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: bold;
   color: rgba(85, 45, 155, 0.919);
   line-height: 1.3;
@@ -2406,7 +2406,7 @@ footer {
     /* width: 90%; */
     border-bottom: 1px solid #73757849;
     /* padding-top: 3rem; */
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     text-align: left;
   }
 
