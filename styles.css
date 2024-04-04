@@ -1,114 +1,112 @@
 @font-face {
-  font-family: 'Alegreya'; 
-  src: url('fonts/AlegreyaSansSC-Regular.ttf') format('truetype'),
+  font-family: "Alegreya";
+  src: url("fonts/AlegreyaSansSC-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Thin.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Thin.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-ExtraLight.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-ExtraLight.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Light.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Regular.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Medium.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-SemiBold.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Bold.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-ExtraBold.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-ExtraBold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Black.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Black.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-Italic.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-Italic.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Alegreya Sans SC';
-  src: url('fonts/AlegreyaSansSC-ExtraBold.ttf') format('truetype');
+  font-family: "Alegreya Sans SC";
+  src: url("fonts/AlegreyaSansSC-ExtraBold.ttf") format("truetype");
   font-weight: bold;
   font-style: italic;
 }
 
-
 @font-face {
-  font-family: 'Merriweather';
-  src: url('fonts/Merriweather-Black.ttf') format('truetype');
+  font-family: "Merriweather";
+  src: url("fonts/Merriweather-Black.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Merriweather';
-  src: url('fonts/Merriweather-Black.ttf') format('truetype');
+  font-family: "Merriweather";
+  src: url("fonts/Merriweather-Black.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Merriweather';
-  src: url('fonts/Merriweather-Bold.ttf') format('truetype');
+  font-family: "Merriweather";
+  src: url("fonts/Merriweather-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Merriweather';
-  src: url('fonts/Merriweather-Regular.ttf') format('truetype');
+  font-family: "Merriweather";
+  src: url("fonts/Merriweather-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
-
 
 /***********************/
 /*****  CSS RESET  *****/
@@ -238,7 +236,6 @@ table {
   border-spacing: 0;
 }
 
-
 :root {
   --white: rgb(244, 244, 244);
   --lightGrey: rgb(237, 237, 237);
@@ -256,7 +253,6 @@ table {
   --accentDark: rgb(33 57 78);
   --accentTwo: rgb(47 107 207);
   --accentOrange: rgb(255 110 110);
-
 }
 
 /***********************/
@@ -282,7 +278,7 @@ html {
 }
 
 body {
-  font-family: 'Merriweather', sans-serif;
+  font-family: "Merriweather", sans-serif;
   width: 100vw;
   height: 100vh;
   letter-spacing: 0.15rem;
@@ -295,7 +291,6 @@ body {
   position: relative;
   color: rgba(14, 8, 42, 0.86);
   font-size: 1rem;
-
 }
 
 p {
@@ -313,11 +308,11 @@ p {
 .content {
   display: flex;
   flex-direction: column;
-  margin: .5rem auto .5rem auto;
+  margin: 0.5rem auto 0.5rem auto;
   border-radius: 1rem;
   background-color: #cce0cf;
 
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   border: 1px dotted white;
   outline: 1px dashed #ede1d4;
 }
@@ -327,7 +322,7 @@ p {
 }
 
 .textBox {
-  background-color: hsl(33, 100%, 98%, .9);
+  background-color: hsl(33, 100%, 98%, 0.9);
   max-width: 85vw;
   display: flex;
   flex-direction: column;
@@ -336,8 +331,6 @@ p {
   border-radius: 10px;
   border: 1px dotted #ed643d;
   text-align: left;
-
-
 }
 
 .textBox-btn {
@@ -453,7 +446,7 @@ btn,
   border-radius: 30px;
   outline: none;
   cursor: pointer;
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   font-weight: bold;
   width: auto;
 }
@@ -463,7 +456,7 @@ btn,
   margin: 2rem auto;
   border-radius: 1rem;
   background-color: #e9623e;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
   border: 1px dotted white;
   outline: 1px dashed #ede1d4;
 }
@@ -476,7 +469,6 @@ btn,
   color: white;
   font-size: 1.5rem;
   text-decoration: none;
-
 }
 
 .btn:hover,
@@ -491,16 +483,15 @@ btn:focus {
   .btn {
     width: auto;
     max-width: 30rem;
-    margin: 3rem  auto 1rem auto;
+    margin: 3rem auto 1rem auto;
   }
 
   .floatingBtn a {
     font-size: 2.2rem;
     max-width: 30rem;
-    margin: 3rem  auto 1rem auto;
+    margin: 3rem auto 1rem auto;
   }
 }
-
 
 .btn-d1,
 .btn-d2,
@@ -509,7 +500,7 @@ btn:focus {
 .btn-d5,
 .btn-d6,
 .btn-d7 {
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   font-weight: bold;
   padding: 5px 9px;
   text-align: center;
@@ -537,19 +528,30 @@ btn:focus {
 
 /* Desktop styles */
 @media screen and (min-width: 768px) {
-  .btn-d1, .btn-d2, .btn-d3, .btn-d4, .btn-d5, .btn-d6, .btn-d7 {
+  .btn-d1,
+  .btn-d2,
+  .btn-d3,
+  .btn-d4,
+  .btn-d5,
+  .btn-d6,
+  .btn-d7 {
     font-size: 0; /* Hides the original text */
     padding: 15px 23px; /* Adjust padding to fit the full day name */
     margin: 10px 10px;
   }
-  
-  .btn-d1::after, .btn-d2::after, .btn-d3::after, .btn-d4::after, .btn-d5::after, .btn-d6::after, .btn-d7::after {
+
+  .btn-d1::after,
+  .btn-d2::after,
+  .btn-d3::after,
+  .btn-d4::after,
+  .btn-d5::after,
+  .btn-d6::after,
+  .btn-d7::after {
     content: attr(data-day); /* Inserts the full day name */
     font-size: 1.5rem; /* Adjust as needed */
     display: block;
   }
 }
-
 
 /***********************/
 /******  videos  *******/
@@ -601,10 +603,8 @@ img {
   /* background-color: white; */
 }
 
-
-
 #caption {
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   /* font-weight: bold; */
   color: #ed643d;
   font-size: 1rem;
@@ -612,12 +612,9 @@ img {
   margin: -5px auto 0 auto;
 }
 
-
-
 #aboutTGW {
   text-align: center; /* Centers the text */
 }
-
 
 .footerImg {
   background-size: cover;
@@ -639,11 +636,10 @@ img {
     /* margin-top: -5rem; */
     max-width: 90vw;
     margin-top: 10rem;
-  
   }
 
   #caption {
-    font-family: 'Alegreya', sans-serif;
+    font-family: "Alegreya", sans-serif;
     /* font-weight: bold; */
     color: #ed643d;
     font-size: 3rem;
@@ -701,7 +697,7 @@ p#schedule {
 
 h1,
 h2 {
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   font-weight: bold;
 }
 
@@ -724,7 +720,7 @@ h1:hover {
 h2 {
   color: var(--accentMed);
   font-size: 1.8rem;
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #af11bd, #a328d8, #6708ba, #6a04ad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -732,7 +728,7 @@ h2 {
 
 h2:nth-child(1) {
   color: var(--accentMed);
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -740,7 +736,7 @@ h2:nth-child(1) {
 
 h2:nth-child(2) {
   color: var(--accentMed);
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #5e5ef0, #6928d8, #490f90, #2247ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -748,7 +744,7 @@ h2:nth-child(2) {
 
 h2:nth-child(3) {
   color: var(--accentMed);
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -756,7 +752,7 @@ h2:nth-child(3) {
 
 h2:nth-child(4) {
   color: var(--accentMed);
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #5e5ef0, #6928d8, #490f90, #2247ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -764,7 +760,7 @@ h2:nth-child(4) {
 
 h2:nth-child(5) {
   color: var(--accentMed);
-  margin: .3em 0em 0.3em 0em;
+  margin: 0.3em 0em 0.3em 0em;
   background: linear-gradient(to right, #5e87f0, #2863d8, #0f5690, #2294ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -843,7 +839,6 @@ li {
   list-style: none;
 }
 
-
 .controllerList li {
   margin-left: 1.5rem; /* Adjust as needed */
   position: relative; /* Needed for absolute positioning */
@@ -855,26 +850,27 @@ li {
   left: -1.5rem; /* Adjust to align with the left margin of the list item */
 }
 
-.controllerList li p, .controllerList li {
+.controllerList li p,
+.controllerList li {
   font-size: 1rem;
-  padding: .5rem;
+  padding: 0.5rem;
   /* margin-left: 2.5rem; Offset to align with the bullet point */
 }
-
 
 @media screen and (min-width: 900px) {
   .controllerList li {
     margin-left: 3rem; /* Adjust as needed */
     position: relative; /* Needed for absolute positioning */
   }
-  
+
   .controllerList li::before {
     content: "🎮 ";
     position: absolute;
     left: -3rem; /* Adjust to align with the left margin of the list item */
   }
-  
-  .controllerList li p, .controllerList li {
+
+  .controllerList li p,
+  .controllerList li {
     font-size: 1.6rem;
     padding: 1rem;
     margin-left: 3rem; /* Offset to align with the bullet point */
@@ -888,7 +884,7 @@ li {
     text-align: left;
     margin-left: 3em;
     padding: 1rem;
-    list-style-type: disc;
+    list-style-type: none;
   }
 }
 
@@ -1014,17 +1010,16 @@ header {
   position: absolute;
   width: 100vw;
   margin-top: 2rem;
-  display:flex;
+  display: flex;
   /* top: 20px; */
   /* right: 0; */
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   font-weight: bold;
 }
 
-.headerImgDiv{
-  background-color: rgb(209, 223, 234, .9);
+.headerImgDiv {
+  background-color: rgb(209, 223, 234, 0.9);
   width: 100vw;
-
 }
 
 @media screen and (min-width: 900px) {
@@ -2252,14 +2247,13 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .event {
   /* flex: 1; */
   /* min-width: 40%; */
   background-color: rgba(255, 255, 255, 0.97);
-  padding: 0.5rem .5rem 2rem 1rem;
+  padding: 0.5rem 0.5rem 2rem 1rem;
   margin: 1rem 0.1rem;
   border: 0.2rem solid rgba(51, 51, 137, 0.4);
   border-radius: 2rem;
@@ -2277,10 +2271,6 @@ footer {
     /* border: 2px solid; */
     max-width: 6vw;
   }
-
-
-  
-
 }
 
 /* .event {
@@ -2303,11 +2293,11 @@ footer {
 } */
 
 .date {
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
 
   /* margin: 0rem; */
   padding-top: 1.5rem;
-  font-size: .95rem;
+  font-size: 0.95rem;
   /* letter-spacing: 1px; */
   text-align: left;
   /* padding-left: 5%; */
@@ -2329,7 +2319,7 @@ footer {
 }
 
 .title {
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
 
   margin: 2rem 0 1rem 0;
   font-size: 1.7rem;
@@ -2363,13 +2353,11 @@ footer {
   border-radius: 13px;
   font-size: 0.8rem;
   display: inline-block; /* keep the background color wrapped tight */
-  font-family: 'Alegreya', sans-serif;
-
+  font-family: "Alegreya", sans-serif;
 }
 
-.details{
+.details {
   padding: 0 10px;
-
 }
 
 .details a {
@@ -2396,10 +2384,8 @@ footer {
 
     /* border-radius: 1rem; */
     margin: 3rem 0;
-    max-width: 60rem;  
-
+    max-width: 60rem;
   }
-
 
   .date {
     /* margin: 1rem 0 0 4rem; */
@@ -2433,7 +2419,6 @@ footer {
 .logo {
 }
 
-
 #googleCalendar {
   /* display:none; */
 }
@@ -2457,4 +2442,3 @@ footer {
     height: 100%;
   }
 }
-
