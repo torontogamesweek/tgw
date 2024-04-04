@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+  <title>Toronto Games Week</title>
+
+  <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+  <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+  <meta property="og:title" content="Toronto Games Week" />
+  <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+
+  <meta property="og:image" content="https://torontogamesweek.com/images/TGWSocial.png" />
+
+  <meta property="og:url" content="https://torontogamesweek.com" />
+  <meta property="og:type" content="webpage" />
+
+  <meta name="twitter:title" content="Toronto Games Week" />
+  <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+  <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+
+</head>
+
+<header>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+  </label>
+  <div>
+    <a href=""><img /></a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
+      <li><a href="about.html" id="aboutNav">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+  <canvas id="myCanvas" width="500" height="400"></canvas>
+
+<!-- 
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+
+
+  <script id="vertexShader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+
+  <script id="fragmentShader" type="x-shader/x-fragment">
+      uniform float time;
+      uniform vec3 color;
+    
+      varying vec2 vUv;
+    
+      void main() {
+        vec3 red = vec3(1.1, 0.0, 0.0);
+        vec3 orange = vec3(0.7, 0.5, 0.0);
+        vec3 yellow = vec3(0.3, 1.3, 0.0);
+        vec3 green = vec3(0.0, 0.5, 0.0);
+        vec3 blue = vec3(0.0, 0.0, 0.5);
+        vec3 purple = vec3(0.5, 0.0, 1.0);
+    
+        float colorMix = clamp(vUv.y, 0.0, 1.0);
+        vec3 color;
+    
+        if (colorMix < 0.2) {
+          color = mix(red, orange, (colorMix / 0.4));
+        } else if (colorMix < 0.4) {
+          color = mix(orange, yellow, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.6) {
+          color = mix(yellow, green, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.8) {
+          color = mix(green, blue, (colorMix - 0.6) / 0.2);
+        } else {
+          color = mix(blue, purple, (colorMix - 0.8) / 0.2);
+        }
+    
+        float pulse = abs(sin(time * 1.0));
+        float strength = pow(pulse, 3.0) * 0.6;
+    
+        // Increase the alpha value to turn up the opacity
+        gl_FragColor = vec4(color * strength, 0.8 * strength);
+      }
+    </script> -->
+
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
+
+<script id="vertexShader" type="x-shader/x-vertex">
+  // This can remain the same as you might not need it for sprites, but it's here in case you want to create custom materials or shaders later on.
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+</script>
+
+<script>
+  // Scene setup
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xD2DFEA);
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Sprite creation
+  const loader = new THREE.TextureLoader();
+  const objects = []; // This will store our sprites
+
+  let clickSound = new Audio('images/hit.mp3');
+
+  // Array of image URLs
+  let imageUrls = [
+    // 'images/creatures/1.png', 
+    // 'images/creatures/2.png',
+    // 'images/creatures/3.png',
+    // 'images/creatures/4.png',
+    // 'images/creatures/5.png',
+    // 'images/creatures/6.png',
+    // 'images/creatures/7.png',
+    // 'images/creatures/8.png',
+    // 'images/creatures/9.png',
+    // 'images/creatures/10.png',
+    // 'images/creatures/11.png',
+
+    // Add more images as needed
+  ];
+
+  imageUrls.forEach(url => {
+    loader.load(url, function(texture) {
+      const material = new THREE.SpriteMaterial({ map: texture });
+
+      // Create the sprite and set its scale to maintain aspect ratio
+      const sprite = new THREE.Sprite(material);
+      const imageAspect = texture.image.width / texture.image.height;
+      sprite.scale.set(imageAspect, 1, 1); // This keeps the sprite's aspect ratio
+
+      sprite.position.x = Math.random() * 10 - 5;
+      sprite.position.y = Math.random() * 10 - 5;
+      sprite.position.z = Math.random() * 10 - 5;
+      sprite.velocity = new THREE.Vector3(Math.random() * 0.01 - 0.005, Math.random() * 0.01 - 0.005, 0);
+      scene.add(sprite);
+      objects.push(sprite);
+    });
+  });
+
+  // Raycaster for click events
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  window.addEventListener("click", onClick);
+
+function onClick(event) {
+  clickSound.play();
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(objects);
+    if (intersects.length > 0) {
+        const object = intersects[0].object;
+
+        object.material.transparent = true;
+
+        new TWEEN.Tween(object.scale)
+    .to({ x: object.scale.x * 1.8, y: object.scale.y * 1.8, z: object.scale.z * 1.8 }, 200)
+    .easing(TWEEN.Easing.Elastic.Out)
+    .onComplete(() => {
+        new TWEEN.Tween(object.material)
+            .to({ opacity: 0 }, 500)
+            .onComplete(() => {
+                // Further actions after fade-out, like removing the object
+                addToInventory(object.material.map.image.src); // Add to inventory after the effect
+                scene.remove(object);
+            })
+            .start();
+    })
+    .start();
+
+// // Add a rotation effect
+// new TWEEN.Tween(object.rotation)
+//   .to({ z: object.rotation.z + Math.PI * 2 }, 500) // Complete spin
+//   .easing(TWEEN.Easing.Quadratic.Out)
+//   .start();
+    }
+}
+ 
+
+  function addToInventory(imageSrc) {
+    const inventory = document.getElementById('inventory');
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.style.height = '50px'; // Tiny version
+    img.style.width = 'auto';
+    inventory.appendChild(img);
+}
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    TWEEN.update(); // Add this to update TWEEN animations
+
+
+    objects.forEach(sprite => {
+      sprite.position.add(sprite.velocity);
+      sprite.material.rotation += 0.005; // Adjusted for slower rotation
+
+
+      if (sprite.position.x > 5 || sprite.position.x < -5) {
+        sprite.velocity.x *= -1;
+      }
+      if (sprite.position.y > 5 || sprite.position.y < -5) {
+        sprite.velocity.y *= -1;
+      }
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Handle window resize
+  window.addEventListener('resize', onWindowResize, false);
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+</script>
+
+
+  <script src="playableBackground.js"></script>
+
+
+  <main>
+
+    <div id="inventory">
+      <!-- <p>Inventory</p> -->
+    </div>
+    <!-- <img class="landingImg" src="images/TGWHeader.png"
+      alt="An abstract illustration of the toronto cityline and some controllers" /> -->
+    <img id="letterImg" src="images/TGWLogo2024.png" alt="A type treatment of Toronto Games Week" />
+    <div class="contentContainer" id="landingPage">
+      <div class="content">
+        <section class="textBox">
+          <p>
+            Toronto Games Week is a celebration of playable arts and culture! Toronto Games Week 2024 will be on
+            <span class="">June 13-19 </span>and is a collective coordination of
+            events organized independently
+            by dozens of organizations, creators, curators, and companies.</p> 
+            
+            <p>At Toronto Games Week this year, you might: 
+          <ul class="controllerList">
+            <li>Frolic in a flickering forest pop-up arcade after dark!</li>
+            <li>Learn open source game tools at a workshop!</li>
+            <li>Play or cheer at a women & femme speedrunning event!</li>
+            <li>Unearth videogame preservation in the Mystery Dump!</li>
+            <li>Sip or stroll the East End Barcade Crawl!</li>
+            <li>Install your game on a Gameboy cartridge!</li>
+          </ul>
+          </p>
+          <p>The week is being kicked off by the XP Summit, a two day industry event that brings together international and local game development talent to learn from each other.</p>
+          <p>We’re excited to be bringing a few special guests to town that will be appearing in XP and TGW events:
+          <ul class="controllerList">
+            <li><a target="_blank" href="https://www.linkedin.com/in/trey-smith-3825aa1/?originalSubdomain=ca">Trey Smith</a>, veteran creative director from Vancouver (Hardspace: Shipbreaker, Tony Hawk's Pro Skater 3)</li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/xalavier-nelson-jr/">Xalavier Nelson Jr.</a>, BAFTA nominated narrative designer from El Paso, Texas (Stranger Things VR, Hypnospace Outlaw)</li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/philsalv/">Phil Salvador</a>, library director from San Francisco (Video Game History Foundation)</li>
+          </ul>
+          </p>
+<p class="btn">
+            <a href="schedule.html">See the in-progress schedule!</a>
+          </p>
+           <p class="btn">
+            <a href="https://gameartsinternational.network/toronto-games-week/">See pictures from last year!</a>
+          </p>
+          <p>If you’d like to run a TGW event yourself, there’s still time to get in on the fun! We’re open to including board/escape room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!</p>
+            <p class="btn">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScjGji3TB0zzj6nC58a31jfvoJIUtbqkPU0Up6BH154-YwHkA/viewform"
+              target="blank">Submit an Event</a>
+            </p>
+
+               <p>Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There’s lots of interesting things to do!</p>
+            <p class="btn">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSewmAgjQA_NeaaAGC0GNJvEnpUphgQlK6WwzBuYj5VBEtpxcA/viewform"
+              target="blank">Volunteer</a>
+            </p>
+                  </section>
+
+        <h2>Keep Updated</h2>
+        <section class="textBox">
+
+        <p>You can follow us on <a href="https://twitter.com/torontogameswk"  target="blank">Twitter</a> and subscribe to our newsletter: </p>
+
+            <p class="btn">
+              <a href="https://network.us10.list-manage.com/subscribe?u=726ae558eee1507dbb40e6571&id=c673ed1420"
+              target="blank">Subscribe</a>
+            </p>
+          </section>
+
+        <h2>Contact</h2>
+        <section class="textBox">
+
+          <p>
+            Have questions? Reach out
+            with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
+          </p>
+        </section>
+
+      <h2>Our Sponsors</h2>
+
+      <div class="sponsorbox">
+        <a href="https://www.ontariocreates.ca/" target="blank"><img src="images/logos/OCLogo.png" alt="Ontario Creates logo"
+            class="logo" /></a>
+        <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/"
+          target="blank"><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo" /></a><br>
+        <a href="https://www.drinkboxstudios.com/" target="blank"><img src="images/logos/DBLogo.png" alt="Drinkbox logo"
+            class="logo" /></a>
+        <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo"
+            class="logo" /></a>
+        <a href="https://www.continueagency.com/" target="blank"><img src="images/logos/ContinueLogo.png" alt="Continue logo"
+            class="logo" /></a>
+        <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo"
+            class="logo" /></a>
+                </div>
+              </div>
+
+            </div>
+        <!-- <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" /> -->
+    </main>
+    <script src="play.js"></script>
+    <script src="connectionTest.js"></script>
+  </body>
+</html>
