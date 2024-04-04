@@ -491,14 +491,13 @@ btn:focus {
   .btn {
     width: auto;
     max-width: 30rem;
-    margin: 1rem  auto 1rem auto;
-    
+    margin: 3rem  auto 1rem auto;
   }
 
   .floatingBtn a {
     font-size: 2.2rem;
     max-width: 30rem;
-    margin: 1rem  auto 1rem auto;
+    margin: 3rem  auto 1rem auto;
   }
 }
 
