@@ -836,6 +836,7 @@ li {
   padding: 0.5rem 0;
   list-style-type: disc;
   /* text-indent: 1.5em; */
+  list-style: none;
 }
 
 .controllerList {
