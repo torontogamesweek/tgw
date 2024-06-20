@@ -8,20 +8,21 @@ const config = {
     velocityMultiplier: 0.005,
     rotationSpeedMultiplier: 0.005,
     particleCount: 10,
-    particleSize: 0.1,
-    particleLifetime: 1000,
+    particleSize: 0.009,
+    particleLifetime: 100,
     velocityDecreaseFactor: 0.9,
-    tailLength: 10 // Number of tail particles
+    tailLength: 2000, // Number of tail particles
+    maxSpeed: 0.02, // Maximum speed of sprites
   };
   
   const particleColors = [
-    0xff0000, // Red
+    // 0xff0000, // Red
     0x00ff00, // Green
-    0x0000ff, // Blue
+    // 0x0000ff, // Blue
     0xffff00, // Yellow
-    0xff00ff, // Magenta
+    // 0xff00ff, // Magenta
     0x00ffff, // Cyan
-    0xffffff  // White
+    0xffffff, // White
   ];
   
   // Scene setup
@@ -144,65 +145,74 @@ const config = {
       }
     );
   }
+
   
-// Particle creation
+  // Particle creation
 function createParticles(position) {
     for (let i = 0; i < config.particleCount; i++) {
-      const color = particleColors[Math.floor(Math.random() * particleColors.length)];
-      const particleMaterial = new THREE.PointsMaterial({ color: color, size: config.particleSize, transparent: true, opacity: 1.0 });
-      const particleGeometry = new THREE.BufferGeometry();
-      const positions = [];
-      const opacities = [];
-  
-      for (let j = 0; j < config.tailLength; j++) {
-        positions.push(position.x, position.y, -2); // Make sure particles are behind the sprites
-        opacities.push(1.0 - j / config.tailLength); // Gradually decrease opacity
-      }
-  
-      particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      particleGeometry.setAttribute('opacity', new THREE.Float32BufferAttribute(opacities, 1));
-  
-      const particle = new THREE.Points(particleGeometry, particleMaterial);
-      particle.tail = positions;
-      particle.velocity = new THREE.Vector3(
-        (Math.random() - 0.5) * config.velocityMultiplier,
-        (Math.random() - 0.5) * config.velocityMultiplier,
-        0
-      );
-  
-      particles.push(particle);
-      SceneController.scene.add(particle);
-  
-      // Animate particle tail
-      const animateTail = () => {
-        const positions = particle.geometry.attributes.position.array;
-        for (let k = positions.length - 3; k >= 3; k -= 3) {
-          positions[k] = positions[k - 3];
-          positions[k + 1] = positions[k - 2];
-          positions[k + 2] = positions[k - 1];
+        const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+        const particleMaterial = new THREE.PointsMaterial({
+            color: color,
+            size: config.particleSize,
+            transparent: true,
+            opacity: 1.0
+        });
+        const particleGeometry = new THREE.BufferGeometry();
+        const positions = [];
+        const opacities = [];
+
+        for (let j = 0; j < config.tailLength; j++) {
+            positions.push(position.x, position.y, position.z); // Ensure particles are at the collision point
+            opacities.push(1.0 - j / config.tailLength); // Gradually decrease opacity
         }
-        positions[0] = particle.position.x;
-        positions[1] = particle.position.y;
-        positions[2] = -2;
-        particle.geometry.attributes.position.needsUpdate = true;
-      };
-  
-      const tailInterval = setInterval(animateTail, 1000 / 60);
-  
-      // Fade out
-      const fadeOut = new TWEEN.Tween(particle.material)
-        .to({ opacity: 0 }, config.particleLifetime)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onComplete(() => {
-          clearInterval(tailInterval);
-          SceneController.scene.remove(particle);
-          particles = particles.filter(p => p !== particle);
-        })
-        .start();
+
+        particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        particleGeometry.setAttribute('opacity', new THREE.Float32BufferAttribute(opacities, 1));
+
+        const particle = new THREE.Points(particleGeometry, particleMaterial);
+        particle.tail = positions;
+        particle.velocity = new THREE.Vector3(
+            (Math.random() - 0.5) * config.velocityMultiplier,
+            (Math.random() - 0.5) * config.velocityMultiplier,
+            0
+        );
+
+        particle.position.copy(position); // Correctly set the initial position of the particle
+        console.log("Particle created at:", particle.position);
+
+        particles.push(particle);
+        SceneController.scene.add(particle);
+
+        // Animate particle tail
+        const animateTail = () => {
+            const positions = particle.geometry.attributes.position.array;
+            for (let k = positions.length - 3; k >= 3; k -= 3) {
+                positions[k] = positions[k - 3];
+                positions[k + 1] = positions[k - 2];
+                positions[k + 2] = positions[k - 1];
+            }
+            positions[0] = particle.position.x;
+            positions[1] = particle.position.y;
+            positions[2] = particle.position.z; // Ensure particles are on the same z-plane as the collision point
+            particle.geometry.attributes.position.needsUpdate = true;
+        };
+
+        const tailInterval = setInterval(animateTail, 1000 / 60);
+
+        // Fade out
+        const fadeOut = new TWEEN.Tween(particle.material)
+            .to({ opacity: 0 }, config.particleLifetime)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .onComplete(() => {
+                clearInterval(tailInterval);
+                SceneController.scene.remove(particle);
+                particles = particles.filter(p => p !== particle);
+            })
+            .start();
     }
-  }
-  
-  
+}
+
+
   // Initially load only the first 5 images
   for (let i = 0; i < imageUrls.length; i++) {
     addSprite(imageUrls[i]);
@@ -279,7 +289,7 @@ function createParticles(position) {
   const squashDuration = 80; // milliseconds
   const stretchBackDuration = 100; // milliseconds
   const velocityIncreaseFactor = 1.2;
-  const maxSpeed = 0.05;
+  const maxSpeed = config.maxSpeed;
   const slowDownDelay = 2000; // milliseconds
   const minVelocityDifference = 0.001;
   const originalScale = { x: 1, y: 1, z: 1 };
@@ -299,40 +309,45 @@ function createParticles(position) {
       // Keep z position constant
       sprite.position.z = -1.5;
   
-      // Check for collisions with other sprites
-      for (let i = 0; i < objects.length; i++) {
-        if (i !== index) {
-          const otherSprite = objects[i];
-          const distance = sprite.position.distanceTo(otherSprite.position);
-          const minDistance = (sprite.scale.x + otherSprite.scale.x) / 2;
-  
-          if (distance < minDistance) {
+   // Check for collisions with other sprites
+for (let i = 0; i < objects.length; i++) {
+    if (i !== index) {
+        const otherSprite = objects[i];
+        const distance = sprite.position.distanceTo(otherSprite.position);
+        const minDistance = (sprite.scale.x + otherSprite.scale.x) / 2;
+
+        if (distance < minDistance) {
             // Handle collision
             const normal = sprite.position.clone().sub(otherSprite.position).normalize();
             const relativeVelocity = sprite.velocity.clone().sub(otherSprite.velocity);
             const velocityAlongNormal = relativeVelocity.dot(normal);
-  
+
             if (velocityAlongNormal > 0) continue;
-  
+
             const restitution = 1; // Perfectly elastic collision
             const impulse = (-(1 + restitution) * velocityAlongNormal) / 2;
-  
+
             sprite.velocity.add(normal.clone().multiplyScalar(impulse));
             otherSprite.velocity.sub(normal.clone().multiplyScalar(impulse));
-  
+
             // Reduce velocity after collision
             sprite.velocity.multiplyScalar(config.velocityDecreaseFactor);
             otherSprite.velocity.multiplyScalar(config.velocityDecreaseFactor);
-  
+
             // Create particles at collision point
-            // createParticles(sprite.position);
-  
+            createParticles(sprite.position.clone());
+            createParticles(otherSprite.position.clone());
+            console.log("Collision at sprite position:", sprite.position.clone());
+            console.log("Collision at otherSprite position:", otherSprite.position.clone());
+
             // Apply collision animation
             applyCollisionAnimation(sprite);
             applyCollisionAnimation(otherSprite);
-          }
         }
-      }
+    }
+}
+
+
   
       let bounced = false;
       let bounceAxis = null;
@@ -356,30 +371,30 @@ function createParticles(position) {
   
         if (!originalSpeeds.has(sprite)) {
           originalSpeeds.set(sprite, sprite.velocity.length());
-          console.log(`Before applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
+        //   console.log(`Before applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
           sprite.velocity.multiplyScalar(config.dampingFactor);
-          console.log(`After applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
+        //   console.log(`After applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
   
           sprite.isDamping = true;
-          console.log(`Before applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
+        //   console.log(`Before applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
           sprite.velocity.multiplyScalar(config.dampingFactor);
-          console.log(`After applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
+        //   console.log(`After applying damping. Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}, z=${sprite.velocity.z}`);
         }
   
         if (sprite.isDamping) {
           let originalSpeed = originalSpeeds.get(sprite);
-          console.log(`Sprite ${sprite} Before damping, Velocity: ${sprite.velocity.length()}, Original Speed: ${originalSpeed}`);
+        //   console.log(`Sprite ${sprite} Before damping, Velocity: ${sprite.velocity.length()}, Original Speed: ${originalSpeed}`);
           sprite.velocity.multiplyScalar(config.dampingFactor);
-          console.log(`Sprite ${sprite} After damping, Velocity: ${sprite.velocity.length()}`);
+        //   console.log(`Sprite ${sprite} After damping, Velocity: ${sprite.velocity.length()}`);
           if (Math.abs(sprite.velocity.length() - originalSpeed) < minVelocityDifference) {
             sprite.isDamping = false;
             sprite.velocity.setLength(originalSpeed);
           }
         }
   
-        console.log(`Sprite ${sprite} Before bounce velocity change, Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}`);
+        // console.log(`Sprite ${sprite} Before bounce velocity change, Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}`);
         sprite.velocity.multiplyScalar(velocityIncreaseFactor);
-        console.log(`Sprite ${sprite} After bounce velocity change, New Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}`);
+        // console.log(`Sprite ${sprite} After bounce velocity change, New Velocity: x=${sprite.velocity.x}, y=${sprite.velocity.y}`);
   
         sprite.velocity.multiplyScalar(velocityIncreaseFactor);
         sprite.velocity.clampLength(0, maxSpeed);
@@ -394,13 +409,11 @@ function createParticles(position) {
     });
   
     // Update particles
-// Update particles
-particles.forEach(particle => {
-    particle.position.add(particle.velocity);
-    // Keep particles on the same z-plane
-    particle.position.z = -2; // Ensure particles stay behind the sprites
-  });
-  
+    particles.forEach(particle => {
+      particle.position.add(particle.velocity);
+      // Keep particles on the same z-plane
+      particle.position.z = -2; // Ensure particles stay behind the sprites
+    });
   
     SceneController.renderer.render(SceneController.scene, SceneController.camera); // Call render method from SceneController
   }
@@ -432,7 +445,7 @@ particles.forEach(particle => {
   };
   
   // Utility function for applying tween
-  function applyTween(target, to, duration, easing, onComplete = () => {}) {
+  function applyTween(target, to, duration, easing, onComplete = () => { }) {
     return new TWEEN.Tween(target)
       .to(to, duration)
       .easing(easing)
@@ -467,7 +480,7 @@ particles.forEach(particle => {
         return;
     }
   
-    console.log(`Applying squash and stretch. Axis: ${bounceAxis}, Target Scale:`, targetScale);
+    // console.log(`Applying squash and stretch. Axis: ${bounceAxis}, Target Scale:`, targetScale);
   
     // Now apply the tween animation using targetScale
     applyTween(sprite.scale, targetScale, squashStretchConfig.squashDuration, TWEEN.Easing.Quadratic.Out, () =>
