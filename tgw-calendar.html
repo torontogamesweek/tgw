@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+    <title>Game Arts International Assembly</title>
+
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="A gathering of games curators, connectors, and intermediaries around the world" />
+
+    <meta property="og:title" content="Game Arts International Assembly" />
+    <meta property="og:description" content="A gathering of games curators, connectors, and intermediaries around the world" />
+
+    <meta property="og:image" content="https://gameartsinternationalassembly.com/img/gaiaColour.png" />
+
+    <meta property="og:url" content="https://gameartsinternationalassembly.com" />
+    <meta property="og:type" content="webpage" />
+
+    <meta name="twitter:title" content="Game Arts International Assembly" />
+    <meta name="twitter:description" content="A gathering of games curators, connectors, and intermediaries around the world" />
+    <meta name="twitter:image" content="img/gaiaColour.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <style>
+    .calendar-container {
+      position: relative;
+      padding-bottom: 75%; /* Aspect ratio (height/width): 600/800 = 75% */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #f9f9f9;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .calendar-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+      margin: 2% 10%;
+    }
+
+    #calendar {
+    max-width: 90%;
+    margin: 2rem auto;
+    background-color: var(--lightGrey);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Major Mono Display', monospace;
+    }
+
+    .calendar-header,
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .calendar-header {
+      font-weight: bold;
+      background-color: var(--accentLight);
+      border-radius: 5px;
+      padding: 0.5rem 0;
+      color: var(--accentDark);
+      margin-bottom: 1rem;
+
+    }
+
+    .calendar-day {
+      padding: 0.75rem;
+      border-radius: 5px;
+      background-color: var(--medGrey);
+      color: var(--white);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .calendar-day:hover {
+      background-color: var(--accentTwo);
+    }
+
+    .calendar-empty-day {
+      visibility: hidden;
+    }
+  </style>
+
+  <body>
+    <header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+      </label>
+
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav>
+        <ul class="navigationMenu">
+          <li>
+            <a href="index.html">ABOUT</a>
+          </li>
+          <li>
+            <a href="index.html#upcoming">UPCOMING</a>
+          </li>
+          <li>
+            <a href="index.html#previous">PREVIOUS</a>
+          </li>
+          <li>
+            <a href="index.html#programmers">PROGRAMMERS</a>
+          </li>
+          <li>
+            <a href="index.html#partners">PARTNERS</a>
+          </li>
+          <li>
+            <a href="index.html#contact">CONTACT</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div>
+        <img class="landingImg" src="img/gaiaColour.png" alt="GAIA Logo" />
+        <h1 id="about">Calendar</h1>
+
+        <div id="calendar"></div>
+
+        <!-- <section class="contentContainer"> -->
+          <div class="calendar-container">
+            <iframe
+              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FToronto&bgcolor=%23ffffff&src=MzY1NDlhNDNiMzRmZjRkNGFmZjQ3ODk0OTljNjljMzg3MTZkM2NhMDg4NWM0MDk5YjU4Y2YyM2RkYTQ1YjY0MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23C0CA33"
+              frameborder="0"
+              scrolling="no"></iframe>
+          </div>
+      </div>
+      <br />
+      <br />
+    </main>
+
+    <script>
+      console.log("hoi");
+      
+      async function fetchCalendarEvents() {
+          const response = await fetch('https://clinquant-bubblegum-06fbcc.netlify.app/.netlify/functions/getCalendarEvents');
+          const data = await response.json();
+          return data.items || [];
+      }
+
+    
+        function createCalendar(year, month, events) {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = ''; // Clear previous content
+
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const firstDay = new Date(year, month).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            // Create header with days of the week
+            const header = document.createElement('div');
+            header.classList.add('calendar-header');
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+                dayElement.textContent = day;
+                header.appendChild(dayElement);
+            });
+            calendar.appendChild(header);
+
+            // Create days
+            const daysContainer = document.createElement('div');
+            daysContainer.classList.add('calendar-days');
+
+            // Fill in the days
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('calendar-empty-day');
+                daysContainer.appendChild(emptyDay);
+            }
+
+            for (let day = 1; day <= lastDate; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+                dayElement.textContent = day;
+
+                // Check if this day has an event
+                const eventDate = new Date(year, month, day).toISOString().split('T')[0];
+                const event = events.find(e => {
+                    const startDate = e.start.date || e.start.dateTime.split('T')[0]; // Get the date part from dateTime if it exists
+                    return startDate === eventDate;
+                });
+
+                if (event) {
+                    const eventElement = document.createElement('div');
+                    eventElement.classList.add('calendar-event');
+                    eventElement.textContent = event.summary; // Display event title
+                    dayElement.appendChild(eventElement);
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+
+            calendar.appendChild(daysContainer);
+        }
+
+        // Initialize the calendar for the current month with events
+        const today = new Date();
+        fetchCalendarEvents().then(events => {
+            createCalendar(today.getFullYear(), today.getMonth(), events);
+        });
+    </script>
+  </body>
+</html>
