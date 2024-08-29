@@ -315,6 +315,7 @@ p {
   padding-bottom: 0.5rem;
   border: 1px dotted white;
   outline: 1px dashed #ede1d4;
+  min-width: 90vw;
 }
 
 .nobg {
@@ -324,6 +325,7 @@ p {
 .textBox {
   background-color: hsl(33, 100%, 98%, 0.9);
   max-width: 85vw;
+  min-width: 85vw;
   display: flex;
   flex-direction: column;
   margin: 0 auto 0 auto;
@@ -427,6 +429,25 @@ a:hover {
 
 .details a:hover {
   color: rgb(203, 19, 240);
+}
+
+#newsletterSignup {
+  margin-top: 2rem;
+  align-self: center;
+  /* display: flex; */
+  /* margin: auto; */
+  /* width: 50vw; */
+}
+
+#field_0 {
+  width: 50vw;
+}
+
+
+@media (min-width: 60rem) {
+  #field_0 {
+    width: 30vw;
+  }
 }
 
 /***********************/
