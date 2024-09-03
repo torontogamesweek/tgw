@@ -605,6 +605,10 @@ img {
   /* max-height: 50vh; */
 }
 
+.blog img {
+  margin: 3rem 0 2rem 0 !important;
+}
+
 @media (min-width: 60rem) {
   img {
     /* max-width: 20vw; */
