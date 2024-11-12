@@ -507,6 +507,7 @@ btn,
   border: 1px dotted white;
   outline: 1px dashed #ede1d4;
   color: white;
+  font-size: 2rem;
 }
 
 .floatingBtnBlue {
