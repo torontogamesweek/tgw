@@ -307,6 +307,12 @@ p {
   /* margin: 0; */
 }
 
+.sticky {
+  position: sticky;
+  top: 5rem; /* Position where the element becomes sticky */
+  z-index: 1000; /* Ensures it stays above other content */
+}
+
 .contentContainer {
   display: flex;
   flex-direction: column;
