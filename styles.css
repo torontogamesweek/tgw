@@ -487,6 +487,17 @@ btn,
   width: auto;
 }
 
+.btndiv {
+  display: flex;
+}
+
+@media (min-width: 60rem) {
+  .btndiv {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 .floatingBtn {
   width: auto;
   margin: 2rem auto;
@@ -495,6 +506,7 @@ btn,
   padding-bottom: 0.5rem;
   border: 1px dotted white;
   outline: 1px dashed #ede1d4;
+  color: white;
 }
 
 .floatingBtnBlue {
