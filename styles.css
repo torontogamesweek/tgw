@@ -458,7 +458,6 @@ a:hover {
   width: 50vw;
 }
 
-
 @media (min-width: 60rem) {
   #field_0 {
     width: 30vw;
@@ -477,7 +476,7 @@ btn,
   color: var(--accentTwo);
   text-decoration: none;
   margin-bottom: 3rem;
-  padding: 0.4em 2em;
+  padding: 0.2em 0.2em;
   border: 2px solid var(--accentLight);
   border-radius: 30px;
   outline: none;
@@ -492,6 +491,11 @@ btn,
 }
 
 @media (min-width: 60rem) {
+  btn,
+  .btn {
+    padding: 0.4em 2em;
+  }
+
   .btndiv {
     display: flex;
     flex-direction: row;
@@ -727,7 +731,8 @@ p#schedule {
     max-width: 10rem;
     /* max-height: auto; */
     margin: 1.3rem;
-    padding: 0 10px;
+    padding: 0 10px;  
+    max-width: 8rem;
   }
 }
 
@@ -1189,6 +1194,7 @@ nav > ul > li {
 
   nav a {
     opacity: 1;
+    font-size: 2.5rem;
   }
 
   nav a:hover::before {
@@ -2470,6 +2476,7 @@ footer {
 }
 
 .logo {
+  max-width: 3rem;
 }
 
 #googleCalendar {
@@ -2477,6 +2484,8 @@ footer {
 }
 
 @media screen and (min-width: 900px) {
+
+
   #googleCalendar {
     position: relative;
     padding-bottom: 56.25%;
