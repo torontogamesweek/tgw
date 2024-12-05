@@ -728,7 +728,7 @@ p#schedule {
 }
 
 .logo {
-  max-width: 7rem;
+  max-width: 5rem;
   /* max-height: auto; */
   margin: 0.5rem;
   padding: 0 10px;
@@ -736,7 +736,7 @@ p#schedule {
 
 @media (min-width: 60rem) {
   .logo {
-    max-width: 10rem;
+    max-width: 8rem;
     /* max-height: auto; */
     margin: 1.3rem;
     padding: 0 10px;  
@@ -2483,9 +2483,7 @@ footer {
   flex-wrap: wrap;
 }
 
-.logo {
-  max-width: 3rem;
-}
+
 
 #googleCalendar {
   /* display:none; */
