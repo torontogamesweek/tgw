@@ -95,13 +95,13 @@ const config = {
     "images/creatures/38.png",
     "images/creatures/39.png",
     "images/creatures/40.png",
-    "images/creatures/41.png",
-    "images/creatures/42.png",
-    "images/creatures/43.png",
-    "images/creatures/44.png",
-    "images/creatures/45.png",
-    "images/creatures/46.png",
-    "images/creatures/47.png",
+    // "images/creatures/41.png",
+    // "images/creatures/42.png",
+    // "images/creatures/43.png",
+    // "images/creatures/44.png",
+    // "images/creatures/45.png",
+    // "images/creatures/46.png",
+    // "images/creatures/47.png",
   ];
   
   function addSprite(url) {

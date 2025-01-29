@@ -82,7 +82,6 @@ const maxDistance = 1.9; // Maximum distance from the camera
 const dampingFactor = 0.98; // Adjust as needed, closer to 1 is less damping
 
 // Function to add a sprite to the scene
-// Function to add a sprite to the scene
 function addSprite(url) {
   loader.load(
     url,
