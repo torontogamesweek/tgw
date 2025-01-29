@@ -247,13 +247,21 @@ table {
   --accentMed: rgb(65 104 107);
   --accentDark: rgb(33 57 78);
   --accentTwo: rgb(47 107 207);
-  --accentOrange: rgb(255 110 110);
+  --accentOrange: rgb(252, 111, 68); 
 
-  --accentMed: rgb(65 104 107);
-  --accentDark: rgb(33 57 78);
-  --accentTwo: rgb(47 107 207);
-  --accentOrange: rgb(255 110 110);
+
+/* 2025  */
+  --brown: rgb(95, 67, 61);
+  --light-green: rgb(220, 242, 216);
+  --accentMed: rgb(118, 180, 154);
+  --lightGrey: rgb(255, 245, 232);
+  --accentMed: rgb(50 102 78);
+  --accentLight: rgb(103, 204, 94);
+
+
 }
+
+
 
 /***********************/
 /*****   PRELOAD   *****/
@@ -328,7 +336,7 @@ p {
   border-radius: 1rem;
   background-color: #cce0cf;
   padding-bottom: 0.5rem;
-  border: 1px dotted white;
+  border: 1px dotted var(--white);
   outline: 1px dashed #ede1d4;
   width: 90vw; /* Base width for smaller screens */
 }
@@ -336,7 +344,7 @@ p {
 .contentContainer {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto 1rem auto;
+  margin: 0rem auto 1rem auto;
 }
 
 .nobg {
@@ -640,14 +648,13 @@ div[eo-block="powered-by"] {
 
 .floatingBtn {
   width: auto;
-  margin: 2rem auto;
+  margin: 1.5rem 1rem;
   border-radius: 1rem;
-  background-color: #e9623e;
-  padding-bottom: 0.5rem;
-  border: 1px dotted white;
+  background-color: var(--accentOrange);
+  border: 1px dotted var(--white);
   outline: 1px dashed #ede1d4;
-  color: white;
-  font-size: 2rem;
+  color:var(--white);
+  font-size: .7rem;
   text-align: center;
 }
 
@@ -656,7 +663,7 @@ div[eo-block="powered-by"] {
 }
 
 .floatingBtn a {
-  color: white;
+  color: var(--white);
   font-size: 1.5rem;
   text-decoration: none;
   line-height: normal;
@@ -700,8 +707,8 @@ btn:focus {
   cursor: pointer;
   transition-duration: 0.4s;
   border-radius: 1rem;
-  background-color: #e9623e;
-  border: 1px dotted white;
+  background-color: var(--accentOrange);
+  border: 1px dotted var(--white);
   outline: 1px dashed #ede1d4;
   color: #ede1d4;
 }
@@ -799,11 +806,10 @@ img {
 
 #caption {
   font-family: "Alegreya", sans-serif;
-  /* font-weight: bold; */
   color: #ed643d;
-  font-size: 1rem;
-  padding: 0 auto 0 auto;
-  margin: -5px auto 0 auto;
+  font-size: 1.5rem;
+  padding: 0 2px;
+  margin: 0 auto 0 auto;
 }
 
 #aboutTGW {
@@ -1306,7 +1312,9 @@ nav a {
 }
 
 nav > ul > li {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin: 10px;
 }
 
 /*************************/
@@ -1399,7 +1407,7 @@ nav > ul > li {
   display: block;
   background-color: rgb(255 110 110);
   height: 4px;
-  width: 50px;
+  width: 45px;
   border-radius: 2px;
   position: relative;
 }
