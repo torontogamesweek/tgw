@@ -306,7 +306,8 @@ body {
   text-align: center;
   position: relative;
   color: rgba(14, 8, 42, 0.86);
-  font-size: 1rem;
+  letter-spacing: .1rem;
+  font-size: .85rem;
 }
 
 p {
@@ -563,7 +564,7 @@ btn,
   padding: 0.4em 1em !important;
   width: 100% !important;
   min-width: 300px !important; /* Add minimum width */
-  font-size: 1.5rem !important;
+  font-size: 1rem !important;
 }
 
 /* Submit button styling */
@@ -579,7 +580,7 @@ btn,
   border-radius: 1rem !important;
   outline: none !important;
   font-family: "Alegreya", sans-serif !important;
-  font-size: 1.5rem !important; /* Smaller on mobile */
+  font-size: 1rem !important; /* Smaller on mobile */
   font-weight: bold !important;
   line-height: normal !important;
   text-decoration: none !important;
@@ -648,7 +649,8 @@ div[eo-block="powered-by"] {
 
 .floatingBtn {
   width: auto;
-  margin: 1.5rem 1rem;
+  margin: 1rem 1rem;
+  padding: 5px 10px;
   border-radius: 1rem;
   background-color: var(--accentOrange);
   border: 1px dotted var(--white);
@@ -664,7 +666,7 @@ div[eo-block="powered-by"] {
 
 .floatingBtn a {
   color: var(--white);
-  font-size: 1.5rem;
+  font-size: 1rem;
   text-decoration: none;
   line-height: normal;
 }
@@ -688,6 +690,7 @@ btn:focus {
     font-size: 2.2rem;
     max-width: 30rem;
     margin: 3rem auto 1rem auto;
+    padding: 3px 2rem;
   }
 }
 
@@ -807,9 +810,17 @@ img {
 #caption {
   font-family: "Alegreya", sans-serif;
   color: #ed643d;
-  font-size: 1.5rem;
-  padding: 0 2px;
-  margin: 0 auto 0 auto;
+  font-size: 1.6rem;
+  /* padding: 0 1.8px; */
+  /* margin: 0 auto 0 auto; */
+}
+
+#date {
+  font-family: "Alegreya", sans-serif;
+  color: var(--accentMed);
+  font-size: 1rem;
+  /* margin: -1rem 0 0 0; */
+  text-align: center;
 }
 
 #aboutTGW {
@@ -841,13 +852,20 @@ img {
   #caption {
     font-family: "Alegreya", sans-serif;
     /* font-weight: bold; */
-    color: #ed643d;
-    font-size: 3rem;
+    color: var(--accentOrange);
+    font-size: 3.5rem;
     margin: -1rem 0 0 0;
     padding: 0;
     text-align: center;
     margin-top: 10px;
   }
+
+  #date {
+    font-size: 2.8rem;
+    text-align: center;
+    margin: 0;
+  }
+
 
   .footerImg {
     padding: 0;
@@ -870,11 +888,10 @@ p#schedule {
 
 @media (min-width: 60rem) {
   .logo {
-    max-width: 8rem;
     /* max-height: auto; */
     margin: 1.3rem;
     padding: 0 10px;
-    max-width: 8rem;
+    max-width: 9rem;
   }
 }
 
@@ -1033,6 +1050,8 @@ li {
   list-style-type: disc;
   /* text-indent: 1.5em; */
   list-style: none;
+  font-size: .85rem;
+
 }
 
 .controllerList {
@@ -1052,7 +1071,7 @@ li {
 
 .controllerList li p,
 .controllerList li {
-  font-size: 1rem;
+  font-size: .85rem;
   padding: 0.5rem;
   /* margin-left: 2.5rem; Offset to align with the bullet point */
 }
