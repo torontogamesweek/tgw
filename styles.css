@@ -781,7 +781,7 @@ img {
 
 @media (min-width: 60rem) {
   img {
-    /* max-width: 20vw; */
+    max-width: 100%;
   }
 }
 
