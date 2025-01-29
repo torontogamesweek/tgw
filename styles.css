@@ -846,8 +846,7 @@ img {
     margin: -1rem 0 0 0;
     padding: 0;
     text-align: center;
-    /* padding: 0 auto 0 auto; */
-    /* margin: -5px auto 0 auto; */
+    margin-top: 10px;
   }
 
   .footerImg {
@@ -865,7 +864,7 @@ p#schedule {
 .logo {
   max-width: 5rem;
   /* max-height: auto; */
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
   padding: 0 10px;
 }
 
@@ -2622,6 +2621,7 @@ footer {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  width: 100vw;
 }
 
 #googleCalendar {
