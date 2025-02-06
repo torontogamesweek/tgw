@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+    <link href="colouring.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+
+    <style>
+      /* Base canvas setup */
+      canvas {
+        position: absolute;
+        background-size: cover;
+        /* position: fixed; */
+        z-index: 0;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+      }
+
+      main {
+        background-color: #eeeeee;
+      }
+
+      /* Content container setup */
+      .contentContainer {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+        margin-top: 31rem;
+      }
+
+      /* Desktop styles */
+@media (min-width: 768px) {
+  .contentContainer {
+    margin-top: 150rem; /* Original desktop margin */
+  }
+}
+
+      #landingPage {
+        /* padding-top: 55vh; */
+      }
+
+      .headerImgDiv {
+        /* position: relative; */
+        z-index: 1;
+        pointer-events: none;
+        background-color: transparent;
+      }
+
+      /* Main content areas */
+      .content {
+        pointer-events: none;
+        /* margin-top: 30rem; */
+      }
+
+      /* Make text boxes semi-transparent */
+      .textBox {
+        background-color: hsla(33, 100%, 98%, 0.9);
+        pointer-events: none;
+      }
+
+      /* Re-enable pointer events for specific interactive elements */
+      .contentContainer a,
+      .contentContainer button,
+      .contentContainer input,
+      .contentContainer select,
+      .contentContainer textarea,
+      .contentContainer label,
+      .headerImgDiv img,
+      .btn,
+      .floatingBtn,
+      .textBox a,
+      .textBox button,
+      .textBox input {
+        pointer-events: auto;
+        /* position: relative; */
+        z-index: 2;
+      }
+
+      /* Controls panel */
+      .controls {
+        position: fixed;
+        width: 0;
+        height: 0;
+        top: -10px;
+        right: -20px;
+        z-index: 1000;
+        pointer-events: auto;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      /* Header */
+      header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        top: 0;
+        pointer-events: auto;
+        height: 1rem;
+      }
+
+      @media (min-width: 768px) {
+        header {
+            position: relative;
+        }
+      }
+
+      /* Navigation */
+      nav {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+      </label>
+
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="image-container">
+      <canvas id="myCanvas" width="500" height="400"></canvas>
+    </div>
+
+    <div class="controls">
+      <div class="effect-buttons">
+        <button class="effect-btn active" data-effect="particles">Particles</button>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Size</span>
+          <span id="sizeValue">55</span>
+        </div>
+        <input type="range" id="sizeSlider" min="5" max="100" value="55" />
+      </div>
+
+      <div class="slider-container" id="speedControl">
+        <div class="slider-label">
+          <span>Speed</span>
+          <span id="speedValue">20</span>
+        </div>
+        <input type="range" id="speedSlider" min="1" max="100" value="20" />
+      </div>
+
+      <div class="slider-container" id="particleCountControl">
+        <div class="slider-label">
+          <span>Particle Count</span>
+          <span id="particleCountValue">18</span>
+        </div>
+        <input type="range" id="particleCountSlider" min="1" max="20" value="18" />
+      </div>
+
+      <div class="slider-container" id="gravityControl">
+        <div class="slider-label">
+          <span>Gravity</span>
+          <span id="gravityValue">0.5</span>
+        </div>
+        <input type="range" id="gravitySlider" min="0" max="100" value="50" />
+      </div>
+
+      <div class="slider-container" id="rotationControl">
+        <div class="slider-label">
+          <span>Rotation Speed</span>
+          <span id="rotationValue">50</span>
+        </div>
+        <input type="range" id="rotationSlider" min="0" max="100" value="50" />
+      </div>
+
+      <div class="slider-container" id="spreadControl">
+        <div class="slider-label">
+          <span>Spread Radius</span>
+          <span id="spreadValue">50</span>
+        </div>
+        <input type="range" id="spreadSlider" min="10" max="200" value="50" />
+      </div>
+
+      <div class="slider-container" id="opacityControl">
+        <div class="slider-label">
+          <span>Opacity</span>
+          <span id="opacityValue">77</span>
+        </div>
+        <input type="range" id="opacitySlider" min="0" max="100" value="77" />
+      </div>
+
+      <div class="slider-container" id="blurControl">
+        <div class="slider-label">
+          <span>Motion Blur</span>
+          <span id="blurValue">0</span>
+        </div>
+        <input type="range" id="blurSlider" min="0" max="20" value="0" />
+      </div>
+
+      <select id="blendMode" class="blend-select">
+        <option value="source-over">Normal</option>
+        <option value="multiply">Multiply</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="darken">Darken</option>
+        <option value="lighten">Lighten</option>
+      </select>
+    </div>
+
+    <main>
+      <div class="headerImgDiv">
+        <!-- <img id="letterImg" src="images/TGWLogo2025wCap.png" alt="A type treatment of Toronto Games Week" /> -->
+        <!-- <p id="caption">A celebration of playable arts & culture</p> -->
+        <!-- <p id="date">June 11-17, 2025</p> -->
+        <br />
+
+        <div class="contentContainer" id="landingPage">
+          <div class="content">
+            <section class="textBox">
+              <h2></h2>
+              <p>
+                Toronto Games Week is a collective coordination of events organized independently by dozens of organizations, curators, companies,
+                creators, and communities.
+              </p>
+              <br />
+              <br />
+
+              <p>Be the first to find out about TGW 2025 by subscribing to our newsletter:</p>
+              <!-- <div id="newsletterSignup">
+              <script
+                async
+                data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
+                src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"></script>
+            </div> -->
+            </section>
+          </div>
+
+          <div class="content">
+            <section class="textBox">
+              <h2>At Toronto Games Week, you might:</h2>
+              <ul class="controllerList">
+                <li>Frolic in a flickering forest pop-up arcade after dark!</li>
+                <li>Learn open source game tools at a workshop!</li>
+                <li>Play or cheer at a women & femme speedrunning event!</li>
+                <li>Brew a DIY blend at a tea party in the park!</li>
+                <li>Compare working class sci-fi movies and games!</li>
+                <li>Install a game you made on a Gameboy cartridge!</li>
+              </ul>
+              <div class="btndiv">
+                <p class="btn floatingBtn">
+                  <a class="" target="_blank" href="blog/2023.html">2023 recap</a>
+                </p>
+
+                <p class="btn floatingBtn">
+                  <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <div class="content">
+            <section class="textBox">
+              <h2>Organize an event!</h2>
+              <p>
+                If you'd like to run a TGW event yourself, there's still time to get in on the fun! We're open to including board/escape
+                room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
+              </p>
+              <p class="btn floatingBtn">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfj5hbgpI-ATNYESbEnNVPaAeONATGXkaEzocRHVB-QRziiyA/viewform?usp=sf_link"
+                  target="_blank"
+                  >Submit an Event</a
+                >
+              </p>
+            </section>
+          </div>
+
+          <div class="content">
+            <section class="textBox">
+              <h2>Help out</h2>
+              <p>
+                Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There's lots of
+                interesting things to do!
+              </p>
+              <p class="btn floatingBtn floatingBtnBlue">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSct8eZvHVT46la0WTR1Lq1Nx_6KS3dEgumXNNak-TG3MbB0Uw/viewform?usp=sf_link"
+                  target="_blank"
+                  >Volunteer</a
+                >
+              </p>
+            </section>
+          </div>
+
+          <div class="content">
+            <section class="textBox">
+              <h2>Contact</h2>
+              <p>
+                Reach out with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or
+                <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div id="inventory"></div>
+    </main>
+
+
+<script>
+    const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+// Get control elements for particles
+const sizeSlider = document.getElementById("sizeSlider");
+const speedSlider = document.getElementById("speedSlider");
+const particleCountSlider = document.getElementById("particleCountSlider");
+const spreadSlider = document.getElementById("spreadSlider");
+const opacitySlider = document.getElementById("opacitySlider");
+const blurSlider = document.getElementById("blurSlider");
+const blendSelect = document.getElementById("blendMode");
+
+const bwImage = new Image();
+const colorImage = new Image();
+let lastX = 0,
+  lastY = 0;
+let isFirstTouch = true;
+let particles = [];
+let isFixed = false;
+let isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+// Update isDesktop on resize
+window.addEventListener('resize', () => {
+  isDesktop = window.matchMedia("(min-width: 768px)").matches;
+});
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+
+  if (bwImage.complete) {
+    ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
+  }
+}
+
+// Scroll handler
+window.addEventListener('scroll', () => {
+  // Only run scroll effect on desktop
+  if (!isDesktop) return;
+
+  const scrollPosition = window.scrollY;
+  const canvasRect = canvas.getBoundingClientRect();
+  const canvasTop = canvas.offsetTop;
+  const canvasBottom = canvasTop + canvasRect.height;
+  const switchPoint = canvasBottom - window.innerHeight;
+  
+  if (scrollPosition >= switchPoint && !isFixed) {
+    isFixed = true;
+    canvas.style.position = 'fixed';
+    canvas.style.bottom = '0';
+    canvas.style.top = 'auto';
+  } else if (scrollPosition <= switchPoint && isFixed) {
+    isFixed = false;
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.bottom = 'auto';
+    // Force a redraw of the canvas
+    requestAnimationFrame(() => {
+      const lastEvent = { clientX: lastX, clientY: lastY };
+      draw(lastEvent);
+    });
+  }
+});
+
+function getCoords(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.clientX || e.touches?.[0]?.clientX || lastX;
+  const clientY = e.clientY || e.touches?.[0]?.clientY || lastY;
+  return {
+    x: (clientX - rect.left) * (canvas.width / rect.width),
+    y: (clientY - rect.top) * (canvas.height / rect.height),
+  };
+}
+
+function draw(e) {
+  const coords = getCoords(e);
+
+  if (isFirstTouch) {
+    lastX = coords.x;
+    lastY = coords.y;
+    isFirstTouch = false;
+    return;
+  }
+
+  ctx.globalCompositeOperation = "destination-out";
+
+  const particleCount = parseInt(particleCountSlider.value);
+  const particleSpeed = speedSlider.value / 10;
+  const particleSpread = spreadSlider.value / 50;
+
+  // Create new particles
+  const newParticles = Array(particleCount)
+    .fill()
+    .map(() => ({
+      x: coords.x,
+      y: coords.y,
+      vx: (Math.random() - 0.5) * particleSpeed * particleSpread,
+      vy: (Math.random() - 0.5) * particleSpeed * particleSpread,
+      size: Math.random() * sizeSlider.value * 0.3 + 2,
+      opacity: opacitySlider.value / 100,
+    }));
+
+  particles.push(...newParticles);
+
+  // Apply motion blur if enabled
+  if (blurSlider.value > 0) {
+    ctx.filter = `blur(${blurSlider.value / 4}px)`;
+  }
+
+  // Update and draw all particles
+  particles.forEach((p) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.opacity *= 0.95;
+    ctx.globalAlpha = p.opacity;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Reset blur
+  ctx.filter = "none";
+
+  // Remove old particles
+  particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
+
+  ctx.globalCompositeOperation = "destination-over";
+  const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
+  const width = canvas.width;
+  const height = width * ratio;
+  ctx.drawImage(colorImage, 0, 0, width, height);
+
+  lastX = coords.x;
+  lastY = coords.y;
+}
+
+function updateValueDisplay(slider, valueElement) {
+  document.getElementById(valueElement).textContent = slider.value;
+}
+
+// Event listeners for sliders
+sizeSlider.addEventListener("input", () => updateValueDisplay(sizeSlider, "sizeValue"));
+speedSlider.addEventListener("input", () => updateValueDisplay(speedSlider, "speedValue"));
+particleCountSlider.addEventListener("input", () => updateValueDisplay(particleCountSlider, "particleCountValue"));
+spreadSlider.addEventListener("input", () => updateValueDisplay(spreadSlider, "spreadValue"));
+opacitySlider.addEventListener("input", () => updateValueDisplay(opacitySlider, "opacityValue"));
+blurSlider.addEventListener("input", () => updateValueDisplay(blurSlider, "blurValue"));
+
+// Canvas event listeners
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  draw(e);
+});
+
+canvas.addEventListener("mouseout", () => (isFirstTouch = true));
+canvas.addEventListener("touchend", () => (isFirstTouch = true));
+
+window.addEventListener("resize", resizeCanvas);
+
+// Image loading
+bwImage.onload = () => {
+  resizeCanvas();
+};
+
+colorImage.onload = () => {
+  resizeCanvas();
+};
+
+bwImage.src = "images/bw.jpg";
+colorImage.src = "images/background.png";
+</script>
+  </body>
+</html>
