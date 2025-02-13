@@ -6,47 +6,65 @@
     <title>Toronto Games Week</title>
 
     <!-- Stylesheets -->
-    <link href="colouring.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+    <meta property="og:image" content="https://torontogamesweek.com/images/tgwposternologos.png" />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <style>
       /* Base canvas setup */
       canvas {
-        position: absolute;
-        background-size: cover;
-        /* position: fixed; */
-        z-index: 0;
+        position: absolute; /* Mobile default */
+        width: 100%;
+        background-image: none;
+        height: auto;
         left: 0;
         top: 0;
+      }
+
+      .image-container {
+        position: relative;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: auto;
+        height: 100vh; /* Mobile default */
       }
 
       main {
-        background-color: #eeeeee;
+        position: relative;
+        z-index: 1;
+        margin-top: 0; /* Mobile default */
       }
 
-      /* Content container setup */
       .contentContainer {
         position: relative;
         z-index: 1;
-        pointer-events: none;
-        margin-top: 31rem;
       }
 
-      /* Desktop styles */
-@media (min-width: 768px) {
-  .contentContainer {
-    margin-top: 150rem; /* Original desktop margin */
-  }
-}
-
-      #landingPage {
-        /* padding-top: 55vh; */
+      /* Content container setup */
+      .contentContainer,
+      .sponsorBox {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
       }
 
       .headerImgDiv {
-        /* position: relative; */
         z-index: 1;
         pointer-events: none;
         background-color: transparent;
@@ -55,7 +73,6 @@
       /* Main content areas */
       .content {
         pointer-events: none;
-        /* margin-top: 30rem; */
       }
 
       /* Make text boxes semi-transparent */
@@ -78,7 +95,6 @@
       .textBox button,
       .textBox input {
         pointer-events: auto;
-        /* position: relative; */
         z-index: 2;
       }
 
@@ -104,15 +120,27 @@
         height: 1rem;
       }
 
-      @media (min-width: 768px) {
-        header {
-            position: relative;
-        }
-      }
-
-      /* Navigation */
       nav {
         pointer-events: auto;
+      }
+
+      /* Desktop styles */
+      @media (min-width: 768px) {
+        canvas {
+          position: absolute; /* Reset for desktop */
+        }
+
+        .image-container {
+          height: 100vh; /* Reset for desktop */
+        }
+
+        main {
+          margin-top: 90vh; /* Desktop margin */
+        }
+
+        header {
+          position: relative;
+        }
       }
     </style>
   </head>
@@ -124,12 +152,17 @@
         <span></span>
       </label>
 
+      <div>
+        <!-- <a href=""><img src="" alt="Logo" /></a> -->
+      </div>
       <nav>
         <ul>
           <li>
             <a href="index.html">Home</a>
           </li>
-
+          <li>
+            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+          </li>
           <li>
             <a href="about.html" id="aboutNav">About</a>
           </li>
@@ -141,358 +174,357 @@
       <canvas id="myCanvas" width="500" height="400"></canvas>
     </div>
 
-    <div class="controls">
-      <div class="effect-buttons">
-        <button class="effect-btn active" data-effect="particles">Particles</button>
-      </div>
+    <!-- <canvas id="myCanvas" width="500" height="400"></canvas> -->
 
-      <div class="slider-container">
-        <div class="slider-label">
-          <span>Size</span>
-          <span id="sizeValue">55</span>
-        </div>
-        <input type="range" id="sizeSlider" min="5" max="100" value="55" />
-      </div>
-
-      <div class="slider-container" id="speedControl">
-        <div class="slider-label">
-          <span>Speed</span>
-          <span id="speedValue">20</span>
-        </div>
-        <input type="range" id="speedSlider" min="1" max="100" value="20" />
-      </div>
-
-      <div class="slider-container" id="particleCountControl">
-        <div class="slider-label">
-          <span>Particle Count</span>
-          <span id="particleCountValue">18</span>
-        </div>
-        <input type="range" id="particleCountSlider" min="1" max="20" value="18" />
-      </div>
-
-      <div class="slider-container" id="gravityControl">
-        <div class="slider-label">
-          <span>Gravity</span>
-          <span id="gravityValue">0.5</span>
-        </div>
-        <input type="range" id="gravitySlider" min="0" max="100" value="50" />
-      </div>
-
-      <div class="slider-container" id="rotationControl">
-        <div class="slider-label">
-          <span>Rotation Speed</span>
-          <span id="rotationValue">50</span>
-        </div>
-        <input type="range" id="rotationSlider" min="0" max="100" value="50" />
-      </div>
-
-      <div class="slider-container" id="spreadControl">
-        <div class="slider-label">
-          <span>Spread Radius</span>
-          <span id="spreadValue">50</span>
-        </div>
-        <input type="range" id="spreadSlider" min="10" max="200" value="50" />
-      </div>
-
-      <div class="slider-container" id="opacityControl">
-        <div class="slider-label">
-          <span>Opacity</span>
-          <span id="opacityValue">77</span>
-        </div>
-        <input type="range" id="opacitySlider" min="0" max="100" value="77" />
-      </div>
-
-      <div class="slider-container" id="blurControl">
-        <div class="slider-label">
-          <span>Motion Blur</span>
-          <span id="blurValue">0</span>
-        </div>
-        <input type="range" id="blurSlider" min="0" max="20" value="0" />
-      </div>
-
-      <select id="blendMode" class="blend-select">
-        <option value="source-over">Normal</option>
-        <option value="multiply">Multiply</option>
-        <option value="screen">Screen</option>
-        <option value="overlay">Overlay</option>
-        <option value="darken">Darken</option>
-        <option value="lighten">Lighten</option>
-      </select>
-    </div>
+    <!-- Scripts for Canvas -->
+    <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script> -->
+    <!-- <script src="playableBackground.js"></script> -->
 
     <main>
-      <div class="headerImgDiv">
-        <!-- <img id="letterImg" src="images/TGWLogo2025wCap.png" alt="A type treatment of Toronto Games Week" /> -->
-        <!-- <p id="caption">A celebration of playable arts & culture</p> -->
-        <!-- <p id="date">June 11-17, 2025</p> -->
+      <!-- <div class="headerImgDiv">
+        <img id="letterImg" src="images/TGWLogo2025wCap.png" alt="A type treatment of Toronto Games Week" />
+        <p id="caption">A celebration of playable arts & culture</p>
+        <p id="date">June 11-17, 2025</p>
         <br />
+      </div> -->
 
-        <div class="contentContainer" id="landingPage">
-          <div class="content">
-            <section class="textBox">
-              <h2></h2>
-              <p>
-                Toronto Games Week is a collective coordination of events organized independently by dozens of organizations, curators, companies,
-                creators, and communities.
-              </p>
-              <br />
-              <br />
+      <div class="contentContainer" id="landingPage">
+        <!-- <div class="content">
+          <section class="textBox">
+            <p id="aboutTGW">
+            </p>
+          </section>
+        </div> -->
 
-              <p>Be the first to find out about TGW 2025 by subscribing to our newsletter:</p>
-              <!-- <div id="newsletterSignup">
+        <div class="content">
+          <section class="textBox">
+            <h2></h2>
+            <p>
+              Toronto Games Week is a collective coordination of events organized independently by dozens of organizations, curators, companies,
+              creators, and communities.
+            </p>
+            <br />
+            <br />
+
+            <p>Be the first to find out about TGW 2025 by subscribing to our newsletter:</p>
+            <div id="newsletterSignup">
               <script
                 async
                 data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
                 src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"></script>
-            </div> -->
-            </section>
-          </div>
+            </div>
+          </section>
+        </div>
 
-          <div class="content">
-            <section class="textBox">
-              <h2>At Toronto Games Week, you might:</h2>
-              <ul class="controllerList">
-                <li>Frolic in a flickering forest pop-up arcade after dark!</li>
-                <li>Learn open source game tools at a workshop!</li>
-                <li>Play or cheer at a women & femme speedrunning event!</li>
-                <li>Brew a DIY blend at a tea party in the park!</li>
-                <li>Compare working class sci-fi movies and games!</li>
-                <li>Install a game you made on a Gameboy cartridge!</li>
-              </ul>
-              <div class="btndiv">
-                <p class="btn floatingBtn">
-                  <a class="" target="_blank" href="blog/2023.html">2023 recap</a>
-                </p>
-
-                <p class="btn floatingBtn">
-                  <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
-                </p>
-              </div>
-            </section>
-          </div>
-
-          <div class="content">
-            <section class="textBox">
-              <h2>Organize an event!</h2>
-              <p>
-                If you'd like to run a TGW event yourself, there's still time to get in on the fun! We're open to including board/escape
-                room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
-              </p>
+        <div class="content">
+          <section class="textBox">
+            <h2>At Toronto Games Week, you might:</h2>
+            <ul class="controllerList">
+              <li>Frolic in a flickering forest pop-up arcade after dark!</li>
+              <li>Learn open source game tools at a workshop!</li>
+              <li>Play or cheer at a women & femme speedrunning event!</li>
+              <li>Brew a DIY blend at a tea party in the park!</li>
+              <li>Compare working class sci-fi movies and games!</li>
+              <li>Install a game you made on a Gameboy cartridge!</li>
+            </ul>
+            <div class="btndiv">
               <p class="btn floatingBtn">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSfj5hbgpI-ATNYESbEnNVPaAeONATGXkaEzocRHVB-QRziiyA/viewform?usp=sf_link"
-                  target="_blank"
-                  >Submit an Event</a
-                >
+                <a class="" target="_blank" href="blog/2023.html">2023 recap</a>
               </p>
-            </section>
-          </div>
 
-          <div class="content">
-            <section class="textBox">
-              <h2>Help out</h2>
-              <p>
-                Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There's lots of
-                interesting things to do!
+              <p class="btn floatingBtn">
+                <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
               </p>
-              <p class="btn floatingBtn floatingBtnBlue">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSct8eZvHVT46la0WTR1Lq1Nx_6KS3dEgumXNNak-TG3MbB0Uw/viewform?usp=sf_link"
-                  target="_blank"
-                  >Volunteer</a
-                >
-              </p>
-            </section>
-          </div>
+            </div>
+            <!-- <p class="btn floatingBtn"><a href="schedule.html">See the schedule!</a></p> -->
+            <!-- <a target="_blank" href="https://drive.google.com/file/d/1Wxfla2Qet1cNO2Ii3dPjL_IFyL_lHzZL/view">See the 2024 poster!</a> -->
+          </section>
+        </div>
 
-          <div class="content">
-            <section class="textBox">
-              <h2>Contact</h2>
-              <p>
-                Reach out with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or
-                <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
-              </p>
-            </section>
-          </div>
+        <!-- <div class="content">
+          <section class="textBox">
+            <h2>Special guests</h2>
+            <p>
+              We're kicking off Toronto Games Week 2024 with XP Summit, a two day industry event that brings together international and local game
+              development talent to learn from each other. And we're excited to be bringing special guests to town:
+            </p>
+            <ul class="controllerList">
+              <li>
+                <a target="_blank" href="https://www.linkedin.com/in/trey-smith-3825aa1/?originalSubdomain=ca">Trey Smith</a>, veteran creative
+                director from Vancouver (Hardspace: Shipbreaker, Tony Hawk's Pro Skater 3)
+              </li>
+              <li>
+                <a target="_blank" href="https://www.linkedin.com/in/xalavier-nelson-jr/">Xalavier Nelson Jr.</a>, BAFTA nominated narrative designer
+                from El Paso, Texas (Stranger Things VR, Hypnospace Outlaw)
+              </li>
+              <li>
+                <a target="_blank" href="https://www.linkedin.com/in/philsalv/">Phil Salvador</a>, library director from San Francisco (Video Game
+                History Foundation)
+              </li>
+            </ul>
+          </section>
+        </div> -->
+
+        <!-- <div class="content">
+          <section class="textBox">
+            <h2>Keep Updated</h2>
+            <p>
+              Stay in touch! You can follow us on <a href="https://x.com/torontogameswk" target="blank">X</a> or even better, subscribe to our
+              newsletter:
+            </p>
+                        <div id="newsletterSignup">
+              <script
+                async
+                data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
+                src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js">
+              </script>
+            </div>
+          </section>
+        </div> -->
+
+        <div class="content">
+          <section class="textBox">
+            <h2>Organize an event!</h2>
+            <p>
+              If you'd like to run a TGW event yourself, there's still time to get in on the fun! We're open to including board/escape
+              room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
+            </p>
+            <p class="btn floatingBtn">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfj5hbgpI-ATNYESbEnNVPaAeONATGXkaEzocRHVB-QRziiyA/viewform?usp=sf_link"
+                target="_blank"
+                >Submit an Event</a
+              >
+            </p>
+          </section>
+        </div>
+
+        <div class="content">
+          <section class="textBox">
+            <h2>Help out</h2>
+            <p>
+              Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There's lots of
+              interesting things to do!
+            </p>
+            <p class="btn floatingBtn floatingBtnBlue">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSct8eZvHVT46la0WTR1Lq1Nx_6KS3dEgumXNNak-TG3MbB0Uw/viewform?usp=sf_link"
+                target="_blank"
+                >Volunteer</a
+              >
+            </p>
+          </section>
+        </div>
+
+        <div class="content">
+          <section class="textBox">
+            <h2>Contact</h2>
+            <p>
+              Reach out with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or
+              <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
+            </p>
+          </section>
+        </div>
+        <!-- </div> -->
+
+        <h2>Our Supporters</h2>
+        <div class="sponsorbox">
+          <a href="https://www.ontariocreates.ca/" target="blank"
+            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo"
+          /></a>
+          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
+            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo" /></a
+          ><br />
+          <a href="https://www.drinkboxstudios.com/" target="blank"><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo" /></a>
+          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo" /></a>
+          <a href="https://gameartsinternational.network/" target="blank"><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo" /></a>
+          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo" /></a>
+          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo" /></a>
+          <a href="https://www.continueagency.com/" target="blank"><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo" /></a>
+          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo" /></a>
+          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo" /></a>
+          <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
+            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo"
+          /></a>
+          <a href="https://ladyarcaders.com/" target="blank"><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo" /></a>
+          <a href="https://vividfoundry.com/" target="blank"><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo" /></a>
+          <a href="https://linktr.ee/blackbeltcinema" target="blank"
+            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo"
+          /></a>
+          <a href="https://www.dirty-rectangles.com/" target="blank"
+            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo"
+          /></a>
+          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo" /></a>
+          <a href="https://torontopubliclibrary.ca/" target="blank"
+            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo"
+          /></a>
+          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo" /></a>
+          <a href="https://indiegamereviewer.com/" target="blank"
+            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo"
+          /></a>
+          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo" /></a>
+          <a href="https://toughguymountain.com/" target="blank"><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo" /></a>
+          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo" /></a>
+          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo" /></a>
+          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo" />
+          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo" /></a>
+          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo" /></a>
+          <a href="https://tripledragon.co.uk/" target="blank"
+            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo"
+          /></a>
+          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo" /></a>
+          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo" /></a>
+          <a href="https://toronto.ubisoft.com/" target="blank"><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo" /></a>
+          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo" /></a>
+          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo" /></a>
+          <a href="https://mightyyell.com/" target="blank"><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo" /></a>
+          <a href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection" target="blank"
+            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo"
+          /></a>
+          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo" /></a>
+          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo" /></a>
         </div>
       </div>
 
-      <div id="inventory"></div>
+      <div id="inventory">
+        <!-- <p>Inventory</p> -->
+      </div>
+      <!-- <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" /> -->
     </main>
 
+    <!-- Scripts -->
+    <script src="play.js"></script>
+    <script src="connectionTest.js"></script>
 
-<script>
-    const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-// Get control elements for particles
-const sizeSlider = document.getElementById("sizeSlider");
-const speedSlider = document.getElementById("speedSlider");
-const particleCountSlider = document.getElementById("particleCountSlider");
-const spreadSlider = document.getElementById("spreadSlider");
-const opacitySlider = document.getElementById("opacitySlider");
-const blurSlider = document.getElementById("blurSlider");
-const blendSelect = document.getElementById("blendMode");
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
 
-const bwImage = new Image();
-const colorImage = new Image();
-let lastX = 0,
-  lastY = 0;
-let isFirstTouch = true;
-let particles = [];
-let isFixed = false;
-let isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      const bwImage = new Image();
+      const colorImage = new Image();
+      let lastX = 0,
+        lastY = 0;
+      let isFirstTouch = true;
+      let particles = [];
+      let isFixed = false;
+      let isDesktop = window.matchMedia("(min-width: 768px)").matches;
 
-// Update isDesktop on resize
-window.addEventListener('resize', () => {
-  isDesktop = window.matchMedia("(min-width: 768px)").matches;
-});
+      // Update isDesktop on resize
+      window.addEventListener("resize", () => {
+        isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      });
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
 
-  if (bwImage.complete) {
-    ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
-  }
-}
+        if (bwImage.complete) {
+          ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
+        }
+      }
 
-// Scroll handler
-window.addEventListener('scroll', () => {
-  // Only run scroll effect on desktop
-  if (!isDesktop) return;
+      function getCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || e.touches?.[0]?.clientX || lastX;
+        const clientY = e.clientY || e.touches?.[0]?.clientY || lastY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height),
+        };
+      }
 
-  const scrollPosition = window.scrollY;
-  const canvasRect = canvas.getBoundingClientRect();
-  const canvasTop = canvas.offsetTop;
-  const canvasBottom = canvasTop + canvasRect.height;
-  const switchPoint = canvasBottom - window.innerHeight;
-  
-  if (scrollPosition >= switchPoint && !isFixed) {
-    isFixed = true;
-    canvas.style.position = 'fixed';
-    canvas.style.bottom = '0';
-    canvas.style.top = 'auto';
-  } else if (scrollPosition <= switchPoint && isFixed) {
-    isFixed = false;
-    canvas.style.position = 'absolute';
-    canvas.style.top = '0';
-    canvas.style.bottom = 'auto';
-    // Force a redraw of the canvas
-    requestAnimationFrame(() => {
-      const lastEvent = { clientX: lastX, clientY: lastY };
-      draw(lastEvent);
-    });
-  }
-});
+      function draw(e) {
+        const coords = getCoords(e);
 
-function getCoords(e) {
-  const rect = canvas.getBoundingClientRect();
-  const clientX = e.clientX || e.touches?.[0]?.clientX || lastX;
-  const clientY = e.clientY || e.touches?.[0]?.clientY || lastY;
-  return {
-    x: (clientX - rect.left) * (canvas.width / rect.width),
-    y: (clientY - rect.top) * (canvas.height / rect.height),
-  };
-}
+        if (isFirstTouch) {
+          lastX = coords.x;
+          lastY = coords.y;
+          isFirstTouch = false;
+          return;
+        }
 
-function draw(e) {
-  const coords = getCoords(e);
+        ctx.globalCompositeOperation = "destination-out";
 
-  if (isFirstTouch) {
-    lastX = coords.x;
-    lastY = coords.y;
-    isFirstTouch = false;
-    return;
-  }
+        // Create new particles with fixed values instead of slider values
+        const newParticles = Array(18) // Fixed particle count
+          .fill()
+          .map(() => ({
+            x: coords.x,
+            y: coords.y,
+            vx: (Math.random() - 0.5) * 2, // Fixed speed
+            vy: (Math.random() - 0.5) * 2,
+            size: Math.random() * 16 + 2, // Fixed size range
+            opacity: 0.77, // Fixed opacity
+          }));
 
-  ctx.globalCompositeOperation = "destination-out";
+        particles.push(...newParticles);
 
-  const particleCount = parseInt(particleCountSlider.value);
-  const particleSpeed = speedSlider.value / 10;
-  const particleSpread = spreadSlider.value / 50;
+        // Update and draw all particles
+        particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.opacity *= 0.95;
+          ctx.globalAlpha = p.opacity;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
 
-  // Create new particles
-  const newParticles = Array(particleCount)
-    .fill()
-    .map(() => ({
-      x: coords.x,
-      y: coords.y,
-      vx: (Math.random() - 0.5) * particleSpeed * particleSpread,
-      vy: (Math.random() - 0.5) * particleSpeed * particleSpread,
-      size: Math.random() * sizeSlider.value * 0.3 + 2,
-      opacity: opacitySlider.value / 100,
-    }));
+        // Remove old particles
+        particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
 
-  particles.push(...newParticles);
+        ctx.globalCompositeOperation = "destination-over";
+        const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
+        const width = canvas.width;
+        const height = width * ratio;
+        ctx.drawImage(colorImage, 0, 0, width, height);
 
-  // Apply motion blur if enabled
-  if (blurSlider.value > 0) {
-    ctx.filter = `blur(${blurSlider.value / 4}px)`;
-  }
+        lastX = coords.x;
+        lastY = coords.y;
+      }
 
-  // Update and draw all particles
-  particles.forEach((p) => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.opacity *= 0.95;
-    ctx.globalAlpha = p.opacity;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-  });
+      // Canvas event listeners
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        draw(e);
+      });
 
-  // Reset blur
-  ctx.filter = "none";
+      canvas.addEventListener("mouseout", () => (isFirstTouch = true));
+      canvas.addEventListener("touchend", () => (isFirstTouch = true));
 
-  // Remove old particles
-  particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
+      window.addEventListener("resize", resizeCanvas);
 
-  ctx.globalCompositeOperation = "destination-over";
-  const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
-  const width = canvas.width;
-  const height = width * ratio;
-  ctx.drawImage(colorImage, 0, 0, width, height);
+      // Image loading
+      bwImage.onload = () => {
+        resizeCanvas();
+      };
 
-  lastX = coords.x;
-  lastY = coords.y;
-}
+      colorImage.onload = () => {
+        resizeCanvas();
+      };
 
-function updateValueDisplay(slider, valueElement) {
-  document.getElementById(valueElement).textContent = slider.value;
-}
+      bwImage.src = "images/2025/bw.png";
+      colorImage.src = "images/2025/colour.png";
+    </script>
 
-// Event listeners for sliders
-sizeSlider.addEventListener("input", () => updateValueDisplay(sizeSlider, "sizeValue"));
-speedSlider.addEventListener("input", () => updateValueDisplay(speedSlider, "speedValue"));
-particleCountSlider.addEventListener("input", () => updateValueDisplay(particleCountSlider, "particleCountValue"));
-spreadSlider.addEventListener("input", () => updateValueDisplay(spreadSlider, "spreadValue"));
-opacitySlider.addEventListener("input", () => updateValueDisplay(opacitySlider, "opacityValue"));
-blurSlider.addEventListener("input", () => updateValueDisplay(blurSlider, "blurValue"));
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
 
-// Canvas event listeners
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  draw(e);
-});
-
-canvas.addEventListener("mouseout", () => (isFirstTouch = true));
-canvas.addEventListener("touchend", () => (isFirstTouch = true));
-
-window.addEventListener("resize", resizeCanvas);
-
-// Image loading
-bwImage.onload = () => {
-  resizeCanvas();
-};
-
-colorImage.onload = () => {
-  resizeCanvas();
-};
-
-bwImage.src = "images/bw.jpg";
-colorImage.src = "images/background.png";
-</script>
+      window.addEventListener("load", () => {
+        ScrollTrigger.create({
+          trigger: ".contentContainer",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2, // Increased for smoother, slower motion
+          pin: ".image-container",
+          pinSpacing: false,
+        });
+      });
+    </script>
   </body>
 </html>
