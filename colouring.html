@@ -42,13 +42,14 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh; /* Mobile default */
+        height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
       }
 
       main {
         position: relative;
         z-index: 1;
-        margin-top: 0; /* Mobile default */
+        margin-top: 0; /* Mobile default - content starts right after canvas */
+        /* background-color: azure; */
       }
 
       .contentContainer {
@@ -75,10 +76,17 @@
         pointer-events: none;
       }
 
-      /* Make text boxes semi-transparent */
       .textBox {
-        background-color: hsla(33, 100%, 98%, 0.9);
+        background-color: hsla(0, 0%, 100%, 0.9);
         pointer-events: none;
+        max-width: 98vw;
+        /* padding: 4rem 10rem; */
+      }
+
+      @media (min-width: 768px) {
+        .textBox {
+          padding: 4rem 10rem;
+        }
       }
 
       /* Re-enable pointer events for specific interactive elements */
@@ -98,18 +106,6 @@
         z-index: 2;
       }
 
-      /* Controls panel */
-      .controls {
-        position: fixed;
-        width: 0;
-        height: 0;
-        top: -10px;
-        right: -20px;
-        z-index: 1000;
-        pointer-events: auto;
-        background: rgba(255, 255, 255, 0.9);
-      }
-
       /* Header */
       header {
         position: fixed;
@@ -122,12 +118,21 @@
 
       nav {
         pointer-events: auto;
+        /* background-color: rgb(255, 255, 255); */
+      }
+
+      nav ul {
+        background-color: rgb(255, 255, 255);
       }
 
       /* Desktop styles */
       @media (min-width: 768px) {
         canvas {
           position: absolute; /* Reset for desktop */
+        }
+
+        nav li, nav ul, nav {
+          background-color: rgba(255, 255, 255, 0);
         }
 
         .image-container {
@@ -140,6 +145,114 @@
 
         header {
           position: relative;
+        }
+      }
+
+      /* sponsorbox  */
+
+      .sponsorbox {
+        margin: 1rem 0 0 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .logo-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+        min-height: 120px;
+        max-width: 97rem;
+        width: 100%;
+      }
+
+      .logo-slot {
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-slot a {
+        /* Add this for the links */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .logo {
+        max-width: 2rem 100%;
+        max-height: 90px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+        pointer-events: auto;
+        /* background-color: rgb(255, 255, 255); */
+      }
+
+      .logo-big {
+        max-width: 90%;
+      }
+
+      .logo.visible {
+        opacity: 1;
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .sponsorBox {
+          margin: 4rem 0 0 0;
+        }
+
+        .logo-container {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+
+        .logo-slot {
+          width: 100px;
+          height: 60px;
+        }
+
+        /* Hide slots 4-6 on mobile */
+        .logo-slot:nth-child(n + 4) {
+          display: none;
+        }
+      }
+
+      /* Base mobile styles */
+      main {
+        position: relative;
+        z-index: 1;
+        margin-top: 8vh;
+      }
+
+      /* Tablet/smaller desktop */
+      @media (min-width: 768px) {
+        main {
+          margin-top: 90vh;
+        }
+      }
+
+      /* Your working desktop size ~1976px */
+      @media (min-width: 1900px) {
+        main {
+          margin-top: 120vh;
+        }
+      }
+
+      /* Larger monitors */
+      @media (min-width: 2500px) {
+        main {
+          margin-top: 150vh;
         }
       }
     </style>
@@ -201,8 +314,8 @@
           <section class="textBox">
             <h2></h2>
             <p>
-              Toronto Games Week is a collective coordination of events organized independently by dozens of organizations, curators, companies,
-              creators, and communities.
+              <span class="strong">Toronto Games Week</span> is a collective coordination of events organized independently by dozens of
+              organizations, curators, companies, creators, and communities.
             </p>
             <br />
             <br />
@@ -328,62 +441,88 @@
         </div>
         <!-- </div> -->
 
-        <h2>Our Supporters</h2>
         <div class="sponsorbox">
+          <div class="logo-container">
+            <div class="logo-slot"></div>
+            <div class="logo-slot"></div>
+            <div class="logo-slot"></div>
+            <div class="logo-slot"></div>
+            <div class="logo-slot"></div>
+            <div class="logo-slot"></div>
+          </div>
+        </div>
+
+        <div class="logo-source" style="display: none">
           <a href="https://www.ontariocreates.ca/" target="blank"
-            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo"
+            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo logo-big"
           /></a>
           <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
-            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo" /></a
+            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo logo-big" /></a
           ><br />
-          <a href="https://www.drinkboxstudios.com/" target="blank"><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo" /></a>
-          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo" /></a>
-          <a href="https://gameartsinternational.network/" target="blank"><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo" /></a>
-          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo" /></a>
-          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo" /></a>
-          <a href="https://www.continueagency.com/" target="blank"><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo" /></a>
-          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo" /></a>
-          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo" /></a>
-          <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
-            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo"
+          <a href="https://www.drinkboxstudios.com/" target="blank"
+            ><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo logo-big"
           /></a>
-          <a href="https://ladyarcaders.com/" target="blank"><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo" /></a>
-          <a href="https://vividfoundry.com/" target="blank"><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo" /></a>
+          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo logo-big" /></a>
+          <a href="https://gameartsinternational.network/" target="blank"
+            ><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo logo-big" /></a>
+          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo logo-big" /></a>
+          <a href="https://www.continueagency.com/" target="blank"
+            ><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo logo-big"
+          /></a>
+          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo logo-big" /></a>
+          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo logo-big" /></a>
+          <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
+            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo logo-big"
+          /></a>
+          <a href="https://ladyarcaders.com/" target="blank"
+            ><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo logo-big"
+          /></a>
+          <a href="https://vividfoundry.com/" target="blank"
+            ><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo logo-big"
+          /></a>
           <a href="https://linktr.ee/blackbeltcinema" target="blank"
-            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo"
+            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo logo-big"
           /></a>
           <a href="https://www.dirty-rectangles.com/" target="blank"
-            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo"
+            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo logo-big"
           /></a>
-          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo" /></a>
+          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo logo-big" /></a>
           <a href="https://torontopubliclibrary.ca/" target="blank"
-            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo"
+            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo logo-big"
           /></a>
-          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo" /></a>
+          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo logo-big" /></a>
           <a href="https://indiegamereviewer.com/" target="blank"
-            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo"
+            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo logo-big"
           /></a>
-          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo" /></a>
-          <a href="https://toughguymountain.com/" target="blank"><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo" /></a>
-          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo" /></a>
-          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo" /></a>
-          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo" />
-          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo" /></a>
-          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo" /></a>
+          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo logo-big" /></a>
+          <a href="https://toughguymountain.com/" target="blank"
+            ><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo logo-big"
+          /></a>
+          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo logo-big" /></a>
+          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo logo-big" /></a>
+          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo logo-big" />
+          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo logo-big" /></a>
+          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo logo-big" /></a>
           <a href="https://tripledragon.co.uk/" target="blank"
-            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo"
+            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo logo-big"
           /></a>
-          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo" /></a>
-          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo" /></a>
-          <a href="https://toronto.ubisoft.com/" target="blank"><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo" /></a>
-          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo" /></a>
-          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo" /></a>
-          <a href="https://mightyyell.com/" target="blank"><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo" /></a>
+          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo logo-big" /></a>
+          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo logo-big" /></a>
+          <a href="https://toronto.ubisoft.com/" target="blank"
+            ><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo logo-big" /></a>
+          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo logo-big" /></a>
+          <a href="https://mightyyell.com/" target="blank"
+            ><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo logo-big"
+          /></a>
           <a href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection" target="blank"
-            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo"
+            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo logo-big"
           /></a>
-          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo" /></a>
-          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo" /></a>
+          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo logo-big" /></a>
+          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo logo-big" /></a>
         </div>
       </div>
 
@@ -404,26 +543,74 @@
       const canvas = document.getElementById("myCanvas");
       const ctx = canvas.getContext("2d");
 
-      const bwImage = new Image();
-      const colorImage = new Image();
+      // Create image objects for both mobile and desktop
+      const images = {
+        desktop: {
+          bw: new Image(),
+          color: new Image(),
+        },
+        mobile: {
+          bw: new Image(),
+          color: new Image(),
+        },
+      };
+
       let lastX = 0,
         lastY = 0;
       let isFirstTouch = true;
       let particles = [];
       let isFixed = false;
       let isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      let scrollTriggerInstance;
+      let currentImages;
 
-      // Update isDesktop on resize
-      window.addEventListener("resize", () => {
-        isDesktop = window.matchMedia("(min-width: 768px)").matches;
-      });
+      // Set image sources
+      images.desktop.bw.src = "images/2025/bw.png";
+      images.desktop.color.src = "images/2025/colour.png";
+      images.mobile.bw.src = "images/2025/bw.png";
+      images.mobile.color.src = "images/2025/colour.png";
+
+      // Update current images based on viewport
+      function updateCurrentImages() {
+        currentImages = isDesktop ? images.desktop : images.mobile;
+      }
 
       function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+        updateCurrentImages();
 
-        if (bwImage.complete) {
-          ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
+        // Wait for the current image to be loaded
+        if (currentImages.bw.complete) {
+          canvas.width = window.innerWidth;
+          canvas.height = currentImages.bw.naturalHeight * (window.innerWidth / currentImages.bw.naturalWidth);
+          ctx.drawImage(currentImages.bw, 0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      function createScrollTrigger() {
+        if (scrollTriggerInstance) {
+          scrollTriggerInstance.kill();
+        }
+
+        if (isDesktop) {
+          scrollTriggerInstance = ScrollTrigger.create({
+            trigger: ".contentContainer",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 2,
+            pin: ".image-container",
+            pinSpacing: false,
+          });
+        } else {
+          scrollTriggerInstance = ScrollTrigger.create({
+            trigger: ".contentContainer",
+            start: "top 10%",
+            end: "bottom top",
+            scrub: 2,
+            pin: ".image-container",
+            pinSpacing: false,
+          });
         }
       }
 
@@ -449,21 +636,19 @@
 
         ctx.globalCompositeOperation = "destination-out";
 
-        // Create new particles with fixed values instead of slider values
-        const newParticles = Array(18) // Fixed particle count
+        const newParticles = Array(18)
           .fill()
           .map(() => ({
             x: coords.x,
             y: coords.y,
-            vx: (Math.random() - 0.5) * 2, // Fixed speed
+            vx: (Math.random() - 0.5) * 2,
             vy: (Math.random() - 0.5) * 2,
-            size: Math.random() * 16 + 2, // Fixed size range
-            opacity: 0.77, // Fixed opacity
+            size: Math.random() * 16 + 2,
+            opacity: 0.77,
           }));
 
         particles.push(...newParticles);
 
-        // Update and draw all particles
         particles.forEach((p) => {
           p.x += p.vx;
           p.y += p.vy;
@@ -474,20 +659,48 @@
           ctx.fill();
         });
 
-        // Remove old particles
         particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
 
         ctx.globalCompositeOperation = "destination-over";
-        const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
+        const ratio = currentImages.color.naturalHeight / currentImages.color.naturalWidth;
         const width = canvas.width;
         const height = width * ratio;
-        ctx.drawImage(colorImage, 0, 0, width, height);
+        ctx.drawImage(currentImages.color, 0, 0, width, height);
 
         lastX = coords.x;
         lastY = coords.y;
       }
 
-      // Canvas event listeners
+      // Debounce function for resize events
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // Event listeners
+      window.addEventListener("load", () => {
+        updateCurrentImages();
+        createScrollTrigger();
+        resizeCanvas();
+      });
+
+      window.addEventListener(
+        "resize",
+        debounce(() => {
+          isDesktop = window.matchMedia("(min-width: 768px)").matches;
+          updateCurrentImages();
+          resizeCanvas();
+          createScrollTrigger();
+        }, 250)
+      );
+
       canvas.addEventListener("mousemove", draw);
       canvas.addEventListener("touchmove", (e) => {
         e.preventDefault();
@@ -497,34 +710,61 @@
       canvas.addEventListener("mouseout", () => (isFirstTouch = true));
       canvas.addEventListener("touchend", () => (isFirstTouch = true));
 
-      window.addEventListener("resize", resizeCanvas);
-
-      // Image loading
-      bwImage.onload = () => {
-        resizeCanvas();
-      };
-
-      colorImage.onload = () => {
-        resizeCanvas();
-      };
-
-      bwImage.src = "images/2025/bw.png";
-      colorImage.src = "images/2025/colour.png";
+      // Image load handlers
+      Object.values(images).forEach((imageSet) => {
+        Object.values(imageSet).forEach((img) => {
+          img.onload = resizeCanvas;
+        });
+      });
     </script>
 
     <script>
-      gsap.registerPlugin(ScrollTrigger);
+      function setupSponsors() {
+        const slots = document.querySelectorAll(".logo-slot");
+        const logos = [...document.querySelectorAll(".logo-source a")];
 
-      window.addEventListener("load", () => {
-        ScrollTrigger.create({
-          trigger: ".contentContainer",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 2, // Increased for smoother, slower motion
-          pin: ".image-container",
-          pinSpacing: false,
-        });
-      });
+        function getVisibleCount() {
+          return window.innerWidth <= 768 ? 3 : 6; // 3 on mobile, 6 on desktop
+        }
+
+        function updateLogos() {
+          const visibleCount = getVisibleCount();
+          const selectedLogos = [...logos].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+          // First fade out current logos
+          slots.forEach((slot) => {
+            const currentLogo = slot.querySelector("img");
+            if (currentLogo) {
+              currentLogo.classList.remove("visible");
+            }
+          });
+
+          setTimeout(() => {
+            slots.forEach((slot, i) => {
+              if (selectedLogos[i]) {
+                const logo = selectedLogos[i].cloneNode(true);
+                slot.innerHTML = "";
+                slot.appendChild(logo);
+                requestAnimationFrame(() => {
+                  logo.querySelector("img").classList.add("visible");
+                });
+              }
+            });
+          }, 1200);
+        }
+
+        updateLogos();
+        setInterval(updateLogos, 6000);
+
+        window.addEventListener(
+          "resize",
+          debounce(() => {
+            updateLogos();
+          }, 250)
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", setupSponsors);
     </script>
   </body>
 </html>

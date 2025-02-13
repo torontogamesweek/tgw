@@ -421,12 +421,12 @@ a {
 
 @media screen and (min-width: 900px) {
   p {
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     /* padding: 2rem 10%; */
   }
 
   li {
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     /* padding: 2rem 10%; */
   }
 
@@ -505,6 +505,7 @@ btn,
 
 .btndiv {
   display: flex;
+  justify-content: center;
 }
 
 @media (min-width: 60rem) {
@@ -649,8 +650,8 @@ div[eo-block="powered-by"] {
 
 .floatingBtn {
   width: auto;
-  margin: 1rem 1rem;
-  padding: 5px 10px;
+  margin: 1.7rem 1rem 1rem 1rem;
+  padding: 8px 10px;
   border-radius: 1rem;
   background-color: var(--accentOrange);
   border: 1px dotted var(--white);
@@ -1350,7 +1351,7 @@ nav > ul > li {
 /*************************/
 @media screen and (min-width: 900px) {
   nav {
-    position: static; /* Remove absolute positioning */
+    /* position: static; */
     transform: scale(1, 1);
     background: none;
     max-width: 90rem;
