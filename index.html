@@ -131,7 +131,9 @@
           position: absolute; /* Reset for desktop */
         }
 
-        nav li, nav ul, nav {
+        nav li,
+        nav ul,
+        nav {
           background-color: rgba(255, 255, 255, 0);
         }
 
@@ -178,7 +180,6 @@
       }
 
       .logo-slot a {
-        /* Add this for the links */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -228,21 +229,21 @@
         }
       }
 
-      /* Base mobile styles */
+      /* Base */
       main {
         position: relative;
         z-index: 1;
         margin-top: 8vh;
       }
 
-      /* Tablet/smaller desktop */
+      /* Tablet */
       @media (min-width: 768px) {
         main {
           margin-top: 90vh;
         }
       }
 
-      /* Your working desktop size ~1976px */
+      /* desktop size ~1976px */
       @media (min-width: 1900px) {
         main {
           margin-top: 120vh;
@@ -265,9 +266,7 @@
         <span></span>
       </label>
 
-      <div>
-        <!-- <a href=""><img src="" alt="Logo" /></a> -->
-      </div>
+      <div></div>
       <nav>
         <ul>
           <li>
@@ -286,30 +285,8 @@
     <div class="image-container">
       <canvas id="myCanvas" width="500" height="400"></canvas>
     </div>
-
-    <!-- <canvas id="myCanvas" width="500" height="400"></canvas> -->
-
-    <!-- Scripts for Canvas -->
-    <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script> -->
-    <!-- <script src="playableBackground.js"></script> -->
-
     <main>
-      <!-- <div class="headerImgDiv">
-        <img id="letterImg" src="images/TGWLogo2025wCap.png" alt="A type treatment of Toronto Games Week" />
-        <p id="caption">A celebration of playable arts & culture</p>
-        <p id="date">June 11-17, 2025</p>
-        <br />
-      </div> -->
-
       <div class="contentContainer" id="landingPage">
-        <!-- <div class="content">
-          <section class="textBox">
-            <p id="aboutTGW">
-            </p>
-          </section>
-        </div> -->
-
         <div class="content">
           <section class="textBox">
             <h2></h2>
@@ -350,51 +327,8 @@
                 <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
               </p>
             </div>
-            <!-- <p class="btn floatingBtn"><a href="schedule.html">See the schedule!</a></p> -->
-            <!-- <a target="_blank" href="https://drive.google.com/file/d/1Wxfla2Qet1cNO2Ii3dPjL_IFyL_lHzZL/view">See the 2024 poster!</a> -->
           </section>
         </div>
-
-        <!-- <div class="content">
-          <section class="textBox">
-            <h2>Special guests</h2>
-            <p>
-              We're kicking off Toronto Games Week 2024 with XP Summit, a two day industry event that brings together international and local game
-              development talent to learn from each other. And we're excited to be bringing special guests to town:
-            </p>
-            <ul class="controllerList">
-              <li>
-                <a target="_blank" href="https://www.linkedin.com/in/trey-smith-3825aa1/?originalSubdomain=ca">Trey Smith</a>, veteran creative
-                director from Vancouver (Hardspace: Shipbreaker, Tony Hawk's Pro Skater 3)
-              </li>
-              <li>
-                <a target="_blank" href="https://www.linkedin.com/in/xalavier-nelson-jr/">Xalavier Nelson Jr.</a>, BAFTA nominated narrative designer
-                from El Paso, Texas (Stranger Things VR, Hypnospace Outlaw)
-              </li>
-              <li>
-                <a target="_blank" href="https://www.linkedin.com/in/philsalv/">Phil Salvador</a>, library director from San Francisco (Video Game
-                History Foundation)
-              </li>
-            </ul>
-          </section>
-        </div> -->
-
-        <!-- <div class="content">
-          <section class="textBox">
-            <h2>Keep Updated</h2>
-            <p>
-              Stay in touch! You can follow us on <a href="https://x.com/torontogameswk" target="blank">X</a> or even better, subscribe to our
-              newsletter:
-            </p>
-                        <div id="newsletterSignup">
-              <script
-                async
-                data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
-                src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js">
-              </script>
-            </div>
-          </section>
-        </div> -->
 
         <div class="content">
           <section class="textBox">
@@ -439,7 +373,6 @@
             </p>
           </section>
         </div>
-        <!-- </div> -->
 
         <div class="sponsorbox">
           <div class="logo-container">
@@ -526,15 +459,8 @@
         </div>
       </div>
 
-      <div id="inventory">
-        <!-- <p>Inventory</p> -->
-      </div>
-      <!-- <img class="footerImg" src="images/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" /> -->
+      <div id="inventory"></div>
     </main>
-
-    <!-- Scripts -->
-    <script src="play.js"></script>
-    <script src="connectionTest.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -543,46 +469,27 @@
       const canvas = document.getElementById("myCanvas");
       const ctx = canvas.getContext("2d");
 
-      // Create image objects for both mobile and desktop
-      const images = {
-        desktop: {
-          bw: new Image(),
-          color: new Image(),
-        },
-        mobile: {
-          bw: new Image(),
-          color: new Image(),
-        },
-      };
+      // Simplified image objects
+      const bwImage = new Image();
+      const colorImage = new Image();
 
       let lastX = 0,
         lastY = 0;
       let isFirstTouch = true;
       let particles = [];
       let isFixed = false;
-      let isDesktop = window.matchMedia("(min-width: 768px)").matches;
       let scrollTriggerInstance;
-      let currentImages;
 
       // Set image sources
-      images.desktop.bw.src = "images/2025/bw.png";
-      images.desktop.color.src = "images/2025/colour.png";
-      images.mobile.bw.src = "images/2025/bw.png";
-      images.mobile.color.src = "images/2025/colour.png";
-
-      // Update current images based on viewport
-      function updateCurrentImages() {
-        currentImages = isDesktop ? images.desktop : images.mobile;
-      }
+      bwImage.src = "images/2025/bw.png";
+      colorImage.src = "images/2025/colour.png";
 
       function resizeCanvas() {
-        updateCurrentImages();
-
-        // Wait for the current image to be loaded
-        if (currentImages.bw.complete) {
+        // Wait for the image to be loaded
+        if (bwImage.complete) {
           canvas.width = window.innerWidth;
-          canvas.height = currentImages.bw.naturalHeight * (window.innerWidth / currentImages.bw.naturalWidth);
-          ctx.drawImage(currentImages.bw, 0, 0, canvas.width, canvas.height);
+          canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+          ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
         }
       }
 
@@ -593,25 +500,16 @@
           scrollTriggerInstance.kill();
         }
 
-        if (isDesktop) {
-          scrollTriggerInstance = ScrollTrigger.create({
-            trigger: ".contentContainer",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 2,
-            pin: ".image-container",
-            pinSpacing: false,
-          });
-        } else {
-          scrollTriggerInstance = ScrollTrigger.create({
-            trigger: ".contentContainer",
-            start: "top 10%",
-            end: "bottom top",
-            scrub: 2,
-            pin: ".image-container",
-            pinSpacing: false,
-          });
-        }
+        const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+        scrollTriggerInstance = ScrollTrigger.create({
+          trigger: ".contentContainer",
+          start: isDesktop ? "top bottom" : "top 10%",
+          end: "bottom top",
+          scrub: 2,
+          pin: ".image-container",
+          pinSpacing: false,
+        });
       }
 
       function getCoords(e) {
@@ -662,10 +560,10 @@
         particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
 
         ctx.globalCompositeOperation = "destination-over";
-        const ratio = currentImages.color.naturalHeight / currentImages.color.naturalWidth;
+        const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
         const width = canvas.width;
         const height = width * ratio;
-        ctx.drawImage(currentImages.color, 0, 0, width, height);
+        ctx.drawImage(colorImage, 0, 0, width, height);
 
         lastX = coords.x;
         lastY = coords.y;
@@ -686,7 +584,6 @@
 
       // Event listeners
       window.addEventListener("load", () => {
-        updateCurrentImages();
         createScrollTrigger();
         resizeCanvas();
       });
@@ -694,8 +591,6 @@
       window.addEventListener(
         "resize",
         debounce(() => {
-          isDesktop = window.matchMedia("(min-width: 768px)").matches;
-          updateCurrentImages();
           resizeCanvas();
           createScrollTrigger();
         }, 250)
@@ -711,11 +606,8 @@
       canvas.addEventListener("touchend", () => (isFirstTouch = true));
 
       // Image load handlers
-      Object.values(images).forEach((imageSet) => {
-        Object.values(imageSet).forEach((img) => {
-          img.onload = resizeCanvas;
-        });
-      });
+      bwImage.onload = resizeCanvas;
+      colorImage.onload = resizeCanvas;
     </script>
 
     <script>
