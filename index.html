@@ -7,7 +7,10 @@
 
     <!-- Stylesheets -->
     <link href="styles.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Meta Tags -->
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
@@ -15,15 +18,28 @@
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Toronto Games Week" />
-    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
-    <meta property="og:image" content="https://torontogamesweek.com/images/tgwposternologos.png" />
+    <meta
+      property="og:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      property="og:image"
+      content="https://torontogamesweek.com/images/tgwposternologos.png"
+    />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
 
     <!-- Twitter Tags -->
     <meta name="twitter:title" content="Toronto Games Week" />
-    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+    <meta
+      name="twitter:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      name="twitter:image"
+      content="images/TGWSocialSmall.png"
+      id="indexImage"
+    />
     <meta name="twitter:card" content="summary_large_image" />
 
     <style>
@@ -42,7 +58,9 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+        height: calc(
+          1000px * (9 / 16)
+        ); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
       }
 
       main {
@@ -90,19 +108,12 @@
       }
 
       /* Re-enable pointer events for specific interactive elements */
-      .contentContainer a,
-      .contentContainer button,
-      .contentContainer input,
-      .contentContainer select,
-      .contentContainer textarea,
-      .contentContainer label,
+      .contentContainer > *
       .headerImgDiv img,
       .btn,
       .floatingBtn,
-      .textBox a,
-      .textBox button,
-      .textBox input {
-        pointer-events: auto;
+      .textBox > * {
+        pointer-events: all;
         z-index: 2;
       }
 
@@ -229,6 +240,10 @@
         }
       }
 
+      .no-pointer-events {
+        pointer-events: none;
+      }
+
       /* Base */
       main {
         position: relative;
@@ -285,24 +300,29 @@
     <div class="image-container">
       <canvas id="myCanvas" width="500" height="400"></canvas>
     </div>
-    <main>
+    <main class="no-pointer-events">
       <div class="contentContainer" id="landingPage">
         <div class="content">
           <section class="textBox">
             <h2></h2>
             <p>
-              <span class="strong">Toronto Games Week</span> is a collective coordination of events organized independently by dozens of
+              <span class="strong">Toronto Games Week</span> is a collective
+              coordination of events organized independently by dozens of
               organizations, curators, companies, creators, and communities.
             </p>
             <br />
             <br />
 
-            <p>Be the first to find out about TGW 2025 by subscribing to our newsletter:</p>
+            <p>
+              Be the first to find out about TGW 2025 by subscribing to our
+              newsletter:
+            </p>
             <div id="newsletterSignup">
               <script
                 async
                 data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
-                src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"></script>
+                src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"
+              ></script>
             </div>
           </section>
         </div>
@@ -334,8 +354,10 @@
           <section class="textBox">
             <h2>Organize an event!</h2>
             <p>
-              If you'd like to run a TGW event yourself, there's still time to get in on the fun! We're open to including board/escape
-              room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
+              If you'd like to run a TGW event yourself, there's still time to
+              get in on the fun! We're open to including board/escape
+              room/theatrical/LARPing -- playful culture of all sorts, not just
+              screen based games!
             </p>
             <p class="btn floatingBtn">
               <a
@@ -351,8 +373,9 @@
           <section class="textBox">
             <h2>Help out</h2>
             <p>
-              Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There's lots of
-              interesting things to do!
+              Would you like to volunteer and help the coalition of community
+              organizations and not-for-profits that make it happen? There's
+              lots of interesting things to do!
             </p>
             <p class="btn floatingBtn floatingBtnBlue">
               <a
@@ -368,7 +391,11 @@
           <section class="textBox">
             <h2>Contact</h2>
             <p>
-              Reach out with any questions to <a href="mailto:marie@gameartsinternational.network">Marie LeBlanc Flanagan</a> or
+              Reach out with any questions to
+              <a href="mailto:marie@gameartsinternational.network"
+                >Marie LeBlanc Flanagan</a
+              >
+              or
               <a href="mailto:jim@gameartsinternational.network">Jim Munroe</a>.
             </p>
           </section>
@@ -387,75 +414,224 @@
 
         <div class="logo-source" style="display: none">
           <a href="https://www.ontariocreates.ca/" target="blank"
-            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo logo-big"
+            ><img
+              src="images/logos/OntarioCreatesLogo.png"
+              alt="Ontario Creates logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
-            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo logo-big" /></a
+          <a
+            href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/"
+            target="blank"
+            ><img
+              src="images/logos/TorontoLogo.png"
+              alt="City of Toronto logo"
+              class="logo logo-big" /></a
           ><br />
           <a href="https://www.drinkboxstudios.com/" target="blank"
-            ><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo logo-big"
+            ><img
+              src="images/logos/DBLogo.png"
+              alt="Drinkbox logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo logo-big" /></a>
+          <a href="https://epicgames.com/" target="blank"
+            ><img
+              src="images/logos/EpicGamesLogo.png"
+              alt="EpicGamesLogo"
+              class="logo logo-big"
+          /></a>
           <a href="https://gameartsinternational.network/" target="blank"
-            ><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo logo-big"
+            ><img
+              src="images/logos/GAINLogo.png"
+              alt="GAIN logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo logo-big" /></a>
-          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo logo-big" /></a>
+          <a href="https://www.interactiveontario.com/" target="blank"
+            ><img
+              src="images/logos/IOLogo.png"
+              alt="IO logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://xpgamesummit.com/" target="blank"
+            ><img
+              src="images/logos/XPGamingLogo.png"
+              alt="XP logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://www.continueagency.com/" target="blank"
-            ><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo logo-big"
+            ><img
+              src="images/logos/ContinueLogo.png"
+              alt="Continue logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo logo-big" /></a>
-          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo logo-big" /></a>
+          <a href="https://brokengamescollective.com/" target="blank"
+            ><img
+              src="images/logos/BGCLogo.png"
+              alt="BGC logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://makerspace.cobot.me/" target="blank"
+            ><img
+              src="images/logos/TTLLogo.png"
+              alt="TTL logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
-            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo logo-big"
+            ><img
+              src="images/logos/BonusStageLogo.png"
+              alt="Bonus Stage logo"
+              class="logo logo-big"
           /></a>
           <a href="https://ladyarcaders.com/" target="blank"
-            ><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo logo-big"
+            ><img
+              src="images/logos/LadyArcadersLogo.png"
+              alt="Lady Arcaders logo"
+              class="logo logo-big"
           /></a>
           <a href="https://vividfoundry.com/" target="blank"
-            ><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo logo-big"
+            ><img
+              src="images/logos/VividFoundryLogo.png"
+              alt="Vivid Foundry logo"
+              class="logo logo-big"
           /></a>
           <a href="https://linktr.ee/blackbeltcinema" target="blank"
-            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo logo-big"
+            ><img
+              src="images/logos/BBCLogo.png"
+              alt="Black Belt Cinema logo"
+              class="logo logo-big"
           /></a>
           <a href="https://www.dirty-rectangles.com/" target="blank"
-            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo logo-big"
+            ><img
+              src="images/logos/DirtyRectanglesLogo.png"
+              alt="Dirty Rectangles logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo logo-big" /></a>
+          <a href="https://tojam.ca/" target="blank"
+            ><img
+              src="images/logos/TOJamLogo.png"
+              alt="Toronto Game Jam logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://torontopubliclibrary.ca/" target="blank"
-            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo logo-big"
+            ><img
+              src="images/logos/TPLLogo.png"
+              alt="Toronto Public Library logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo logo-big" /></a>
+          <a href="https://longslice.com/" target="blank"
+            ><img
+              src="images/logos/LongsliceLogo.png"
+              alt="Longslice logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://indiegamereviewer.com/" target="blank"
-            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo logo-big"
+            ><img
+              src="images/logos/IGRLogo.png"
+              alt="Indie Game Reviewer logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo logo-big" /></a>
+          <a href="https://interaccess.ca/" target="blank"
+            ><img
+              src="images/logos/IALogo.png"
+              alt="Interaccess logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://toughguymountain.com/" target="blank"
-            ><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo logo-big"
+            ><img
+              src="images/logos/TGMLogo.png"
+              alt="Tough Guy Mountain logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo logo-big" /></a>
-          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo logo-big" /></a>
-          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo logo-big" />
-          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo logo-big" /></a>
-          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo logo-big" /></a>
+          <a href="https://werocreative.com/" target="blank"
+            ><img
+              src="images/logos/WeroLogo.png"
+              alt="Wero logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://soundcloud.com/iamdjxl" target="blank"
+            ><img
+              src="images/logos/DJXLLogo.png"
+              alt="DJXL logo"
+              class="logo logo-big"
+          /></a>
+          <img
+            src="images/logos/PRMoisanLogo.png"
+            alt="PRMoisan logo"
+            class="logo logo-big"
+          />
+          <a href="https://fitc.ca/" target="blank"
+            ><img
+              src="images/logos/FITCLogo.png"
+              alt="FITC logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://jaliresearch.com/" target="blank"
+            ><img
+              src="images/logos/JaliLogo.png"
+              alt="Jali logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://tripledragon.co.uk/" target="blank"
-            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo logo-big"
+            ><img
+              src="images/logos/TripleDragonLogo.png"
+              alt="TripleDragon logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo logo-big" /></a>
-          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo logo-big" /></a>
+          <a href="https://www.getluckyvr.com/" target="blank"
+            ><img
+              src="images/logos/LuckyVRLogo.png"
+              alt="LuckyVR logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://xsolla.com" target="blank"
+            ><img
+              src="images/logos/XsollaLogo.png"
+              alt="Xsolla logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://toronto.ubisoft.com/" target="blank"
-            ><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo logo-big"
+            ><img
+              src="images/logos/UbisoftLogo.png"
+              alt="Ubisoft logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo logo-big" /></a>
-          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo logo-big" /></a>
+          <a href="https://www.torontofilmschool.ca/" target="blank"
+            ><img
+              src="images/logos/TFSLogo.png"
+              alt="TFS logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://handeyesociety.com/" target="blank"
+            ><img
+              src="images/logos/HESLogo.png"
+              alt="HES logo"
+              class="logo logo-big"
+          /></a>
           <a href="https://mightyyell.com/" target="blank"
-            ><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo logo-big"
+            ><img
+              src="images/logos/MightyYellLogo.png"
+              alt="Mighty Yell logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection" target="blank"
-            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo logo-big"
+          <a
+            href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection"
+            target="blank"
+            ><img
+              src="images/logos/UTMLogo.png"
+              alt="UTM logo"
+              class="logo logo-big"
           /></a>
-          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo logo-big" /></a>
-          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo logo-big" /></a>
+          <a href="https://mackenzie.art/" target="blank"
+            ><img
+              src="images/logos/MAGLogo.png"
+              alt="MAG logo"
+              class="logo logo-big"
+          /></a>
+          <a href="https://cwacanada.ca/" target="blank"
+            ><img
+              src="images/logos/CWALogo.png"
+              alt="CWA logo"
+              class="logo logo-big"
+          /></a>
         </div>
       </div>
 
@@ -488,7 +664,8 @@
         // Wait for the image to be loaded
         if (bwImage.complete) {
           canvas.width = window.innerWidth;
-          canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+          canvas.height =
+            bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
           ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
         }
       }
@@ -522,8 +699,9 @@
         };
       }
 
+      let eventRef;
       function draw(e) {
-        const coords = getCoords(e);
+        const coords = getCoords(eventRef);
 
         if (isFirstTouch) {
           lastX = coords.x;
@@ -557,7 +735,14 @@
           ctx.fill();
         });
 
-        particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
+        particles = particles.filter(
+          (p) =>
+            p.x > 0 &&
+            p.x < canvas.width &&
+            p.y > 0 &&
+            p.y < canvas.height &&
+            p.opacity > 0.01
+        );
 
         ctx.globalCompositeOperation = "destination-over";
         const ratio = colorImage.naturalHeight / colorImage.naturalWidth;
@@ -596,14 +781,35 @@
         }, 250)
       );
 
-      canvas.addEventListener("mousemove", draw);
+      let timeoutReference;
+
+      canvas.addEventListener("mousemove", (e) => {
+        eventRef = e;
+        if (timeoutReference) return;
+
+        timeoutReference = setInterval(() => {
+          draw(e);
+        }, 1);
+      });
       canvas.addEventListener("touchmove", (e) => {
-        e.preventDefault();
-        draw(e);
+        eventRef = e;
+        if (timeoutReference) return;
+
+        timeoutReference = setInterval(() => {
+          draw(e);
+        }, 1);
       });
 
-      canvas.addEventListener("mouseout", () => (isFirstTouch = true));
-      canvas.addEventListener("touchend", () => (isFirstTouch = true));
+      window.addEventListener("blur", () => {
+        clearInterval(timeoutReference);
+        timeoutReference = null;
+      });
+      canvas.addEventListener("mouseout", () => {
+        isFirstTouch = true;
+      });
+      canvas.addEventListener("touchend", () => {
+        isFirstTouch = true;
+      });
 
       // Image load handlers
       bwImage.onload = resizeCanvas;
@@ -621,7 +827,9 @@
 
         function updateLogos() {
           const visibleCount = getVisibleCount();
-          const selectedLogos = [...logos].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+          const selectedLogos = [...logos]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, visibleCount);
 
           // First fade out current logos
           slots.forEach((slot) => {
