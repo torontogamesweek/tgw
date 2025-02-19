@@ -700,7 +700,7 @@
       }
 
       let eventRef;
-      function draw(e) {
+      function draw() {
         const coords = getCoords(eventRef);
 
         if (isFirstTouch) {
@@ -788,7 +788,7 @@
         if (timeoutReference) return;
 
         timeoutReference = setInterval(() => {
-          draw(e);
+          draw();
         }, 1);
       });
       canvas.addEventListener("touchmove", (e) => {
@@ -796,7 +796,7 @@
         if (timeoutReference) return;
 
         timeoutReference = setInterval(() => {
-          draw(e);
+          draw();
         }, 1);
       });
 
