@@ -1323,6 +1323,7 @@ nav {
   transform: scale(1, 0);
   transform-origin: top;
   transition: transform 400ms ease-in-out;
+
 }
 
 nav ul {
@@ -1338,6 +1339,8 @@ nav a {
   /* color: var(--accentDark); */
   /* font-size: 1.2rem; */
   /* transition: opacity 150ms ease-in-out; */
+  text-decoration: none;
+
 }
 
 nav > ul > li {
