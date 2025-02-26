@@ -307,7 +307,7 @@ body {
   position: relative;
   color: rgba(14, 8, 42, 0.86);
   letter-spacing: .1rem;
-  font-size: .85rem;
+  font-size: 1rem;
 }
 
 p {
@@ -355,7 +355,7 @@ p {
 .textBox {
   background-color: hsl(33, 100%, 98%, 0.9);
   /* max-width: 85vw; */
-  /* min-width: 85vw; */
+  min-width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto 0 auto;
@@ -388,11 +388,12 @@ canvas {
   background-position: center;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
+
   /* findme  */
   /* Changed breakpoint */
   body {
-    font-size: .85rem;
+    font-size: 1rem;
     line-height: 1.5;
   }
 
@@ -423,7 +424,8 @@ a {
   font-weight: bold;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
+
   p {
     font-size: 1.3rem;
     /* padding: 2rem 10%; */
@@ -480,7 +482,7 @@ a:hover {
   width: 50vw;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   #field_0 {
     width: 30vw;
   }
@@ -513,7 +515,7 @@ btn,
   justify-content: center;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   btn,
   .btn {
     padding: 0.4em 2em;
@@ -602,7 +604,7 @@ btn,
 }
 
 /* Desktop styles */
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   /* Width fixes for containers */
   [data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"].inline-container,
   .form-container {
@@ -666,7 +668,8 @@ div[eo-block="powered-by"] {
 
 .floatingBtn {
   width: auto;
-  margin: 1.7rem 1rem 1rem 1rem;
+  /* max-width: 8rem; */
+  margin: 1.7rem auto 1rem auto;
   padding: 8px 10px;
   border-radius: 1rem;
   background-color: var(--accentOrange);
@@ -695,7 +698,7 @@ btn:focus {
   border: 2px solid var(--accentOrange);
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   btn,
   .btn {
     width: auto;
@@ -745,7 +748,7 @@ btn:focus {
 }
 
 /* Desktop styles */
-@media screen and (min-width: 768px) {
+@media (min-width: 800px) {
   .btn-d1,
   .btn-d2,
   .btn-d3,
@@ -806,7 +809,7 @@ img {
   margin: 3rem 0 2rem 0 !important;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   img {
     max-width: 100%;
   }
@@ -852,7 +855,7 @@ img {
   background-color: #b2c6d5;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   .landingImg {
     background-size: cover;
     margin-top: 0;
@@ -903,7 +906,7 @@ p#schedule {
   padding: 0 10px;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   .logo {
     /* max-height: auto; */
     margin: 1.3rem;
@@ -1026,7 +1029,7 @@ h5 {
   color: var(--accentLight);
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   h1 {
     font-size: 7vw;
     white-space: nowrap;
@@ -1068,7 +1071,7 @@ li {
   list-style-type: disc;
   /* text-indent: 1.5em; */
   list-style: none;
-  font-size: .85rem;
+  font-size: 1rem;
 
 }
 
@@ -1089,12 +1092,12 @@ li {
 
 .controllerList li p,
 .controllerList li {
-  font-size: .85rem;
+  font-size: 1rem;
   padding: 0.5rem;
   /* margin-left: 2.5rem; Offset to align with the bullet point */
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   .controllerList li {
     margin-left: 3rem; /* Adjust as needed */
     position: relative; /* Needed for absolute positioning */
@@ -1181,7 +1184,7 @@ legend {
 /***********************/
 /**** DESKTOP FORMS ****/
 /***********************/
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   form {
     /* width: 60%; */
   }
@@ -1261,7 +1264,7 @@ header {
   border-radius: 2%;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   header {
     /* width: 100vw;
     display: flex;
@@ -1294,7 +1297,7 @@ header {
   z-index: 999;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   #nameAndLogo {
     margin: 20px 20px 0 0;
   }
@@ -1319,7 +1322,7 @@ header {
   filter: hue-rotate(280deg);
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   #indexImage {
     z-index: 999;
     /* position: static; */
@@ -1369,7 +1372,7 @@ nav > ul > li {
 /*************************/
 /****** NAV DESKTOP ******/
 /*************************/
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   nav {
     /* position: static; */
     transform: scale(1, 1);
@@ -1509,7 +1512,7 @@ nav.expanded a {
   transition: opacity 250ms ease-in-out 250ms;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   .nav-toggle-button {
     display: none;
   }
@@ -1531,7 +1534,7 @@ footer {
   width: 100vw;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
 }
 
 /* ///// */
@@ -2495,7 +2498,7 @@ footer {
   border-width: 0px;
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 800px) {
   .indexItem,
   .indexType {
     width: auto;
@@ -2547,7 +2550,7 @@ footer {
   max-width: 10vw;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   .eventIcon {
     margin: 2rem;
     /* border: 2px solid; */
@@ -2633,7 +2636,7 @@ footer {
   color: blueviolet;
   padding: 0.45rem 0.5rem;
   border-radius: 13px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   display: inline-block; /* keep the background color wrapped tight */
   font-family: "Alegreya", sans-serif;
 }
@@ -2648,7 +2651,7 @@ footer {
   font-weight: 300;
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
   .event {
     border: 0.6rem solid;
     border-radius: 2rem;
@@ -2703,7 +2706,8 @@ footer {
   /* display:none; */
 }
 
-@media screen and (min-width: 900px) {
+@media (min-width: 800px) {
+
   #googleCalendar {
     position: relative;
     padding-bottom: 56.25%;
