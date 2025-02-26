@@ -303,6 +303,7 @@ body {
   overflow-y: auto;
   line-height: 1.25;
   background: hsl(200 20% 88%);
+  /* background: white; */
   text-align: center;
   position: relative;
   color: rgba(14, 8, 42, 0.86);
