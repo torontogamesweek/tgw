@@ -525,8 +525,6 @@ btn,
   }
 }
 
-
-
 /* Base form container styles */
 .emailoctopus-form-wrapper {
   display: flex !important;
@@ -605,50 +603,6 @@ btn,
 
 /* Desktop styles */
 @media (min-width: 60rem) {
-  .emailoctopus-form-wrapper .emailoctopus-form .main-form {
-    flex-direction: row !important;
-    justify-content: center !important;
-    /* gap: 2rem !important; */
-    flex-wrap: nowrap !important;
-    width: 100% !important; /* Ensure full width */
-  }
-
-  .emailoctopus-form-wrapper .emailoctopus-form [eo-form-fields-container] {
-    flex: 1 1 auto !important;
-    max-width: none !important; /* Remove max-width restriction */
-    width: 100% !important; /* Ensure full width */
-    margin-right: 1rem !important; /* Add some margin between input and button */
-
-  }
-
-  .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
-    margin-bottom: 0 !important;
-    max-width: 70rem !important; /* Increased significantly */
-    font-size: 1rem !important;
-    padding: 0.4em 1.5em !important;
-    width: 100% !important;
-    min-width: 50px !important; 
-    flex: 1 1 auto !important;
-  }
-
-  .emailoctopus-form-wrapper .emailoctopus-form input[type="submit"] {
-    margin: 0 !important;
-    flex-shrink: 0 !important;
-    font-size: 1rem !important;
-    white-space: nowrap !important; /* Prevent button text from wrapping */
-    min-width: fit-content !important; /* Ensure button doesn't shrink too much */
-  }
-
-  .emailoctopus-form-wrapper .emailoctopus-form .emailoctopus-form-row {
-    width: 100% !important;
-    flex: 1 1 auto !important;
-  }
-}
-
-
-
-/* Desktop styles */
-@media (min-width: 60rem) {
   /* Width fixes for containers */
   [data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"].inline-container,
   .form-container {
@@ -663,12 +617,12 @@ btn,
     max-width: 100% !important;
     flex: 1 1 auto !important;
   }
-  
-  /* Form layout - removed duplicate declaration */
+
+  /* Form layout */
   .emailoctopus-form-wrapper .emailoctopus-form .main-form {
-    display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
+    /* gap: 2rem !important; */
     flex-wrap: nowrap !important;
   }
 
@@ -676,7 +630,6 @@ btn,
   .emailoctopus-form-wrapper .emailoctopus-form [eo-form-fields-container] {
     flex: 1 1 auto !important;
     max-width: none !important;
-    width: 100% !important;
     margin-right: 1rem !important;
   }
 
@@ -684,10 +637,9 @@ btn,
   .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
     margin-bottom: 0 !important;
     max-width: 70rem !important;
-    font-size: 2rem !important;
-    padding: 0.4em 1.5em !important;
-    width: 100% !important;
-    min-width: 450px !important; 
+    font-size: 1.5rem !important;
+    padding: 0.2em 1.5em !important;
+    min-width: 50px !important;
     flex: 1 1 auto !important;
   }
 
@@ -699,16 +651,6 @@ btn,
     padding: 0.3em 1.5em !important;
     white-space: nowrap !important;
     min-width: fit-content !important;
-  }
-
-  .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
-    margin-bottom: 0 !important;
-    max-width: 70rem !important; /* Increased significantly */
-    font-size: 1.5rem !important;
-    padding: 0.2em 1.5em !important;
-    width: 100% !important;
-    min-width: 50px !important; 
-    flex: 1 1 auto !important;
   }
 }
 
