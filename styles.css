@@ -1426,33 +1426,45 @@ nav > ul > li {
 /***** NAV TOGGLE ******/
 /***********************/
 
-.nav-toggle {
-  /* display: inline-block; */
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
-  padding: 0.5rem;
+
+
+
+/* new nav */
+
+
+/* Visually hidden text for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-.nav-toggle:focus,
-.nav-toggle-label {
-  color: var(--accentLight);
-}
-
-.nav-toggle-label {
+/* Navigation toggle button */
+.nav-toggle-button {
   z-index: 99999;
-  /* position: absolute; */
+  position: absolute;
   top: 0;
   left: 0;
   margin: 0 0.95em;
   height: 100%;
   display: flex;
   align-items: center;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
-.nav-toggle-label span,
-.nav-toggle-label span::before,
-.nav-toggle-label span::after {
+/* Toggle button icon styles */
+.nav-toggle-button .icon,
+.nav-toggle-button .icon::before,
+.nav-toggle-button .icon::after {
   display: block;
   background-color: rgb(255 110 110);
   height: 4px;
@@ -1461,32 +1473,49 @@ nav > ul > li {
   position: relative;
 }
 
-.nav-toggle-label span::before,
-.nav-toggle-label span::after {
+.nav-toggle-button .icon::before,
+.nav-toggle-button .icon::after {
   content: "";
   position: absolute;
 }
 
-.nav-toggle-label span::before {
+.nav-toggle-button .icon::before {
   bottom: 13px;
 }
 
-.nav-toggle-label span::after {
+.nav-toggle-button .icon::after {
   top: 13px;
 }
 
-.nav-toggle:checked ~ nav {
+/* Update the nav styles to work with JS instead of checkbox */
+nav {
+  position: absolute;
+  text-align: right;
+  top: 100%;
+  background-color: rgb(209 223 234);
+  width: 100%;
+  transform: scale(1, 0);
+  transform-origin: top;
+  transition: transform 400ms ease-in-out;
+}
+
+/* Class that will be toggled with JavaScript */
+nav.expanded {
   transform: scale(1, 1);
 }
 
-.nav-toggle:checked ~ nav a {
+nav.expanded a {
   opacity: 1;
   transition: opacity 250ms ease-in-out 250ms;
 }
 
 @media screen and (min-width: 900px) {
-  .nav-toggle-label {
+  .nav-toggle-button {
     display: none;
+  }
+  
+  nav {
+    transform: scale(1, 1);
   }
 }
 

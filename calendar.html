@@ -104,7 +104,7 @@
         <div>
           <a href=""><img alt="" /></a>
         </div>
-        <nav>
+        <nav id="primary-navigation">
           <ul>
             <li>
               <a href="/index.html">Home</a>
@@ -207,5 +207,15 @@ fetchCalendarEvents().then(events => {
 });
 
     </script>
+        <script>document.addEventListener('DOMContentLoaded', function() {
+          const navToggle = document.getElementById('nav-toggle');
+          const primaryNav = document.getElementById('primary-navigation');
+          
+          navToggle.addEventListener('click', function() {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            primaryNav.classList.toggle('expanded');
+          });
+        });</script>
   </body>
 </html>

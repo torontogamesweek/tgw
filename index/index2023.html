@@ -35,7 +35,7 @@
   <div>
     <a href=""><img /></a>
   </div>
-  <nav>
+  <nav id="primary-navigation">
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="schedule.html" id="scheduleNav">Schedule</a></li>
@@ -351,5 +351,15 @@ function onClick(event) {
     </main>
     <script src="play.js"></script>
     <script src="connectionTest.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('nav-toggle');
+      const primaryNav = document.getElementById('primary-navigation');
+      
+      navToggle.addEventListener('click', function() {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', !isExpanded);
+        primaryNav.classList.toggle('expanded');
+      });
+    });</script>
   </body>
 </html>

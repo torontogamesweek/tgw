@@ -26,15 +26,15 @@
 
   <body>
     <header>
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-      <label for="nav-toggle" class="nav-toggle-label">
-        <span></span>
-      </label>
+      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+  <span class="sr-only">Menu</span>
+  <span class="icon"></span>
+</button>
 
       <div>
         <a href=""><img alt="" /></a>
       </div>
-      <nav>
+      <nav id="primary-navigation">
         <ul>
           <li>
             <a href="/index.html">Home</a>
@@ -141,5 +141,15 @@
     </main>
     <script src="/play.js"></script>
     <script src="/connectionTest.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('nav-toggle');
+      const primaryNav = document.getElementById('primary-navigation');
+      
+      navToggle.addEventListener('click', function() {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', !isExpanded);
+        primaryNav.classList.toggle('expanded');
+      });
+    });</script>
   </body>
 </html>

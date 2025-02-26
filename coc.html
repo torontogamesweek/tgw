@@ -37,7 +37,7 @@
   </head>
 
   <header>
-    <nav>
+    <nav id="primary-navigation">
       <ul>
         <!-- <li><a href="#">Home</a></li> -->
         <!-- <li><a href="about.html" id="aboutNav">About</a></li> -->
@@ -321,5 +321,15 @@
       </p>
     </main>
     <script src="play.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('nav-toggle');
+      const primaryNav = document.getElementById('primary-navigation');
+      
+      navToggle.addEventListener('click', function() {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', !isExpanded);
+        primaryNav.classList.toggle('expanded');
+      });
+    });</script>
   </body>
 </html>
