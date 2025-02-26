@@ -303,7 +303,6 @@ body {
   overflow-y: auto;
   line-height: 1.25;
   background: hsl(200 20% 88%);
-  /* background: white; */
   text-align: center;
   position: relative;
   color: rgba(14, 8, 42, 0.86);
@@ -355,12 +354,14 @@ p {
 
 .textBox {
   background-color: hsl(33, 100%, 98%, 0.9);
-  max-width: 85vw;
-  min-width: 85vw;
+  /* max-width: 85vw; */
+  /* min-width: 85vw; */
   display: flex;
   flex-direction: column;
   margin: 0 auto 0 auto;
   padding: 1.5rem;
+  /* padding: 0 2rem 2rem 3rem; */
+
   border-radius: 10px;
   border: 1px dotted #ed643d;
   text-align: left;
@@ -387,10 +388,11 @@ canvas {
   background-position: center;
 }
 
-@media screen and (min-width: 1344px) {
+@media screen and (min-width: 900px) {
+  /* findme  */
   /* Changed breakpoint */
   body {
-    font-size: 1rem;
+    font-size: .85rem;
     line-height: 1.5;
   }
 
@@ -400,7 +402,8 @@ canvas {
 
   .content {
     margin-top: 4.5rem;
-    width: 80rem; /* Fixed width for larger screens */
+    max-width: 750px; 
+
   }
 }
 
@@ -422,16 +425,17 @@ a {
 
 @media screen and (min-width: 900px) {
   p {
-    font-size: 1.9rem;
+    font-size: 1.3rem;
     /* padding: 2rem 10%; */
   }
 
   li {
-    font-size: 1.9rem;
+    font-size: 1.3rem;
     /* padding: 2rem 10%; */
   }
 
   ul {
+    font-size: 1.3rem;
     /* margin-left: 3em; */
   }
 
@@ -440,9 +444,9 @@ a {
   }
 
   .textBox {
-    padding: 0 2rem 2rem 3rem;
-    max-width: max(80rem, 90vw);
-    min-width: min(80rem, 90vw);
+    /* max-width: max(80rem, 90vw); */
+    /* min-width: min(80rem, 90vw); */
+    padding: 0 4rem 3rem 4rem;
   }
 }
 
@@ -521,6 +525,8 @@ btn,
   }
 }
 
+
+
 /* Base form container styles */
 .emailoctopus-form-wrapper {
   display: flex !important;
@@ -543,7 +549,7 @@ btn,
   display: flex !important;
   flex-direction: column !important; /* Column on mobile */
   align-items: center !important;
-  gap: 1rem !important;
+  /* gap: 1rem !important; */
   width: 100% !important; /* Ensure full width */
 }
 
@@ -574,8 +580,8 @@ btn,
   display: inline-block !important;
   width: auto !important;
   text-align: center !important;
-  margin: 0 !important;
-  padding: 0.2em 2em !important;
+  margin: 1em 0 !important;
+  padding: 0.4em 2em !important;
   background-color: var(--accentLight) !important;
   color: white !important;
   border: 2px solid var(--accentLight) !important;
@@ -602,7 +608,7 @@ btn,
   .emailoctopus-form-wrapper .emailoctopus-form .main-form {
     flex-direction: row !important;
     justify-content: center !important;
-    gap: 2rem !important;
+    /* gap: 2rem !important; */
     flex-wrap: nowrap !important;
     width: 100% !important; /* Ensure full width */
   }
@@ -618,23 +624,90 @@ btn,
   .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
     margin-bottom: 0 !important;
     max-width: 70rem !important; /* Increased significantly */
-    font-size: 2rem !important;
+    font-size: 1rem !important;
     padding: 0.4em 1.5em !important;
     width: 100% !important;
-    min-width: 550px !important; 
+    min-width: 50px !important; 
     flex: 1 1 auto !important;
   }
 
   .emailoctopus-form-wrapper .emailoctopus-form input[type="submit"] {
     margin: 0 !important;
     flex-shrink: 0 !important;
-    font-size: 2rem !important;
+    font-size: 1rem !important;
     white-space: nowrap !important; /* Prevent button text from wrapping */
     min-width: fit-content !important; /* Ensure button doesn't shrink too much */
   }
 
   .emailoctopus-form-wrapper .emailoctopus-form .emailoctopus-form-row {
     width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+}
+
+
+
+/* Desktop styles */
+@media (min-width: 60rem) {
+  /* Width fixes for containers */
+  [data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"].inline-container,
+  .form-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Target all form elements that need full width */
+  #newsletterSignup .emailoctopus-form-container .emailoctopus-form-wrapper .emailoctopus-form,
+  .emailoctopus-form-wrapper .emailoctopus-form .emailoctopus-form-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+  
+  /* Form layout - removed duplicate declaration */
+  .emailoctopus-form-wrapper .emailoctopus-form .main-form {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* Form fields container */
+  .emailoctopus-form-wrapper .emailoctopus-form [eo-form-fields-container] {
+    flex: 1 1 auto !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin-right: 1rem !important;
+  }
+
+  /* Email input field */
+  .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
+    margin-bottom: 0 !important;
+    max-width: 70rem !important;
+    font-size: 2rem !important;
+    padding: 0.4em 1.5em !important;
+    width: 100% !important;
+    min-width: 450px !important; 
+    flex: 1 1 auto !important;
+  }
+
+  /* Submit button */
+  .emailoctopus-form-wrapper .emailoctopus-form input[type="submit"] {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    font-size: 1.5rem !important;
+    padding: 0.3em 1.5em !important;
+    white-space: nowrap !important;
+    min-width: fit-content !important;
+  }
+
+  .emailoctopus-form-wrapper .emailoctopus-form input[type="email"] {
+    margin-bottom: 0 !important;
+    max-width: 70rem !important; /* Increased significantly */
+    font-size: 1.5rem !important;
+    padding: 0.2em 1.5em !important;
+    width: 100% !important;
+    min-width: 50px !important; 
     flex: 1 1 auto !important;
   }
 }
@@ -812,7 +885,7 @@ img {
 #caption {
   font-family: "Alegreya", sans-serif;
   color: #ed643d;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   /* padding: 0 1.8px; */
   /* margin: 0 auto 0 auto; */
 }
@@ -1021,7 +1094,8 @@ h5 {
   }
 
   h2 {
-    font-size: 4rem;
+    padding-top: 2rem;
+    font-size: 2.5rem;
   }
 
   h3 {
@@ -1092,9 +1166,9 @@ li {
 
   .controllerList li p,
   .controllerList li {
-    font-size: 1.6rem;
-    padding: 1rem;
-    margin-left: 3rem; /* Offset to align with the bullet point */
+    font-size: 1.3rem;
+    padding: .4rem;
+    margin-left: 2rem; /* Offset to align with the bullet point */
   }
 
   .controllerList li::before {
@@ -1376,7 +1450,7 @@ nav > ul > li {
 
   nav a {
     opacity: 1;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   nav a:hover::before {
@@ -2457,10 +2531,6 @@ footer {
   }
 }
 
-#landingPage {
-  /* display:flex; */
-  /* flex-direction: row; */
-}
 
 .fixedImage {
   /* position: fixed; */
@@ -2644,7 +2714,7 @@ footer {
   }
 
   .category {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     margin: 2rem 0 1rem 1rem;
   }
 }
