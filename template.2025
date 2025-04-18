@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <!--a Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta
+      property="og:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      property="og:image"
+      content="https://torontogamesweek.com/images/tgwposternologos.png"
+    />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta
+      name="twitter:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      name="twitter:image"
+      content="images/TGWSocialSmall.png"
+      id="indexImage"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      /* Base canvas setup */
+      canvas {
+        position: absolute; /* Mobile default */
+        width: 100%;
+        background-image: none;
+        height: auto;
+        left: 0;
+        top: 0;
+      }
+
+      .image-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(
+          1000px * (9 / 16)
+        ); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        margin-top: 0;
+        background-color: none;
+      }
+
+      .contentContainer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Content container setup */
+      .contentContainer,
+      .sponsorBox {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .headerImgDiv {
+        z-index: 1;
+        pointer-events: none;
+        background-color: transparent;
+      }
+
+      /* Main content areas */
+      .content {
+        pointer-events: none;
+      }
+
+      .textBox {
+        background-color: hsla(0, 0%, 100%, 0.9);
+        pointer-events: none;
+        /* max-width: 98vw; */
+        /* padding: 4rem 10rem; */
+      }
+
+      @media (min-width: 768px) {
+        .textBox {
+          /* padding: 4rem 10rem; */
+        }
+      }
+
+      /* Re-enable pointer events for specific interactive elements */
+      .contentContainer > * .headerImgDiv img,
+      .btn,
+      .floatingBtn,
+      .textBox > * {
+        pointer-events: all;
+        z-index: 2;
+      }
+
+      /* Header */
+      header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        top: 0;
+        pointer-events: auto;
+        height: 4rem;
+        margin-top: 0;
+      }
+
+      nav,
+      nav a {
+        pointer-events: auto;
+        background-color: white;
+      }
+
+      nav ul {
+        background-color: rgb(255, 255, 255);
+      }
+
+      @media screen and (min-width: 900px) {
+      }
+
+      @media (min-width: 768px) {
+        header {
+          height: 0;
+        }
+
+        canvas {
+          position: absolute; /* Reset for desktop */
+        }
+
+        nav li,
+        nav ul,
+        nav {
+          background-color: rgba(255, 255, 255, 0);
+          padding: 10px 10px 0 10px;
+        }
+
+        nav {
+          margin: 0;
+          padding: 0;
+          background-color: rgba(255, 255, 255, 0);
+        }
+        nav a {
+          color: rgb(45, 45, 45); /* Adjust based on background */
+          text-shadow: 0 0 5px white; /* Soft glow effect */
+          background-color: rgba(255, 255, 255, 0);
+        }
+
+        nav > ul > li {
+          font-size: 1.5rem;
+          margin: 0 10px;
+        }
+        .image-container {
+          height: 100vh; /* Reset for desktop */
+        }
+
+        main {
+          margin-top: 90vh; /* Desktop margin */
+        }
+
+        header {
+          position: relative;
+        }
+      }
+
+      /* sponsorbox  */
+
+      .sponsorbox {
+        margin: 1rem 0 0 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .logo-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+        min-height: 120px;
+        max-width: 97rem;
+        width: 100%;
+      }
+
+      .logo-slot {
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-slot a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .logo {
+        max-width: 2rem 100%;
+        min-height: 90px;
+        max-height: 90px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255);
+        border-radius: 5px;
+      }
+
+      .logo-big {
+        max-width: 90%;
+      }
+
+      .logo.visible {
+        opacity: 1;
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .sponsorBox {
+          margin: 4rem 0 0 0;
+        }
+
+        .logo-container {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+
+        .logo-slot {
+          width: 100px;
+          height: 60px;
+        }
+
+        /* Hide slots 4-6 on mobile */
+        .logo-slot:nth-child(n + 4) {
+          display: none;
+        }
+      }
+
+      .no-pointer-events {
+        pointer-events: none;
+      }
+
+      /* Base */
+      main {
+        position: relative;
+        z-index: 1;
+        margin-top: 3vh;
+      }
+
+      /* Tablet */
+      @media (min-width: 768px) {
+        main {
+          margin-top: 90vh;
+        }
+      }
+
+      /* desktop size ~1976px */
+      @media (min-width: 1900px) {
+        main {
+          margin-top: 120vh;
+        }
+      }
+
+      /* Larger monitors */
+      @media (min-width: 2500px) {
+        main {
+          margin-top: 150vh;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <button
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        class="nav-toggle-button"
+      >
+        <span class="sr-only">Menu</span>
+        <span class="icon"></span>
+      </button>
+
+      <div></div>
+      <nav id="primary-navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="image-container">
+      <canvas id="myCanvas" width="500" height="400"></canvas>
+    </div>
+    <main class="no-pointer-events">
+      <!-- Add HTML here -->
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+    <script>
+      // Add Javascript Here
+    </script>
+  </body>
+</html>

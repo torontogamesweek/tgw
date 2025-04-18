@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <!--a Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta
+      property="og:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      property="og:image"
+      content="https://torontogamesweek.com/images/tgwposternologos.png"
+    />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta
+      name="twitter:description"
+      content="Celebrating games in Toronto, Canada"
+    />
+    <meta
+      name="twitter:image"
+      content="images/TGWSocialSmall.png"
+      id="indexImage"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      /* Base canvas setup */
+      canvas {
+        position: absolute; /* Mobile default */
+        width: 100%;
+        background-image: none;
+        height: auto;
+        left: 0;
+        top: 0;
+      }
+
+      .image-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(
+          1000px * (9 / 16)
+        ); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        margin-top: 0;
+        background-color: none;
+      }
+
+      .contentContainer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Content container setup */
+      .contentContainer,
+      .sponsorBox {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .headerImgDiv {
+        z-index: 1;
+        pointer-events: none;
+        background-color: transparent;
+      }
+
+      /* Main content areas */
+      .content {
+        pointer-events: none;
+      }
+
+      .textBox {
+        background-color: hsla(0, 0%, 100%, 0.9);
+        pointer-events: none;
+        /* max-width: 98vw; */
+        /* padding: 4rem 10rem; */
+      }
+
+      @media (min-width: 768px) {
+        .textBox {
+          /* padding: 4rem 10rem; */
+        }
+      }
+
+      /* Re-enable pointer events for specific interactive elements */
+      .contentContainer > * .headerImgDiv img,
+      .btn,
+      .floatingBtn,
+      .textBox > * {
+        pointer-events: all;
+        z-index: 2;
+      }
+
+      /* Header */
+      nav {
+        position: static;
+      }
+
+      nav a {
+        pointer-events: auto;
+        background-color: white;
+      }
+
+      nav ul {
+        background-color: rgb(255, 255, 255);
+      }
+
+      @media screen and (min-width: 900px) {
+      }
+
+      @media (min-width: 768px) {
+        header {
+          height: 0;
+        }
+
+        canvas {
+          position: absolute; /* Reset for desktop */
+        }
+
+        nav li,
+        nav ul,
+        nav {
+          background-color: rgba(255, 255, 255, 0);
+          padding: 10px 10px 0 10px;
+        }
+
+        nav {
+          margin: 0;
+          padding: 0;
+          background-color: rgba(255, 255, 255, 0);
+        }
+        nav a {
+          color: rgb(45, 45, 45); /* Adjust based on background */
+          text-shadow: 0 0 5px white; /* Soft glow effect */
+          background-color: rgba(255, 255, 255, 0);
+        }
+
+        nav > ul > li {
+          font-size: 1.5rem;
+          margin: 0 10px;
+        }
+
+        header {
+          position: relative;
+        }
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .sponsorBox {
+          margin: 4rem 0 0 0;
+        }
+
+        .logo-container {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+
+        .logo-slot {
+          width: 100px;
+          height: 60px;
+        }
+
+        /* Hide slots 4-6 on mobile */
+        .logo-slot:nth-child(n + 4) {
+          display: none;
+        }
+      }
+
+      .no-pointer-events {
+        pointer-events: none;
+      }
+
+      /* Base */
+      main {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <button
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        class="nav-toggle-button"
+      >
+        <span class="sr-only">Menu</span>
+        <span class="icon"></span>
+      </button>
+
+      <div></div>
+    </header>
+    <!-- 
+    <div class="i`age-container">
+      <canvas id="myCanvas" width="500" height="400"></canvas>
+    </div> -->
+    <main class="no-pointer-events">
+      <!-- Add HTML here -->
+      <nav id="primary-navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+      <div id="schedule-container"></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+    <script>
+      // Add Javascript Here
+      class Event {
+        constructor(name, description, tags, location, rsvpLink) {
+          this.name = name;
+          this.description = description;
+          this.tags = tags;
+          this.location = location;
+          this.rsvpLink = rsvpLink;
+        }
+      }
+
+      const events = [];
+      const SHEET_ID = "1zGyrxUWyrjOFSYNOsH7u_w0K41G8CTPZ6G_cfA4GIZk";
+      const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+
+      async function fetchSheetData() {
+        try {
+          const response = await fetch(SHEET_URL);
+          const csvText = await response.text();
+
+          // Parse CSV
+          const rows = csvText
+            .split("\n")
+            .map((row) =>
+              row.split(",").map((cell) => cell.replace(/^"|"$/g, ""))
+            ); // Remove quotes
+
+          // Skip header row and process data
+          for (let i = 1; i < rows.length; i++) {
+            const [name, description, tags, location, rsvpLink] = rows[i];
+            events.push(new Event(name, description, tags, location, rsvpLink));
+          }
+
+          console.log("Fetched events:", events);
+          return events;
+        } catch (error) {
+          console.error("Error fetching sheet data:", error);
+          return [];
+        }
+      }
+
+      function displayEvents(events) {
+        const container = document.getElementById("schedule-container");
+        container.innerHTML = ""; // Clear previous content
+
+        events.forEach((event) => {
+          const eventDiv = document.createElement("div");
+          eventDiv.className = "event";
+          eventDiv.innerHTML = `
+            <h3>${event.name}</h3>
+            <p>${event.description}</p>
+            <p><strong>Location:</strong> ${event.location}</p>
+            <p><strong>Tags:</strong> ${event.tags}</p>
+            <a href="${event.rsvpLink}" target="_blank">RSVP</a>
+          `;
+          container.appendChild(eventDiv);
+        });
+      }
+
+      function handleLoaaded() {
+        fetchSheetData()
+          .then((events) => {
+            displayEvents(events);
+          })
+          .catch((error) => {
+            console.error("Error displaying events:", error);
+          });
+      }
+
+      // Call the function when the page loads
+      document.addEventListener("DOMContentLoaded", handleLoaaded);
+    </script>
+  </body>
+</html>
