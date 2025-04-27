@@ -6,7 +6,7 @@
     <title>Toronto Games Week</title>
 
     <!-- Stylesheets -->
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="../styles.css" rel="stylesheet" type="text/css" />
     <link
       href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
       rel="stylesheet"
@@ -97,6 +97,7 @@
       .textBox {
         background-color: hsla(0, 0%, 100%, 0.9);
         pointer-events: none;
+        text-align: center;
         /* max-width: 98vw; */
         /* padding: 4rem 10rem; */
       }
@@ -227,10 +228,10 @@
       <nav id="primary-navigation">
         <ul>
           <li>
-            <a href="index.html">Home</a>
+            <a href="./index.html">Home</a>
           </li>
           <li>
-            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+            <a href="schedule.html" id="scheduleNav">Schedule</a>
           </li>
           <li>
             <a href="about.html" id="aboutNav">About</a>
@@ -257,35 +258,52 @@
     <script>
       // Add Javascript Here
       class Event {
-        constructor(name, description, tags, location, rsvpLink) {
+        constructor(name, hook, description, date, location, link) {
           this.name = name;
+          this.hook = hook;
           this.description = description;
-          this.tags = tags;
+          this.date = date;
           this.location = location;
-          this.rsvpLink = rsvpLink;
+          this.link = link;
         }
       }
 
       const events = [];
-      const SHEET_ID = "1zGyrxUWyrjOFSYNOsH7u_w0K41G8CTPZ6G_cfA4GIZk";
+      const SHEET_ID = "1nfs459EuPLSICm9QbCI9EcQoyJ9T6hfXQPzogEYaW_4";
       const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
       async function fetchSheetData() {
         try {
           const response = await fetch(SHEET_URL);
           const csvText = await response.text();
+          let semicolonCsv = csvText.replace(
+            /,(?=(?:(?:[^"]*"){2})*[^"]*$)/g,
+            ";"
+          );
 
           // Parse CSV
-          const rows = csvText
+          const rows = semicolonCsv
             .split("\n")
             .map((row) =>
-              row.split(",").map((cell) => cell.replace(/^"|"$/g, ""))
+              row.split(";").map((cell) => cell.replace(/^"|"$/g, ""))
             ); // Remove quotes
 
           // Skip header row and process data
           for (let i = 1; i < rows.length; i++) {
-            const [name, description, tags, location, rsvpLink] = rows[i];
-            events.push(new Event(name, description, tags, location, rsvpLink));
+            const name = rows[i][1] || "";
+            const hook = rows[i][5] || "";
+            const description = rows[i][23] || "";
+            const date = rows[i][2] || "";
+            const location = rows[i][4] || "";
+            const link = rows[i][22]?.includes("http") ? rows[i][22] : "";
+
+            if (!name || name == "Incomplete") {
+              continue; // Skip incomplete rows
+            }
+
+            events.push(
+              new Event(name, hook, description, date, location, link)
+            );
           }
 
           console.log("Fetched events:", events);
@@ -302,13 +320,19 @@
 
         events.forEach((event) => {
           const eventDiv = document.createElement("div");
-          eventDiv.className = "event";
+          eventDiv.className = "content";
           eventDiv.innerHTML = `
-            <h3>${event.name}</h3>
-            <p>${event.description}</p>
-            <p><strong>Location:</strong> ${event.location}</p>
-            <p><strong>Tags:</strong> ${event.tags}</p>
-            <a href="${event.rsvpLink}" target="_blank">RSVP</a>
+            <section class="textBox">
+            <h2>${event.name}</h2>
+            <p>${event.hook}</p>
+            <p>Location: ${event.location}</p>
+            <p>Date: ${event.date}</p]>
+            ${
+              event.link
+                ? `<a href="${event.link}" target="_blank">Link</a>`
+                : ``
+            }
+            </section>
           `;
           container.appendChild(eventDiv);
         });
