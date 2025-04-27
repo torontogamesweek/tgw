@@ -292,10 +292,14 @@
           for (let i = 1; i < rows.length; i++) {
             const name = rows[i][1] || "";
             const hook = rows[i][5] || "";
-            const description = rows[i][23] || "";
+            const description = rows[i][6] || "";
             const date = rows[i][2] || "";
             const location = rows[i][4] || "";
             const link = rows[i][22]?.includes("http") ? rows[i][22] : "";
+
+            if (events.some((event) => event.name === name)) {
+              continue; // Skip duplicate events
+            }
 
             if (!name || name == "Incomplete") {
               continue; // Skip incomplete rows
@@ -324,7 +328,7 @@
           eventDiv.innerHTML = `
             <section class="textBox">
             <h2>${event.name}</h2>
-            <p>${event.hook}</p>
+            <p>${event.description}</p>
             <p>Location: ${event.location}</p>
             <p>Date: ${event.date}</p]>
             ${
