@@ -257,14 +257,85 @@
     </script>
     <script>
       // Add Javascript Here
+
+      // Parse CSV with proper handling of newlines in quoted fields
+      const parseCSV = (csvText) => {
+        const result = [];
+        let row = [];
+        let currentValue = "";
+        let insideQuotes = false;
+
+        for (let i = 0; i < csvText.length; i++) {
+          const char = csvText[i];
+          const nextChar = csvText[i + 1];
+
+          if (char === '"' && (!insideQuotes || nextChar !== '"')) {
+            // Toggle quote state (but not for escaped quotes)
+            insideQuotes = !insideQuotes;
+            continue;
+          }
+
+          if (char === '"' && nextChar === '"') {
+            // Handle escaped quotes (double quotes)
+            currentValue += '"';
+            i++; // Skip the next quote
+            continue;
+          }
+
+          if (char === ";" && !insideQuotes) {
+            // End of field
+            row.push(currentValue);
+            currentValue = "";
+            continue;
+          }
+
+          if (
+            (char === "\n" || (char === "\r" && nextChar === "\n")) &&
+            !insideQuotes
+          ) {
+            // End of row
+            row.push(currentValue);
+            result.push(row);
+            row = [];
+            currentValue = "";
+            if (char === "\r") i++; // Skip \n if we encountered \r\n
+            continue;
+          }
+
+          // Regular character, add to current value
+          currentValue += char;
+        }
+
+        // Don't forget the last row/value if file doesn't end with newline
+        if (currentValue !== "" || row.length > 0) {
+          row.push(currentValue);
+          result.push(row);
+        }
+
+        return result;
+      };
+
       class Event {
-        constructor(name, hook, description, date, location, link) {
+        constructor(
+          name,
+          hook,
+          description,
+          date,
+          location,
+          linkInfo,
+          link,
+          startTime,
+          endTime
+        ) {
           this.name = name;
           this.hook = hook;
           this.description = description;
           this.date = date;
           this.location = location;
+          this.linkInfo = linkInfo;
           this.link = link;
+          this.startTime = startTime;
+          this.endTime = endTime;
         }
       }
 
@@ -282,22 +353,30 @@
           );
 
           // Parse CSV
-          const rows = semicolonCsv
-            .split("\n")
-            .map((row) =>
-              row.split(";").map((cell) => cell.replace(/^"|"$/g, ""))
-            ); // Remove quotes
+          const rows = parseCSV(semicolonCsv);
 
           // Skip header row and process data
           for (let i = 1; i < rows.length; i++) {
+            console.log(rows[i]);
             const name = rows[i][1] || "";
             const hook = rows[i][5] || "";
             const description = rows[i][6] || "";
             const date = rows[i][2] || "";
             const location = rows[i][4] || "";
-            const link = rows[i][22]?.includes("http") ? rows[i][22] : "";
+            const linkInfo = rows[i][23] || "";
+            const link = rows[i][24] || "";
+            const incomplete = rows[i][26];
+            const startTime = rows[i][3];
+            const endTime = rows[i][28];
+
+            if (incomplete) {
+              continue;
+            }
 
             if (events.some((event) => event.name === name)) {
+              // add the date to the existing events date
+              const existingEvent = events.find((event) => event.name === name);
+              existingEvent.date += `, ${date}`;
               continue; // Skip duplicate events
             }
 
@@ -306,11 +385,20 @@
             }
 
             events.push(
-              new Event(name, hook, description, date, location, link)
+              new Event(
+                name,
+                hook,
+                description,
+                date,
+                location,
+                linkInfo,
+                link,
+                startTime,
+                endTime
+              )
             );
           }
 
-          console.log("Fetched events:", events);
           return events;
         } catch (error) {
           console.error("Error fetching sheet data:", error);
@@ -328,7 +416,9 @@
           // <img src="/images/creatures2024/31.png" alt="NIGHT" class="eventIcon" />
           eventDiv.innerHTML = `
             <section class="textBox">
-              <h3 class="date">${event.date}</h3>
+              <h3 class="date">${event.date} ~~~ ${event.startTime}-${
+            event.endTime
+          }</h3>
               <div class="DescAndImg">
                 <div class="desc">
                   <h2 class="title">${event.name}</h2>
@@ -337,12 +427,26 @@
                   </p>
                 </div>
               </div>
-              <p class="location"><span aria-hidden="true">📍</span>~???????~</p>
-              ${
-                event.link
-                  ? `<a href="${event.link}" target="_blank">Link</a>`
-                  : ``
-              }
+              <p class="location"><span aria-hidden="true">📍</span>
+                <a href="https://www.google.com/maps/search/${encodeURIComponent(
+                  event.location
+                )}" 
+                  target="_blank" 
+                  title="View on Google Maps">
+                  ${event.location}
+                </a>
+              </p>
+              <p>
+                <span aria-hidden="true">🔗</span>
+                ${event.linkInfo}
+                
+                ${
+                  event.link
+                    ? `<a href="${event.link}" target="_blank">Link</a>`
+                    : ``
+                }
+              </p>
+
             </section>
           `;
           container.appendChild(eventDiv);
