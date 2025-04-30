@@ -70,6 +70,22 @@
         background-color: none;
       }
 
+      header {
+        margin-top: 0;
+      }
+
+      #main2025 {
+        background-image: url("images/2025/lcolour.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: top;
+        background-size: cover;
+      }
+
+      #primary-navigation {
+        z-index: 50;
+      }
+
       .contentContainer {
         position: relative;
         z-index: 1;
@@ -128,7 +144,7 @@
       }
 
       #schedule-container {
-        padding: 2rem 2rem;
+        padding: 8rem 2rem;
       }
 
       @media (min-width: 768px) {
@@ -259,14 +275,6 @@
         <span class="icon"></span>
       </button>
 
-      <div></div>
-    </header>
-    <!-- 
-    <div class="i`age-container">
-      <canvas id="myCanvas" width="500" height="400"></canvas>
-    </div> -->
-    <main class="no-pointer-events">
-      <!-- Add HTML here -->
       <nav id="primary-navigation">
         <ul>
           <li>
@@ -280,6 +288,10 @@
           </li>
         </ul>
       </nav>
+    </header>
+
+    <main class="no-pointer-events" id="main2025">
+      <!-- Add HTML here -->
       <div id="schedule-container"></div>
     </main>
 
@@ -399,7 +411,6 @@
 
           // Skip header row and process data
           for (let i = 1; i < rows.length; i++) {
-            console.log(rows[i]);
             const name = rows[i][1] || "";
             const hook = rows[i][5] || "";
             const description = rows[i][6] || "";
