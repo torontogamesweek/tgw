@@ -142,8 +142,13 @@
         background-color: hsla(0, 0%, 100%, 0.9);
         pointer-events: none;
         text-align: center;
+        align-items: center;
         /* max-width: 98vw; */
         /* padding: 4rem 10rem; */
+      }
+
+      #img2025 {
+        max-height: 8rem;
       }
 
       #title2025 {
@@ -176,7 +181,7 @@
       }
 
       #date2025 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
       }
 
       @media (min-width: 768px) {
@@ -407,7 +412,9 @@
           linkInfo,
           link,
           startTime,
-          endTime
+          endTime,
+          icon,
+          iconAlt
         ) {
           this.name = name;
           this.hook = hook;
@@ -418,6 +425,8 @@
           this.link = link;
           this.startTime = startTime;
           this.endTime = endTime;
+          this.icon = icon;
+          this.iconAlt = iconAlt;
         }
       }
 
@@ -449,6 +458,8 @@
             const incomplete = rows[i][26];
             const startTime = rows[i][3];
             const endTime = rows[i][28];
+            const icon = rows[i][29];
+            const iconAlt = rows[i][30];
 
             if (incomplete) {
               continue;
@@ -475,7 +486,9 @@
                 linkInfo,
                 link,
                 startTime,
-                endTime
+                endTime,
+                icon,
+                iconAlt
               )
             );
           }
@@ -494,9 +507,12 @@
         events.forEach((event) => {
           const eventDiv = document.createElement("div");
           eventDiv.className = "event";
-          // <img src="/images/creatures2024/31.png" alt="NIGHT" class="eventIcon" />
+
           eventDiv.innerHTML = `
             <section class="textBox2025">
+              <img id="img2025" src="/images/TGW Poster Assets 2025/${
+                event.icon
+              }" alt="${event.icon}" class="eventIcon" />
               <h3 class="date" id="date2025">${event.date} ${event.startTime}-${
             event.endTime
           }</h3>
@@ -519,12 +535,10 @@
               </p>
               <p>
                 <span aria-hidden="true">🔗</span>
-                ${event.linkInfo}
-                
                 ${
                   event.link
-                    ? `<a href="${event.link}" target="_blank">Link</a>`
-                    : ``
+                    ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>`
+                    : `${event.linkInfo}`
                 }
               </p>
 
