@@ -324,18 +324,25 @@
 
         events.forEach((event) => {
           const eventDiv = document.createElement("div");
-          eventDiv.className = "content";
+          eventDiv.className = "event";
+          // <img src="/images/creatures2024/31.png" alt="NIGHT" class="eventIcon" />
           eventDiv.innerHTML = `
             <section class="textBox">
-            <h2>${event.name}</h2>
-            <p>${event.description}</p>
-            <p>Location: ${event.location}</p>
-            <p>Date: ${event.date}</p]>
-            ${
-              event.link
-                ? `<a href="${event.link}" target="_blank">Link</a>`
-                : ``
-            }
+              <h3 class="date">${event.date}</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <h2 class="title">${event.name}</h2>
+                  <p class="details">
+                    ${event.description}
+                  </p>
+                </div>
+              </div>
+              <p class="location"><span aria-hidden="true">📍</span>~???????~</p>
+              ${
+                event.link
+                  ? `<a href="${event.link}" target="_blank">Link</a>`
+                  : ``
+              }
             </section>
           `;
           container.appendChild(eventDiv);
