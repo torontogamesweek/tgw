@@ -73,6 +73,11 @@
       header {
         margin-top: 0;
       }
+      
+      #linkBold2025 {
+        font-weight: bold;
+        color: #5f32f3;
+      }
 
       #main2025 {
         display: flex;
@@ -645,6 +650,9 @@
                   <h2 class="title" id="title2025">${event.name}</h2>
                   <p class="details" id="description2025">
                     ${event.description}
+
+                    <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -658,10 +666,6 @@
                   ${event.location}
                 </a>
               </p>
-
-              ${event.link ? `<p><span aria-hidden="true">🔗</span> <a href="${event.link}" target="_blank">${event.linkInfo}</a></p>` : `<p>
-                ${event.linkInfo}
-              </p>`}
 
               <p class="categoryContainer2025">
                 ${event.categories
