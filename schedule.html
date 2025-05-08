@@ -73,6 +73,11 @@
       header {
         margin-top: 0;
       }
+      
+      #linkBold2025 {
+        font-weight: bold;
+        color: #5f32f3;
+      }
 
       #main2025 {
         display: flex;
@@ -131,6 +136,7 @@
 
       .textBox2025 {
         /* max-width: 85vw; */
+        position: relative;
         min-width: 100%;
         display: flex;
         flex-direction: column;
@@ -145,6 +151,64 @@
         align-items: center;
         /* max-width: 98vw; */
         /* padding: 4rem 10rem; */
+      }
+
+      button:hover {
+        /* expand a bit */
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .categoryContainer2025 {
+        margin: 1rem 0;
+      }
+
+      .category2025 {
+        text-transform: lowercase;
+        /* margin: 2rem 0 1rem 1rem; */
+        background: rgba(221, 213, 230, 0.9);
+        color: #5f32f3;
+        padding: 0.45rem 0.5rem;
+        border-radius: 13px;
+        font-size: 1rem;
+        display: inline-block; /* keep the background color wrapped tight */
+        font-family: "Alegreya", sans-serif;
+        margin: 0.25rem 0.25rem;
+      }
+
+      #daySelectorSelected {
+        background-color: rgba(218, 194, 247, 0.3);
+        color: #bbbbbb;
+        font-weight: bold;
+      }
+
+      .weekendColorOne {
+        /* light-medium blue */
+        background-color: #4c8bb8;
+      }
+
+      .weekendColorTwo {
+        /* Deep Blue */
+        background-color: #045888;
+      }
+
+      .weekendColorThree {
+        /* Medium Blue */
+        background-color: #4f8cc9;
+      }
+
+      .saveEvent {
+        background-color: #4c8bb8;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        /* Fix to top right */
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
       }
 
       #img2025 {
@@ -175,13 +239,14 @@
         #schedule-container {
           /* 3 per row in the grid with them all the same size */
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
           gap: 2rem;
         }
       }
 
       #date2025 {
         font-size: 1.5rem;
+        font-weight: bold;
       }
 
       @media (min-width: 768px) {
@@ -323,6 +388,58 @@
             Explore the many events and activities happening throughout the
             week.
           </p>
+          <section class="textBox-btn" id="daySelector">
+            <button
+              role="button"
+              href="#day1"
+              class="btn-d1 weekendColorOne"
+              data-day="Thu 12"
+              >Th<br />
+              12</a
+            >
+            <button
+              role="button"
+              href="#day2"
+              class="btn-d2 weekendColorOne"
+              data-day="Fri 13"
+              >Fr<br />13</a
+            >
+            <button
+              role="button"
+              href="#day3"
+              class="btn-d3 weekendColorTwo"
+              data-day="Sat 14"
+              >Sa<br />14</a
+            >
+            <button
+              role="button"
+              href="#day4"
+              class="btn-d4 weekendColorTwo"
+              data-day="Sun 15"
+              >Su<br />15</a
+            >
+            <button
+              role="button"
+              href="#day5"
+              class="btn-d5 weekendColorThree"
+              data-day="Mon 16"
+              >Mo<br />16</a
+            >
+            <button
+              role="button"
+              href="#day6"
+              class="btn-d6 weekendColorThree"
+              data-day="Tue 17"
+              >Tu<br />17</a
+            >
+            <button
+              role="button"
+              href="#day7"
+              class="btn-d7 weekendColorThree"
+              data-day="Wed 18"
+              >We<br />18</a
+            >
+          </section>
         </section>
       </div>
       <div id="schedule-container"></div>
@@ -414,7 +531,8 @@
           startTime,
           endTime,
           icon,
-          iconAlt
+          iconAlt,
+          categories
         ) {
           this.name = name;
           this.hook = hook;
@@ -427,6 +545,7 @@
           this.endTime = endTime;
           this.icon = icon;
           this.iconAlt = iconAlt;
+          this.categories = categories;
         }
       }
 
@@ -460,6 +579,7 @@
             const endTime = rows[i][28];
             const icon = rows[i][29];
             const iconAlt = rows[i][30];
+            const categories = rows[i][10] ? rows[i][10].split(",") : [];
 
             if (incomplete) {
               continue;
@@ -488,7 +608,8 @@
                 startTime,
                 endTime,
                 icon,
-                iconAlt
+                iconAlt,
+                categories
               )
             );
           }
@@ -500,7 +621,15 @@
         }
       }
 
+      let currentDisplayingEvents = events;
       function displayEvents(events) {
+        if (!events) {
+          events = currentDisplayingEvents;
+        }
+        else {
+          currentDisplayingEvents = events; // Update the current displaying events
+        }
+
         const container = document.getElementById("schedule-container");
         container.innerHTML = ""; // Clear previous content
 
@@ -510,7 +639,7 @@
 
           eventDiv.innerHTML = `
             <section class="textBox2025">
-              <img id="img2025" src="/images/TGW_Poster Assets_2025/${
+              <img id="img2025" src="/images/TGW_Poster_Assets_2025/${
                 event.icon
               }" alt="${event.icon}" class="eventIcon" />
               <h3 class="date" id="date2025">${event.date} ${event.startTime}-${
@@ -521,9 +650,13 @@
                   <h2 class="title" id="title2025">${event.name}</h2>
                   <p class="details" id="description2025">
                     ${event.description}
+
+                    <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
+                    </span>
                   </p>
                 </div>
               </div>
+
               <p class="location"><span aria-hidden="true">📍</span>
                 <a href="https://www.google.com/maps/search/${encodeURIComponent(
                   event.location
@@ -533,25 +666,123 @@
                   ${event.location}
                 </a>
               </p>
-              <p>
-                <span aria-hidden="true">🔗</span>
-                ${
-                  event.link
-                    ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>`
-                    : `${event.linkInfo}`
-                }
-              </p>
 
+              <p class="categoryContainer2025">
+                ${event.categories
+                  ?.map((category) => {
+                    return `<span class="category2025">${category}</span>`;
+                  })
+                  .join("")}
+                
+              </p>
+              
             </section>
           `;
           container.appendChild(eventDiv);
         });
+
+        registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
       }
 
-      function handleLoaaded() {
+      function registerDaySelectors() {
+        // Add event listeners to buttons
+        const buttons = document.querySelectorAll("[role='button']");
+        buttons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            // Prevent default link behavior
+            event.preventDefault();
+
+            // If the button is already selected, unselect
+            if (event.currentTarget.id === "daySelectorSelected") {
+              event.currentTarget.id = "";
+              displayEvents(events); // Rerender all events
+              return;
+            }
+
+            // Remove selected ID from all buttons
+            buttons.forEach((btn) => {
+              btn.id = "";
+            });
+            // Set selected ID to the clicked button
+            event.currentTarget.id = "daySelectorSelected";
+
+            const day = event.currentTarget
+              .getAttribute("data-day")
+              .split(" ")[0];
+            const targetId = `#day${day}`;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: "smooth" });
+            }
+            // Rerender events for the selected day
+            const filteredEvents = events.filter((event) =>
+              event.date.includes(day)
+            );
+
+            displayEvents(filteredEvents);
+          });
+        });
+      }
+
+      function registerSaveEventButtons() {
+        const saveButtons = document.querySelectorAll("button.saveEvent");
+        // Remove existing listeners to avoid duplicates
+        saveButtons.forEach((button) => {
+          button.removeEventListener("click", () => {});
+        });
+
+        saveButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const eventName =
+              event.currentTarget.getAttribute("data-event-name");
+
+            const savedEvents = localStorage.getItem("savedEvents")
+              ? JSON.parse(localStorage.getItem("savedEvents"))
+              : [];
+
+            if (savedEvents.includes(eventName)) {
+              savedEvents.splice(savedEvents.indexOf(eventName), 1);
+              localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+            } else {
+              savedEvents.push(eventName);
+              localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+            }
+
+            displayEvents(); // Rerender events to reflect changes
+            registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
+          });
+        });
+      }
+
+      function showSavedEvents() {
+        const savedEvents = localStorage.getItem("savedEvents")
+          ? JSON.parse(localStorage.getItem("savedEvents"))
+          : [];
+
+        if (savedEvents.length === 0) {
+          const saveEventButton = document.getElementById("showSavedEvents");
+          return;
+        }
+
+        const filteredEvents = events.filter((event) =>
+          savedEvents.includes(event.name)
+        );
+
+        displayEvents(filteredEvents);
+      }
+
+      function handleLoaded() {
         fetchSheetData()
           .then((events) => {
             displayEvents(events);
+            registerDaySelectors();
+            registerSaveEventButtons();
+            
+            const saveEventButton = document.getElementById("showSavedEvents");
+            saveEventButton.addEventListener("click", (event) => {
+              event.preventDefault(); // Prevent default link behavior
+              showSavedEvents();
+            });
           })
           .catch((error) => {
             console.error("Error displaying events:", error);
@@ -559,7 +790,7 @@
       }
 
       // Call the function when the page loads
-      document.addEventListener("DOMContentLoaded", handleLoaaded);
+      document.addEventListener("DOMContentLoaded", handleLoaded);
     </script>
   </body>
 </html>

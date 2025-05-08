@@ -319,10 +319,6 @@ p {
   background: yellow;
   /* margin: 0; */
 }
-.strong {
-  font-weight: bolder;
-  /* margin: 0; */
-}
 
 .sticky {
   position: sticky;
@@ -2618,7 +2614,8 @@ footer {
 }
 
 .location {
-  margin-bottom: 10px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 .details {
   margin: 1rem 0 1rem 0;
@@ -2679,6 +2676,7 @@ footer {
     /* padding-top: 3rem; */
     font-size: 1.7rem;
     text-align: left;
+    color: #36373a;
   }
 
   .title {
