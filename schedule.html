@@ -164,6 +164,11 @@
         margin: 0.25rem 0.25rem;
       }
 
+      .daySelectorSelected {
+        background: rgba(221, 213, 230, 0.3);
+        color: blueviolet;
+      }
+
       #img2025 {
         max-height: 8rem;
       }
@@ -340,6 +345,30 @@
             Explore the many events and activities happening throughout the
             week.
           </p>
+          <section class="textBox-btn" id="daySelector">
+            <a role="button" href="#day1" class="btn-d1" data-day="Thu 12"
+              >Th<br />
+              12</a
+            >
+            <a role="button" href="#day2" class="btn-d2" data-day="Fri 13"
+              >Fr<br />13</a
+            >
+            <a role="button" href="#day3" class="btn-d3" data-day="Sat 14"
+              >Sa<br />14</a
+            >
+            <a role="button" href="#day4" class="btn-d4" data-day="Sun 15"
+              >Su<br />15</a
+            >
+            <a role="button" href="#day5" class="btn-d5" data-day="Mon 16"
+              >Mo<br />16</a
+            >
+            <a role="button" href="#day6" class="btn-d6" data-day="Tue 17"
+              >Tu<br />17</a
+            >
+            <a role="button" href="#day7" class="btn-d7" data-day="Wed 18"
+              >We<br />18</a
+            >
+          </section>
         </section>
       </div>
       <div id="schedule-container"></div>
@@ -584,6 +613,44 @@
           .catch((error) => {
             console.error("Error displaying events:", error);
           });
+
+        // Add event listeners to buttons
+        const buttons = document.querySelectorAll("[role='button']");
+        buttons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            // Prevent default link behavior
+            event.preventDefault();
+
+            // If the button is already selected, unselect
+            if (event.currentTarget.classList.contains("daySelectorSelected")) {
+              event.currentTarget.classList.remove("daySelectorSelected");
+              displayEvents(events); // Rerender all events
+              return;
+            }
+
+            // Remove selected class from all buttons
+            buttons.forEach((btn) => {
+              btn.classList.remove("daySelectorSelected");
+            });
+            // Add selected class to the clicked button
+            event.currentTarget.classList.add("daySelectorSelected");
+
+            const day = event.currentTarget
+              .getAttribute("data-day")
+              .split(" ")[0];
+            const targetId = `#day${day}`;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: "smooth" });
+            }
+            // Rerender events for the selected day
+            const filteredEvents = events.filter((event) =>
+              event.date.includes(day)
+            );
+
+            displayEvents(filteredEvents);
+          });
+        });
       }
 
       // Call the function when the page loads
