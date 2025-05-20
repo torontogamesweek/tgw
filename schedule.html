@@ -84,7 +84,7 @@
         flex-direction: column;
         align-items: center;
         gap: 2rem;
-        padding: 8rem 2rem;
+        padding: 10px 5px;
         background-image: url("images/2025/lcolour.jpg");
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -92,13 +92,20 @@
         background-size: cover;
       }
 
+      @media (min-width: 768px) {
+        #main2025 {
+        padding: 8rem 2rem;
+        }
+      }
+
       #topboxcontainer2025 {
-        margin: 0 2rem;
+        margin-top: 15rem;
+        /* margin: 0 2px; */
       }
 
       @media (min-width: 768px) {
         #topboxcontainer2025 {
-          margin: 0 15rem;
+          /* margin: 0 15rem; */
         }
       }
 
@@ -151,6 +158,12 @@
         align-items: center;
         /* max-width: 98vw; */
         /* padding: 4rem 10rem; */
+      }
+
+      @media (min-width: 768px) {
+        .textBox2025 {
+        padding: 8rem 2rem;
+        }
       }
 
       button:hover {
@@ -381,8 +394,11 @@
 
     <main class="no-pointer-events" id="main2025">
       <!-- Add HTML here -->
+
       <div id="topboxcontainer2025">
+
         <section class="textBox2025">
+
           <p id="topbox2025">
             <b>Toronto Games Week</b> takes place from June 12th to June 18th!
             Explore the many events and activities happening throughout the
