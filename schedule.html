@@ -511,7 +511,7 @@
       };
 
       class Event {
-        constructor(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories) {
+        constructor(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories, gcalLink) {
           this.name = name;
           this.hook = hook;
           this.description = description;
@@ -524,7 +524,8 @@
           this.icon = icon;
           this.iconAlt = iconAlt;
           this.categories = categories;
-        }
+          this.gcalLink = gcalLink;
+                }
       }
 
       const events = [];
@@ -555,6 +556,7 @@
             const icon = rows[i][29];
             const iconAlt = rows[i][30];
             const categories = rows[i][10] ? rows[i][10].split(",") : [];
+            const gcalLink = rows[i][33] || ""; 
 
             if (incomplete) {
               continue;
@@ -571,7 +573,7 @@
               continue; // Skip incomplete rows
             }
 
-            events.push(new Event(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories));
+            events.push(new Event(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories, gcalLink));
           }
 
           return events;
@@ -600,6 +602,11 @@
             <section class="textBox2025">
               <img id="img2025" src="/images/TGW_Poster_Assets_2025/${event.icon}" alt="${event.icon}" class="eventIcon" />
               <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
+             
+      ${event.gcalLink ? 
+  `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" style="position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; text-decoration: none; pointer-events: all; z-index: 10;" aria-label="Add to Google Calendar">📅</a>` 
+  : ''}
+
               <div class="DescAndImg">
                 <div class="desc">
                   <h2 class="title" id="title2025">${event.name}</h2>
