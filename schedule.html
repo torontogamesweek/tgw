@@ -7,10 +7,7 @@
 
     <!-- Stylesheets -->
     <link href="../styles.css" rel="stylesheet" type="text/css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
 
     <!-- Meta Tags -->
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
@@ -18,28 +15,15 @@
 
     <!--a Open Graph Tags -->
     <meta property="og:title" content="Toronto Games Week" />
-    <meta
-      property="og:description"
-      content="Celebrating games in Toronto, Canada"
-    />
-    <meta
-      property="og:image"
-      content="https://torontogamesweek.com/images/tgwposternologos.png"
-    />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+    <meta property="og:image" content="https://torontogamesweek.com/images/tgwposternologos.png" />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
 
     <!-- Twitter Tags -->
     <meta name="twitter:title" content="Toronto Games Week" />
-    <meta
-      name="twitter:description"
-      content="Celebrating games in Toronto, Canada"
-    />
-    <meta
-      name="twitter:image"
-      content="images/TGWSocialSmall.png"
-      id="indexImage"
-    />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <style>
@@ -58,9 +42,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(
-          1000px * (9 / 16)
-        ); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+        height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
       }
 
       main {
@@ -73,7 +55,7 @@
       header {
         margin-top: 0;
       }
-      
+
       #linkBold2025 {
         font-weight: bold;
         color: #5f32f3;
@@ -94,7 +76,7 @@
 
       @media (min-width: 768px) {
         #main2025 {
-        padding: 8rem 2rem;
+          padding: 8rem 2rem;
         }
       }
 
@@ -162,7 +144,7 @@
 
       @media (min-width: 768px) {
         .textBox2025 {
-        padding: 8rem 2rem;
+          padding: 8rem 2rem;
         }
       }
 
@@ -183,7 +165,7 @@
         color: #5f32f3;
         padding: 0.15rem 0.3rem;
         border-radius: 13px;
-        font-size: .9rem;
+        font-size: 0.9rem;
         display: inline-block; /* keep the background color wrapped tight */
         font-family: "Alegreya", sans-serif;
         margin: 0.25rem 0.25rem;
@@ -277,6 +259,11 @@
         z-index: 2;
       }
 
+      #allDaysButton {
+        background-color: #800077;
+        color: white;
+      }
+
       /* Header */
       nav {
         position: static;
@@ -367,12 +354,7 @@
 
   <body>
     <header>
-      <button
-        id="nav-toggle"
-        aria-expanded="false"
-        aria-controls="primary-navigation"
-        class="nav-toggle-button"
-      >
+      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
         <span class="sr-only">Menu</span>
         <span class="icon"></span>
       </button>
@@ -396,65 +378,23 @@
       <!-- Add HTML here -->
 
       <div id="topboxcontainer2025">
-
         <section class="textBox2025">
-
           <p id="topbox2025">
-            <b>Toronto Games Week</b> takes place from June 12th to June 18th!
-            Explore the many events and activities happening throughout the
-            week.
+            <b>Toronto Games Week</b> takes place from June 12th to June 18th! Explore the many events and activities happening throughout the week.
           </p>
           <section class="textBox-btn" id="daySelector">
-            <button
-              role="button"
-              href="#day1"
-              class="btn-d1 weekendColorOne"
-              data-day="Thu 12"
-              >Th<br />
-              12</a
-            >
-            <button
-              role="button"
-              href="#day2"
-              class="btn-d2 weekendColorOne"
-              data-day="Fri 13"
-              >Fr<br />13</a
-            >
-            <button
-              role="button"
-              href="#day3"
-              class="btn-d3 weekendColorTwo"
-              data-day="Sat 14"
-              >Sa<br />14</a
-            >
-            <button
-              role="button"
-              href="#day4"
-              class="btn-d4 weekendColorTwo"
-              data-day="Sun 15"
-              >Su<br />15</a
-            >
-            <button
-              role="button"
-              href="#day5"
-              class="btn-d5 weekendColorThree"
-              data-day="Mon 16"
-              >Mo<br />16</a
-            >
-            <button
-              role="button"
-              href="#day6"
-              class="btn-d6 weekendColorThree"
-              data-day="Tue 17"
-              >Tu<br />17</a
-            >
-            <button
-              role="button"
-              href="#day7"
-              class="btn-d7 weekendColorThree"
-              data-day="Wed 18"
-              >We<br />18</a
-            >
+            <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
+              Th<br />
+              12
+            </button>
+            <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri 13">Fr<br />13</button>
+            <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat 14">Sa<br />14</button>
+            <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun 15">Su<br />15</button>
+            <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon 16">Mo<br />16</button>
+            <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue 17">Tu<br />17</button>
+            <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed 18">We<br />18</button>
+
+            <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All" id="allDaysButton">All<br />Days</button>
           </section>
         </section>
       </div>
@@ -509,10 +449,7 @@
             continue;
           }
 
-          if (
-            (char === "\n" || (char === "\r" && nextChar === "\n")) &&
-            !insideQuotes
-          ) {
+          if ((char === "\n" || (char === "\r" && nextChar === "\n")) && !insideQuotes) {
             // End of row
             row.push(currentValue);
             result.push(row);
@@ -536,20 +473,7 @@
       };
 
       class Event {
-        constructor(
-          name,
-          hook,
-          description,
-          date,
-          location,
-          linkInfo,
-          link,
-          startTime,
-          endTime,
-          icon,
-          iconAlt,
-          categories
-        ) {
+        constructor(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories) {
           this.name = name;
           this.hook = hook;
           this.description = description;
@@ -573,10 +497,7 @@
         try {
           const response = await fetch(SHEET_URL);
           const csvText = await response.text();
-          let semicolonCsv = csvText.replace(
-            /,(?=(?:(?:[^"]*"){2})*[^"]*$)/g,
-            ";"
-          );
+          let semicolonCsv = csvText.replace(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/g, ";");
 
           // Parse CSV
           const rows = parseCSV(semicolonCsv);
@@ -612,22 +533,7 @@
               continue; // Skip incomplete rows
             }
 
-            events.push(
-              new Event(
-                name,
-                hook,
-                description,
-                date,
-                location,
-                linkInfo,
-                link,
-                startTime,
-                endTime,
-                icon,
-                iconAlt,
-                categories
-              )
-            );
+            events.push(new Event(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories));
           }
 
           return events;
@@ -641,8 +547,7 @@
       function displayEvents(events) {
         if (!events) {
           events = currentDisplayingEvents;
-        }
-        else {
+        } else {
           currentDisplayingEvents = events; // Update the current displaying events
         }
 
@@ -655,12 +560,8 @@
 
           eventDiv.innerHTML = `
             <section class="textBox2025">
-              <img id="img2025" src="/images/TGW_Poster_Assets_2025/${
-                event.icon
-              }" alt="${event.icon}" class="eventIcon" />
-              <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${
-            event.endTime
-          }</h3>
+              <img id="img2025" src="/images/TGW_Poster_Assets_2025/${event.icon}" alt="${event.icon}" class="eventIcon" />
+              <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
               <div class="DescAndImg">
                 <div class="desc">
                   <h2 class="title" id="title2025">${event.name}</h2>
@@ -674,9 +575,7 @@
               </div>
 
               <p class="location"><span aria-hidden="true">📍</span>
-                <a href="https://www.google.com/maps/search/${encodeURIComponent(
-                  event.location
-                )}" 
+                <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}" 
                   target="_blank" 
                   title="View on Google Maps">
                   ${event.location}
@@ -708,36 +607,42 @@
             // Prevent default link behavior
             event.preventDefault();
 
-            // If the button is already selected, unselect
-            if (event.currentTarget.id === "daySelectorSelected") {
-              event.currentTarget.id = "";
-              displayEvents(events); // Rerender all events
-              return;
-            }
-
             // Remove selected ID from all buttons
             buttons.forEach((btn) => {
               btn.id = "";
             });
+
             // Set selected ID to the clicked button
             event.currentTarget.id = "daySelectorSelected";
 
-            const day = event.currentTarget
-              .getAttribute("data-day")
-              .split(" ")[0];
-            const targetId = `#day${day}`;
+            // Check if this is the All Days button
+            const day = event.currentTarget.getAttribute("data-day");
+            if (day === "All") {
+              // Show all events
+              displayEvents(events);
+              return;
+            }
+
+            // Otherwise, filter by the selected day
+            const dayShort = day.split(" ")[0];
+            const targetId = `#day${dayShort}`;
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
               targetElement.scrollIntoView({ behavior: "smooth" });
             }
+
             // Rerender events for the selected day
-            const filteredEvents = events.filter((event) =>
-              event.date.includes(day)
-            );
+            const filteredEvents = events.filter((event) => event.date.includes(dayShort));
 
             displayEvents(filteredEvents);
           });
         });
+
+        // Set All Days button as selected by default
+        const allDaysButton = document.querySelector("[data-day='All']");
+        if (allDaysButton) {
+          allDaysButton.id = "daySelectorSelected";
+        }
       }
 
       function registerSaveEventButtons() {
@@ -749,12 +654,9 @@
 
         saveButtons.forEach((button) => {
           button.addEventListener("click", (event) => {
-            const eventName =
-              event.currentTarget.getAttribute("data-event-name");
+            const eventName = event.currentTarget.getAttribute("data-event-name");
 
-            const savedEvents = localStorage.getItem("savedEvents")
-              ? JSON.parse(localStorage.getItem("savedEvents"))
-              : [];
+            const savedEvents = localStorage.getItem("savedEvents") ? JSON.parse(localStorage.getItem("savedEvents")) : [];
 
             if (savedEvents.includes(eventName)) {
               savedEvents.splice(savedEvents.indexOf(eventName), 1);
@@ -771,18 +673,14 @@
       }
 
       function showSavedEvents() {
-        const savedEvents = localStorage.getItem("savedEvents")
-          ? JSON.parse(localStorage.getItem("savedEvents"))
-          : [];
+        const savedEvents = localStorage.getItem("savedEvents") ? JSON.parse(localStorage.getItem("savedEvents")) : [];
 
         if (savedEvents.length === 0) {
           const saveEventButton = document.getElementById("showSavedEvents");
           return;
         }
 
-        const filteredEvents = events.filter((event) =>
-          savedEvents.includes(event.name)
-        );
+        const filteredEvents = events.filter((event) => savedEvents.includes(event.name));
 
         displayEvents(filteredEvents);
       }
@@ -793,7 +691,7 @@
             displayEvents(events);
             registerDaySelectors();
             registerSaveEventButtons();
-            
+
             const saveEventButton = document.getElementById("showSavedEvents");
             saveEventButton.addEventListener("click", (event) => {
               event.preventDefault(); // Prevent default link behavior
