@@ -50,6 +50,17 @@
         z-index: 1;
         margin-top: 0;
         background-color: none;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 10px 5px;
+        background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
+        background-repeat: repeat-y;
+        background-position: center top;
+        background-size: 100% auto;
+        background-attachment: fixed;
       }
 
       header {
@@ -67,21 +78,21 @@
         align-items: center;
         gap: 2rem;
         padding: 10px 5px;
-        background-image: url("images/2025/lcolour.jpg");
-        background-repeat: no-repeat;
+        background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
+        background-repeat: repeat-y;
+        background-position: center top;
+        background-size: 100% auto;
         background-attachment: fixed;
-        background-position: top;
-        background-size: cover;
       }
 
       @media (min-width: 768px) {
         #main2025 {
-          padding: 8rem 2rem;
+          padding: 0 2rem 8rem ;
         }
       }
 
       #topboxcontainer2025 {
-        margin-top: 15rem;
+        /* margin-top: 15rem; */
         /* margin: 0 2px; */
       }
 
@@ -93,10 +104,12 @@
 
       #topbox2025 {
         font-size: 1.5rem;
+        padding-top: 20px;
+        opacity: 1;
       }
 
       #primary-navigation {
-        z-index: 50;
+        /* z-index: 50; */
       }
 
       .contentContainer {
@@ -132,7 +145,7 @@
         margin: 0 auto 0 auto;
         /* padding: 1.5rem; */
         /* padding: 0 2rem 2rem 3rem; */
-
+        padding: 0;
         border-radius: 10px;
         background-color: hsla(0, 0%, 100%, 0.9);
         pointer-events: none;
@@ -145,6 +158,7 @@
       @media (min-width: 768px) {
         .textBox2025 {
           padding: 8rem 2rem;
+          padding: 0;
         }
       }
 
@@ -171,6 +185,19 @@
         margin: 0.25rem 0.25rem;
       }
 
+      #daySelector {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+
+      @media (min-width: 768px) {
+        #daySelector {
+          justify-content: center;
+        }
+      }
+
       #daySelectorSelected {
         background-color: rgba(218, 194, 247, 0.3);
         color: #bbbbbb;
@@ -184,7 +211,8 @@
 
       .weekendColorTwo {
         /* Deep Blue */
-        background-color: #045888;
+        /* background-color: #045888; */
+        background-color: #4c8bb8;
       }
 
       .weekendColorThree {
@@ -266,7 +294,7 @@
 
       /* Header */
       nav {
-        position: static;
+        /* position: static; */
       }
 
       nav a {
@@ -377,10 +405,16 @@
     <main class="no-pointer-events" id="main2025">
       <!-- Add HTML here -->
 
+      <div class="headerImgDiv">
+        <img id="letterImg" src="/images/TGW_Poster_Assets_2025/_Logo.png" alt="A type treatment of Toronto Games Week" />
+        <!-- <p id="caption">A celebration of playable arts & culture</p> -->
+        <br />
+      </div>
+
       <div id="topboxcontainer2025">
         <section class="textBox2025">
           <p id="topbox2025">
-            <b>Toronto Games Week</b> takes place from June 12th to June 18th! Explore the many events and activities happening throughout the week.
+            Explore the many events and activities happening from June 12th to June 18th.
           </p>
           <section class="textBox-btn" id="daySelector">
             <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
@@ -607,13 +641,15 @@
             // Prevent default link behavior
             event.preventDefault();
 
-            // Remove selected ID from all buttons
+            // Remove selected styling from all buttons
             buttons.forEach((btn) => {
-              btn.id = "";
+              btn.style.border = "none";
+              btn.style.outline = "none";
             });
 
-            // Set selected ID to the clicked button
-            event.currentTarget.id = "daySelectorSelected";
+            // Set selected styling to the clicked button
+            event.currentTarget.style.border = "2px solid white";
+            event.currentTarget.style.outline = "2px solid #4f8cc9";
 
             // Check if this is the All Days button
             const day = event.currentTarget.getAttribute("data-day");
@@ -641,7 +677,8 @@
         // Set All Days button as selected by default
         const allDaysButton = document.querySelector("[data-day='All']");
         if (allDaysButton) {
-          allDaysButton.id = "daySelectorSelected";
+          allDaysButton.style.border = "3px solid white";
+          allDaysButton.style.outline = "6px solid #5f32f3";
         }
       }
 

@@ -739,8 +739,8 @@ btn:focus {
 .btn-d5:hover,
 .btn-d6:hover,
 .btn-d7:hover {
-  background-color: lightcyan;
-  color: black;
+  background-color: #8dbbeb;
+  /* color: black; */
 }
 
 /* Desktop styles */
@@ -1251,6 +1251,15 @@ header {
   /* right: 0; */
   font-family: "Alegreya", sans-serif;
   font-weight: bold;
+
+
+  position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    pointer-events: auto;
+    height: 4rem;
+    margin-top: 0;
 }
 
 .headerImgDiv {
@@ -2665,7 +2674,7 @@ footer {
     border-radius: 1rem;
 
     /* border-radius: 1rem; */
-    margin: 3rem 0;
+    /* margin: 3rem 0; */
     max-width: 60rem;
   }
 

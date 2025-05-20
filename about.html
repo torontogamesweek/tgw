@@ -89,6 +89,17 @@
         z-index: 1;
         margin-top: 0;
         background-color: none;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 10px 5px;
+        background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
+        background-repeat: repeat-y;
+        background-position: center top;
+        background-size: 100% auto;
+        background-attachment: fixed;
       }
 
       .contentContainer {
@@ -197,7 +208,7 @@
         }
 
         main {
-          margin-top: 90vh; /* Desktop margin */
+          /* margin-top: 90vh; Desktop margin */
         }
 
         header {
@@ -294,27 +305,27 @@
       main {
         position: relative;
         z-index: 1;
-        margin-top: 3vh;
+        /* margin-top: 3vh; */
       }
 
       /* Tablet */
       @media (min-width: 768px) {
         main {
-          margin-top: 90vh;
+          /* margin-top: 90vh; */
         }
       }
 
       /* desktop size ~1976px */
       @media (min-width: 1900px) {
         main {
-          margin-top: 120vh;
+          /* margin-top: 120vh; */
         }
       }
 
       /* Larger monitors */
       @media (min-width: 2500px) {
         main {
-          margin-top: 150vh;
+          /* margin-top: 150vh; */
         }
       }
     </style>
@@ -347,11 +358,14 @@
         </ul>
       </nav>
     </header>
-
+<!-- 
     <div class="image-container">
       <canvas id="myCanvas" width="500" height="400"></canvas>
-    </div>
+    </div> -->
     <main class="no-pointer-events">
+
+  
+
       <div class="contentContainer" id="landingPage">
         <!-- <div class="content">
           <section class="textBox">
@@ -359,6 +373,12 @@
             </p>
           </section>
         </div> -->
+
+        <div class="headerImgDiv">
+          <img id="letterImg" src="/images/TGW_Poster_Assets_2025/_Logo.png" alt="A type treatment of Toronto Games Week" />
+          <!-- <p id="caption">A celebration of playable arts & culture</p> -->
+          <br />
+        </div>
 
         <div class="content">
           <section class="textBox">
