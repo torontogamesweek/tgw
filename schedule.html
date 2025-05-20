@@ -604,7 +604,7 @@
               <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
              
       ${event.gcalLink ? 
-  `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" style="position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; text-decoration: none; pointer-events: all; z-index: 10;" aria-label="Add to Google Calendar">📅</a>` 
+  `f` 
   : ''}
 
               <div class="DescAndImg">
@@ -740,11 +740,11 @@
             registerDaySelectors();
             registerSaveEventButtons();
 
-            const saveEventButton = document.getElementById("showSavedEvents");
-            saveEventButton.addEventListener("click", (event) => {
-              event.preventDefault(); // Prevent default link behavior
-              showSavedEvents();
-            });
+            // const saveEventButton = document.getElementById("showSavedEvents");
+            // saveEventButton.addEventListener("click", (event) => {
+            //   event.preventDefault(); // Prevent default link behavior
+            //   showSavedEvents();
+            // });
           })
           .catch((error) => {
             console.error("Error displaying events:", error);
