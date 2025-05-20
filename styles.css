@@ -861,8 +861,11 @@ img {
     /* background-size: cover; */
     /* width: 90vw; */
     /* margin-top: -5rem; */
-    max-width: 90rem;
-    margin-top: 10rem;
+    max-width: 100%;
+    /* margin-top: 10rem; */
+
+    display: flex;
+    margin: 10rem auto 0;
   }
 
   #caption {
