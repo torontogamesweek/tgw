@@ -215,41 +215,39 @@
         height: 100%;
       }
 
+      .logo {
+        width: 80px; /* Smaller for mobile */
+        height: 50px; /* Smaller for mobile */
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255);
+        border-radius: 5px;
+        padding: 0.3rem 0.5rem; /* Less padding on mobile */
+        border: 1px dotted var(--white);
+      }
 
-    .logo {
-  width: 80px;   /* Smaller for mobile */
-  height: 50px;  /* Smaller for mobile */
-  object-fit: contain;
-  opacity: 0;
-  transition: opacity 1.2s ease-in-out;
-  pointer-events: auto;
-  background-color: rgba(255, 255, 255);
-  border-radius: 5px;
-  padding: 0.3rem 0.5rem;  /* Less padding on mobile */
-  border: 1px dotted var(--white);
-}
+      .logo-big {
+        width: 80px; /* Same size for consistency */
+        height: 50px;
+      }
 
-.logo-big {
-  width: 80px;   /* Same size for consistency */
-  height: 50px;
-}
+      /* Make them bigger on desktop while keeping them uniform */
+      @media (min-width: 768px) {
+        .logo-slot {
+          width: 100%;
+          height: 180px;
+        }
 
-/* Make them bigger on desktop while keeping them uniform */
-@media (min-width: 768px) {
-  .logo-slot {
-    width: 100%;
-    height: 180px;
-  }
-  
-  .logo,
-  .logo-big {
-    width: 160px;  /* Bigger but uniform width */
-    height: 120px; /* Bigger but uniform height */
-    padding: 0.5rem 1rem;  /* More padding on desktop */
-    border: 2px solid #4e312a;  /* Thicker border on desktop */
-  }
-}
-
+        .logo,
+        .logo-big {
+          width: 160px; /* Bigger but uniform width */
+          height: 120px; /* Bigger but uniform height */
+          padding: 0.5rem 1rem; /* More padding on desktop */
+          border: 2px solid #271b189c; /* Thicker border on desktop */
+        }
+      }
 
       .logo.visible {
         opacity: 1;
@@ -257,17 +255,15 @@
 
       /* Mobile styles */
       @media (max-width: 768px) {
-        
         .sponsorbox {
           margin: 0;
         }
 
         .logo-container {
           grid-template-columns: repeat(3, 1fr);
-          gap: 1rem;
+          gap: 5px;
         }
 
-   
         /* Hide slots 4-6 on mobile */
         .logo-slot:nth-child(n + 4) {
           display: none;
