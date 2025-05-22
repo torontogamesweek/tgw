@@ -45,42 +45,42 @@
         height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
       }
 
-.gcal-icon {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  text-decoration: none;
-  z-index: 10;
-  border-radius: 50%; 
-  padding: 1rem;
-  border: 2px solid #c0d4e9; 
-  background-color: rgba(248, 251, 255, 0.81);
-  color: #4285F4;
-  cursor: pointer; 
-  transition: all 0.3s ease; 
-  
-  width: 3rem;
-  height: 3rem;
-}
+      .gcal-icon {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
 
-/* Hover state */
-.gcal-icon:hover {
-  background-color: #c0d4e9;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        text-decoration: none;
+        z-index: 10;
+        border-radius: 50%;
+        padding: 1rem;
+        border: 2px solid #c0d4e9;
+        background-color: rgba(248, 251, 255, 0.81);
+        color: #4285f4;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-/* Focus state for accessibility */
-.gcal-icon:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.4);
-}
+        width: 3rem;
+        height: 3rem;
+      }
+
+      /* Hover state */
+      .gcal-icon:hover {
+        background-color: #c0d4e9;
+        color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Focus state for accessibility */
+      .gcal-icon:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.4);
+      }
 
       main {
         position: relative;
@@ -454,7 +454,12 @@
         <section class="textBox2025" id="topbox2025">
           <h2>Toronto Games Week Schedule (June 12-18, 2025)</h2>
           <p>Come explore the many events, gatherings, and happenings of Toronto Games Week 2025!</p>
-          <p>You can add the full schedule to your calendar (<a href="https://calendar.google.com/calendar/u/0/r?cid=torontogamesweek@gmail.com">Gcal link</a>) or add individual events using the calendar icons.</p> <p>Use the buttons below to check out specific days!</p>
+          <p>
+            You can add the full schedule to your calendar (<a href="https://calendar.google.com/calendar/u/0/r?cid=torontogamesweek@gmail.com"
+              >Gcal link</a
+            >) or add individual events using the calendar icons.
+          </p>
+          <p>Use the buttons below to check out specific days!</p>
           <section class="textBox-btn" id="daySelector">
             <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
               Th<br />
@@ -639,10 +644,10 @@
               <img id="img2025" src="/images/TGW_Poster_Assets_2025/${event.icon}" alt="${event.icon}" class="eventIcon" />
               <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3> 
               ${
-        event.gcalLink
-          ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
-          : ""
-      }
+                event.gcalLink
+                  ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
+                  : ""
+              }
              
       
               <div class="DescAndImg">
