@@ -793,7 +793,7 @@
             const categories = rowData["Target Audience"] ? rowData["Target Audience"].split(",") : [];
             const gcalLink = rowData["Gcal"] || "";
 
-            if (incomplete) continue;
+            if (incomplete !== "Live") continue;
             if (events.some((event) => event.name === name)) {
               const existingEvent = events.find((event) => event.name === name);
               existingEvent.date += `, ${date}`;
