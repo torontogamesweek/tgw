@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Three-Layer Scratch Reveal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #222;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            display: block;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: auto;
+            touch-action: pan-y;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            vertical-align: top;
+        }
+
+        .instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: clamp(10px, 2.5vw, 14px);
+            pointer-events: none;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(10px, 2.5vw, 14px);
+            z-index: 10;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reset-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .reset-btn:active {
+            transform: translateY(0);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 300px;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            z-index: 10;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .layer-indicator {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: clamp(10px, 2.5vw, 14px);
+            pointer-events: none;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+        }
+
+        .completion-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            z-index: 20;
+            display: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid #4CAF50;
+        }
+
+        .completion-message .emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            z-index: 5;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .instructions, .layer-indicator {
+                font-size: 12px;
+                padding: 6px 10px;
+                top: 5px;
+                left: 5px;
+            }
+            
+            .layer-indicator {
+                top: 50px;
+            }
+
+            .reset-btn {
+                top: 5px;
+                right: 5px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .completion-message {
+                font-size: 16px;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading" id="loading">Loading images...</div>
+        <div class="instructions" id="instructions" style="display: none;">
+            Scratch to reveal the hidden layers!
+        </div>
+        <div class="layer-indicator" id="layerIndicator" style="display: none;">
+            Layer 1 of 3: Black & White
+        </div>
+        <button class="reset-btn" id="resetBtn" onclick="resetCanvas()" style="display: none;">Reset</button>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="completion-message" id="completionMessage">
+            <span class="emoji">🎉</span>
+            <span id="completionText">Layer revealed!</span>
+        </div>
+        <canvas id="scratchCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        const loading = document.getElementById('loading');
+        const instructions = document.getElementById('instructions');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const completionMessage = document.getElementById('completionMessage');
+        const completionText = document.getElementById('completionText');
+        const layerIndicator = document.getElementById('layerIndicator');
+
+        // Three images for three layers
+        const bwImage = new Image();
+        const colorImage = new Image();
+        const finalImage = new Image();
+        
+        let lastX = 0, lastY = 0;
+        let isFirstTouch = true;
+        let particles = [];
+        let imagesLoaded = 0;
+        let isDrawing = false;
+        let animationId = null;
+        let completionPercentage = 0;
+        let isCompleted = false;
+        let currentLayer = 1; // 1 = B&W visible, 2 = Color visible, 3 = Final visible
+        let scratchedArea = 0;
+
+        // Enhanced responsive image paths - now with 3 layers
+        const imagePaths = {
+            small: {
+                bw: "images/2025/sbw.jpg",
+                color: "images/2025/scolour.jpg",
+                final: "images/2025/sfinal.jpg",
+            },
+            medium: {
+                bw: "images/2025/mbw.jpg",
+                color: "images/2025/mcolour.jpg",
+                final: "images/2025/mfinal.jpg",
+            },
+            large: {
+                bw: "images/2025/lbw.jpg",
+                color: "images/2025/lcolour.jpg",
+                final: "images/2025/lfinal.jpg",
+            },
+            xlarge: {
+                bw: "images/2025/xlbw.jpg",
+                color: "images/2025/xlcolour.jpg",
+                final: "images/2025/xlfinal.jpg",
+            },
+        };
+
+        function getImageSizeToLoad() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const pixelRatio = window.devicePixelRatio || 1;
+            const effectiveWidth = width * pixelRatio;
+            
+            if (effectiveWidth >= 3840) return "xlarge";
+            else if (effectiveWidth >= 1920 || width >= 1200) return "large";
+            else if (width >= 768) return "medium";
+            else return "small";
+        }
+
+        function loadAppropriateImages() {
+            const sizeToLoad = getImageSizeToLoad();
+            console.log(`Loading ${sizeToLoad} images for ${window.innerWidth}x${window.innerHeight}`);
+
+            imagesLoaded = 0;
+            
+            const handleImageError = (imageName) => {
+                console.warn(`Failed to load ${imageName}, trying fallback...`);
+                const fallbackSizes = ['small', 'medium', 'large', 'xlarge'];
+                const currentIndex = fallbackSizes.indexOf(sizeToLoad);
+                if (currentIndex > 0) {
+                    const fallbackSize = fallbackSizes[currentIndex - 1];
+                    if (imageName === 'bw') {
+                        bwImage.src = imagePaths[fallbackSize].bw;
+                    } else if (imageName === 'color') {
+                        colorImage.src = imagePaths[fallbackSize].color;
+                    } else {
+                        finalImage.src = imagePaths[fallbackSize].final;
+                    }
+                }
+            };
+
+            bwImage.onerror = () => handleImageError('bw');
+            colorImage.onerror = () => handleImageError('color');
+            finalImage.onerror = () => handleImageError('final');
+
+            bwImage.src = imagePaths[sizeToLoad].bw;
+            colorImage.src = imagePaths[sizeToLoad].color;
+            finalImage.src = imagePaths[sizeToLoad].final;
+        }
+
+        const totalCanvasArea = () => canvas.width * canvas.height;
+
+        function updateCompletion(newParticleCount) {
+            const particleAreaEstimate = newParticleCount * 150;
+            scratchedArea += particleAreaEstimate;
+            
+            const percentage = Math.min((scratchedArea / totalCanvasArea()) * 100, 100);
+            completionPercentage = Math.round(percentage);
+            
+            progressFill.style.width = completionPercentage + '%';
+            
+            if (completionPercentage >= 75 && !isCompleted) {
+                isCompleted = true;
+                
+                if (currentLayer === 1) {
+                    // First layer completed - reveal color layer
+                    completionText.textContent = "Color layer revealed! Keep scratching for more...";
+                    completionMessage.style.display = 'block';
+                    layerIndicator.textContent = "Layer 2 of 3: Color";
+                    
+                    setTimeout(() => {
+                        completionMessage.style.display = 'none';
+                        advanceToNextLayer();
+                    }, 2000);
+                    
+                } else if (currentLayer === 2) {
+                    // Second layer completed - reveal final layer
+                    completionText.textContent = "Final layer revealed! 🎉";
+                    completionMessage.style.display = 'block';
+                    layerIndicator.textContent = "Layer 3 of 3: Final Image";
+                    
+                    setTimeout(() => {
+                        completionMessage.style.display = 'none';
+                        advanceToNextLayer();
+                    }, 3000);
+                }
+                
+                console.log(`Layer ${currentLayer} completion detected! ${completionPercentage}% estimated`);
+            }
+        }
+
+        function advanceToNextLayer() {
+            if (currentLayer < 3) {
+                currentLayer++;
+                // Reset completion tracking for next layer
+                completionPercentage = 0;
+                scratchedArea = 0;
+                isCompleted = false;
+                progressFill.style.width = '0%';
+                
+                console.log(`Advanced to layer ${currentLayer}`);
+            }
+        }
+
+        function resizeCanvas() {
+            if (!bwImage.complete || !colorImage.complete || !finalImage.complete) return;
+
+            const canvasWidth = window.innerWidth;
+            const imageAspectRatio = bwImage.naturalHeight / bwImage.naturalWidth;
+            const canvasHeight = canvasWidth * imageAspectRatio;
+
+            const pixelRatio = window.devicePixelRatio || 1;
+            canvas.width = canvasWidth * pixelRatio;
+            canvas.height = canvasHeight * pixelRatio;
+            canvas.style.width = canvasWidth + 'px';
+            canvas.style.height = canvasHeight + 'px';
+            
+            ctx.scale(pixelRatio, pixelRatio);
+            
+            // Draw the initial black & white layer
+            ctx.drawImage(bwImage, 0, 0, canvasWidth, canvasHeight);
+        }
+
+        function onImageLoad() {
+            imagesLoaded++;
+            if (imagesLoaded === 3) {
+                loading.style.display = 'none';
+                instructions.style.display = 'block';
+                layerIndicator.style.display = 'block';
+                resetBtn.style.display = 'flex';
+                progressBar.style.display = 'block';
+                resizeCanvas();
+            }
+        }
+
+        function getCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const pixelRatio = window.devicePixelRatio || 1;
+            
+            let clientX, clientY;
+            
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else if (e.changedTouches && e.changedTouches.length > 0) {
+                clientX = e.changedTouches[0].clientX;
+                clientY = e.changedTouches[0].clientY;
+            } else {
+                clientX = e.clientX || lastX;
+                clientY = e.clientY || lastY;
+            }
+            
+            return {
+                x: ((clientX - rect.left) * (canvas.width / pixelRatio / rect.width)),
+                y: ((clientY - rect.top) * (canvas.height / pixelRatio / rect.height))
+            };
+        }
+
+        function draw(e) {
+            if (!isDrawing && e.type.includes('mouse')) return;
+            
+            const coords = getCoords(e);
+
+            if (isFirstTouch) {
+                lastX = coords.x;
+                lastY = coords.y;
+                isFirstTouch = false;
+                return;
+            }
+
+            // Make current layer transparent
+            ctx.globalCompositeOperation = 'destination-out';
+
+            const distance = Math.sqrt((coords.x - lastX) ** 2 + (coords.y - lastY) ** 2);
+            const particleCount = Math.min(Math.max(Math.floor(distance / 2), 3), 25);
+
+            const newParticles = Array(particleCount).fill().map(() => ({
+                x: coords.x + (Math.random() - 0.5) * 20,
+                y: coords.y + (Math.random() - 0.5) * 20,
+                vx: (Math.random() - 0.5) * 3,
+                vy: (Math.random() - 0.5) * 3,
+                size: Math.random() * 18 + 4,
+                opacity: 0.8
+            }));
+
+            particles.push(...newParticles);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.opacity *= 0.94;
+                ctx.globalAlpha = p.opacity;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            particles = particles.filter(p => 
+                p.x > -50 && p.x < canvas.width + 50 && 
+                p.y > -50 && p.y < canvas.height + 50 && 
+                p.opacity > 0.02
+            );
+
+            // Draw the appropriate underlying layer
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.globalAlpha = 1;
+            const pixelRatio = window.devicePixelRatio || 1;
+            const canvasWidth = canvas.width / pixelRatio;
+            const canvasHeight = canvas.height / pixelRatio;
+            
+            if (currentLayer === 1) {
+                // Reveal color layer underneath B&W
+                ctx.drawImage(colorImage, 0, 0, canvasWidth, canvasHeight);
+            } else if (currentLayer === 2) {
+                // Reveal final layer underneath color
+                ctx.drawImage(finalImage, 0, 0, canvasWidth, canvasHeight);
+            }
+            // If currentLayer === 3, we're done - no need to draw anything underneath
+
+            updateCompletion(newParticles.length);
+
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function resetCanvas() {
+            particles = [];
+            isFirstTouch = true;
+            isDrawing = false;
+            completionPercentage = 0;
+            isCompleted = false;
+            scratchedArea = 0;
+            currentLayer = 1;
+            
+            // Reset UI elements
+            progressFill.style.width = '0%';
+            completionMessage.style.display = 'none';
+            layerIndicator.textContent = "Layer 1 of 3: Black & White";
+            
+            if (animationId) {
+                clearInterval(animationId);
+                animationId = null;
+            }
+            
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.globalAlpha = 1;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const pixelRatio = window.devicePixelRatio || 1;
+            const canvasWidth = canvas.width / pixelRatio;
+            const canvasHeight = canvas.height / pixelRatio;
+            ctx.drawImage(bwImage, 0, 0, canvasWidth, canvasHeight);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            isFirstTouch = true;
+            
+            if (animationId) return;
+            
+            animationId = setInterval(() => {
+                if (window.lastMoveEvent) {
+                    draw(window.lastMoveEvent);
+                }
+            }, 16);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            isFirstTouch = true;
+            
+            if (animationId) {
+                clearInterval(animationId);
+                animationId = null;
+            }
+        }
+
+        function handleMove(e) {
+            e.preventDefault();
+            window.lastMoveEvent = e;
+            
+            if (!animationId && (isDrawing || e.type.includes('mouse'))) {
+                startDrawing(e);
+            }
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', handleMove);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            startDrawing(e);
+        }, { passive: true });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (isDrawing) {
+                e.preventDefault();
+            }
+            handleMove(e);
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            stopDrawing();
+        }, { passive: true });
+
+        canvas.addEventListener('touchcancel', stopDrawing);
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        window.addEventListener('blur', stopDrawing);
+        window.addEventListener('beforeunload', stopDrawing);
+
+        bwImage.onload = onImageLoad;
+        colorImage.onload = onImageLoad;
+        finalImage.onload = onImageLoad;
+
+        let currentSizeCategory = getImageSizeToLoad();
+        let resizeTimeout;
+
+        function handleResize() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const newSizeCategory = getImageSizeToLoad();
+                
+                if (newSizeCategory !== currentSizeCategory) {
+                    currentSizeCategory = newSizeCategory;
+                    loading.style.display = 'block';
+                    instructions.style.display = 'none';
+                    resetBtn.style.display = 'none';
+                    progressBar.style.display = 'none';
+                    layerIndicator.style.display = 'none';
+                    loadAppropriateImages();
+                } else {
+                    resizeCanvas();
+                }
+            }, 250);
+        }
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(handleResize, 100);
+        });
+
+        window.addEventListener('load', () => {
+            loadAppropriateImages();
+        });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
