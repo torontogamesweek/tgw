@@ -355,7 +355,7 @@
         <div class="content">
           <section class="textBox">
             <h2>At Toronto Games Week, you might:</h2>
-            <ul class="controllerList">
+            <ul class="controllerList" id="activitiesList">
               <li>Play massive videogames projected on concrete silos at the waterfront!</li>
               <li>Scour High Park for fungi and butterflies in scavenger hunts!</li>
               <li>Level up your industry knowledge and contacts!</li>
@@ -382,16 +382,14 @@
           </section>
         </div>
 
-        <!-- <div class="content">
+        <div class="content">
           <section class="textBox">
             <h2>Special Guests:</h2>
-            <ul class="controllerList">
-              <li>Terry Cavanagh (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!</li>
-              <li>Adam and Rebekah Saltsman, founders of Finji (Night in the Woods, Tunic) from the USA!</li>
-              <li>Holly Gramazio (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!</li>
+            <ul class="controllerList" id="guestsList">
+              <!-- Guests will be populated by JavaScript -->
             </ul>
           </section>
-        </div> -->
+        </div>
 
         <div class="content">
           <section class="textBox">
@@ -931,6 +929,67 @@
       }
 
       document.addEventListener("DOMContentLoaded", setupSponsors);
+    </script>
+
+    <script>
+      // Random Activities and Guests Script
+      document.addEventListener("DOMContentLoaded", function () {
+        // All possible activities
+        const allActivities = [
+          "Play massive videogames projected on concrete silos at the waterfront!",
+          "Scour High Park for fungi and butterflies in scavenger hunts!",
+          "Level up your industry knowledge and contacts!",
+          "Learn from a game-designer-turned-bestselling-novelist!",
+          "Play an RPG you found in a Little Free Library!",
+          "Wheel down dark forest paths to the Night Parkcade!",
+          "Use a flight sim to chase a sunset neverending!",
+          "Connect with queer joy and rage in DEI or DIE Variety Show!",
+          "Discover a new favourite pen for journaling about games!",
+          "Rediscover your love of playing with giant parachutes!",
+        ];
+
+        // All possible guests (with HTML for links)
+        const allGuests = [
+          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
+          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
+          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
+          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
+          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
+          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
+        ];
+
+        // Function to get random items from an array
+        function getRandomItems(array, count) {
+          const shuffled = [...array].sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, count);
+        }
+
+        // Function to populate a list with items
+        function populateList(listId, items, useHTML = false) {
+          const list = document.getElementById(listId);
+          if (!list) return;
+
+          list.innerHTML = "";
+
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            if (useHTML) {
+              li.innerHTML = item;
+            } else {
+              li.textContent = item;
+            }
+            list.appendChild(li);
+          });
+        }
+
+        // Populate the activities list with 5 random activities
+        const randomActivities = getRandomItems(allActivities, 5);
+        populateList("activitiesList", randomActivities);
+
+        // Populate the guests list with 3 random guests
+        const randomGuests = getRandomItems(allGuests, 3);
+        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
+      });
     </script>
   </body>
 </html>
