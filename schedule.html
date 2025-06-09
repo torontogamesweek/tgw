@@ -791,7 +791,7 @@
             const icon = rowData["Icon"];
             const iconAlt = rowData["Alttext"];
             const categories = rowData["Target Audience"] ? rowData["Target Audience"].split(",") : [];
-            const gcalLink = rowData["BAD CAL (v2)"] || "";
+            const gcalLink = rowData["Gcal"] || "";
 
             if (incomplete !== "Live") continue;
             if (events.some((event) => event.name === name)) {
