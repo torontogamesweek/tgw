@@ -898,6 +898,16 @@ p#schedule {
   text-align: center;
 }
 
+#site{
+  background-color: white;
+  display: flex;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+
+
+}
+
 .logo {
   max-width: 5rem;
   /* max-height: auto; */
