@@ -247,21 +247,16 @@ table {
   --accentMed: rgb(65 104 107);
   --accentDark: rgb(33 57 78);
   --accentTwo: rgb(47 107 207);
-  --accentOrange: rgb(252, 111, 68); 
+  --accentOrange: rgb(252, 111, 68);
 
-
-/* 2025  */
+  /* 2025  */
   --brown: rgb(95, 67, 61);
   --light-green: rgb(220, 242, 216);
   --accentMed: rgb(118, 180, 154);
   --lightGrey: rgb(255, 245, 232);
   --accentMed: rgb(50 102 78);
   --accentLight: rgb(103, 204, 94);
-
-
 }
-
-
 
 /***********************/
 /*****   PRELOAD   *****/
@@ -303,10 +298,12 @@ body {
   overflow-y: auto;
   line-height: 1.25;
   background: hsl(200 20% 88%);
+  background: white;
+
   text-align: center;
   position: relative;
   color: rgba(14, 8, 42, 0.86);
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   font-size: 1rem;
 }
 
@@ -385,7 +382,6 @@ canvas {
 }
 
 @media (min-width: 800px) {
-
   /* findme  */
   /* Changed breakpoint */
   body {
@@ -399,8 +395,7 @@ canvas {
 
   .content {
     margin-top: 4.5rem;
-    max-width: 750px; 
-
+    max-width: 750px;
   }
 }
 
@@ -421,7 +416,6 @@ a {
 }
 
 @media (min-width: 800px) {
-
   p {
     font-size: 1.3rem;
     /* padding: 2rem 10%; */
@@ -567,7 +561,7 @@ btn,
   border: 2px solid var(--accentLight) !important;
   padding: 0.4em 1em !important;
   width: 100% !important;
-  min-width: 300px !important; /* Add minimum width */
+  min-width: 250px !important; /* Add minimum width */
   font-size: 1rem !important;
 }
 
@@ -671,8 +665,8 @@ div[eo-block="powered-by"] {
   background-color: var(--accentOrange);
   border: 1px dotted var(--white);
   outline: 1px dashed #ede1d4;
-  color:var(--white);
-  font-size: .7rem;
+  color: var(--white);
+  font-size: 0.7rem;
   text-align: center;
 }
 
@@ -885,7 +879,6 @@ img {
     margin: 0;
   }
 
-
   .footerImg {
     padding: 0;
     margin: 0;
@@ -898,14 +891,13 @@ p#schedule {
   text-align: center;
 }
 
-#site{
+#site {
   background-color: white;
   display: flex;
   margin: auto;
   text-align: center;
   justify-content: center;
-
-
+  z-index: 999;
 }
 
 .logo {
@@ -1081,7 +1073,6 @@ li {
   /* text-indent: 1.5em; */
   list-style: none;
   font-size: 1rem;
-
 }
 
 .controllerList {
@@ -1121,7 +1112,7 @@ li {
   .controllerList li p,
   .controllerList li {
     font-size: 1.3rem;
-    padding: .4rem;
+    padding: 0.4rem;
     margin-left: 2rem; /* Offset to align with the bullet point */
   }
 
@@ -1265,14 +1256,13 @@ header {
   font-family: "Alegreya", sans-serif;
   font-weight: bold;
 
-
   position: fixed;
-    width: 100%;
-    z-index: 1000;
-    top: 0;
-    pointer-events: auto;
-    height: 4rem;
-    margin-top: 0;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+  pointer-events: auto;
+  height: 4rem;
+  margin-top: 0;
 }
 
 .headerImgDiv {
@@ -1361,7 +1351,6 @@ nav {
   transform: scale(1, 0);
   transform-origin: top;
   transition: transform 400ms ease-in-out;
-
 }
 
 nav ul {
@@ -1378,7 +1367,6 @@ nav a {
   /* font-size: 1.2rem; */
   /* transition: opacity 150ms ease-in-out; */
   text-decoration: none;
-
 }
 
 nav > ul > li {
@@ -1399,7 +1387,6 @@ nav > ul > li {
     margin: 0 auto; /* Center the nav */
     text-align: center; /* Center the nav items */
   }
-
 
   nav ul {
     display: flex;
@@ -1447,11 +1434,7 @@ nav > ul > li {
 /***** NAV TOGGLE ******/
 /***********************/
 
-
-
-
 /* new nav */
-
 
 /* Visually hidden text for screen readers */
 .sr-only {
@@ -1534,7 +1517,7 @@ nav.expanded a {
   .nav-toggle-button {
     display: none;
   }
-  
+
   nav {
     transform: scale(1, 1);
   }
@@ -1546,16 +1529,16 @@ nav.expanded a {
 
 footer {
   padding: 1em 0;
-  background-color: var(--lightGrey);
+  background-color: rgb(250 248 241);
   text-align: center;
   display: inline-block;
   width: 100vw;
+  z-index: 999;
 }
 
 @media (min-width: 800px) {
 }
 
-/* ///// */
 
 #Surface {
   position: fixed;
@@ -2523,7 +2506,6 @@ footer {
   }
 }
 
-
 .fixedImage {
   /* position: fixed; */
   /* max-width: 5rem; */
@@ -2727,7 +2709,6 @@ footer {
 }
 
 @media (min-width: 800px) {
-
   #googleCalendar {
     position: relative;
     padding-bottom: 56.25%;

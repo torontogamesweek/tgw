@@ -301,6 +301,25 @@
           margin-top: 150vh;
         }
       }
+
+      .footer-content {
+        /* max-width: 1200px; */
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.903);
+        bottom: 0;
+        z-index: 10000;
+        pointer-events: all;
+        width: 100vw;
+        border-top: 2px dashed black;
+      }
+
+      .footer-credit {
+        font-size: 0.9rem;
+        /* color: rgb(95, 67, 61); */
+        /* margin: 1rem; */
+        padding: 1rem;
+        /* border-top: 1px solid rgba(95, 67, 61, 0.3); */
+      }
     </style>
   </head>
 
@@ -636,12 +655,17 @@
       </div> -->
       </div>
 
-      <div id="inventory"></div>
-            <div id="site">
-              <p>Website<a href="http://marieflanagan.com/" target="_blank"> Marie LeBlanc Flanagan</a></p>
-            </div>
 
+
+      <div class="footer-content">
+        <div class="footer-credit">
+          <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
+        </div>
+      </div>
+
+      <!-- <div id="inventory"></div> -->
     </main>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
