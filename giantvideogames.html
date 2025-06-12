@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <style>
+      body {
+        background-color: black;
+      }
+      /* Base canvas setup - SIMPLE APPROACH */
+      canvas {
+        position: absolute;
+        width: 100%;
+        background-image: none;
+        height: auto;
+        left: 0;
+        top: 0;
+      }
+
+   .image-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        margin-top: 100vh; /* Start right after the image */
+        background-color: none;
+      }
+
+      .contentContainer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Main content areas */
+      .content {
+        pointer-events: none;
+      }
+
+      /* Re-enable pointer events for specific interactive elements */
+      .contentContainer > * .headerImgDiv img,
+      .btn,
+      .floatingBtn,
+      .textBox > * {
+        pointer-events: all;
+        z-index: 2;
+      }
+
+      .no-pointer-events {
+        pointer-events: none;
+      }
+
+      /* Webcam controls - hidden by default */
+      .webcam-controls {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1001;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        font-family: "PT Mono", monospace;
+        display: none; /* Hidden by default */
+      }
+
+      .webcam-controls button {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin: 2px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "PT Mono", monospace;
+        font-size: 12px;
+      }
+
+      .webcam-controls button:hover {
+        background: #555;
+      }
+
+      .webcam-controls button.active {
+        background: #4caf50;
+      }
+
+      #webcamVideo {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        width: 200px;
+        height: 150px;
+        border-radius: 10px;
+        border: 2px solid #333;
+        z-index: 1000;
+        display: none;
+        transform: scaleX(-1); /* Mirror the video feed */
+      }
+
+      .status-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ff4444;
+        margin-right: 8px;
+      }
+
+      .status-indicator.active {
+        background: #44ff44;
+      }
+
+      .sensitivity-control {
+        margin-top: 10px;
+      }
+
+      .sensitivity-control input {
+        width: 100px;
+      }
+
+      /* Enhanced Gold Sparkly Debug Cursor */
+      .debug-cursor {
+        /* CSS Custom Properties for easy theming */
+        --cursor-size: 40px;
+        --cursor-color: #ffd700;
+        --cursor-color-rgb: 255, 215, 0;
+        --glow-intensity: 0.8;
+        --animation-duration: 2.5s;
+
+        /* Core positioning and structure */
+        position: absolute;
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 999;
+        display: none;
+        transform: translate(-50%, -50%);
+
+        /* Layered visual effects */
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(var(--cursor-color-rgb), 0.4) 0%,
+          rgba(var(--cursor-color-rgb), 0.2) 40%,
+          rgba(var(--cursor-color-rgb), 0.05) 70%,
+          transparent 100%
+        );
+
+        border: 2px solid var(--cursor-color);
+
+        /* Multi-layered glow effect */
+        box-shadow: 0 0 8px rgba(var(--cursor-color-rgb), var(--glow-intensity)),
+          0 0 16px rgba(var(--cursor-color-rgb), calc(var(--glow-intensity) * 0.6)),
+          0 0 24px rgba(var(--cursor-color-rgb), calc(var(--glow-intensity) * 0.3)), inset 0 0 8px rgba(var(--cursor-color-rgb), 0.3),
+          inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+
+        /* Smooth animations */
+        animation: sparkle-pulse var(--animation-duration) ease-in-out infinite, sparkle-rotate calc(var(--animation-duration) * 3) linear infinite;
+      }
+
+      /* Add sparkle particles using pseudo-elements */
+      .debug-cursor::before,
+      .debug-cursor::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: var(--cursor-color);
+        border-radius: 50%;
+        opacity: 0;
+        animation: sparkle-twinkle calc(var(--animation-duration) * 0.8) ease-in-out infinite;
+      }
+
+      .debug-cursor::before {
+        top: 15%;
+        right: 15%;
+        animation-delay: 0.3s;
+        box-shadow: 0 0 4px rgba(var(--cursor-color-rgb), 0.8);
+      }
+
+      .debug-cursor::after {
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 1.2s;
+        box-shadow: 0 0 4px rgba(var(--cursor-color-rgb), 0.8);
+      }
+
+      /* Main pulsing and scaling animation */
+      @keyframes sparkle-pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          box-shadow: 0 0 8px rgba(var(--cursor-color-rgb), var(--glow-intensity)),
+            0 0 16px rgba(var(--cursor-color-rgb), calc(var(--glow-intensity) * 0.6)),
+            0 0 24px rgba(var(--cursor-color-rgb), calc(var(--glow-intensity) * 0.3)), inset 0 0 8px rgba(var(--cursor-color-rgb), 0.3),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+          box-shadow: 0 0 12px rgba(var(--cursor-color-rgb), 1), 0 0 24px rgba(var(--cursor-color-rgb), 0.8),
+            0 0 36px rgba(var(--cursor-color-rgb), 0.5), 0 0 48px rgba(var(--cursor-color-rgb), 0.2),
+            inset 0 0 12px rgba(var(--cursor-color-rgb), 0.5), inset 2px 2px 6px rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      /* Subtle rotation for dynamic feel */
+      @keyframes sparkle-rotate {
+        from {
+          filter: hue-rotate(0deg);
+        }
+        to {
+          filter: hue-rotate(360deg);
+        }
+      }
+
+      /* Twinkling sparkle particles */
+      @keyframes sparkle-twinkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      /* Optional: Enhanced version with backdrop blur (modern browsers) */
+      .debug-cursor.enhanced {
+        backdrop-filter: blur(1px);
+        border: 3px solid transparent;
+        background-clip: padding-box;
+        background-image: linear-gradient(45deg, rgba(var(--cursor-color-rgb), 0.9), rgba(var(--cursor-color-rgb), 0.7)),
+          radial-gradient(circle at 30% 30%, rgba(var(--cursor-color-rgb), 0.4) 0%, transparent 70%);
+      }
+
+      /* Responsive scaling for different screen sizes */
+      @media (max-width: 768px) {
+        .debug-cursor {
+          --cursor-size: 32px;
+        }
+      }
+
+      @media (min-width: 1400px) {
+        .debug-cursor {
+          --cursor-size: 48px;
+        }
+      }
+
+      .debug-cursor.active {
+        display: block;
+      }
+
+      /* Debug info panel - hidden by default */
+      .debug-info {
+        position: fixed;
+        top: 200px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 11px;
+        z-index: 1002;
+        display: none;
+        min-width: 200px;
+      }
+
+      .debug-info.active {
+        display: block;
+      }
+
+      /* Debug toggle instruction */
+      .debug-toggle-hint {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-family: "PT Mono", monospace;
+        font-size: 12px;
+        z-index: 1000;
+      }
+    
+    body, html {
+    margin: 0;
+    padding: 0;
+}
+    </style>
+  </head>
+
+  <body>
+    <!-- Debug toggle hint -->
+    <!-- <div class="debug-toggle-hint">Press 'D' to toggle debug tools</div> -->
+
+    <!-- Webcam Controls -->
+    <div class="webcam-controls" id="webcamControls">
+      <div>
+        <span class="status-indicator" id="statusIndicator"></span>
+        <span id="statusText">Webcam Off</span>
+      </div>
+      <button id="toggleWebcam">Start Webcam</button>
+      <button id="toggleMode">Mouse Mode</button>
+      <div class="sensitivity-control">
+        <label>Sensitivity:</label>
+        <input type="range" id="sensitivitySlider" min="0.1" max="2.0" value="0.8" step="0.1" />
+        <span id="sensitivityValue">0.8</span>
+      </div>
+      <div class="sensitivity-control">
+        <label>Smoothing:</label>
+        <input type="range" id="smoothingSlider" min="0.1" max="0.9" value="0.3" step="0.1" />
+        <span id="smoothingValue">0.3</span>
+      </div>
+      <div style="margin-top: 10px">
+        <label> <input type="checkbox" id="showDebugCursor" checked /> Show debug cursor </label>
+      </div>
+      <div style="margin-top: 5px">
+        <label> <input type="checkbox" id="showDebugInfo" checked /> Show debug info </label>
+      </div>
+    </div>
+
+    <!-- Hidden webcam video element -->
+    <video id="webcamVideo" autoplay playsinline muted></video>
+
+    <!-- Debug cursor indicator -->
+    <div class="debug-cursor" id="debugCursor"></div>
+
+    <!-- Debug info panel -->
+    <div class="debug-info" id="debugInfo">
+      <div>Face Detected: <span id="faceStatus">No</span></div>
+      <div>Nose Raw: <span id="noseRaw">-</span></div>
+      <div>Nose Smoothed: <span id="noseSmoothed">-</span></div>
+      <div>Canvas Position: <span id="canvasPos">-</span></div>
+      <div>Drawing Active: <span id="drawingStatus">No</span></div>
+    </div>
+
+    <div class="image-container">
+      <canvas id="myCanvas" width="500" height="400"></canvas>
+    </div>
+    <main class="no-pointer-events">
+      <div class="contentContainer" id="landingPage"></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- MediaPipe for nose tracking -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+      const video = document.getElementById("webcamVideo");
+
+      // Initialize images with direct paths
+      const bwImage = new Image();
+      const colorImage = new Image();
+      bwImage.src = "images/2025/displayBW.jpg";
+      colorImage.src = "images/2025/displayColour.jpg";
+
+      let lastX = 0,
+        lastY = 0;
+      let isFirstTouch = true;
+      let particles = [];
+      let isFixed = false;
+      let scrollTriggerInstance;
+
+      // Webcam tracking variables
+      let webcamActive = false;
+      let webcamMode = false; // false = mouse mode, true = webcam mode
+      let sensitivity = 0.8;
+      let stream = null;
+      let trackingInterval = null;
+
+      // MediaPipe Face Mesh
+      let faceMesh = null;
+      let camera = null;
+
+      // Current webcam cursor position
+      let webcamX = 400;
+      let webcamY = 300;
+
+      // Nose tracking smoothing
+      let smoothedNoseX = 400;
+      let smoothedNoseY = 300;
+      let smoothingFactor = 0.3; // Lower = smoother, higher = more responsive
+
+      // Debug tools visibility
+      let debugToolsVisible = false;
+
+      // Initialize smoothed position to canvas center
+      function initializeNosePosition() {
+        smoothedNoseX = canvas.width * 0.5;
+        smoothedNoseY = canvas.height * 0.5;
+        webcamX = smoothedNoseX;
+        webcamY = smoothedNoseY;
+      }
+
+      // Toggle debug tools visibility
+      function toggleDebugTools() {
+        debugToolsVisible = !debugToolsVisible;
+        const webcamControls = document.getElementById("webcamControls");
+
+        if (debugToolsVisible) {
+          webcamControls.style.display = "block";
+        } else {
+          webcamControls.style.display = "none";
+          // Also hide debug cursor and info when tools are hidden
+          document.getElementById("debugCursor").classList.remove("active");
+          document.getElementById("debugInfo").classList.remove("active");
+        }
+      }
+
+      // Update debug cursor position
+      function updateDebugCursor() {
+        const debugCursor = document.getElementById("debugCursor");
+        const debugInfo = document.getElementById("debugInfo");
+        const showDebugCursor = document.getElementById("showDebugCursor").checked;
+        const showDebugInfo = document.getElementById("showDebugInfo").checked;
+
+        if (webcamMode && showDebugCursor && debugToolsVisible) {
+          debugCursor.classList.add("active");
+
+          // Convert canvas coordinates to screen coordinates
+          const canvasRect = canvas.getBoundingClientRect();
+          const screenX = canvasRect.left + (webcamX * canvasRect.width) / canvas.width;
+          const screenY = canvasRect.top + (webcamY * canvasRect.height) / canvas.height;
+
+          debugCursor.style.left = screenX + "px";
+          debugCursor.style.top = screenY + "px";
+        } else {
+          debugCursor.classList.remove("active");
+        }
+
+        if (webcamMode && showDebugInfo && debugToolsVisible) {
+          debugInfo.classList.add("active");
+          // Update debug info
+          document.getElementById("canvasPos").textContent = `${Math.round(webcamX)}, ${Math.round(webcamY)}`;
+        } else {
+          debugInfo.classList.remove("active");
+        }
+      }
+
+      // FIXED RESIZE CANVAS FUNCTION - MATCHES WORKING VERSION
+      function resizeCanvas() {
+        // Wait for the image to be loaded
+        if (bwImage.complete) {
+          canvas.width = window.innerWidth;
+          canvas.height = bwImage.naturalHeight * (window.innerWidth / bwImage.naturalWidth);
+          ctx.drawImage(bwImage, 0, 0, canvas.width, canvas.height);
+
+          // Update main content position to start after the canvas
+          const main = document.querySelector('main');
+          main.style.marginTop = canvas.height + 'px';
+
+          // Initialize nose tracking position to center
+          initializeNosePosition();
+        }
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      function createScrollTrigger() {
+        if (scrollTriggerInstance) {
+          scrollTriggerInstance.kill();
+        }
+
+        scrollTriggerInstance = ScrollTrigger.create({
+          trigger: ".contentContainer",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2,
+          pin: ".image-container",
+          pinSpacing: false,
+        });
+      }
+
+      function getCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || e.touches?.[0]?.clientX || lastX;
+        const clientY = e.clientY || e.touches?.[0]?.clientY || lastY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height),
+        };
+      }
+
+      // Initialize MediaPipe Face Mesh
+      function initializeMediaPipe() {
+        faceMesh = new FaceMesh({
+          locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+          },
+        });
+
+        faceMesh.setOptions({
+          maxNumFaces: 1,
+          refineLandmarks: true,
+          minDetectionConfidence: 0.5,
+          minTrackingConfidence: 0.5,
+        });
+
+        faceMesh.onResults(onFaceResults);
+      }
+
+      // Handle face detection results
+      function onFaceResults(results) {
+        if (!webcamMode) {
+          // Update debug info even when not in webcam mode
+          document.getElementById("faceStatus").textContent = "Mode Off";
+          document.getElementById("drawingStatus").textContent = "No";
+          return;
+        }
+
+        // Update face detection status
+        const faceDetected = results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0;
+        document.getElementById("faceStatus").textContent = faceDetected ? "Yes" : "No";
+
+        if (!faceDetected) {
+          document.getElementById("drawingStatus").textContent = "No";
+          console.log("No face detected");
+          return;
+        }
+
+        // Get the first (and only) face
+        const landmarks = results.multiFaceLandmarks[0];
+
+        // Nose tip is landmark index 1
+        const noseTip = landmarks[1];
+
+        if (noseTip) {
+          console.log("Nose detected:", noseTip.x, noseTip.y);
+
+          // Convert from normalized coordinates (0-1) to canvas coordinates
+          // Map the webcam frame directly to the canvas dimensions
+          const extendedWidth = canvas.width * 1.3; // 30% larger than canvas
+          const extendedHeight = canvas.height * 1.3; // 30% larger than canvas
+
+          // Flip X for mirror effect and center the extended area on the canvas
+          const rawX = (1 - noseTip.x) * extendedWidth - (extendedWidth - canvas.width) * 0.5;
+          const rawY = noseTip.y * extendedHeight - (extendedHeight - canvas.height) * 0.5;
+
+          // Update debug info
+          document.getElementById("noseRaw").textContent = `${rawX.toFixed(1)}, ${rawY.toFixed(1)}`;
+
+          // Apply smoothing
+          smoothedNoseX = smoothedNoseX + (rawX - smoothedNoseX) * smoothingFactor;
+          smoothedNoseY = smoothedNoseY + (rawY - smoothedNoseY) * smoothingFactor;
+
+          // Update debug info
+          document.getElementById("noseSmoothed").textContent = `${smoothedNoseX.toFixed(1)}, ${smoothedNoseY.toFixed(1)}`;
+
+          // Apply sensitivity
+          const centerX = canvas.width * 0.5;
+          const centerY = canvas.height * 0.5;
+
+          // Calculate offset from center
+          const offsetX = (smoothedNoseX - centerX) * sensitivity;
+          const offsetY = (smoothedNoseY - centerY) * sensitivity;
+
+          webcamX = centerX + offsetX;
+          webcamY = centerY + offsetY;
+
+          // Clamp to canvas bounds (now we can reach all edges easily)
+          webcamX = Math.max(0, Math.min(canvas.width, webcamX));
+          webcamY = Math.max(0, Math.min(canvas.height, webcamY));
+
+          // Update debug cursor
+          updateDebugCursor();
+
+          // Create a fake event for the existing draw function
+          eventRef = {
+            clientX: webcamX,
+            clientY: webcamY,
+            type: "webcam",
+          };
+
+          // Update drawing status
+          document.getElementById("drawingStatus").textContent = "Yes";
+
+          // IMPORTANT: Simulate continuous drawing like mousemove does
+          if (!timeoutReference) {
+            timeoutReference = setInterval(() => {
+              draw();
+            }, 16); // 60 FPS drawing
+          }
+
+          console.log("Drawing at:", Math.round(webcamX), Math.round(webcamY));
+        } else {
+          console.log("Nose tip not found in landmarks");
+
+          // Stop continuous drawing when no nose detected
+          if (timeoutReference) {
+            clearInterval(timeoutReference);
+            timeoutReference = null;
+          }
+          document.getElementById("drawingStatus").textContent = "No";
+        }
+      }
+
+      // REPLACED: Old motion detection with MediaPipe nose tracking
+      function trackWebcamPosition() {
+        // This function is now handled by MediaPipe callbacks
+        // No longer needed, but keeping for compatibility
+      }
+
+      let eventRef;
+      function draw() {
+        let coords;
+
+        if (eventRef && eventRef.type === "webcam") {
+          // Use webcam coordinates directly
+          coords = { x: webcamX, y: webcamY };
+        } else {
+          // Use mouse/touch coordinates
+          coords = getCoords(eventRef);
+        }
+
+        if (isFirstTouch) {
+          lastX = coords.x;
+          lastY = coords.y;
+          isFirstTouch = false;
+          return;
+        }
+
+        ctx.globalCompositeOperation = "destination-out";
+
+        const newParticles = Array(18)
+          .fill()
+          .map(() => ({
+            x: coords.x,
+            y: coords.y,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 0.5) * 2,
+            size: Math.random() * 16 + 2,
+            opacity: 0.77,
+          }));
+
+        particles.push(...newParticles);
+
+        particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.opacity *= 0.95;
+          ctx.globalAlpha = p.opacity;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        particles = particles.filter((p) => p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height && p.opacity > 0.01);
+
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.drawImage(colorImage, 0, 0, canvas.width, canvas.height);
+
+        if (eventRef && eventRef.type !== "webcam") {
+          lastX = coords.x;
+          lastY = coords.y;
+        }
+      }
+
+      // Webcam functions
+      async function startWebcam() {
+        try {
+          // Initialize MediaPipe if not already done
+          if (!faceMesh) {
+            initializeMediaPipe();
+          }
+
+          // Initialize camera
+          camera = new Camera(video, {
+            onFrame: async () => {
+              if (faceMesh && webcamMode) {
+                await faceMesh.send({ image: video });
+              }
+            },
+            width: 640,
+            height: 480,
+          });
+
+          await camera.start();
+
+          webcamActive = true;
+          video.style.display = "block";
+
+          // Update UI
+          document.getElementById("statusIndicator").classList.add("active");
+          document.getElementById("statusText").textContent = "Webcam Active - Nose Tracking!";
+          document.getElementById("toggleWebcam").textContent = "Stop Webcam";
+
+          console.log("MediaPipe nose tracking initialized!");
+          console.log("Camera started, ready for face detection");
+          console.log("Canvas size:", canvas.width, "x", canvas.height);
+        } catch (error) {
+          console.error("Error accessing webcam:", error);
+          alert("Could not access webcam. Please ensure you have granted camera permissions.");
+        }
+      }
+
+      // Auto-switch to webcam mode after webcam starts
+      function autoSwitchToWebcamMode() {
+        if (!webcamActive) return;
+
+        webcamMode = true;
+        const button = document.getElementById("toggleMode");
+
+        button.textContent = "Webcam Mode - Nose Tracking";
+        button.classList.add("active");
+        isFirstTouch = true; // Reset touch state
+
+        // Initialize nose position to canvas center
+        initializeNosePosition();
+
+        // MediaPipe handles tracking automatically, no intervals needed
+        updateDebugCursor(); // Show debug cursor
+        console.log("Auto-switched to nose tracking mode!");
+      }
+
+      function stopWebcam() {
+        if (camera) {
+          camera.stop();
+          camera = null;
+        }
+
+        video.style.display = "none";
+        webcamActive = false;
+        webcamMode = false;
+
+        // Stop any continuous drawing
+        if (timeoutReference) {
+          clearInterval(timeoutReference);
+          timeoutReference = null;
+        }
+
+        if (trackingInterval) {
+          clearInterval(trackingInterval);
+          trackingInterval = null;
+        }
+
+        // Update UI
+        document.getElementById("statusIndicator").classList.remove("active");
+        document.getElementById("statusText").textContent = "Webcam Off";
+        document.getElementById("toggleWebcam").textContent = "Start Webcam";
+        document.getElementById("toggleMode").textContent = "Mouse Mode";
+        document.getElementById("toggleMode").classList.remove("active");
+
+        // Hide debug cursor
+        updateDebugCursor();
+      }
+
+      // Event listeners for controls
+      document.getElementById("toggleWebcam").addEventListener("click", () => {
+        if (webcamActive) {
+          stopWebcam();
+        } else {
+          startWebcam();
+        }
+      });
+
+      document.getElementById("toggleMode").addEventListener("click", () => {
+        if (!webcamActive) {
+          alert("Please start the webcam first!");
+          return;
+        }
+
+        webcamMode = !webcamMode;
+        const button = document.getElementById("toggleMode");
+
+        if (webcamMode) {
+          button.textContent = "Webcam Mode - Nose Tracking";
+          button.classList.add("active");
+          isFirstTouch = true; // Reset touch state
+
+          // Initialize nose position to canvas center
+          initializeNosePosition();
+
+          // MediaPipe handles tracking automatically, no intervals needed
+          updateDebugCursor(); // Show debug cursor
+          console.log("Nose tracking mode ON - move your nose to control the cursor!");
+        } else {
+          button.textContent = "Mouse Mode";
+          button.classList.remove("active");
+
+          // Stop any continuous drawing when switching modes
+          if (timeoutReference) {
+            clearInterval(timeoutReference);
+            timeoutReference = null;
+          }
+
+          updateDebugCursor(); // Hide debug cursor
+        }
+      });
+
+      document.getElementById("sensitivitySlider").addEventListener("input", (e) => {
+        sensitivity = parseFloat(e.target.value);
+        document.getElementById("sensitivityValue").textContent = sensitivity.toFixed(1);
+        console.log("Nose tracking sensitivity:", sensitivity);
+      });
+
+      document.getElementById("smoothingSlider").addEventListener("input", (e) => {
+        smoothingFactor = parseFloat(e.target.value);
+        document.getElementById("smoothingValue").textContent = smoothingFactor.toFixed(1);
+        console.log("Nose tracking smoothing:", smoothingFactor);
+      });
+
+      document.getElementById("showDebugCursor").addEventListener("change", () => {
+        updateDebugCursor();
+      });
+
+      document.getElementById("showDebugInfo").addEventListener("change", () => {
+        updateDebugCursor();
+      });
+
+      // Key event listener for 'D' key to toggle debug tools
+      document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "d") {
+          toggleDebugTools();
+        }
+      });
+
+      // Debounce function for resize events
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // Event listeners
+      window.addEventListener("load", async () => {
+        createScrollTrigger();
+
+        // Auto-start webcam and switch to webcam mode
+        console.log("Auto-starting webcam...");
+        await startWebcam();
+
+        // Small delay to ensure webcam is ready, then auto-switch to webcam mode
+        setTimeout(() => {
+          autoSwitchToWebcamMode();
+        }, 1000);
+      });
+
+      window.addEventListener(
+        "resize",
+        debounce(() => {
+          resizeCanvas();
+          createScrollTrigger();
+        }, 250)
+      );
+
+      let timeoutReference;
+
+      canvas.addEventListener("mousemove", (e) => {
+        if (webcamMode) return; // Ignore mouse when in webcam mode
+
+        eventRef = e;
+        if (timeoutReference) return;
+
+        timeoutReference = setInterval(() => {
+          draw();
+        }, 1);
+      });
+
+      canvas.addEventListener("touchmove", (e) => {
+        if (webcamMode) return; // Ignore touch when in webcam mode
+
+        eventRef = e;
+        if (timeoutReference) return;
+
+        timeoutReference = setInterval(() => {
+          draw();
+        }, 1);
+      });
+
+      window.addEventListener("blur", () => {
+        clearInterval(timeoutReference);
+        timeoutReference = null;
+      });
+
+      canvas.addEventListener("mouseout", () => {
+        if (!webcamMode) isFirstTouch = true;
+      });
+
+      canvas.addEventListener("touchend", () => {
+        if (!webcamMode) isFirstTouch = true;
+      });
+
+      // Image load handlers
+      bwImage.onload = resizeCanvas;
+      colorImage.onload = resizeCanvas;
+
+      // Cleanup on page unload
+      window.addEventListener("beforeunload", () => {
+        if (camera) {
+          camera.stop();
+        }
+        if (faceMesh) {
+          faceMesh.close();
+        }
+        if (trackingInterval) {
+          clearInterval(trackingInterval);
+        }
+        if (timeoutReference) {
+          clearInterval(timeoutReference);
+        }
+      });
+    </script>
+  </body>
+</html>
