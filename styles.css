@@ -2727,3 +2727,136 @@ footer {
     height: 100%;
   }
 }
+
+
+/* Horizontal social bar */
+.social-horizontal {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 10px 0;
+}
+
+/* Better spacing on desktop */
+@media (min-width: 768px) {
+    .social-horizontal {
+        gap: 4rem;
+        
+    }
+
+        .social-icon {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Icon styles */
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-1px);
+    border-color: #dee2e6;
+    background: #ffffff;
+}
+
+.social-icon:hover::before {
+    opacity: 1;
+}
+
+.social-icon svg {
+    width: 3rem;
+    height: 3rem;
+    transition: transform 0.2s ease;
+}
+
+.social-icon:hover svg {
+    transform: scale(1.05);
+}
+
+/* Platform-specific subtle colors */
+.facebook svg { 
+    fill: #6c757d;
+}
+
+.bluesky svg { 
+    fill: #6c757d;
+}
+
+.instagram svg { 
+    fill: #6c757d;
+}
+
+.tiktok svg { 
+    fill: #495057;
+}
+
+.newsletter svg { 
+    fill: #6c757d;
+}
+
+/* Subtle hover color hints */
+.facebook:hover svg { 
+    fill: #4267B2;
+}
+
+.bluesky:hover svg { 
+    fill: #0085FF;
+}
+
+.instagram:hover svg { 
+    fill: #E4405F;
+}
+
+.tiktok:hover svg { 
+    fill: #000000;
+}
+
+.newsletter:hover svg { 
+    fill: #6B73FF;
+}
+
+
+  .footer-content {
+        /* max-width: 1200px; */
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.903);
+        bottom: 0;
+        z-index: 10000;
+        pointer-events: all;
+        width: 100vw;
+        border-top: 2px dashed black;
+      }
+
+      .footer-credit {
+        font-size: 0.9rem;
+        /* color: rgb(95, 67, 61); */
+        /* margin: 1rem; */
+        padding: 1rem;
+        /* border-top: 1px solid rgba(95, 67, 61, 0.3); */
+      }
