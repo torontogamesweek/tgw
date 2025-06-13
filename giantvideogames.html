@@ -412,10 +412,19 @@
       // Debug tools visibility
       let debugToolsVisible = false;
 
-      // Initialize smoothed position to canvas center
+      // Initialize smoothed position to visible viewport center
       function initializeNosePosition() {
+        // Get the visible portion of the canvas (same logic as in tracking)
+        const canvasRect = canvas.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        const visibleTop = Math.max(0, -canvasRect.top);
+        const visibleBottom = Math.min(canvas.height, visibleTop + viewportHeight);
+        const visibleHeight = visibleBottom - visibleTop;
+        
+        // Set initial position to center of visible area
         smoothedNoseX = canvas.width * 0.5;
-        smoothedNoseY = canvas.height * 0.5;
+        smoothedNoseY = visibleTop + visibleHeight * 0.5;
         webcamX = smoothedNoseX;
         webcamY = smoothedNoseY;
       }
@@ -445,7 +454,7 @@
         if (webcamMode && showDebugCursor && debugToolsVisible) {
           debugCursor.classList.add("active");
 
-          // Convert canvas coordinates to screen coordinates
+          // Convert canvas coordinates to screen coordinates, accounting for scroll
           const canvasRect = canvas.getBoundingClientRect();
           const screenX = canvasRect.left + (webcamX * canvasRect.width) / canvas.width;
           const screenY = canvasRect.top + (webcamY * canvasRect.height) / canvas.height;
@@ -648,6 +657,7 @@
         }
 
         ctx.globalCompositeOperation = "destination-out";
+        
 
         const newParticles = Array(18)
           .fill()

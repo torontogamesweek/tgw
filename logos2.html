@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+
+    <style>
+      /* Image container setup */
+
+      .image-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-image: url('images/2025/lcolour.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      
+
+      .sponsorbox {
+        /* margin: 1rem 0 0 0; */
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        padding: 2rem;
+        width: 100%;
+        height: 90vh;
+      }
+
+
+  
+
+      .logo {
+        width: 240px; /* Slightly bigger for better visibility */
+        height: 130px; 
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out; /* Faster transition */
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        padding: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+    
+
+      .logo.visible {
+        opacity: 1;
+      }
+
+
+   
+
+      /* Base */
+      main {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        margin-top: 0;
+        /* background: rgba(255, 255, 255, 0.1); */
+        backdrop-filter: blur(7px);
+        padding: 2rem 0;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+    <div class="image-container">
+      <!-- Background image displays here -->
+    </div>
+    <main class="no-pointer-events">
+      <div class="logo-container">
+        <!-- Logos will be dynamically inserted here -->
+      </div>
+
+        <div class="logo-source" style="display: none">
+          <a href="https://www.ontariocreates.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Ontario-Creates.png" alt="Ontario Creates logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_City-of-Toronto.png" alt="City of Toronto logo" class="logo logo-big" /> </a
+          ><br />
+          <a href="https://unity.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Unity-Color.png" alt="Unity logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.drinkboxstudios.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Drinkbox-Studios.png" alt="Drinkbox Studios logo" class="logo logo-big" />
+          </a>
+
+          <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
+
+          <a href="https://www.epicgames.com/site/en-US/home" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Epic-Games.png" alt="Epic Games logo" class="logo logo-big" />
+          </a>
+          <a href="https://gameartsinternational.network/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_GAIN.png" alt="GAIN logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.interactiveontario.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Interactive-Ontario.png" alt="Interactive Ontario logo" class="logo logo-big" />
+          </a>
+          <a href="https://xpgamesummit.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_XP-Gaming.png" alt="XP Gaming logo" class="logo logo-big" />
+          </a>
+          <a href="https://brokengamescollective.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Broken-Games-Collective.png" alt="Broken Games Collective logo" class="logo logo-big" />
+          </a>
+          <a href="https://makerspace.cobot.me/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_TTL-Makerspace.png" alt="TTL Makerspace logo" class="logo logo-big" />
+          </a>
+          <a href="https://linktr.ee/bonusstagetoronto/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Bonus-Stage.png" alt="Bonus Stage logo" class="logo logo-big" />
+          </a>
+          <a href="https://ladyarcaders.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Lady-Arcaders.png" alt="Lady Arcaders logo" class="logo logo-big" />
+          </a>
+          <a href="https://vividfoundry.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Vivid-Foundry.png" alt="Vivid Foundry logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.dirty-rectangles.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Dirty-Rectangles.png" alt="Dirty Rectangles logo" class="logo logo-big" />
+          </a>
+          <a href="https://tojam.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_TO-Jam.png" alt="Toronto Game Jam logo" class="logo logo-big" />
+          </a>
+          <a href="https://torontopubliclibrary.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Toronto-Public-Library.png" alt="Toronto Public Library logo" class="logo logo-big" />
+          </a>
+          <a href="https://interaccess.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Interaccess.png" alt="Interaccess logo" class="logo logo-big" />
+          </a>
+          <a href="https://werocreative.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_wero.png" alt="Wero logo" class="logo logo-big" />
+          </a>
+
+          <a href="https://www.amd.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_AMD.png" alt="AMD logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.rom.on.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_ROM.png" alt="ROM logo" class="logo logo-big" />
+          </a>
+          <a href="https://kittencupstudio.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Kitten-Cup-Studio.png" alt="Kitten Cup Studio logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.finji.co/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_FINJI.png" alt="FINJI logo" class="logo logo-big" />
+          </a>
+          <a href="https://gamerella.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_GAMERella.png" alt="GAMERella logo" class="logo logo-big" />
+          </a>
+          <a href="https://igda.org/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_IGDA.png" alt="IGDA logo" class="logo logo-big" />
+          </a>
+          <a href="https://handeyesociety.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Hand-Eye-Society.png" alt="Hand Eye Society logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.georgebrown.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_George-Brown-College.png" alt="George Brown College logo" class="logo logo-big" />
+          </a>
+          <a href="" target="blank">
+            <img src="images/logos/2025/TGW25-Web_GRID.png" alt="GRID logo" class="logo logo-big" />
+          </a>
+          <a href="https://cwacanada.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_CODE-CWA.png" alt="CODE CWA logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.anotherstory.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Another-Story-Bookshop.png" alt="Another Story Bookshop logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.trinitysquarevideo.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Trinity-Square-Video.png" alt="Trinity Square Video logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.lockwoodimmersive.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Lockwood-Immersive.png" alt="Lockwood Immersive logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.instagram.com/hypergamestorytime/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Hypergame-Storytime.png" alt="Hypergame Storytime logo" class="logo logo-big" />
+          </a>
+          <a href="https://trainwrecklabs.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Trainwreck-Labs.png" alt="Trainwreck Labs logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.ocadu.ca/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_OCADU.png" alt="OCAD University logo" class="logo logo-big" />
+          </a>
+          <a href="https://xtramagazine.com/" target="blank">
+            <img src="images/logos/2025/TGW25-Web_Xtra.png" alt="Xtra Magazine logo" class="logo logo-big" />
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      function setupSponsors() {
+        const logos = [...document.querySelectorAll(".logo-source a")];
+
+        // Define priority sponsors in exact order you want them to appear
+        const prioritySponsors = [
+          "City of Toronto logo",      // Toronto (city logo)
+          "Interactive Ontario logo",  // Interactive Ontario
+          "Unity logo",               // Unity
+          "OCAD University logo",     // OCAD University
+          "Hand Eye Society logo",    // Hand Eye Society
+          "Dirty Rectangles logo"     // Dirty Rectangles
+        ];
+
+        function displayAllLogos() {
+          // Find priority sponsors
+          const priorityLogos = [];
+          const remainingLogos = [];
+          
+          logos.forEach(logoLink => {
+            const img = logoLink.querySelector('img');
+            const altText = img.getAttribute('alt');
+            
+            if (prioritySponsors.includes(altText)) {
+              priorityLogos.push(logoLink);
+            } else {
+              remainingLogos.push(logoLink);
+            }
+          });
+          
+          // Sort priority logos in the specified order
+          priorityLogos.sort((a, b) => {
+            const aIndex = prioritySponsors.indexOf(a.querySelector('img').getAttribute('alt'));
+            const bIndex = prioritySponsors.indexOf(b.querySelector('img').getAttribute('alt'));
+            return aIndex - bIndex;
+          });
+          
+          // Combine: priority sponsors first, then all others
+          const allLogos = [...priorityLogos, ...remainingLogos];
+
+          // Clear existing container
+          const container = document.querySelector(".logo-container");
+          container.innerHTML = "";
+
+          // Create slots for ALL logos
+          allLogos.forEach((logoLink) => {
+            const slot = document.createElement("div");
+            slot.className = "logo-slot";
+            const logo = logoLink.cloneNode(true);
+            slot.appendChild(logo);
+            container.appendChild(slot);
+            
+            // Make logos visible immediately
+            requestAnimationFrame(() => {
+              logo.querySelector("img").classList.add("visible");
+            });
+          });
+        }
+
+        displayAllLogos();
+
+        // Update on resize to maintain responsive layout
+        window.addEventListener(
+          "resize",
+          debounce(() => {
+            displayAllLogos();
+          }, 250)
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", setupSponsors);
+    </script>
+  </body>
+</html>
