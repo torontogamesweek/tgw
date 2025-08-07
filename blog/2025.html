@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+    <title>Toronto Games Week Blog 2023</title>
+
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+
+    <meta property="og:image" content="/images/tgwposternologos.png" />
+
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <body>
+    <header>
+      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+        <span class="sr-only">Menu</span>
+        <span class="icon"></span>
+      </button>
+
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav id="primary-navigation">
+        <ul>
+          <li>
+            <a href="/index.html">Home</a>
+          </li>
+          <li>
+            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+          </li>
+          <li>
+            <a href="/about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r129/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <script src="/playableBackground.js"></script>
+    <main>
+      <div class="headerImgDiv">
+        <img id="letterImg" src="/images/TGWLogo2025wCap.png" alt="A type treatment of Toronto Games Week" />
+        <p id="caption">A celebration of playable arts & culture</p>
+        <br />
+      </div>
+
+<div class="contentContainer" id="landingPage">
+        <div class="content blog">
+          <section class="textBox">
+            <h2>2025 Toronto Games Week Recap</h2>
+
+            <p>
+              2025 was the biggest year yet for TGW, with over 4500 combined attendees at 35+ events over seven magical days.
+              <!-- <span class="highlight"><a href="/schedule/2025.html">See the entire 2025 program here!</a></span> -->
+            </p>
+            <br>
+            <br>
+            <p>
+              <strong>At Toronto Games Week 2025, you could:</strong>
+            </p>
+            <ul class="controllerList" id="activitiesList">
+              <li>Connect with queer joy and rage in DEI or DIE Variety Show!</li>
+              <li>Scour High Park for fungi and butterflies in scavenger hunts!</li>
+              <li>Wheel down dark forest paths to the Night Parkcade!</li>
+              <li>Level up your industry knowledge and contacts!</li>
+              <li>Play massive videogames projected on concrete silos at the waterfront!</li>
+            </ul>
+            
+            <h2>Special guests</h2>
+            <ul class="controllerList" id="guestsList">
+              <li>
+                <strong>Sherwin Tjia</strong> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from
+                Montreal who brought the contemplative SUNCHASER flight simulator experience!
+              </li>
+              <li>
+                <strong>Paolo Pedercini</strong> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from
+                Pittsburgh!
+              </li>
+              <li><strong>Terry Cavanagh</strong> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!</li>
+            </ul>
+
+            <h2>Thursday, June 12: Kicking Off in Style</h2>
+
+            <p>
+              We kicked off Toronto Games Week with Giant Video Games at the waterfront. We had massive playable projections lighting up the historic Canada Malting Silos. 
+            </p>
+            <img src="/images/blog/tgw2025-organizers.jpg" alt="Marie and Jim organizers speaking at the opening party with Toronto Games Week backdrop" />
+            <p>Players were selected through a contest involving giant golden tickets.</p>
+            <img src="/images/blog/tgw2025-golden.jpg" alt="Soneone with a hand made golden ticket" />
+
+           <p>Mayor Olivia Chow joined in on the fun!</p>
+            <img src="/images/blog/tgw2025-outdoor-evening.jpg" alt="Outdoor evening event with tents and crowds enjoying games and demos" />
+            <em>(photos: Yevi Kaliuzhka)</em>
+            <br>
+
+            <p>
+              XP Game Summit brought hundreds of professionals together for insights and connections across two days. Behaviour Interactive hosted a meet & greet at their new Toronto office.
+            </p>
+       <img src="/images/blog/tgw2025-xp-summit-crowd.jpg" alt="Packed auditorium at XP Game Summit with engaged audience members" />
+            <em>(photo: Ryan of XP Summit)</em>
+            <br>
+            <p>
+              At InterAccess, visitors could experience xXx_FANTASYLAND_xXx a transgressive multimedia project combining videogames, live performance, and projection mapping to explore identity and representation.
+            </p>
+            <img
+              src="/images/blog/tgw2025-projection-mapping.jpg"
+              alt="Two artists working with projection mapping technology for multimedia performance" />
+            <em>(photo: Liam Mackenzie)</em>
+            <br>
+
+            <p>
+              Tanya Kan from Vivid Foundry hosted Journaling for Game Makers at Fort York Library, and Mathew Iantorno introduced Spellbinder, a tabletop game that turns books into spellcasting components through Making + Playing a Little Free Library RPG
+            </p>
+
+            <h2>Friday, June 13: Community and Connection</h2>
+
+            <p>
+              Friday brought the beloved DEI or DIE Variety Showcase & Queer Social to TMU's eighth floor, where hosts Gav Sarafian and Hannah Beatty connected the community through performances, conversations, and gameplay that celebrated queer joy and rage.
+            </p>
+            <img
+              src="/images/blog/tgw2025-dei-or-die.jpg" 
+              alt="Gav and Hannah on stage with DEI or DIE poster, making exaggerated expressions" />
+            <em>(photo: jcallejasrodriguez)</em>
+            <br>
+
+            <p>
+              The G.R.I.D. provided structured playtesting and feedback to delighted devs at George Brown College.
+            </p>
+                         <img
+              src="/images/blog/tgw2025-thegrid.jpg" 
+              alt="Game devs getting feedback" />
+            <em>(photo: Mega Power Games)</em>
+     
+
+            <h2>Saturday, June 14: Adventure Central</h2>
+            
+            <p>
+              Saturday was packed with outdoor adventures and creative activities. The Hunt for the Brightwing Butterfly led participants through High Park's winding paths on an immersive scavenger hunt, while the Rat Race | Adventure in the P.A.T.H. challenged teams to conquer North America's largest underground pedestrian network.
+            </p>
+            <img src="/images/blog/tgw2025-high-park-gathering.jpg" alt="Large group gathered in High Park for nature-themed gaming experience" />
+            <em>(photo: jesse of lockwoodimmersive)</em>
+            <br>
+
+
+            <p>
+              In Search of the Godmama offered an alternative ritual for exchanging goddesses from different cultures, and Haggle on the Grange turned the park into a large-scale negotiation game.
+            </p>
+<br>
+
+            <p>The beloved Kitten Cup Tea Party returned to Grange Park with a capybara theme, complete with tea-posing traditions and indie game demos.</p>
+            <img src="/images/blog/tgw2025-kitten-cup.jpg" alt="Group of smiling people in Grange Park holding up a large capybara cutout" />
+            <em>(photo: jsajm quino)</em>
+            <br>
+
+            <p>
+              We had a wealth of Game Jam Day events, with Board Game and PICO-8 MicroJams, featuring workshops by Andrew Tran and Adam Saltsman from Finji, followed by "What's Next, Jammer?", a discussion about the cultural and economic value of game jams.
+            </p>
+<br>
+            <p>
+              The Pixel Power Play showcase at Red Bull/Overactive Media gave attendees early access to upcoming games, while Vector Festival's Game Residency Keynote at InterAccess featured documentarian Min Sook Lee discussing autofiction in videogames.
+            </p>
+<br>
+
+            <p>We closed the night with the mysterious Night Bike Parkcade, a pop-up arcade with a two-wheeled theme featuring bike-related videogames, protest games, and secret clues to find us.</p>
+
+            <h2>Sunday, June 15: Making and Playing</h2>
+<br>
+            <p>
+              Sunday opened with hands-on creation at Games Made Open at TTL Makerspace, where participants could hack with open-source tools like Godot and create their own Gameboy cartridges. The Board Game Design Jam at Snakes & Lattes College invited teams to prototype boardgames in a day.
+            </p>
+<br>
+
+            <p>
+              High Park hosted Metazooa Live!, an evolution-themed scavenger hunt using phones to track plants and animals while building a tree of life.
+            </p>
+<br>
+
+            <p>
+              The Out of Bounds 2ronto speedrunning event at Society Clubhouse showcased women and femme players demonstrating incredible gaming skills throughout the weekend.
+            </p>
+<br>
+
+            <p>
+              At Hideaway Studios, we had Dream Game Incorporated, where participants' drawings came to life in a playable game prototype with live musical accompaniment. The Indie Game Emporium at Houndstooth offered a chance to meet local developers and purchase zines, diy games, and other game-art objects.
+            </p>
+<br>
+
+            <p>
+              The day wrapped with experimental performances at Play House at See-Scape, with live electronic music and games, and then the NextGen Showcase at CSI Spadina, featuring curated games from Toronto's emerging talent.
+            </p>
+
+            <h2>Monday, June 16: Building Community</h2>
+
+            <p>
+              On Monday we had Deck Building at Lillian H. Smith Library where participants created trading cards, and The Playful Page conversation at Palmerston Library featuring Holly Gramazio and Jim Munroe discussing the intersection of writing and games.
+            </p>
+<br>
+            <p>
+              Team Up Activated brought Marvel Rivals tournaments to Invictus Game Station, while The Sound of Soft Rains' New Sci-Fi Game at the Canadian Music Centre offered a behind-the-scenes look at video game music creation.
+            </p>
+<br>
+
+            <p>
+              The IGDA Game Programmers Roundtable at George Brown College brought together veteran programmers to share career insights and advice.
+            </p>
+<br>
+
+            <p>
+              Monday ended with the joyful Parachute Club in Christie Pits Park, where people of all ages came together for playful community activities with a giant rainbow parachute.
+            </p>
+            <img
+              src="/images/blog/tgw2025-parachute-club.jpg"
+              alt="Group of people holding up a giant rainbow parachute in Christie Pits Park" />
+            <em>(photo: kreztakingphotos)</em>
+            <br>
+
+            <h2>Tuesday, June 17: Art and Preservation</h2>
+<br>
+
+            <p>
+              Tuesday started with Sherwin Tjia's SUNCHASER at InterAccess, where participants took turns flying a flight simulator while chasing an endless sunset projected on the walls.
+            </p>
+<br>
+
+            <p>
+              The Portable Preservation showcase at the Royal Ontario Museum celebrated handheld gaming history with Game Boy cameras, rare accessories, and hidden gems from gaming's past.
+            </p>
+<br>
+
+            <p>
+              We gathered for microtalks at Bonus Stage at TacoTaco, and then onwards to Seriously Fun at Danu Social House, dedicated to games for change, educational games, and serious game development.
+            </p>
+
+            <h2>Wednesday, June 18</h2>
+
+            <p>We wrapped it all up with the Toronto Games Week Closing Party at Trinity Square Video with OMNIVOX, a magical cube with 4,096 LEDs and a custom playful experience designed by Callum Hay, Sara Vinten, and Jessica Mak.</p>
+<br>
+            <p>~~~</p>
+
+                        <h2>Sponsors and Co-organizers:</h2>
+
+                        <p>Thanks to all our co-organizers and sponsors for making it happen!</p>
+
+            <p>
+              City of Toronto, Ontario Creates, Toronto Public Library, CWA Canada / CODE-CANADA, Drinkbox Games, Trinity Square Video, Unreal
+              Education / EPIC, A Gaming Network / Toronto Community Meetup Powered By Twitch, Another Story, AMD, FINJI, GAMERella, George Brown
+              College, Hand Eye Society, Resolume, ROM (Royal Ontario Museum), TO Jam, TTL Makerspace, Unity, Toronto Prop Expo, Greta bar
+            </p>
+
+            <p>
+              Bonus Stage, Broken Games Collective, Chat Perdu Productions, Dirty Rectangles, GAIN, GRID, Hideaway Studios & Hypergame Storytime, IGDA
+              Toronto, InterAccess, Interactive Ontario, Kitten Cup Studio, Lady Arcaders, Lockwood Immersive, OCADU, Trainwreck Labs, Vivid Foundry,
+              Wero, XP Gaming Inc.
+            </p>
+          </section>
+        </div>
+      </div>
+
+    </main>
+    <script src="/play.js"></script>
+    <script src="/connectionTest.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+  </body>
+</html>
