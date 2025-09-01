@@ -347,7 +347,7 @@ p {
 
 .textBox {
   background-color: hsl(33, 100%, 98%, 0.9);
-  /* max-width: 85vw; */
+  max-width: 95vw;
   min-width: 100%;
   display: flex;
   flex-direction: column;
@@ -1345,7 +1345,7 @@ header {
 nav {
   position: absolute;
   text-align: right;
-  top: 100%;
+  top: 0;
   background-color: rgb(209 223 234);
   width: 100%;
   transform: scale(1, 0);
@@ -1495,7 +1495,7 @@ nav > ul > li {
 nav {
   position: absolute;
   text-align: right;
-  top: 100%;
+  top: 0;
   background-color: rgb(209 223 234);
   width: 100%;
   transform: scale(1, 0);
