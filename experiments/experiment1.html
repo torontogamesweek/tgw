@@ -29,7 +29,7 @@
             cursor: pointer;
             border-right: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 600;
             transition: all 0.2s;
             user-select: none;
@@ -81,15 +81,15 @@
 <body>
     <div id="nav">
         <div class="nav-item" data-game="1">Fling<span class="tooltip">Collect gold ✦ but avoid the catchers!</span></div>
-        <div class="nav-item" data-game="2">Paddle<span class="tooltip">Keep the balls bouncing! They fade if they rest.</span></div>
+        <div class="nav-item" data-game="2">Paddle<span class="tooltip">Keep the balls bouncing!</span></div>
         <div class="nav-item" data-game="3">Pop<span class="tooltip">Pop them all! Smaller = harder to click.</span></div>
         <div class="nav-item" data-game="4">Vacuum<span class="tooltip">Hold to vacuum, release to explode!</span></div>
         <div class="nav-item" data-game="5">Gravity Flip<span class="tooltip">Click to reverse gravity</span></div>
-        <div class="nav-item" data-game="6">Draw Barriers<span class="tooltip">Draw platforms to bounce falling balls!</span></div>
+        <div class="nav-item" data-game="6">Draw Lines<span class="tooltip">Draw lines to keep balls bouncing!</span></div>
         <div class="nav-item" data-game="7">Magnet Zones<span class="tooltip">Click = attract, SHIFT+click = repel</span></div>
         <div class="nav-item" data-game="8">Explode<span class="tooltip">Hold to charge, release to burst!</span></div>
         <div class="nav-item" data-game="9">Orbital<span class="tooltip">Balls orbit you. Click to release!</span></div>
-        <div class="nav-item" data-game="10">Transform<span class="tooltip">Click balls to make guards. Protect the moving zone</span></div>
+        <div class="nav-item" data-game="10">Defend<span class="tooltip">Click balls to make guards. Protect the zone!</span></div>
         <div class="nav-item" data-game="11">Connections<span class="tooltip">Connect people↔balls only! Same types explode</span></div>
         <div class="nav-item" data-game="12">Merge & Split<span class="tooltip">Unite all the walkers onto one world!</span></div>
         <div class="nav-item" data-game="13">Inflate/Pop<span class="tooltip">Click balls to pop them</span></div>
@@ -107,6 +107,7 @@
         let balls = [];
         let gameState = {};
         let mouseX = 0, mouseY = 0;
+        let isMouseDown = false;
         const MAX_SPEED = 25;
         let screenShake = { x: 0, y: 0, intensity: 0 };
         
@@ -126,6 +127,19 @@
         const numBallImages = 29, numPeopleImages = 19;
         for (let i = 1; i <= numBallImages; i++) { const img = new Image(); img.src = 'balls/ball_' + i + '.png'; ballImages.push(img); }
         for (let i = 1; i <= numPeopleImages; i++) { const img = new Image(); img.src = 'ppl/ppl_' + i + '.png'; peopleImages.push(img); }
+        
+        const pointImg = new Image(); pointImg.src = 'special/point.png';
+        const specialImg = new Image(); specialImg.src = 'special/special.png';
+        const baddieImg = new Image(); baddieImg.src = 'special/baddie.png';
+        const emptyCircleImg = new Image(); emptyCircleImg.src = 'special/empty_circle.png';
+        const blackCircleImg = new Image(); blackCircleImg.src = 'special/black_circle.png';
+        
+        const heartImg = new Image(); heartImg.src = 'particles/hot/heart.png';
+        const koImg = new Image(); koImg.src = 'particles/hot/ko.png';
+        const starImages = [];
+        for (let i = 1; i <= 3; i++) { const img = new Image(); img.src = 'particles/hot/stars/star_' + i + '.png'; starImages.push(img); }
+        const musicImages = [];
+        for (let i = 1; i <= 3; i++) { const img = new Image(); img.src = 'particles/music/music_' + i + '.png'; musicImages.push(img); }
         
         function drawPerson(x, y, height, imageIndex, opacity = 1.0, rotation = 0) {
             const img = peopleImages[imageIndex % numPeopleImages];
@@ -151,17 +165,30 @@
             ctx.closePath(); ctx.fillStyle = color; ctx.fill();
         }
         
+        function safeDrawImage(img, x, y, w, h, opacity = 1, rotation = 0) {
+            if (img && img.complete && img.naturalWidth > 0) {
+                ctx.save();
+                ctx.globalAlpha = opacity;
+                ctx.translate(x + w/2, y + h/2);
+                ctx.rotate(rotation);
+                ctx.drawImage(img, -w/2, -h/2, w, h);
+                ctx.restore();
+                return true;
+            }
+            return false;
+        }
+        
         const games = {
             1: { name: "Fling", init: initFling, update: updateFling, draw: drawFling, onPointerDown: flingPointerDown, onPointerMove: flingPointerMove, onPointerUp: flingPointerUp },
             2: { name: "Paddle", init: initPaddle, update: updatePaddle, draw: drawPaddle, onPointerMove: paddlePointerMove },
             3: { name: "Pop", init: initPop, update: updatePop, draw: drawPop, onPointerDown: popPointerDown },
             4: { name: "Vacuum", init: initVacuum, update: updateVacuum, draw: drawVacuum, onPointerDown: vacuumPointerDown, onPointerMove: vacuumPointerMove, onPointerUp: vacuumPointerUp },
             5: { name: "Gravity Flip", init: initGravityFlip, update: updateGravityFlip, draw: drawGravityFlip, onPointerDown: gravityFlipPointerDown },
-            6: { name: "Draw Barriers", init: initDrawBarriers, update: updateDrawBarriers, draw: drawDrawBarriers, onPointerDown: barrierPointerDown, onPointerMove: barrierPointerMove, onPointerUp: barrierPointerUp },
+            6: { name: "Draw Lines", init: initDrawBarriers, update: updateDrawBarriers, draw: drawDrawBarriers, onPointerDown: barrierPointerDown, onPointerMove: barrierPointerMove, onPointerUp: barrierPointerUp },
             7: { name: "Magnet Zones", init: initMagnetZones, update: updateMagnetZones, draw: drawMagnetZones, onPointerDown: magnetPointerDown },
             8: { name: "Explode", init: initExplode, update: updateExplode, draw: drawExplode, onPointerDown: explodePointerDown, onPointerUp: explodePointerUp },
             9: { name: "Orbital", init: initOrbital, update: updateOrbital, draw: drawOrbital, onPointerMove: orbitalPointerMove, onPointerDown: orbitalPointerDown },
-            10: { name: "Transform", init: initTransform, update: updateTransform, draw: drawTransform, onPointerDown: transformPointerDown },
+            10: { name: "Defend", init: initTransform, update: updateTransform, draw: drawTransform, onPointerDown: transformPointerDown },
             11: { name: "Connections", init: initConnections, update: updateConnections, draw: drawConnections, onPointerDown: connectionsPointerDown, onPointerMove: connectionsPointerMove },
             12: { name: "Merge & Split", init: initMergeSplit, update: updateMergeSplit, draw: drawMergeSplit, onPointerDown: mergeSplitPointerDown },
             13: { name: "Inflate/Pop", init: initInflate, update: updateInflate, draw: drawInflate, onPointerDown: inflatePointerDown },
@@ -169,12 +196,12 @@
             15: { name: "Portals", init: initPortals, update: updatePortals, draw: drawPortals, onPointerDown: portalPointerDown }
         };
         
-        // GAME 1: FLING - starts with 1 ball, starburst catchers, slower spawn
+        // GAME 1: FLING
         function initFling() {
             balls = [];
             gameState = { draggedBall: null, goldenOrbs: [], catchers: [], score: 0, lives: 5, particles: [], gameTime: 0, lastCatcherSpawn: 0 };
-            spawnFlingBall(); // Just 1 ball
-            for (let i = 0; i < 6; i++) gameState.goldenOrbs.push({ x: 150 + Math.random() * (canvas.width - 300), y: 200 + Math.random() * (canvas.height - 400), radius: 10, pulse: Math.random() * Math.PI * 2 });
+            spawnFlingBall();
+            for (let i = 0; i < 3; i++) gameState.goldenOrbs.push({ x: 150 + Math.random() * (canvas.width - 300), y: 200 + Math.random() * (canvas.height - 400), radius: 25, pulse: Math.random() * Math.PI * 2 });
             spawnCatcher(); spawnCatcher();
         }
         
@@ -186,14 +213,14 @@
         function spawnCatcher() {
             let x, y;
             do { x = 100 + Math.random() * (canvas.width - 200); y = 100 + Math.random() * (canvas.height - 200); } while (Math.abs(x - canvas.width/2) < 200 && Math.abs(y - canvas.height/2) < 200);
-            gameState.catchers.push({ x, y, personIndex: getNextPersonImage(), radius: 35, spawnProgress: 0 });
+            gameState.catchers.push({ x, y, personIndex: getNextPersonImage(), radius: 35, spawnProgress: 0, pulsePhase: Math.random() * Math.PI * 2, rotationPhase: Math.random() * Math.PI * 2 });
         }
         
         function updateFling() {
             gameState.gameTime++;
-            if (gameState.catchers.length < 12 && gameState.gameTime - gameState.lastCatcherSpawn > 1200) { spawnCatcher(); gameState.lastCatcherSpawn = gameState.gameTime; } // Even slower: 20 seconds
+            if (gameState.catchers.length < 12 && gameState.gameTime - gameState.lastCatcherSpawn > 1200) { spawnCatcher(); gameState.lastCatcherSpawn = gameState.gameTime; }
             gameState.goldenOrbs.forEach(orb => { orb.pulse += 0.1; });
-            gameState.catchers.forEach(c => { if (c.spawnProgress < 1) c.spawnProgress += 0.01; }); // Slower appear
+            gameState.catchers.forEach(c => { if (c.spawnProgress < 1) c.spawnProgress += 0.01; c.pulsePhase += 0.08; c.rotationPhase += 0.02; });
             gameState.particles = gameState.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += p.gravity || 0; p.life--; p.rotation = (p.rotation || 0) + (p.spin || 0); return p.life > 0; });
             
             for (let i = balls.length - 1; i >= 0; i--) {
@@ -211,7 +238,14 @@
                 if (speed > 4) {
                     for (let j = gameState.goldenOrbs.length - 1; j >= 0; j--) {
                         const orb = gameState.goldenOrbs[j], dx = ball.x - orb.x, dy = ball.y - orb.y;
-                        if (Math.sqrt(dx*dx + dy*dy) < ball.radius + orb.radius + 5) { ball.glowTimer = 60; gameState.score++; for (let k = 0; k < 8; k++) { const a = (Math.PI * 2 / 8) * k; gameState.particles.push({ x: orb.x, y: orb.y, vx: Math.cos(a) * 3, vy: Math.sin(a) * 3, life: 20, color: '#FFD700' }); } orb.x = 150 + Math.random() * (canvas.width - 300); orb.y = 200 + Math.random() * (canvas.height - 400); }
+                        if (Math.sqrt(dx*dx + dy*dy) < ball.radius + orb.radius + 5) { 
+                            ball.glowTimer = 60; gameState.score++; 
+                            for (let k = 0; k < 8; k++) { 
+                                const a = (Math.PI * 2 / 8) * k; 
+                                gameState.particles.push({ x: orb.x, y: orb.y, vx: Math.cos(a) * 4, vy: Math.sin(a) * 4, life: 30, starImg: starImages[Math.floor(Math.random() * 3)], size: 15 + Math.random() * 15, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.3, gravity: 0.1 }); 
+                            } 
+                            orb.x = 150 + Math.random() * (canvas.width - 300); orb.y = 200 + Math.random() * (canvas.height - 400); 
+                        }
                     }
                     gameState.catchers.forEach(catcher => {
                         if (catcher.spawnProgress < 0.8) return;
@@ -230,60 +264,169 @@
         function drawFling() {
             gameState.catchers.forEach(c => {
                 const op = Math.min(1, c.spawnProgress), scale = 0.5 + c.spawnProgress * 0.5;
-                ctx.save(); ctx.globalAlpha = op; ctx.translate(c.x, c.y); ctx.scale(scale, scale); ctx.translate(-c.x, -c.y);
-                drawStarburst(c.x, c.y, c.radius * 0.5, c.radius + 18, 8, 'rgba(255, 60, 60, 0.3)');
-                drawPerson(c.x, c.y + 20, 50, c.personIndex, 1); ctx.restore();
+                const spikeScale = 1 + Math.sin(c.pulsePhase) * 0.15;
+                ctx.save(); ctx.globalAlpha = op; ctx.translate(c.x, c.y); ctx.scale(scale, scale);
+                ctx.save();
+                ctx.rotate(c.rotationPhase);
+                const spikeRadius = (c.radius + 18) * spikeScale;
+                drawStarburst(0, 0, c.radius * 0.5, spikeRadius, 8, 'rgba(255, 60, 60, 0.4)');
+                ctx.restore();
+                const dangerGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, c.radius * 1.2);
+                dangerGrad.addColorStop(0, 'rgba(255, 0, 0, 0.2)');
+                dangerGrad.addColorStop(1, 'rgba(255, 0, 0, 0)');
+                ctx.beginPath(); ctx.arc(0, 0, c.radius * 1.2, 0, Math.PI * 2); ctx.fillStyle = dangerGrad; ctx.fill();
+                ctx.restore();
+                drawPerson(c.x, c.y + 20 * scale, 50 * scale, c.personIndex, op);
             });
-            gameState.goldenOrbs.forEach(orb => { const ps = 1 + Math.sin(orb.pulse) * 0.2; const g = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius * ps * 3); g.addColorStop(0, 'rgba(255, 215, 0, 0.6)'); g.addColorStop(1, 'rgba(255, 150, 0, 0)'); ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.radius * ps * 3, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.radius * ps, 0, Math.PI * 2); ctx.fillStyle = '#FFD700'; ctx.fill(); });
-            gameState.particles.forEach(p => { if (p.ballImage) { const img = ballImages[p.ballImage - 1]; if (img && img.complete) { ctx.save(); ctx.globalAlpha = p.life / 35; ctx.translate(p.x, p.y); ctx.rotate(p.rotation); ctx.drawImage(img, -p.radius, -p.radius, p.radius * 2, p.radius * 2); ctx.restore(); } } else { ctx.beginPath(); ctx.arc(p.x, p.y, 3 * (p.life / 25), 0, Math.PI * 2); ctx.fillStyle = p.color; ctx.globalAlpha = p.life / 25; ctx.fill(); ctx.globalAlpha = 1; } });
+            // Draw golden orbs as simple yellow dots
+            gameState.goldenOrbs.forEach(orb => { 
+                const ps = 1 + Math.sin(orb.pulse) * 0.2;
+                const g = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius * ps * 2);
+                g.addColorStop(0, 'rgba(255, 215, 0, 0.8)'); g.addColorStop(0.5, 'rgba(255, 180, 0, 0.3)'); g.addColorStop(1, 'rgba(255, 150, 0, 0)');
+                ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.radius * ps * 2, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill();
+                ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.radius * ps, 0, Math.PI * 2);
+                ctx.fillStyle = '#FFD700'; ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 200, 0.8)'; ctx.lineWidth = 3; ctx.stroke();
+            });
+            gameState.particles.forEach(p => { 
+                if (p.starImg) {
+                    safeDrawImage(p.starImg, p.x - p.size/2, p.y - p.size/2, p.size, p.size, p.life / 30, p.rotation);
+                } else if (p.ballImage) { 
+                    const img = ballImages[p.ballImage - 1]; 
+                    if (img && img.complete && img.naturalWidth > 0) { 
+                        ctx.save(); ctx.globalAlpha = p.life / 35; ctx.translate(p.x, p.y); ctx.rotate(p.rotation); ctx.drawImage(img, -p.radius, -p.radius, p.radius * 2, p.radius * 2); ctx.restore(); 
+                    } 
+                }
+            });
             balls.forEach(ball => { ball.trail.forEach(p => { const a = p.life / 25; ctx.beginPath(); ctx.arc(p.x, p.y, ball.radius * a * 0.5, 0, Math.PI * 2); ctx.fillStyle = ball.glowTimer > 0 ? 'rgba(255, 215, 0, ' + (a * 0.3) + ')' : 'rgba(200, 150, 150, ' + (a * 0.2) + ')'; ctx.fill(); }); if (ball.glowTimer > 0) { const g = ctx.createRadialGradient(ball.x, ball.y, ball.radius * 0.5, ball.x, ball.y, ball.radius * 1.8); g.addColorStop(0, 'rgba(255, 215, 0, ' + (ball.glowTimer / 120) + ')'); g.addColorStop(1, 'rgba(255, 215, 0, 0)'); ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius * 1.8, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); } const op = ball.dying ? (1 - ball.deathProgress) : (ball.spawnProgress < 1 ? ball.spawnProgress : (ball.isDragging ? 0.7 : 1.0)); drawBallWithSquash(ball, op, ball.rotation, ball.squashX, ball.squashY); if (ball.isDragging) { ctx.beginPath(); ctx.moveTo(ball.dragStartX, ball.dragStartY); ctx.lineTo(ball.x, ball.y); ctx.strokeStyle = 'rgba(100, 100, 100, 0.5)'; ctx.lineWidth = 3; ctx.stroke(); } });
             ctx.fillStyle = '#FFD700'; ctx.font = 'bold 24px Arial'; ctx.textAlign = 'left'; ctx.fillText('✦ ' + gameState.score, 20, canvas.height - 80);
             ctx.fillStyle = '#FF6666'; ctx.fillText('♥ ' + gameState.lives, 120, canvas.height - 80);
         }
-        function flingPointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y) && !balls[i].dying && balls[i].spawnProgress >= 1) { gameState.draggedBall = balls[i]; balls[i].isDragging = true; balls[i].dragStartX = x; balls[i].dragStartY = y; break; } } }
-        function flingPointerMove(x, y) { if (!gameState.draggedBall) return; const ball = gameState.draggedBall, pad = ball.radius + 10; ball.x = Math.max(pad, Math.min(canvas.width - pad, x)); ball.y = Math.max(pad, Math.min(canvas.height - pad, y)); }
-        function flingPointerUp() { if (!gameState.draggedBall) return; const ball = gameState.draggedBall; ball.vx = (ball.dragStartX - ball.x) * 0.3; ball.vy = (ball.dragStartY - ball.y) * 0.3; capSpeed(ball); ball.isDragging = false; gameState.draggedBall = null; }
+        function flingPointerDown(x, y) { 
+            for (let i = balls.length - 1; i >= 0; i--) { 
+                if (contains(balls[i], x, y) && !balls[i].dying && balls[i].spawnProgress >= 1) { 
+                    gameState.draggedBall = balls[i]; 
+                    balls[i].isDragging = true; 
+                    balls[i].dragStartX = x; 
+                    balls[i].dragStartY = y; 
+                    break; 
+                } 
+            } 
+        }
+        function flingPointerMove(x, y) { 
+            if (!gameState.draggedBall) return; 
+            const ball = gameState.draggedBall, pad = ball.radius + 10; 
+            ball.x = Math.max(pad, Math.min(canvas.width - pad, x)); 
+            ball.y = Math.max(pad, Math.min(canvas.height - pad, y)); 
+        }
+        function flingPointerUp() { 
+            if (!gameState.draggedBall) return; 
+            const ball = gameState.draggedBall; 
+            ball.vx = (ball.dragStartX - ball.x) * 0.3; 
+            ball.vy = (ball.dragStartY - ball.y) * 0.3; 
+            capSpeed(ball); 
+            ball.isDragging = false; 
+            gameState.draggedBall = null; 
+        }
         
-        // GAME 2: PADDLE - toned down squash/stretch
+        // GAME 2: PADDLE - simplified, no special object
         function initPaddle() {
-            balls = []; gameState = { mouseX: canvas.width/2, mouseY: canvas.height/2, lastMouseX: canvas.width/2, lastMouseY: canvas.height/2, personIndex: getNextPersonImage(), energy: 100 };
-            for (let i = 0; i < 15; i++) { const a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 2; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 35 + Math.random() * 20, rotation: Math.random() * Math.PI * 2, ballImage: getNextBallImage(), lastHitTime: Date.now(), sleepy: false, fadeProgress: 0, squashX: 1, squashY: 1 }); }
+            balls = []; 
+            gameState = { 
+                mouseX: canvas.width/2, mouseY: canvas.height/2, 
+                lastMouseX: canvas.width/2, lastMouseY: canvas.height/2, 
+                personIndex: getNextPersonImage(), energy: 100
+            };
+            for (let i = 0; i < 15; i++) { const a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 2; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 35 + Math.random() * 20, rotation: Math.random() * Math.PI * 2, ballImage: getNextBallImage(), lastHitTime: Date.now(), sleepy: false, fadeProgress: 0, squashX: 1, squashY: 1, wallHitTimer: 0 }); }
         }
         function updatePaddle() {
             const mVx = gameState.mouseX - gameState.lastMouseX, mVy = gameState.mouseY - gameState.lastMouseY;
             let sleepyCount = 0;
+            
             for (let i = balls.length - 1; i >= 0; i--) {
-                const ball = balls[i]; ball.vy += 0.05; const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+                const ball = balls[i]; 
+                ball.vy += 0.15;
+                const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
                 ball.vx *= 0.995; ball.vy *= 0.995; ball.x += ball.vx; ball.y += ball.vy; ball.rotation += speed * 0.02; capSpeed(ball);
-                ball.squashX += (1 - ball.squashX) * 0.06; ball.squashY += (1 - ball.squashY) * 0.06; // Slower recovery
-                if (speed < 1.5 && Date.now() - ball.lastHitTime > 3000) { ball.sleepy = true; ball.fadeProgress += 0.008; sleepyCount++; if (ball.fadeProgress >= 1) { balls.splice(i, 1); const a = Math.random() * Math.PI * 2, ns = 3 + Math.random() * 2; balls.push({ x: Math.random() * canvas.width, y: 100, vx: Math.cos(a) * ns, vy: Math.sin(a) * ns, radius: 35 + Math.random() * 20, rotation: 0, ballImage: getNextBallImage(), lastHitTime: Date.now(), sleepy: false, fadeProgress: 0, squashX: 1, squashY: 1 }); continue; } }
+                
+                // Wall hit timer for squash recovery
+                if (ball.wallHitTimer > 0) { 
+                    ball.wallHitTimer--; 
+                } else { 
+                    ball.squashX += (1 - ball.squashX) * 0.15; 
+                    ball.squashY += (1 - ball.squashY) * 0.15; 
+                }
+                
+                if (speed < 1.5 && Date.now() - ball.lastHitTime > 3000) { ball.sleepy = true; ball.fadeProgress += 0.008; sleepyCount++; if (ball.fadeProgress >= 1) { balls.splice(i, 1); const a = Math.random() * Math.PI * 2, ns = 3 + Math.random() * 2; balls.push({ x: Math.random() * canvas.width, y: 100, vx: Math.cos(a) * ns, vy: Math.sin(a) * ns, radius: 35 + Math.random() * 20, rotation: 0, ballImage: getNextBallImage(), lastHitTime: Date.now(), sleepy: false, fadeProgress: 0, squashX: 1, squashY: 1, wallHitTimer: 0 }); continue; } }
                 else { ball.sleepy = false; ball.fadeProgress = Math.max(0, ball.fadeProgress - 0.02); ball.lastHitTime = Date.now(); }
-                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.9; ball.squashX = 0.9; ball.squashY = 1.1; }
-                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.9; ball.squashX = 0.9; ball.squashY = 1.1; }
-                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.9; ball.squashX = 1.1; ball.squashY = 0.9; }
-                if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.9; ball.squashX = 1.1; ball.squashY = 0.9; }
-                const dx = ball.x - gameState.mouseX, dy = ball.y - gameState.mouseY, dist = Math.sqrt(dx * dx + dy * dy), padR = 45;
-                if (dist < ball.radius + padR) { const mSpeed = Math.sqrt(mVx * mVx + mVy * mVy), force = Math.min(mSpeed * 0.5, 15), ang = Math.atan2(dy, dx); ball.vx += Math.cos(ang) * force; ball.vy += Math.sin(ang) * force; ball.squashX = 0.88; ball.squashY = 1.08; const overlap = (ball.radius + padR) - dist; ball.x += Math.cos(ang) * overlap; ball.y += Math.sin(ang) * overlap; ball.lastHitTime = Date.now(); ball.sleepy = false; if (force > 3) addScreenShake(force * 0.3); capSpeed(ball); }
+                
+                // Wall bounces with subtle squash
+                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.9; ball.squashX = 0.9; ball.squashY = 1.1; ball.wallHitTimer = 8; }
+                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.9; ball.squashX = 0.9; ball.squashY = 1.1; ball.wallHitTimer = 8; }
+                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.9; ball.squashX = 1.1; ball.squashY = 0.9; ball.wallHitTimer = 8; }
+                if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.7; ball.squashX = 1.1; ball.squashY = 0.9; ball.wallHitTimer = 8; }
+                
+                // Paddle collision
+                const dx = ball.x - gameState.mouseX, dy = ball.y - gameState.mouseY, dist = Math.sqrt(dx * dx + dy * dy), padR = 55;
+                if (dist < ball.radius + padR) { 
+                    const mSpeed = Math.sqrt(mVx * mVx + mVy * mVy), force = Math.min(mSpeed * 0.5, 15), ang = Math.atan2(dy, dx); 
+                    ball.vx += Math.cos(ang) * force; ball.vy += Math.sin(ang) * force; 
+                    const overlap = (ball.radius + padR) - dist; 
+                    ball.x += Math.cos(ang) * overlap; ball.y += Math.sin(ang) * overlap; 
+                    ball.lastHitTime = Date.now(); ball.sleepy = false; 
+                    if (force > 3) addScreenShake(force * 0.3); 
+                    capSpeed(ball); 
+                }
             }
             gameState.energy = Math.max(0, 100 - sleepyCount * 15);
-            for (let i = 0; i < balls.length; i++) { for (let j = i + 1; j < balls.length; j++) { const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; if (dist < minDist) { const ang = Math.atan2(dy, dx), tx = b1.x + Math.cos(ang) * minDist, ty = b1.y + Math.sin(ang) * minDist, ax = (tx - b2.x) * 0.05, ay = (ty - b2.y) * 0.05; b1.vx -= ax; b1.vy -= ay; b2.vx += ax; b2.vy += ay; b1.squashX = 0.95; b1.squashY = 1.05; b2.squashX = 0.95; b2.squashY = 1.05; } } }
+            for (let i = 0; i < balls.length; i++) { for (let j = i + 1; j < balls.length; j++) { const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; if (dist < minDist) { const ang = Math.atan2(dy, dx), tx = b1.x + Math.cos(ang) * minDist, ty = b1.y + Math.sin(ang) * minDist, ax = (tx - b2.x) * 0.05, ay = (ty - b2.y) * 0.05; b1.vx -= ax; b1.vy -= ay; b2.vx += ax; b2.vy += ay; } } }
             gameState.lastMouseX = gameState.mouseX; gameState.lastMouseY = gameState.mouseY;
         }
-        function drawPaddle() { balls.forEach(ball => { const op = 1 - ball.fadeProgress; if (ball.sleepy) { ctx.fillStyle = 'rgba(100, 100, 200, ' + (0.3 * op) + ')'; ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.fillText('💤', ball.x, ball.y - ball.radius - 10); } drawBallWithSquash(ball, op, ball.rotation, ball.squashX, ball.squashY); }); drawPerson(gameState.mouseX, gameState.mouseY + 25, 60, gameState.personIndex); ctx.beginPath(); ctx.arc(gameState.mouseX, gameState.mouseY, 45, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)'; ctx.lineWidth = 3; ctx.stroke(); const bW = 150, bH = 12, bX = 20, bY = canvas.height - 85; ctx.fillStyle = '#ddd'; ctx.fillRect(bX, bY, bW, bH); ctx.fillStyle = gameState.energy > 50 ? '#4CAF50' : gameState.energy > 25 ? '#FFC107' : '#F44336'; ctx.fillRect(bX, bY, bW * (gameState.energy / 100), bH); ctx.strokeStyle = '#999'; ctx.lineWidth = 2; ctx.strokeRect(bX, bY, bW, bH); ctx.fillStyle = '#666'; ctx.font = '14px Arial'; ctx.textAlign = 'left'; ctx.fillText('Energy', bX, bY - 5); }
+        function drawPaddle() { 
+            balls.forEach(ball => { const op = 1 - ball.fadeProgress; if (ball.sleepy) { ctx.fillStyle = 'rgba(100, 100, 200, ' + (0.3 * op) + ')'; ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.fillText('💤', ball.x, ball.y - ball.radius - 10); } drawBallWithSquash(ball, op, ball.rotation, ball.squashX, ball.squashY); }); 
+            drawPerson(gameState.mouseX, gameState.mouseY + 35, 80, gameState.personIndex); 
+            ctx.beginPath(); ctx.arc(gameState.mouseX, gameState.mouseY, 55, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)'; ctx.lineWidth = 3; ctx.stroke(); 
+            const bW = 150, bH = 12, bX = 20, bY = canvas.height - 85; ctx.fillStyle = '#ddd'; ctx.fillRect(bX, bY, bW, bH); ctx.fillStyle = gameState.energy > 50 ? '#4CAF50' : gameState.energy > 25 ? '#FFC107' : '#F44336'; ctx.fillRect(bX, bY, bW * (gameState.energy / 100), bH); ctx.strokeStyle = '#999'; ctx.lineWidth = 2; ctx.strokeRect(bX, bY, bW, bH); ctx.fillStyle = '#666'; ctx.font = '14px Arial'; ctx.textAlign = 'left'; ctx.fillText('Energy', bX, bY - 5); 
+        }
         function paddlePointerMove(x, y) { gameState.mouseX = x; gameState.mouseY = y; }
         
-        // GAME 3: POP - no score
+        // GAME 3: POP
         function initPop() { balls = []; gameState = { particles: [] }; for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2, s = 0.8 + Math.random() * 0.8; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 90 + Math.random() * 30, popping: false, popProgress: 0, opacity: 1, rotation: Math.random() * Math.PI * 2, ballImage: getNextBallImage() }); } }
         function updatePop() { gameState.particles = gameState.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += p.gravity || 0.1; p.life--; p.rotation = (p.rotation || 0) + (p.spin || 0); return p.life > 0; }); for (let i = balls.length - 1; i >= 0; i--) { const ball = balls[i]; if (ball.popping) { ball.popProgress += 0.12; ball.opacity = 1 - ball.popProgress; if (ball.popProgress >= 1) balls.splice(i, 1); continue; } const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy); if (speed < 0.5) { const a = Math.atan2(ball.vy, ball.vx); ball.vx = Math.cos(a) * 0.8; ball.vy = Math.sin(a) * 0.8; } ball.vx *= 0.98; ball.vy *= 0.98; ball.x += ball.vx; ball.y += ball.vy; ball.rotation += speed * 0.01; capSpeed(ball); if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.9; } if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.9; } if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.9; } if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.9; } } ballCollisions(); }
-        function drawPop() { gameState.particles.forEach(p => { const img = ballImages[p.ballImage - 1]; if (img && img.complete) { ctx.save(); ctx.globalAlpha = p.life / p.maxLife; ctx.translate(p.x, p.y); ctx.rotate(p.rotation); ctx.drawImage(img, -p.size/2, -p.size/2, p.size, p.size); ctx.restore(); } }); balls.forEach(ball => { ctx.save(); ctx.globalAlpha = ball.opacity; if (ball.popping) { const sc = 1 + ball.popProgress * 0.8; ctx.translate(ball.x, ball.y); ctx.scale(sc, sc); ctx.rotate(ball.popProgress * 0.5); ctx.translate(-ball.x, -ball.y); } drawBall(ball, 1.0, ball.rotation); ctx.restore(); }); }
+        function drawPop() { 
+            gameState.particles.forEach(p => { 
+                const img = ballImages[p.ballImage - 1]; 
+                if (img && img.complete && img.naturalWidth > 0) { 
+                    ctx.save(); 
+                    ctx.globalAlpha = p.life / p.maxLife; 
+                    ctx.translate(p.x, p.y); 
+                    ctx.rotate(p.rotation); 
+                    ctx.drawImage(img, -p.size/2, -p.size/2, p.size, p.size); 
+                    ctx.restore(); 
+                } 
+            }); 
+            balls.forEach(ball => { 
+                ctx.save(); 
+                ctx.globalAlpha = ball.opacity; 
+                if (ball.popping) { 
+                    const sc = 1 + ball.popProgress * 0.8; 
+                    ctx.translate(ball.x, ball.y); 
+                    ctx.scale(sc, sc); 
+                    ctx.rotate(ball.popProgress * 0.5); 
+                    ctx.translate(-ball.x, -ball.y); 
+                } 
+                drawBall(ball, 1.0, ball.rotation); 
+                ctx.restore(); 
+            }); 
+        }
         function popPointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (!balls[i].popping && contains(balls[i], x, y)) { const ball = balls[i]; ball.popping = true; addScreenShake(ball.radius * 0.08); const nP = Math.floor(ball.radius * 0.25); for (let j = 0; j < nP; j++) { const a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 5; gameState.particles.push({ x: ball.x, y: ball.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, size: 8 + Math.random() * 15, life: 40, maxLife: 40, rotation: Math.random() * Math.PI, spin: (Math.random() - 0.5) * 0.2, gravity: 0.15, ballImage: ball.ballImage }); } if (ball.radius > 25) { const cR = ball.radius * 0.55, nC = 2 + Math.floor(Math.random() * 2); for (let j = 0; j < nC; j++) { const a = (Math.PI * 2 / nC) * j + Math.random() * 0.5, sp = 4 + Math.random() * 4; balls.push({ x: ball.x, y: ball.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, radius: cR, popping: false, popProgress: 0, opacity: 1, rotation: Math.random() * Math.PI * 2, ballImage: getNextBallImage() }); } } break; } } }
         
-        // GAME 4: VACUUM - tiny squash/stretch
+        // GAME 4: VACUUM
         function initVacuum() { balls = []; gameState = { mouseX: canvas.width/2, mouseY: canvas.height/2, isVacuuming: false, vacuumStrength: 0 }; for (let i = 0; i < 25; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, radius: 30 + Math.random() * 25, ballImage: getNextBallImage(), squashX: 1, squashY: 1 }); }
         function updateVacuum() {
             if (gameState.isVacuuming) gameState.vacuumStrength = Math.min(gameState.vacuumStrength + 3, 100);
             balls.forEach(ball => {
-                if (gameState.isVacuuming) { const dx = gameState.mouseX - ball.x, dy = gameState.mouseY - ball.y, dist = Math.sqrt(dx * dx + dy * dy), force = Math.min(gameState.vacuumStrength / (dist + 30), 4); ball.vx += (dx / dist) * force; ball.vy += (dy / dist) * force; }
+                if (gameState.isVacuuming) { const dx = gameState.mouseX - ball.x, dy = gameState.mouseY - ball.y, dist = Math.sqrt(dx * dx + dy * dy), force = Math.min(gameState.vacuumStrength / (dist + 20), 8); ball.vx += (dx / dist) * force; ball.vy += (dy / dist) * force; }
                 if (ball.x < canvas.width / 2) ball.vx -= 0.15; else ball.vx += 0.15;
                 ball.vx *= 0.98; ball.vy *= 0.98; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball);
                 ball.squashX += (1 - ball.squashX) * 0.1; ball.squashY += (1 - ball.squashY) * 0.1;
@@ -299,7 +442,7 @@
         function vacuumPointerMove(x, y) { gameState.mouseX = x; gameState.mouseY = y; }
         function vacuumPointerUp() { if (gameState.isVacuuming) { addScreenShake(gameState.vacuumStrength * 0.1); balls.forEach(ball => { const dx = ball.x - gameState.mouseX, dy = ball.y - gameState.mouseY, dist = Math.sqrt(dx * dx + dy * dy), force = Math.min(5000 / (dist + 50), 20); ball.vx += (dx / dist) * force; ball.vy += (dy / dist) * force; ball.squashX = 0.85; ball.squashY = 1.15; capSpeed(ball); }); gameState.isVacuuming = false; gameState.vacuumStrength = 0; } }
         
-        // GAME 5: GRAVITY FLIP - tiny squash/stretch
+        // GAME 5: GRAVITY FLIP
         function initGravityFlip() { balls = []; gameState = { gravityDir: 1 }; for (let i = 0; i < 18; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, radius: 25 + Math.random() * 20, ballImage: getNextBallImage(), squashX: 1, squashY: 1 }); }
         function updateGravityFlip() {
             balls.forEach(ball => {
@@ -315,33 +458,157 @@
         function drawGravityFlip() { balls.forEach(ball => drawBallWithSquash(ball, 1, 0, ball.squashX, ball.squashY)); const aY = gameState.gravityDir === 1 ? canvas.height - 30 : 30; ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; ctx.font = 'bold 24px Arial'; ctx.textAlign = 'center'; ctx.fillText(gameState.gravityDir === 1 ? '↓' : '↑', canvas.width / 2, aY); }
         function gravityFlipPointerDown() { gameState.gravityDir *= -1; addScreenShake(4); }
         
-        // GAME 6: DRAW BARRIERS
-        function initDrawBarriers() { balls = []; gameState = { barriers: [], drawing: false, drawStart: null, drawEnd: null, splats: [], saved: 0, lost: 0, maxBarriers: 5, maxLineLength: 250, barrierLifetime: 12000 }; for (let i = 0; i < 4; i++) spawnBarrierBall(); }
+        // GAME 6: DRAW BARRIERS - moving target, fewer balls, point collection
+        function initDrawBarriers() { 
+            balls = []; 
+            gameState = { 
+                barriers: [], drawing: false, drawStart: null, drawEnd: null, 
+                splats: [], score: 0, lost: 0, maxBarriers: 5, maxLineLength: 250, barrierLifetime: 12000,
+                // Moving target
+                target: {
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: 1.5,
+                    vy: 1,
+                    radius: 35,
+                    rotation: 0,
+                    pulse: 0,
+                    hitFlash: 0
+                },
+                particles: []
+            }; 
+            for (let i = 0; i < 3; i++) spawnBarrierBall(); // Fewer balls
+        }
         function spawnBarrierBall() { balls.push({ x: 100 + Math.random() * (canvas.width - 200), y: -50, vx: (Math.random() - 0.5) * 2, vy: 0.8 + Math.random() * 0.5, radius: 25 + Math.random() * 20, ballImage: getNextBallImage(), dying: false, deathProgress: 0 }); }
         function updateDrawBarriers() {
             gameState.barriers = gameState.barriers.filter(b => Date.now() - b.created < gameState.barrierLifetime);
             gameState.splats = gameState.splats.filter(s => s.life > 0); gameState.splats.forEach(s => s.life--);
-            for (let i = balls.length - 1; i >= 0; i--) { const ball = balls[i]; if (ball.dying) { ball.deathProgress += 0.08; if (ball.deathProgress >= 1) { balls.splice(i, 1); spawnBarrierBall(); gameState.lost++; } continue; } ball.vy += 0.06; ball.vx *= 0.99; ball.vy *= 0.99; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); if (ball.y + ball.radius >= canvas.height - 5 && !ball.dying) { ball.dying = true; ball.deathProgress = 0; addScreenShake(5); gameState.splats.push({ x: ball.x, y: canvas.height, radius: ball.radius, life: 120, color: 'hsl(' + (Math.random() * 360) + ', 60%, 50%)' }); continue; } if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -1; } if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -1; } if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -1; } gameState.barriers.forEach(barrier => { const result = lineCircleCollision(barrier.x1, barrier.y1, barrier.x2, barrier.y2, ball.x, ball.y, ball.radius); if (result.collides) { ball.x = result.newX; ball.y = result.newY; const ang = Math.atan2(barrier.y2 - barrier.y1, barrier.x2 - barrier.x1), nAng = ang + Math.PI / 2, dot = ball.vx * Math.cos(nAng) + ball.vy * Math.sin(nAng); ball.vx -= 2 * dot * Math.cos(nAng) * 1.1; ball.vy -= 2 * dot * Math.sin(nAng) * 1.1; capSpeed(ball); gameState.saved++; } }); }
+            gameState.particles = gameState.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += p.gravity || 0; p.life--; p.rotation += p.spin || 0; return p.life > 0; });
+            
+            // Update target
+            const t = gameState.target;
+            t.x += t.vx;
+            t.y += t.vy;
+            t.rotation += 0.02;
+            t.pulse += 0.1;
+            if (t.hitFlash > 0) t.hitFlash -= 0.03;
+            // Bounce off walls with some margin
+            const margin = 100;
+            if (t.x < margin || t.x > canvas.width - margin) t.vx *= -1;
+            if (t.y < 200 || t.y > canvas.height - margin) t.vy *= -1;
+            t.x = Math.max(margin, Math.min(canvas.width - margin, t.x));
+            t.y = Math.max(200, Math.min(canvas.height - margin, t.y));
+            
+            for (let i = balls.length - 1; i >= 0; i--) { 
+                const ball = balls[i]; 
+                if (ball.dying) { ball.deathProgress += 0.08; if (ball.deathProgress >= 1) { balls.splice(i, 1); spawnBarrierBall(); gameState.lost++; } continue; } 
+                ball.vy += 0.06; ball.vx *= 0.99; ball.vy *= 0.99; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); 
+                
+                // Check collision with target
+                const dx = ball.x - t.x, dy = ball.y - t.y, dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < ball.radius + t.radius) {
+                    gameState.score++;
+                    addScreenShake(10);
+                    // Spawn lots of star particles for celebration
+                    for (let k = 0; k < 15; k++) {
+                        const a = Math.random() * Math.PI * 2;
+                        gameState.particles.push({
+                            x: t.x, y: t.y,
+                            vx: Math.cos(a) * (4 + Math.random() * 6),
+                            vy: Math.sin(a) * (4 + Math.random() * 6) - 3,
+                            life: 50, rotation: Math.random() * Math.PI * 2,
+                            spin: (Math.random() - 0.5) * 0.5,
+                            gravity: 0.12,
+                            starImg: starImages[Math.floor(Math.random() * 3)],
+                            size: 25 + Math.random() * 20
+                        });
+                    }
+                    // Add hearts too
+                    for (let k = 0; k < 5; k++) {
+                        const a = Math.random() * Math.PI * 2;
+                        gameState.particles.push({
+                            x: t.x, y: t.y,
+                            vx: Math.cos(a) * (2 + Math.random() * 3),
+                            vy: Math.sin(a) * (2 + Math.random() * 3) - 4,
+                            life: 60, rotation: Math.random() * Math.PI * 2,
+                            spin: (Math.random() - 0.5) * 0.2,
+                            gravity: 0.08,
+                            heartImg: true,
+                            size: 30 + Math.random() * 20
+                        });
+                    }
+                    // Target pulse effect
+                    t.hitFlash = 1;
+                    // Reset ball
+                    ball.x = 100 + Math.random() * (canvas.width - 200);
+                    ball.y = -50;
+                    ball.vx = (Math.random() - 0.5) * 2;
+                    ball.vy = 0.8 + Math.random() * 0.5;
+                    continue;
+                }
+                
+                if (ball.y + ball.radius >= canvas.height - 5 && !ball.dying) { 
+                    ball.dying = true; ball.deathProgress = 0; addScreenShake(5); 
+                    gameState.splats.push({ x: ball.x, y: canvas.height, radius: ball.radius, life: 120, color: 'hsl(' + (Math.random() * 360) + ', 60%, 50%)' }); 
+                    continue; 
+                } 
+                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -1; } 
+                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -1; } 
+                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -1; } 
+                gameState.barriers.forEach(barrier => { 
+                    const result = lineCircleCollision(barrier.x1, barrier.y1, barrier.x2, barrier.y2, ball.x, ball.y, ball.radius); 
+                    if (result.collides) { 
+                        ball.x = result.newX; ball.y = result.newY; 
+                        const ang = Math.atan2(barrier.y2 - barrier.y1, barrier.x2 - barrier.x1), nAng = ang + Math.PI / 2, dot = ball.vx * Math.cos(nAng) + ball.vy * Math.sin(nAng); 
+                        ball.vx -= 2 * dot * Math.cos(nAng) * 1.1; ball.vy -= 2 * dot * Math.sin(nAng) * 1.1; 
+                        capSpeed(ball); 
+                    } 
+                }); 
+            }
             ballCollisions();
         }
         function drawDrawBarriers() {
+            // Draw target with glow
+            const t = gameState.target;
+            const pulseScale = 1 + Math.sin(t.pulse) * 0.1 + (t.hitFlash * 0.3);
+            const glowGrad = ctx.createRadialGradient(t.x, t.y, t.radius * 0.5, t.x, t.y, t.radius * 3);
+            glowGrad.addColorStop(0, t.hitFlash > 0 ? 'rgba(255, 255, 100, ' + (0.6 + t.hitFlash * 0.4) + ')' : 'rgba(255, 215, 0, 0.5)');
+            glowGrad.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            ctx.beginPath();
+            ctx.arc(t.x, t.y, t.radius * 3 * pulseScale, 0, Math.PI * 2);
+            ctx.fillStyle = glowGrad;
+            ctx.fill();
+            // Draw point.png as target
+            const size = t.radius * 2.5 * pulseScale;
+            safeDrawImage(pointImg, t.x - size/2, t.y - size/2, size, size, 1, t.rotation);
+            
+            // Draw particles including hearts
+            gameState.particles.forEach(p => {
+                if (p.heartImg) {
+                    safeDrawImage(heartImg, p.x - p.size/2, p.y - p.size/2, p.size, p.size, p.life / 60, p.rotation);
+                } else if (p.starImg) {
+                    safeDrawImage(p.starImg, p.x - p.size/2, p.y - p.size/2, p.size, p.size, p.life / 50, p.rotation);
+                }
+            });
+            
             gameState.splats.forEach(splat => { const a = splat.life / 120, sq = 1 + (1 - a) * 2; ctx.save(); ctx.globalAlpha = a * 0.6; ctx.translate(splat.x, splat.y); ctx.scale(sq, 0.3); ctx.beginPath(); ctx.arc(0, 0, splat.radius, 0, Math.PI * 2); ctx.fillStyle = splat.color; ctx.fill(); ctx.restore(); });
             balls.forEach(ball => { if (ball.dying) { ctx.save(); const sqY = 1 - ball.deathProgress * 0.8, sqX = 1 + ball.deathProgress * 0.5; ctx.translate(ball.x, canvas.height); ctx.scale(sqX, sqY); ctx.translate(-ball.x, -canvas.height); ctx.globalAlpha = 1 - ball.deathProgress; drawBall({...ball, y: canvas.height - ball.radius * sqY}); ctx.restore(); } else drawBall(ball); });
             gameState.barriers.forEach(barrier => { const age = Date.now() - barrier.created, op = Math.max(0, 1 - age / gameState.barrierLifetime); ctx.save(); ctx.shadowColor = 'rgba(100, 180, 255, 0.8)'; ctx.shadowBlur = 15 * op; ctx.beginPath(); ctx.moveTo(barrier.x1, barrier.y1); ctx.lineTo(barrier.x2, barrier.y2); ctx.strokeStyle = 'rgba(80, 150, 220, ' + op + ')'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.stroke(); ctx.restore(); ctx.beginPath(); ctx.moveTo(barrier.x1, barrier.y1); ctx.lineTo(barrier.x2, barrier.y2); ctx.strokeStyle = 'rgba(255, 255, 255, ' + (op * 0.9) + ')'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.stroke(); });
             if (gameState.drawing && gameState.drawStart) { let dx = gameState.drawEnd.x - gameState.drawStart.x, dy = gameState.drawEnd.y - gameState.drawStart.y, len = Math.sqrt(dx * dx + dy * dy); if (len > gameState.maxLineLength) { dx = (dx / len) * gameState.maxLineLength; dy = (dy / len) * gameState.maxLineLength; } const endX = gameState.drawStart.x + dx, endY = gameState.drawStart.y + dy; ctx.save(); ctx.shadowColor = 'rgba(100, 180, 255, 0.5)'; ctx.shadowBlur = 10; ctx.beginPath(); ctx.moveTo(gameState.drawStart.x, gameState.drawStart.y); ctx.lineTo(endX, endY); ctx.strokeStyle = len > gameState.maxLineLength ? 'rgba(255, 100, 100, 0.5)' : 'rgba(80, 150, 220, 0.5)'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.stroke(); ctx.restore(); }
-            ctx.fillStyle = '#666'; ctx.font = 'bold 18px Arial'; ctx.textAlign = 'left'; ctx.fillText('Saved: ' + gameState.saved + '  Lost: ' + gameState.lost, 20, canvas.height - 85);
+            ctx.fillStyle = '#4A4'; ctx.font = 'bold 18px Arial'; ctx.textAlign = 'left'; ctx.fillText('Score: ' + gameState.score + '  Lost: ' + gameState.lost, 20, canvas.height - 85);
             const rem = gameState.maxBarriers - gameState.barriers.length; ctx.fillStyle = rem > 0 ? '#4A4' : '#A44'; ctx.fillText('Lines: ' + rem + '/' + gameState.maxBarriers, 20, canvas.height - 60);
         }
         function barrierPointerDown(x, y) { if (gameState.barriers.length >= gameState.maxBarriers) return; gameState.drawing = true; gameState.drawStart = { x, y }; gameState.drawEnd = { x, y }; }
         function barrierPointerMove(x, y) { if (gameState.drawing) gameState.drawEnd = { x, y }; }
         function barrierPointerUp() { if (gameState.drawing && gameState.drawStart && gameState.drawEnd) { let dx = gameState.drawEnd.x - gameState.drawStart.x, dy = gameState.drawEnd.y - gameState.drawStart.y, len = Math.sqrt(dx * dx + dy * dy); if (len > 20) { if (len > gameState.maxLineLength) { dx = (dx / len) * gameState.maxLineLength; dy = (dy / len) * gameState.maxLineLength; } gameState.barriers.push({ x1: gameState.drawStart.x, y1: gameState.drawStart.y, x2: gameState.drawStart.x + dx, y2: gameState.drawStart.y + dy, created: Date.now() }); } } gameState.drawing = false; gameState.drawStart = null; gameState.drawEnd = null; }
         
-        // GAME 7: MAGNET ZONES - slower rotation
+        
+        // GAME 7: MAGNET ZONES
         function initMagnetZones() { balls = []; gameState = { magnets: [], shiftPressed: false }; for (let i = 0; i < 20; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, radius: 18 + Math.random() * 15, ballImage: getNextBallImage() }); }
         function updateMagnetZones() { gameState.magnets = gameState.magnets.filter(m => Date.now() - m.created < 10000); balls.forEach(ball => { ball.vy += 0.15; gameState.magnets.forEach(magnet => { const dx = magnet.x - ball.x, dy = magnet.y - ball.y, dist = Math.sqrt(dx * dx + dy * dy), force = (magnet.type === 'attract' ? 1 : -1) * Math.min(200 / (dist + 20), 4); ball.vx += (dx / dist) * force; ball.vy += (dy / dist) * force; }); ball.vx *= 0.98; ball.vy *= 0.98; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.7; } if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.7; } if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.7; } if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.7; } }); ballCollisions(); }
         function drawMagnetZones() {
             gameState.magnets.forEach(magnet => {
-                const age = Date.now() - magnet.created, op = Math.max(0, 1 - age / 10000), isAttr = magnet.type === 'attract', time = Date.now() * 0.0015; // Slower rotation
+                const age = Date.now() - magnet.created, op = Math.max(0, 1 - age / 10000), isAttr = magnet.type === 'attract', time = Date.now() * 0.0015;
                 if (isAttr) { for (let i = 0; i < 4; i++) { const bR = 100 - ((time * 30 + i * 25) % 100); ctx.beginPath(); ctx.arc(magnet.x, magnet.y, bR, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(50, 150, 255, ' + (op * (0.5 - i * 0.1)) + ')'; ctx.lineWidth = 3; ctx.stroke(); } const g = ctx.createRadialGradient(magnet.x, magnet.y, 0, magnet.x, magnet.y, 60); g.addColorStop(0, 'rgba(50, 150, 255, ' + (op * 0.4) + ')'); g.addColorStop(1, 'rgba(50, 150, 255, 0)'); ctx.beginPath(); ctx.arc(magnet.x, magnet.y, 60, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); }
                 else { for (let i = 0; i < 4; i++) { const bR = 20 + ((time * 30 + i * 25) % 100); ctx.beginPath(); ctx.arc(magnet.x, magnet.y, bR, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(255, 80, 80, ' + (op * (0.5 - i * 0.1)) + ')'; ctx.lineWidth = 3; ctx.stroke(); } const g = ctx.createRadialGradient(magnet.x, magnet.y, 0, magnet.x, magnet.y, 60); g.addColorStop(0, 'rgba(255, 80, 80, ' + (op * 0.4) + ')'); g.addColorStop(1, 'rgba(255, 80, 80, 0)'); ctx.beginPath(); ctx.arc(magnet.x, magnet.y, 60, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); }
                 drawPerson(magnet.x, magnet.y + 80, 55, magnet.personIndex, op);
@@ -366,12 +633,164 @@
         function orbitalPointerMove(x, y) { gameState.mouseX = x; gameState.mouseY = y; }
         function orbitalPointerDown() { balls.forEach(ball => { if (ball.orbiting) { ball.orbiting = false; const tS = Math.abs(ball.angleSpeed) * ball.distance * 2; ball.vx = Math.cos(ball.angle + Math.PI / 2) * tS + Math.cos(ball.angle) * 8; ball.vy = Math.sin(ball.angle + Math.PI / 2) * tS + Math.sin(ball.angle) * 8; capSpeed(ball); } }); }
         
-        // GAME 10: TRANSFORM
-        function initTransform() { balls = []; gameState = { score: 0, breaches: 0, centerRadius: 120, centerX: canvas.width / 2, centerY: canvas.height / 2, centerVx: 0.5, centerVy: 0.3, boredomThreshold: 300 }; for (let i = 0; i < 15; i++) spawnTransformBall(); }
-        function spawnTransformBall() { const side = Math.floor(Math.random() * 4); let x, y, vx, vy; switch(side) { case 0: x = Math.random() * canvas.width; y = -30; vx = (Math.random() - 0.5) * 2; vy = 1.5 + Math.random(); break; case 1: x = canvas.width + 30; y = Math.random() * canvas.height; vx = -1.5 - Math.random(); vy = (Math.random() - 0.5) * 2; break; case 2: x = Math.random() * canvas.width; y = canvas.height + 30; vx = (Math.random() - 0.5) * 2; vy = -1.5 - Math.random(); break; case 3: x = -30; y = Math.random() * canvas.height; vx = 1.5 + Math.random(); vy = (Math.random() - 0.5) * 2; break; } balls.push({ x, y, vx, vy, radius: 25 + Math.random() * 20, ballImage: getNextBallImage(), peopleImage: getNextPersonImage(), isGuard: false, breached: false, guardTime: 0, boredom: 0 }); }
-        function updateTransform() { gameState.centerX += gameState.centerVx; gameState.centerY += gameState.centerVy; const margin = gameState.centerRadius + 50; if (gameState.centerX < margin || gameState.centerX > canvas.width - margin) gameState.centerVx *= -1; if (gameState.centerY < margin || gameState.centerY > canvas.height - margin) gameState.centerVy *= -1; for (let i = balls.length - 1; i >= 0; i--) { const ball = balls[i]; if (ball.isGuard) { ball.guardTime++; ball.boredom += 0.5; if (ball.boredom > gameState.boredomThreshold && Math.random() < 0.01) { ball.isGuard = false; ball.boredom = 0; ball.vx = (Math.random() - 0.5) * 4; ball.vy = (Math.random() - 0.5) * 4; continue; } const dx = gameState.centerX - ball.x, dy = gameState.centerY - ball.y, dist = Math.sqrt(dx * dx + dy * dy), patrolDist = gameState.centerRadius + 80; if (dist < patrolDist - 10) { ball.vx -= dx / dist * 0.12; ball.vy -= dy / dist * 0.12; } else if (dist > patrolDist + 10) { ball.vx += dx / dist * 0.12; ball.vy += dy / dist * 0.12; } const perpX = -dy / dist, perpY = dx / dist; ball.vx += perpX * 0.06; ball.vy += perpY * 0.06; ball.vx *= 0.97; ball.vy *= 0.97; ball.x += ball.vx; ball.y += ball.vy; for (let j = balls.length - 1; j >= 0; j--) { if (i === j || balls[j].isGuard) continue; const enemy = balls[j], edx = enemy.x - ball.x, edy = enemy.y - ball.y, eDist = Math.sqrt(edx * edx + edy * edy); if (eDist < ball.radius + enemy.radius + 15) { const ang = Math.atan2(edy, edx); enemy.vx = Math.cos(ang) * 6; enemy.vy = Math.sin(ang) * 6; gameState.score++; ball.boredom = Math.max(0, ball.boredom - 50); addScreenShake(4); } } } else { const dx = gameState.centerX - ball.x, dy = gameState.centerY - ball.y, dist = Math.sqrt(dx * dx + dy * dy); ball.vx += dx / dist * 0.03; ball.vy += dy / dist * 0.03; ball.vx *= 0.99; ball.vy *= 0.99; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); if (dist < gameState.centerRadius && !ball.breached) { ball.breached = true; gameState.breaches++; addScreenShake(8); } if (ball.x < -100 || ball.x > canvas.width + 100 || ball.y < -100 || ball.y > canvas.height + 100) { balls.splice(i, 1); spawnTransformBall(); } } if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.8; } if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.8; } if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.8; } if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.8; } } }
-        function drawTransform() { ctx.beginPath(); ctx.arc(gameState.centerX, gameState.centerY, gameState.centerRadius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255, 215, 100, 0.2)'; ctx.fill(); ctx.strokeStyle = 'rgba(255, 180, 50, 0.5)'; ctx.lineWidth = 3; ctx.stroke(); ctx.beginPath(); ctx.arc(gameState.centerX, gameState.centerY, gameState.centerRadius + 80, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 200, 100, 0.2)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]); balls.forEach(ball => { if (ball.isGuard) { drawPerson(ball.x, ball.y + ball.radius, ball.radius * 2.5, ball.peopleImage); const bR = ball.boredom / gameState.boredomThreshold; ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius + 20, 0, Math.PI * 2); ctx.strokeStyle = bR > 0.7 ? 'rgba(200, 200, 100, 0.4)' : 'rgba(100, 200, 100, 0.4)'; ctx.lineWidth = 2; ctx.stroke(); if (bR > 0.5) { ctx.fillStyle = 'rgba(200, 200, 100, ' + bR + ')'; ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.fillText('😴', ball.x, ball.y - ball.radius - 15); } } else drawBall(ball, ball.breached ? 0.5 : 1.0); }); ctx.fillStyle = '#4A4'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'left'; ctx.fillText('Deflected: ' + gameState.score, 20, canvas.height - 85); ctx.fillStyle = '#A44'; ctx.fillText('Breached: ' + gameState.breaches, 20, canvas.height - 60); ctx.fillStyle = '#666'; ctx.fillText('Guards: ' + balls.filter(b => b.isGuard).length, 200, canvas.height - 85); }
-        function transformPointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y)) { balls[i].isGuard = !balls[i].isGuard; balls[i].boredom = 0; break; } } }
+          // GAME 10: TRANSFORM - gradual spawn, baddie image
+        function initTransform() { 
+            balls = []; 
+            gameState = { 
+                score: 0, breaches: 0, centerRadius: 120, 
+                centerX: canvas.width / 2, centerY: canvas.height / 2, 
+                centerVx: 0.5, centerVy: 0.3, boredomThreshold: 300,
+                spawnTimer: 0, maxBalls: 15, spawnDelay: 120 // Gradual spawn
+            }; 
+            // Start with just a couple balls
+            for (let i = 0; i < 3; i++) spawnTransformBall(); 
+        }
+        function spawnTransformBall() { 
+            const side = Math.floor(Math.random() * 4); 
+            let x, y, vx, vy; 
+            switch(side) { 
+                case 0: x = Math.random() * canvas.width; y = -30; vx = (Math.random() - 0.5) * 2; vy = 1.5 + Math.random(); break; 
+                case 1: x = canvas.width + 30; y = Math.random() * canvas.height; vx = -1.5 - Math.random(); vy = (Math.random() - 0.5) * 2; break; 
+                case 2: x = Math.random() * canvas.width; y = canvas.height + 30; vx = (Math.random() - 0.5) * 2; vy = -1.5 - Math.random(); break; 
+                case 3: x = -30; y = Math.random() * canvas.height; vx = 1.5 + Math.random(); vy = (Math.random() - 0.5) * 2; break; 
+            } 
+            balls.push({ 
+                x, y, vx, vy, 
+                radius: 25 + Math.random() * 20, 
+                ballImage: getNextBallImage(), 
+                peopleImage: getNextPersonImage(), 
+                isGuard: false, breached: false, guardTime: 0, boredom: 0,
+                isBaddie: false, // New: tracks if converted to baddie
+                spawnProgress: 0 // For animation
+            }); 
+        }
+        function updateTransform() { 
+            // Gradual spawning
+            gameState.spawnTimer++;
+            if (balls.length < gameState.maxBalls && gameState.spawnTimer >= gameState.spawnDelay) {
+                spawnTransformBall();
+                gameState.spawnTimer = 0;
+            }
+            
+            gameState.centerX += gameState.centerVx; gameState.centerY += gameState.centerVy; 
+            const margin = gameState.centerRadius + 50; 
+            if (gameState.centerX < margin || gameState.centerX > canvas.width - margin) gameState.centerVx *= -1; 
+            if (gameState.centerY < margin || gameState.centerY > canvas.height - margin) gameState.centerVy *= -1; 
+            
+            for (let i = balls.length - 1; i >= 0; i--) { 
+                const ball = balls[i]; 
+                
+                // Animate spawn
+                if (ball.spawnProgress < 1) {
+                    ball.spawnProgress += 0.02;
+                    continue;
+                }
+                
+                if (ball.isGuard) { 
+                    ball.guardTime++; ball.boredom += 0.5; 
+                    if (ball.boredom > gameState.boredomThreshold && Math.random() < 0.01) { 
+                        ball.isGuard = false; ball.boredom = 0; 
+                        ball.vx = (Math.random() - 0.5) * 4; ball.vy = (Math.random() - 0.5) * 4; 
+                        continue; 
+                    } 
+                    const dx = gameState.centerX - ball.x, dy = gameState.centerY - ball.y, dist = Math.sqrt(dx * dx + dy * dy), patrolDist = gameState.centerRadius + 80; 
+                    if (dist < patrolDist - 10) { ball.vx -= dx / dist * 0.12; ball.vy -= dy / dist * 0.12; } 
+                    else if (dist > patrolDist + 10) { ball.vx += dx / dist * 0.12; ball.vy += dy / dist * 0.12; } 
+                    const perpX = -dy / dist, perpY = dx / dist; 
+                    ball.vx += perpX * 0.06; ball.vy += perpY * 0.06; 
+                    ball.vx *= 0.97; ball.vy *= 0.97; ball.x += ball.vx; ball.y += ball.vy; 
+                    for (let j = balls.length - 1; j >= 0; j--) { 
+                        if (i === j || balls[j].isGuard || balls[j].isBaddie) continue; 
+                        const enemy = balls[j], edx = enemy.x - ball.x, edy = enemy.y - ball.y, eDist = Math.sqrt(edx * edx + edy * edy); 
+                        if (eDist < ball.radius + enemy.radius + 15) { 
+                            const ang = Math.atan2(edy, edx); 
+                            enemy.vx = Math.cos(ang) * 6; enemy.vy = Math.sin(ang) * 6; 
+                            gameState.score++; ball.boredom = Math.max(0, ball.boredom - 50); 
+                            addScreenShake(4); 
+                        } 
+                    } 
+                } else if (ball.isBaddie) {
+                    // Baddies shrink and disappear
+                    ball.shrinkProgress = (ball.shrinkProgress || 0) + 0.015;
+                    if (ball.shrinkProgress >= 1) {
+                        balls.splice(i, 1);
+                        continue;
+                    }
+                    // Slow spiral inward while shrinking
+                    const dx = gameState.centerX - ball.x, dy = gameState.centerY - ball.y, dist = Math.sqrt(dx * dx + dy * dy);
+                    ball.vx = dx / dist * 0.5 - dy / dist * 0.3;
+                    ball.vy = dy / dist * 0.5 + dx / dist * 0.3;
+                    ball.vx *= 0.95; ball.vy *= 0.95;
+                    ball.x += ball.vx; ball.y += ball.vy;
+                } else { 
+                    const dx = gameState.centerX - ball.x, dy = gameState.centerY - ball.y, dist = Math.sqrt(dx * dx + dy * dy); 
+                    ball.vx += dx / dist * 0.03; ball.vy += dy / dist * 0.03; 
+                    ball.vx *= 0.99; ball.vy *= 0.99; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); 
+                    if (dist < gameState.centerRadius && !ball.breached) { 
+                        ball.breached = true; 
+                        ball.isBaddie = true; // Convert to baddie
+                        gameState.breaches++; 
+                        addScreenShake(8); 
+                        // Give it some random velocity to wander
+                        ball.vx = (Math.random() - 0.5) * 3;
+                        ball.vy = (Math.random() - 0.5) * 3;
+                    } 
+                    if (ball.x < -100 || ball.x > canvas.width + 100 || ball.y < -100 || ball.y > canvas.height + 100) { 
+                        balls.splice(i, 1); 
+                        continue; 
+                    } 
+                } 
+                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.8; } 
+                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.8; } 
+                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.8; } 
+                if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.8; } 
+            } 
+        }
+        function drawTransform() { 
+            ctx.beginPath(); ctx.arc(gameState.centerX, gameState.centerY, gameState.centerRadius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255, 215, 100, 0.2)'; ctx.fill(); ctx.strokeStyle = 'rgba(255, 180, 50, 0.5)'; ctx.lineWidth = 3; ctx.stroke(); 
+            ctx.beginPath(); ctx.arc(gameState.centerX, gameState.centerY, gameState.centerRadius + 80, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 200, 100, 0.2)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]); 
+            balls.forEach(ball => { 
+                const spawnScale = ball.spawnProgress < 1 ? ball.spawnProgress : 1;
+                const spawnOpacity = ball.spawnProgress < 1 ? ball.spawnProgress : 1;
+                
+                if (ball.isGuard) { 
+                    ctx.save();
+                    ctx.globalAlpha = spawnOpacity;
+                    ctx.translate(ball.x, ball.y);
+                    ctx.scale(spawnScale, spawnScale);
+                    ctx.translate(-ball.x, -ball.y);
+                    drawPerson(ball.x, ball.y + ball.radius, ball.radius * 2.5, ball.peopleImage); 
+                    const bR = ball.boredom / gameState.boredomThreshold; 
+                    ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius + 20, 0, Math.PI * 2); ctx.strokeStyle = bR > 0.7 ? 'rgba(200, 200, 100, 0.4)' : 'rgba(100, 200, 100, 0.4)'; ctx.lineWidth = 2; ctx.stroke(); 
+                    if (bR > 0.5) { ctx.fillStyle = 'rgba(200, 200, 100, ' + bR + ')'; ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.fillText('😴', ball.x, ball.y - ball.radius - 15); } 
+                    ctx.restore();
+                } else if (ball.isBaddie) {
+                    // Draw baddie.png with shrink animation
+                    const shrinkScale = 1 - (ball.shrinkProgress || 0);
+                    const shrinkOpacity = shrinkScale;
+                    ctx.save();
+                    ctx.globalAlpha = shrinkOpacity;
+                    ctx.translate(ball.x, ball.y);
+                    ctx.scale(shrinkScale, shrinkScale);
+                    ctx.rotate((ball.shrinkProgress || 0) * Math.PI * 2);
+                    const size = ball.radius * 2;
+                    safeDrawImage(baddieImg, -size/2, -size/2, size, size, 1, 0);
+                    ctx.restore();
+                } else {
+                    ctx.save();
+                    ctx.globalAlpha = spawnOpacity;
+                    ctx.translate(ball.x, ball.y);
+                    ctx.scale(spawnScale, spawnScale);
+                    ctx.translate(-ball.x, -ball.y);
+                    drawBall(ball, 1.0); 
+                    ctx.restore();
+                }
+            }); 
+            ctx.fillStyle = '#4A4'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'left'; ctx.fillText('Deflected: ' + gameState.score, 20, canvas.height - 85); 
+            ctx.fillStyle = '#A44'; ctx.fillText('Breached: ' + gameState.breaches, 20, canvas.height - 60); 
+            ctx.fillStyle = '#666'; ctx.fillText('Guards: ' + balls.filter(b => b.isGuard).length, 200, canvas.height - 85); 
+        }
+        function transformPointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y) && !balls[i].isBaddie) { balls[i].isGuard = !balls[i].isGuard; balls[i].boredom = 0; break; } } }
         
         // GAME 11: CONNECTIONS - bigger click radius, hover effect, more explosion juice
         function initConnections() { balls = []; gameState = { connections: [], firstEntity: null, hoveredEntity: null, score: 0, exploded: 0, particles: [] }; for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2, s = 1.5 + Math.random() * 1.5; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 25 + Math.random() * 15, ballImage: getNextBallImage(), type: 'ball' }); } for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2, s = 1 + Math.random(); balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 35, clickRadius: 50, personImage: getNextPersonImage(), type: 'person' }); } }
@@ -382,7 +801,21 @@
             for (let i = 0; i < balls.length; i++) { for (let j = i + 1; j < balls.length; j++) { const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; if (dist < minDist && dist > 0) { const ang = Math.atan2(dy, dx), ax = (minDist - dist) * Math.cos(ang) * 0.05, ay = (minDist - dist) * Math.sin(ang) * 0.05; b1.vx -= ax; b1.vy -= ay; b2.vx += ax; b2.vy += ay; } } }
         }
         function drawConnections() {
-            gameState.particles.forEach(p => { ctx.save(); ctx.globalAlpha = p.life / p.maxLife; ctx.translate(p.x, p.y); ctx.rotate(p.rotation); ctx.scale(p.scale, p.scale); if (p.type === 'circle') { ctx.beginPath(); ctx.arc(0, 0, p.size, 0, Math.PI * 2); ctx.fillStyle = p.color; ctx.fill(); } else { ctx.fillStyle = p.color; ctx.font = p.size + 'px Arial'; ctx.textAlign = 'center'; ctx.fillText(p.emoji, 0, 0); } ctx.restore(); });
+            gameState.particles.forEach(p => { 
+                ctx.save(); 
+                ctx.globalAlpha = p.life / p.maxLife; 
+                ctx.translate(p.x, p.y); 
+                ctx.rotate(p.rotation); 
+                ctx.scale(p.scale, p.scale);
+                if (p.type === 'star' && p.starImg) {
+                    safeDrawImage(p.starImg, -p.size/2, -p.size/2, p.size, p.size, 1, 0);
+                } else if (p.type === 'heart') {
+                    safeDrawImage(heartImg, -p.size/2, -p.size/2, p.size, p.size, 1, 0);
+                } else if (p.type === 'ko') {
+                    safeDrawImage(koImg, -p.size/2, -p.size/2, p.size, p.size, 1, 0);
+                }
+                ctx.restore(); 
+            });
             gameState.connections.forEach(conn => { if (!balls.includes(conn.entity1) || !balls.includes(conn.entity2)) return; ctx.beginPath(); ctx.moveTo(conn.entity1.x, conn.entity1.y); ctx.lineTo(conn.entity2.x, conn.entity2.y); ctx.strokeStyle = 'rgba(100, 200, 100, 0.6)'; ctx.lineWidth = 3; ctx.stroke(); });
             balls.forEach(entity => {
                 const isSel = gameState.firstEntity === entity, isHov = gameState.hoveredEntity === entity;
@@ -405,13 +838,15 @@
                 if (!gameState.firstEntity) gameState.firstEntity = clicked;
                 else if (gameState.firstEntity !== clicked) {
                     if (gameState.firstEntity.type === clicked.type) {
-                        // EXPLOSION with more juice!
                         addScreenShake(20);
                         gameState.exploded++;
-                        // Spawn lots of particles
                         const cx = (gameState.firstEntity.x + clicked.x) / 2, cy = (gameState.firstEntity.y + clicked.y) / 2;
-                        for (let j = 0; j < 20; j++) { const a = Math.random() * Math.PI * 2, sp = 5 + Math.random() * 8; gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, size: 15 + Math.random() * 20, life: 50, maxLife: 50, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.4, scale: 1, type: 'circle', color: 'hsl(' + Math.random() * 360 + ', 80%, 60%)' }); }
-                        for (let j = 0; j < 8; j++) { const a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 5; gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, size: 30 + Math.random() * 20, life: 40, maxLife: 40, rotation: 0, spin: 0, scale: 1, type: 'emoji', emoji: ['💥', '✨', '⭐', '🔥'][Math.floor(Math.random() * 4)] }); }
+                        // Star particles
+                        for (let j = 0; j < 15; j++) { const a = Math.random() * Math.PI * 2, sp = 5 + Math.random() * 8; gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, size: 20 + Math.random() * 25, life: 50, maxLife: 50, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.5, scale: 1, type: 'star', starImg: starImages[Math.floor(Math.random() * 3)] }); }
+                        // Heart particles
+                        for (let j = 0; j < 8; j++) { const a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 5; gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, size: 30 + Math.random() * 20, life: 45, maxLife: 45, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.3, scale: 1, type: 'heart' }); }
+                        // KO particles
+                        for (let j = 0; j < 3; j++) { const a = -Math.PI/2 + (Math.random() - 0.5) * 0.5, sp = 4 + Math.random() * 3; gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, size: 40 + Math.random() * 20, life: 60, maxLife: 60, rotation: (Math.random() - 0.5) * 0.3, spin: 0, scale: 1, type: 'ko' }); }
                         gameState.connections = gameState.connections.filter(c => c.entity1 !== gameState.firstEntity && c.entity2 !== gameState.firstEntity && c.entity1 !== clicked && c.entity2 !== clicked);
                         const idx1 = balls.indexOf(gameState.firstEntity), idx2 = balls.indexOf(clicked);
                         if (idx1 > idx2) { balls.splice(idx1, 1); balls.splice(idx2, 1); } else { balls.splice(idx2, 1); balls.splice(idx1, 1); }
@@ -427,7 +862,87 @@
             gameState.firstEntity = null;
         }
         
-        // GAME 12: MERGE & SPLIT - bigger people
+        
+        // GAME 11: CONNECTIONS - KO for bad, hearts for good
+        function initConnections() { balls = []; gameState = { connections: [], firstEntity: null, hoveredEntity: null, score: 0, exploded: 0, particles: [] }; for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2, s = 1.5 + Math.random() * 1.5; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 25 + Math.random() * 15, ballImage: getNextBallImage(), type: 'ball' }); } for (let i = 0; i < 8; i++) { const a = Math.random() * Math.PI * 2, s = 1 + Math.random(); balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 35, clickRadius: 50, personImage: getNextPersonImage(), type: 'person' }); } }
+        function updateConnections() {
+            gameState.particles = gameState.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life--; p.rotation += p.spin || 0; p.scale *= 0.98; return p.life > 0; });
+            gameState.connections.forEach(conn => { const b1 = conn.entity1, b2 = conn.entity2; if (!balls.includes(b1) || !balls.includes(b2)) return; const dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), stretch = dist - conn.restLength, force = stretch * 0.02, fx = (dx / dist) * force, fy = (dy / dist) * force; b1.vx += fx; b1.vy += fy; b2.vx -= fx; b2.vy -= fy; });
+            balls.forEach(ball => { const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy); if (speed < 0.3) { const a = Math.atan2(ball.vy, ball.vx); ball.vx = Math.cos(a) * 0.8; ball.vy = Math.sin(a) * 0.8; } ball.vx *= 0.98; ball.vy *= 0.98; ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball); if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.8; } if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.8; } if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.8; } if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.8; } });
+            for (let i = 0; i < balls.length; i++) { for (let j = i + 1; j < balls.length; j++) { const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; if (dist < minDist && dist > 0) { const ang = Math.atan2(dy, dx), ax = (minDist - dist) * Math.cos(ang) * 0.05, ay = (minDist - dist) * Math.sin(ang) * 0.05; b1.vx -= ax; b1.vy -= ay; b2.vx += ax; b2.vy += ay; } } }
+        }
+        function drawConnections() {
+            gameState.particles.forEach(p => { 
+                ctx.save(); 
+                ctx.globalAlpha = p.life / p.maxLife; 
+                ctx.translate(p.x, p.y); 
+                ctx.rotate(p.rotation); 
+                ctx.scale(p.scale, p.scale);
+                if (p.type === 'heart') {
+                    safeDrawImage(heartImg, -p.size/2, -p.size/2, p.size, p.size, 1, 0);
+                } else if (p.type === 'ko') {
+                    safeDrawImage(koImg, -p.size/2, -p.size/2, p.size, p.size, 1, 0);
+                }
+                ctx.restore(); 
+            });
+            gameState.connections.forEach(conn => { if (!balls.includes(conn.entity1) || !balls.includes(conn.entity2)) return; ctx.beginPath(); ctx.moveTo(conn.entity1.x, conn.entity1.y); ctx.lineTo(conn.entity2.x, conn.entity2.y); ctx.strokeStyle = 'rgba(100, 200, 100, 0.6)'; ctx.lineWidth = 3; ctx.stroke(); });
+            balls.forEach(entity => {
+                const isSel = gameState.firstEntity === entity, isHov = gameState.hoveredEntity === entity;
+                if (entity.type === 'person') {
+                    if (isSel || isHov) { ctx.beginPath(); ctx.arc(entity.x, entity.y, entity.clickRadius + 5, 0, Math.PI * 2); ctx.strokeStyle = isSel ? 'rgba(100, 200, 255, 0.8)' : 'rgba(200, 200, 200, 0.5)'; ctx.lineWidth = isSel ? 4 : 2; ctx.stroke(); }
+                    drawPerson(entity.x, entity.y + 10, 55, entity.personImage);
+                } else {
+                    if (isSel || isHov) { ctx.beginPath(); ctx.arc(entity.x, entity.y, entity.radius + 8, 0, Math.PI * 2); ctx.strokeStyle = isSel ? 'rgba(100, 200, 255, 0.8)' : 'rgba(200, 200, 200, 0.5)'; ctx.lineWidth = isSel ? 4 : 2; ctx.stroke(); }
+                    drawBall(entity);
+                }
+            });
+            ctx.fillStyle = '#4A4'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'left'; ctx.fillText('Connections: ' + gameState.score, 20, canvas.height - 85);
+            ctx.fillStyle = '#A44'; ctx.fillText('Exploded: ' + gameState.exploded, 20, canvas.height - 60);
+            if (gameState.firstEntity) { ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'center'; const tT = gameState.firstEntity.type === 'person' ? 'person' : 'ball'; ctx.fillText('Selected: ' + tT + ' - click a ' + (tT === 'person' ? 'ball' : 'person') + ' to connect!', canvas.width / 2, 160); }
+        }
+        function connectionsPointerMove(x, y) { mouseX = x; mouseY = y; gameState.hoveredEntity = null; for (let i = balls.length - 1; i >= 0; i--) { const entity = balls[i], clickR = entity.clickRadius || entity.radius; const dx = x - entity.x, dy = y - entity.y; if (Math.sqrt(dx*dx + dy*dy) < clickR + 10) { gameState.hoveredEntity = entity; break; } } }
+        function connectionsPointerDown(x, y) {
+            for (let i = balls.length - 1; i >= 0; i--) { const entity = balls[i], clickR = entity.clickRadius || entity.radius; const dx = x - entity.x, dy = y - entity.y; if (Math.sqrt(dx*dx + dy*dy) < clickR + 10) {
+                const clicked = entity;
+                if (!gameState.firstEntity) gameState.firstEntity = clicked;
+                else if (gameState.firstEntity !== clicked) {
+                    if (gameState.firstEntity.type === clicked.type) {
+                        // BAD connection - same types = KO particles
+                        addScreenShake(20);
+                        gameState.exploded++;
+                        const cx = (gameState.firstEntity.x + clicked.x) / 2, cy = (gameState.firstEntity.y + clicked.y) / 2;
+                        // KO particles for bad connection
+                        for (let j = 0; j < 5; j++) { 
+                            const a = -Math.PI/2 + (Math.random() - 0.5) * 1, sp = 3 + Math.random() * 4; 
+                            gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, size: 50 + Math.random() * 30, life: 60, maxLife: 60, rotation: (Math.random() - 0.5) * 0.3, spin: 0, scale: 1, type: 'ko' }); 
+                        }
+                        gameState.connections = gameState.connections.filter(c => c.entity1 !== gameState.firstEntity && c.entity2 !== gameState.firstEntity && c.entity1 !== clicked && c.entity2 !== clicked);
+                        const idx1 = balls.indexOf(gameState.firstEntity), idx2 = balls.indexOf(clicked);
+                        if (idx1 > idx2) { balls.splice(idx1, 1); balls.splice(idx2, 1); } else { balls.splice(idx2, 1); balls.splice(idx1, 1); }
+                        setTimeout(() => { const a1 = Math.random() * Math.PI * 2, a2 = Math.random() * Math.PI * 2; balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a1) * 2, vy: Math.sin(a1) * 2, radius: 25 + Math.random() * 15, ballImage: getNextBallImage(), type: 'ball' }); balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a2) * 1.5, vy: Math.sin(a2) * 1.5, radius: 35, clickRadius: 50, personImage: getNextPersonImage(), type: 'person' }); }, 500);
+                    } else {
+                        // GOOD connection - different types = hearts
+                        const existingConn = gameState.connections.find(c => (c.entity1 === gameState.firstEntity && c.entity2 === clicked) || (c.entity2 === gameState.firstEntity && c.entity1 === clicked));
+                        if (!existingConn) { 
+                            const dx = clicked.x - gameState.firstEntity.x, dy = clicked.y - gameState.firstEntity.y, dist = Math.sqrt(dx * dx + dy * dy); 
+                            gameState.connections.push({ entity1: gameState.firstEntity, entity2: clicked, restLength: Math.min(dist, 150) }); 
+                            gameState.score++; 
+                            // Heart particles for good connection
+                            const cx = (gameState.firstEntity.x + clicked.x) / 2, cy = (gameState.firstEntity.y + clicked.y) / 2;
+                            for (let j = 0; j < 8; j++) { 
+                                const a = Math.random() * Math.PI * 2, sp = 2 + Math.random() * 4; 
+                                gameState.particles.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, size: 30 + Math.random() * 20, life: 50, maxLife: 50, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.2, scale: 1, type: 'heart' }); 
+                            }
+                        }
+                    }
+                    gameState.firstEntity = null;
+                }
+                return;
+            } }
+            gameState.firstEntity = null;
+        }
+        
+        // GAME 12: MERGE & SPLIT
         function initMergeSplit() { balls = []; gameState = { mergingPairs: [], victory: false }; for (let i = 0; i < 12; i++) { const a = Math.random() * Math.PI * 2, s = 1 + Math.random() * 1.5, ball = { x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.cos(a) * s, vy: Math.sin(a) * s, radius: 35 + Math.random() * 15, mass: 1, id: Date.now() + Math.random(), ballImage: getNextBallImage(), spinAngle: 0, merging: false, walkers: [] }; ball.walkers.push({ angle: Math.random() * Math.PI * 2, walkSpeed: 0.015 + Math.random() * 0.015, direction: Math.random() > 0.5 ? 1 : -1, personIndex: getNextPersonImage() }); balls.push(ball); } }
         function updateMergeSplit() {
             if (balls.length === 1 && !gameState.victory) { gameState.victory = true; addScreenShake(15); }
@@ -439,7 +954,6 @@
             balls.forEach(ball => {
                 ctx.save(); if (ball.merging) { ctx.translate(ball.x, ball.y); ctx.rotate(ball.spinAngle); ctx.translate(-ball.x, -ball.y); }
                 drawBall(ball); ctx.restore();
-                // Bigger people - base 40, scales with sqrt(mass), max 70% of radius
                 const basePersonH = 40, sF = Math.sqrt(ball.mass), pH = Math.min(basePersonH * sF, ball.radius * 0.7);
                 ball.walkers.forEach(w => { const wX = ball.x + Math.cos(w.angle) * ball.radius, wY = ball.y + Math.sin(w.angle) * ball.radius, rot = w.angle + Math.PI / 2; drawPerson(wX, wY, pH, w.personIndex, 1.0, rot); });
                 if (ball.mass > 1) { ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.font = 'bold 14px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(ball.mass, ball.x, ball.y); }
@@ -449,58 +963,133 @@
         }
         function mergeSplitPointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y) && balls[i].mass > 1 && !balls[i].merging) { const ball = balls[i], numS = Math.min(ball.mass, 4), wPN = Math.floor(ball.walkers.length / numS); for (let j = 0; j < numS; j++) { const ang = (Math.PI * 2 / numS) * j, sp = 3 + Math.random() * 2, nB = { x: ball.x, y: ball.y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, radius: ball.radius / Math.sqrt(numS), mass: 1, id: Date.now() + Math.random() + j, ballImage: getNextBallImage(), spinAngle: 0, merging: false, walkers: ball.walkers.slice(j * wPN, (j + 1) * wPN) }; if (nB.walkers.length === 0) nB.walkers.push({ angle: Math.random() * Math.PI * 2, walkSpeed: 0.015 + Math.random() * 0.015, direction: Math.random() > 0.5 ? 1 : -1, personIndex: getNextPersonImage() }); balls.push(nB); } balls.splice(i, 1); gameState.victory = false; addScreenShake(5); break; } } }
         
-        // GAME 13: INFLATE/POP - more pop effect, no people
-        function initInflate() { balls = []; gameState = { poppedCount: 0, popEffects: [] }; for (let i = 0; i < 8; i++) balls.push({ x: 100 + Math.random() * (canvas.width - 200), y: 100 + Math.random() * (canvas.height - 200), vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, radius: 40, baseRadius: 40, maxRadius: 100, inflateProgress: 0, inflateSpeed: 0.2 + Math.random() * 0.4, ballImage: getNextBallImage(), rotation: 0 }); }
+        // GAME 13: INFLATE/POP - balls push each other more before popping
+        function initInflate() { balls = []; gameState = { poppedCount: 0, popEffects: [], particles: [] }; for (let i = 0; i < 6; i++) balls.push({ x: 100 + Math.random() * (canvas.width - 200), y: 100 + Math.random() * (canvas.height - 200), vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, radius: 35, baseRadius: 35, maxRadius: 150, inflateProgress: 0, inflateSpeed: 0.08 + Math.random() * 0.12, ballImage: getNextBallImage(), rotation: 0 }); }
         function updateInflate() {
-            gameState.popEffects = gameState.popEffects.filter(e => { e.progress += 0.08; e.rotation += e.spinSpeed; return e.progress < 1; });
-            for (let i = balls.length - 1; i >= 0; i--) { const ball = balls[i]; ball.inflateProgress += ball.inflateSpeed * 0.003; const tR = ball.baseRadius + ball.inflateProgress * (ball.maxRadius - ball.baseRadius); ball.radius = Math.min(tR, ball.maxRadius); ball.vx *= 0.98; ball.vy *= 0.98; let newX = ball.x + ball.vx, newY = ball.y + ball.vy; if (newX - ball.radius < 0) { newX = ball.radius; ball.vx = Math.abs(ball.vx) * 0.3; } if (newX + ball.radius > canvas.width) { newX = canvas.width - ball.radius; ball.vx = -Math.abs(ball.vx) * 0.3; } if (newY - ball.radius < 0) { newY = ball.radius; ball.vy = Math.abs(ball.vy) * 0.3; } if (newY + ball.radius > canvas.height) { newY = canvas.height - ball.radius; ball.vy = -Math.abs(ball.vy) * 0.3; } ball.x = newX; ball.y = newY; capSpeed(ball); if (ball.radius >= ball.maxRadius * 0.95) { gameState.popEffects.push({ x: ball.x, y: ball.y, radius: ball.radius, ballImage: ball.ballImage, progress: 0, rotation: 0, spinSpeed: (Math.random() - 0.5) * 0.5 }); ball.radius = ball.baseRadius; ball.inflateProgress = 0; ball.x = 100 + Math.random() * (canvas.width - 200); ball.y = 100 + Math.random() * (canvas.height - 200); gameState.poppedCount++; addScreenShake(6); } }
-            for (let i = 0; i < balls.length; i++) { for (let j = i + 1; j < balls.length; j++) { const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; if (dist < minDist && dist > 0) { const overlap = minDist - dist, pushF = overlap * 0.1, ang = Math.atan2(dy, dx); b1.x -= Math.cos(ang) * pushF; b1.y -= Math.sin(ang) * pushF; b2.x += Math.cos(ang) * pushF; b2.y += Math.sin(ang) * pushF; b1.vx -= Math.cos(ang) * pushF * 0.2; b1.vy -= Math.sin(ang) * pushF * 0.2; b2.vx += Math.cos(ang) * pushF * 0.2; b2.vy += Math.sin(ang) * pushF * 0.2; } } }
+            gameState.popEffects = gameState.popEffects.filter(e => { e.progress += 0.06; e.rotation += e.spinSpeed; return e.progress < 1; });
+            gameState.particles = gameState.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life--; p.rotation += p.spin; return p.life > 0; });
+            
+            for (let i = balls.length - 1; i >= 0; i--) { 
+                const ball = balls[i]; 
+                ball.inflateProgress += ball.inflateSpeed * 0.002; 
+                const tR = ball.baseRadius + ball.inflateProgress * (ball.maxRadius - ball.baseRadius); 
+                ball.radius = Math.min(tR, ball.maxRadius); 
+                ball.vx *= 0.98; ball.vy *= 0.98; 
+                let newX = ball.x + ball.vx, newY = ball.y + ball.vy; 
+                
+                // Wall collisions
+                if (newX - ball.radius < 0) { newX = ball.radius; ball.vx = Math.abs(ball.vx) * 0.5; } 
+                if (newX + ball.radius > canvas.width) { newX = canvas.width - ball.radius; ball.vx = -Math.abs(ball.vx) * 0.5; } 
+                if (newY - ball.radius < 0) { newY = ball.radius; ball.vy = Math.abs(ball.vy) * 0.5; } 
+                if (newY + ball.radius > canvas.height) { newY = canvas.height - ball.radius; ball.vy = -Math.abs(ball.vy) * 0.5; } 
+                ball.x = newX; ball.y = newY; 
+                capSpeed(ball); 
+                
+                // Auto-pop only when truly maxed AND can't push others away
+                if (ball.radius >= ball.maxRadius * 0.99) { 
+                    spawnInflatePopParticles(ball.x, ball.y, ball.radius); 
+                    gameState.popEffects.push({ x: ball.x, y: ball.y, radius: ball.radius, ballImage: ball.ballImage, progress: 0, rotation: 0, spinSpeed: (Math.random() - 0.5) * 0.5 }); 
+                    ball.radius = ball.baseRadius; 
+                    ball.inflateProgress = 0; 
+                    ball.x = 100 + Math.random() * (canvas.width - 200); 
+                    ball.y = 100 + Math.random() * (canvas.height - 200); 
+                    gameState.poppedCount++; 
+                    addScreenShake(8); 
+                } 
+            }
+            
+            // Strong ball-ball collision - push each other away aggressively
+            for (let i = 0; i < balls.length; i++) { 
+                for (let j = i + 1; j < balls.length; j++) { 
+                    const b1 = balls[i], b2 = balls[j], dx = b2.x - b1.x, dy = b2.y - b1.y, dist = Math.sqrt(dx * dx + dy * dy), minDist = b1.radius + b2.radius; 
+                    if (dist < minDist && dist > 0) { 
+                        const overlap = minDist - dist;
+                        const pushF = overlap * 0.4; // Much stronger push
+                        const ang = Math.atan2(dy, dx); 
+                        // Direct position push
+                        b1.x -= Math.cos(ang) * pushF * 0.5; 
+                        b1.y -= Math.sin(ang) * pushF * 0.5; 
+                        b2.x += Math.cos(ang) * pushF * 0.5; 
+                        b2.y += Math.sin(ang) * pushF * 0.5; 
+                        // Velocity push
+                        b1.vx -= Math.cos(ang) * pushF * 0.2; 
+                        b1.vy -= Math.sin(ang) * pushF * 0.2; 
+                        b2.vx += Math.cos(ang) * pushF * 0.2; 
+                        b2.vy += Math.sin(ang) * pushF * 0.2; 
+                    } 
+                } 
+            }
+        }
+        function spawnInflatePopParticles(x, y, r) {
+            for (let k = 0; k < 12; k++) { const a = Math.random() * Math.PI * 2; gameState.particles.push({ x: x, y: y, vx: Math.cos(a) * (4 + Math.random() * 5), vy: Math.sin(a) * (4 + Math.random() * 5) - 3, life: 45, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.4, starImg: starImages[Math.floor(Math.random() * 3)], size: 20 + Math.random() * 15 }); }
+            for (let k = 0; k < 5; k++) { const a = Math.random() * Math.PI * 2; gameState.particles.push({ x: x, y: y, vx: Math.cos(a) * (3 + Math.random() * 4), vy: Math.sin(a) * (3 + Math.random() * 4) - 4, life: 50, rotation: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.2, heartImg: true, size: 25 + Math.random() * 15 }); }
         }
         function drawInflate() {
-            // Pop effects with spin and scale
+            gameState.particles.forEach(p => {
+                if (p.starImg) { safeDrawImage(p.starImg, p.x - p.size/2, p.y - p.size/2, p.size, p.size, p.life / 45, p.rotation); }
+                else if (p.heartImg) { safeDrawImage(heartImg, p.x - p.size/2, p.y - p.size/2, p.size, p.size, p.life / 50, p.rotation); }
+            });
             gameState.popEffects.forEach(e => {
                 const img = ballImages[e.ballImage - 1];
-                if (img && img.complete) {
+                if (img && img.complete && img.naturalWidth > 0) {
                     ctx.save();
-                    ctx.globalAlpha = 1 - e.progress;
+                    ctx.globalAlpha = (1 - e.progress) * 0.8;
                     ctx.translate(e.x, e.y);
-                    ctx.rotate(e.rotation);
-                    const scale = 1 + e.progress * 1.5;
-                    ctx.scale(scale, scale);
-                    ctx.drawImage(img, -e.radius, -e.radius, e.radius * 2, e.radius * 2);
+                    ctx.rotate(e.rotation * 3);
+                    const scale = 1 + e.progress * 2;
+                    ctx.scale(scale, scale * (1 - e.progress * 0.5));
+                    ctx.drawImage(img, -e.radius/2, -e.radius/2, e.radius, e.radius);
                     ctx.restore();
                 }
-                // Ring effect
-                ctx.beginPath();
-                ctx.arc(e.x, e.y, e.radius * (1 + e.progress * 2), 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(255, 200, 100, ' + (1 - e.progress) * 0.5 + ')';
-                ctx.lineWidth = 4 * (1 - e.progress);
-                ctx.stroke();
             });
-            balls.forEach(ball => { const pr = ball.radius / ball.maxRadius, hue = 60 - pr * 60; ctx.save(); if (pr > 0.7) { ctx.shadowBlur = pr * 20; ctx.shadowColor = 'hsla(' + hue + ', 80%, 50%, 0.5)'; } drawBall(ball); ctx.restore(); });
+            balls.forEach(ball => { 
+                const pr = ball.radius / ball.maxRadius;
+                const wobble = pr > 0.8 ? Math.sin(Date.now() * 0.02) * (pr - 0.8) * 10 : 0;
+                ctx.save();
+                ctx.translate(ball.x, ball.y);
+                ctx.scale(1 + wobble * 0.02, 1 - wobble * 0.02);
+                ctx.translate(-ball.x, -ball.y);
+                drawBall(ball); 
+                ctx.restore();
+            });
             ctx.fillStyle = '#666'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'left'; ctx.fillText('Auto-popped: ' + gameState.poppedCount, 20, canvas.height - 80);
         }
-        function inflatePointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y)) { const ball = balls[i]; gameState.popEffects.push({ x: ball.x, y: ball.y, radius: ball.radius, ballImage: ball.ballImage, progress: 0, rotation: 0, spinSpeed: (Math.random() - 0.5) * 0.6 }); ball.radius = ball.baseRadius; ball.inflateProgress = 0; ball.x = 100 + Math.random() * (canvas.width - 200); ball.y = 100 + Math.random() * (canvas.height - 200); addScreenShake(4); break; } } }
+        function inflatePointerDown(x, y) { for (let i = balls.length - 1; i >= 0; i--) { if (contains(balls[i], x, y)) { const ball = balls[i]; spawnInflatePopParticles(ball.x, ball.y, ball.radius); gameState.popEffects.push({ x: ball.x, y: ball.y, radius: ball.radius, ballImage: ball.ballImage, progress: 0, rotation: 0, spinSpeed: (Math.random() - 0.5) * 0.6 }); ball.radius = ball.baseRadius; ball.inflateProgress = 0; ball.x = 100 + Math.random() * (canvas.width - 200); ball.y = 100 + Math.random() * (canvas.height - 200); addScreenShake(6); break; } } }
         
-        // GAME 14: BRUSH - follow line if it intersects anywhere
-        function initBrush() { balls = []; gameState = { paths: [], drawing: false, currentPath: [] }; for (let i = 0; i < 15; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, radius: 20 + Math.random() * 15, ballImage: getNextBallImage(), followingPath: null, pathProgress: 0, pathStartIndex: 0 }); }
+        // GAME 14: BRUSH - very slow drift when not on paths
+        function initBrush() { balls = []; gameState = { paths: [], drawing: false, currentPath: [] }; for (let i = 0; i < 15; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, radius: 20 + Math.random() * 15, ballImage: getNextBallImage(), followingPath: null, pathProgress: 0, pathStartIndex: 0, pathDirection: 1, driftAngle: Math.random() * Math.PI * 2 }); }
         function updateBrush() {
-            gameState.paths = gameState.paths.filter(path => Date.now() - path.created < 6000);
+            gameState.paths = gameState.paths.filter(path => Date.now() - path.created < 8000);
             balls.forEach(ball => {
                 if (ball.followingPath && ball.followingPath.points) {
                     const path = ball.followingPath;
-                    ball.pathProgress += 0.02;
-                    const totalProgress = ball.pathStartIndex / (path.points.length - 1) + ball.pathProgress * (1 - ball.pathStartIndex / (path.points.length - 1));
-                    if (totalProgress >= 1 || !gameState.paths.includes(path)) { ball.followingPath = null; ball.pathProgress = 0; ball.pathStartIndex = 0; }
-                    else {
-                        const idx = Math.floor(totalProgress * (path.points.length - 1)), nextIdx = Math.min(idx + 1, path.points.length - 1);
-                        const t = (totalProgress * (path.points.length - 1)) - idx;
-                        const targetX = path.points[idx].x + (path.points[nextIdx].x - path.points[idx].x) * t;
-                        const targetY = path.points[idx].y + (path.points[nextIdx].y - path.points[idx].y) * t;
-                        ball.vx = (targetX - ball.x) * 0.15; ball.vy = (targetY - ball.y) * 0.15;
+                    if (!gameState.paths.includes(path)) {
+                        ball.followingPath = null;
+                        ball.pathProgress = 0;
+                        ball.pathStartIndex = 0;
+                        return;
                     }
+                    
+                    ball.pathProgress += 0.015 * ball.pathDirection;
+                    
+                    if (ball.pathProgress >= 1) {
+                        ball.pathProgress = 1;
+                        ball.pathDirection = -1;
+                    } else if (ball.pathProgress <= 0) {
+                        ball.pathProgress = 0;
+                        ball.pathDirection = 1;
+                    }
+                    
+                    const idx = Math.floor(ball.pathProgress * (path.points.length - 1));
+                    const clampedIdx = Math.max(0, Math.min(path.points.length - 2, idx));
+                    const nextIdx = clampedIdx + 1;
+                    const t = (ball.pathProgress * (path.points.length - 1)) - clampedIdx;
+                    const targetX = path.points[clampedIdx].x + (path.points[nextIdx].x - path.points[clampedIdx].x) * t;
+                    const targetY = path.points[clampedIdx].y + (path.points[nextIdx].y - path.points[clampedIdx].y) * t;
+                    ball.vx = (targetX - ball.x) * 0.15;
+                    ball.vy = (targetY - ball.y) * 0.15;
                 } else {
-                    // Check if ball intersects ANY part of any path
+                    // Check if ball intersects any path
                     for (const path of gameState.paths) {
                         if (path.points.length < 2) continue;
                         for (let i = 0; i < path.points.length; i++) {
@@ -508,52 +1097,102 @@
                             const dx = ball.x - pt.x, dy = ball.y - pt.y, dist = Math.sqrt(dx * dx + dy * dy);
                             if (dist < ball.radius + 20) {
                                 ball.followingPath = path;
-                                ball.pathStartIndex = i;
-                                ball.pathProgress = 0;
+                                ball.pathProgress = i / (path.points.length - 1);
+                                ball.pathDirection = 1;
                                 break;
                             }
                         }
                         if (ball.followingPath) break;
                     }
-                    ball.vx *= 0.95; ball.vy *= 0.95;
+                    
+                    // Very slow constant drift when not on a path
+                    if (!ball.followingPath) {
+                        // Slowly change drift angle
+                        ball.driftAngle += (Math.random() - 0.5) * 0.05;
+                        // Apply very gentle drift
+                        ball.vx += Math.cos(ball.driftAngle) * 0.01;
+                        ball.vy += Math.sin(ball.driftAngle) * 0.01;
+                        // Cap at very slow speed
+                        const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+                        if (speed > 0.5) {
+                            ball.vx *= 0.5 / speed;
+                            ball.vy *= 0.5 / speed;
+                        }
+                    }
+                    ball.vx *= 0.98; ball.vy *= 0.98;
                 }
                 ball.x += ball.vx; ball.y += ball.vy; capSpeed(ball);
-                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.8; }
-                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.8; }
-                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.8; }
-                if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.8; }
+                if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -0.8; ball.driftAngle = Math.PI - ball.driftAngle; }
+                if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -0.8; ball.driftAngle = Math.PI - ball.driftAngle; }
+                if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.8; ball.driftAngle = -ball.driftAngle; }
+                if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.8; ball.driftAngle = -ball.driftAngle; }
             });
             ballCollisions();
         }
         function drawBrush() {
             gameState.paths.forEach(path => {
                 if (path.points.length < 2) return;
-                const age = Date.now() - path.created, op = Math.max(0, 1 - age / 6000);
+                const age = Date.now() - path.created, op = Math.max(0, 1 - age / 8000);
                 ctx.save();
                 ctx.beginPath(); ctx.moveTo(path.points[0].x, path.points[0].y);
                 for (let i = 1; i < path.points.length; i++) ctx.lineTo(path.points[i].x, path.points[i].y);
                 ctx.strokeStyle = 'rgba(100, 180, 255, ' + (op * 0.6) + ')'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
-                // Start dot (green)
                 ctx.beginPath(); ctx.arc(path.points[0].x, path.points[0].y, 10, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(100, 255, 150, ' + (op * 0.8) + ')'; ctx.fill();
-                // End dot (orange)
                 if (path.points.length > 1) { const endPt = path.points[path.points.length - 1]; ctx.beginPath(); ctx.arc(endPt.x, endPt.y, 8, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255, 150, 100, ' + (op * 0.8) + ')'; ctx.fill(); }
                 ctx.restore();
             });
             if (gameState.drawing && gameState.currentPath.length > 1) { ctx.save(); ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.moveTo(gameState.currentPath[0].x, gameState.currentPath[0].y); for (let i = 1; i < gameState.currentPath.length; i++) ctx.lineTo(gameState.currentPath[i].x, gameState.currentPath[i].y); ctx.strokeStyle = 'rgba(100, 180, 255, 0.9)'; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.stroke(); ctx.restore(); }
-            balls.forEach(ball => { if (ball.followingPath) { ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius + 8, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 200, 255, 0.5)'; ctx.lineWidth = 3; ctx.stroke(); } drawBall(ball); });
-            ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'left'; ctx.fillText('Draw paths - balls follow when they touch the line', 20, canvas.height - 80);
+            balls.forEach(ball => { 
+                if (ball.followingPath) { 
+                    ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius + 8, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(100, 200, 255, 0.5)'; ctx.lineWidth = 3; ctx.stroke(); 
+                    const arrowDir = ball.pathDirection > 0 ? '→' : '←';
+                    ctx.fillStyle = 'rgba(100, 200, 255, 0.8)';
+                    ctx.font = '16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(arrowDir, ball.x, ball.y - ball.radius - 10);
+                } 
+                drawBall(ball); 
+            });
+            ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'left'; ctx.fillText('Draw paths - balls bounce back and forth on them', 20, canvas.height - 80);
         }
         function brushPointerDown(x, y) { gameState.drawing = true; gameState.currentPath = [{ x, y }]; }
         function brushPointerMove(x, y) { if (gameState.drawing) { const lastPt = gameState.currentPath[gameState.currentPath.length - 1]; if (Math.abs(x - lastPt.x) > 5 || Math.abs(y - lastPt.y) > 5) gameState.currentPath.push({ x, y }); } }
         function brushPointerUp() { if (gameState.drawing && gameState.currentPath.length > 3) gameState.paths.push({ points: [...gameState.currentPath], created: Date.now() }); gameState.drawing = false; gameState.currentPath = []; }
         
-        // GAME 15: PORTALS - original golden quadrant version
+        // GAME 15: PORTALS - slower zone changes, fewer balls, shrink + greyscale
         function initPortals() {
-            balls = []; gameState = { portals: [], nextPortalIsExit: false };
-            for (let i = 0; i < 20; i++) balls.push({ x: Math.random() * canvas.width * 0.6, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, radius: 20 + Math.random() * 15, ballImage: getNextBallImage(), portalCooldown: 0 });
+            balls = []; 
+            gameState = { 
+                portals: [], 
+                nextPortalIsExit: false,
+                currentQuadrant: 0,
+                quadrantTimer: 0,
+                quadrantDuration: 600 // Much slower - 10 seconds
+            };
+            // Fewer balls
+            for (let i = 0; i < 10; i++) balls.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, radius: 25 + Math.random() * 15, ballImage: getNextBallImage(), portalCooldown: 0, grayscale: 0, scale: 1 });
+        }
+        function getQuadrantBounds(q) {
+            const hw = canvas.width / 2, hh = canvas.height / 2;
+            switch(q) {
+                case 0: return { x: hw, y: 0, w: hw, h: hh };
+                case 1: return { x: 0, y: 0, w: hw, h: hh };
+                case 2: return { x: 0, y: hh, w: hw, h: hh };
+                case 3: return { x: hw, y: hh, w: hw, h: hh };
+            }
+        }
+        function isInQuadrant(ball, q) {
+            const b = getQuadrantBounds(q);
+            return ball.x >= b.x && ball.x < b.x + b.w && ball.y >= b.y && ball.y < b.y + b.h;
         }
         function updatePortals() {
+            gameState.quadrantTimer++;
+            if (gameState.quadrantTimer >= gameState.quadrantDuration) {
+                gameState.quadrantTimer = 0;
+                gameState.currentQuadrant = (gameState.currentQuadrant + 1) % 4;
+            }
+            
             balls.forEach(ball => {
                 const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
                 if (speed < 0.5) { const a = Math.atan2(ball.vy, ball.vx); ball.vx = Math.cos(a) * 1; ball.vy = Math.sin(a) * 1; }
@@ -563,50 +1202,112 @@
                 if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -0.9; }
                 if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -0.9; }
                 if (ball.portalCooldown > 0) ball.portalCooldown--;
+                
+                // Update grayscale AND scale based on whether ball is in zone
+                const inZone = isInQuadrant(ball, gameState.currentQuadrant);
+                if (inZone) { 
+                    ball.grayscale = Math.max(0, ball.grayscale - 0.03); 
+                    ball.scale = Math.min(1, ball.scale + 0.02);
+                }
+                else { 
+                    ball.grayscale = Math.min(1, ball.grayscale + 0.008); 
+                    ball.scale = Math.max(0.5, ball.scale - 0.005); // Shrink when outside
+                }
+                
+                // Portal teleportation
                 gameState.portals.forEach(portal => {
                     if (!portal.exit) return;
                     const dx = ball.x - portal.entrance.x, dy = ball.y - portal.entrance.y, dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 35 && ball.portalCooldown === 0) { ball.x = portal.exit.x; ball.y = portal.exit.y; ball.portalCooldown = 60; addScreenShake(3); }
+                    if (dist < 45 && ball.portalCooldown === 0) { ball.x = portal.exit.x; ball.y = portal.exit.y; ball.portalCooldown = 60; addScreenShake(3); }
                 });
             });
             ballCollisions();
         }
         function drawPortals() {
-            // Golden quadrant (right side)
-            const gx = canvas.width * 0.7, gy = 0, gw = canvas.width * 0.3, gh = canvas.height;
-            const grad = ctx.createLinearGradient(gx, 0, canvas.width, 0);
-            grad.addColorStop(0, 'rgba(255, 215, 0, 0)'); grad.addColorStop(0.3, 'rgba(255, 215, 0, 0.15)'); grad.addColorStop(1, 'rgba(255, 215, 0, 0.3)');
-            ctx.fillStyle = grad; ctx.fillRect(gx, gy, gw, gh);
-            ctx.strokeStyle = 'rgba(255, 180, 0, 0.5)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvas.height); ctx.stroke();
+            // Draw all quadrants
+            for (let q = 0; q < 4; q++) {
+                const b = getQuadrantBounds(q);
+                const isCurrent = q === gameState.currentQuadrant;
+                if (isCurrent) {
+                    const grad = ctx.createRadialGradient(b.x + b.w/2, b.y + b.h/2, 0, b.x + b.w/2, b.y + b.h/2, Math.max(b.w, b.h));
+                    grad.addColorStop(0, 'rgba(255, 215, 0, 0.25)');
+                    grad.addColorStop(1, 'rgba(255, 215, 0, 0.05)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                    ctx.strokeStyle = 'rgba(255, 200, 0, 0.6)';
+                    ctx.lineWidth = 4;
+                    ctx.strokeRect(b.x + 2, b.y + 2, b.w - 4, b.h - 4);
+                } else {
+                    ctx.fillStyle = 'rgba(100, 100, 100, 0.05)';
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                }
+            }
+            // Timer bar
+            const timerProgress = gameState.quadrantTimer / gameState.quadrantDuration;
+            ctx.fillStyle = 'rgba(255, 200, 0, 0.3)';
+            ctx.fillRect(canvas.width / 2 - 100, 165, 200 * timerProgress, 8);
+            ctx.strokeStyle = 'rgba(255, 200, 0, 0.5)';
+            ctx.strokeRect(canvas.width / 2 - 100, 165, 200, 8);
             
+            // Draw portals
             gameState.portals.forEach(portal => {
-                const ent = portal.entrance, time = Date.now() * 0.003;
-                // Entrance (orange)
-                ctx.save(); ctx.translate(ent.x, ent.y);
-                for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(0, 0, 35 - i * 8, time + i * 0.5, time + i * 0.5 + Math.PI * 1.6); ctx.strokeStyle = 'rgba(255, ' + (150 - i * 40) + ', 50, ' + (0.8 - i * 0.2) + ')'; ctx.lineWidth = 5 - i; ctx.stroke(); }
-                ctx.restore();
-                // Exit (blue)
+                const ent = portal.entrance;
+                const time = Date.now() * 0.002;
+                const pulse = 1 + Math.sin(time) * 0.1;
+                const size = 70 * pulse;
+                
+                const entranceGrad = ctx.createRadialGradient(ent.x, ent.y, 0, ent.x, ent.y, size);
+                entranceGrad.addColorStop(0, 'rgba(255, 100, 100, 0.4)');
+                entranceGrad.addColorStop(1, 'rgba(255, 100, 100, 0)');
+                ctx.beginPath(); ctx.arc(ent.x, ent.y, size, 0, Math.PI * 2); ctx.fillStyle = entranceGrad; ctx.fill();
+                safeDrawImage(heartImg, ent.x - size/2, ent.y - size/2, size, size, 1, time * 0.5);
+                
                 if (portal.exit) {
                     const exit = portal.exit;
-                    ctx.save(); ctx.translate(exit.x, exit.y);
-                    for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(0, 0, 35 - i * 8, -time + i * 0.5, -time + i * 0.5 + Math.PI * 1.6); ctx.strokeStyle = 'rgba(50, ' + (150 - i * 40) + ', 255, ' + (0.8 - i * 0.2) + ')'; ctx.lineWidth = 5 - i; ctx.stroke(); }
-                    ctx.restore();
+                    const exitGrad = ctx.createRadialGradient(exit.x, exit.y, 0, exit.x, exit.y, size);
+                    exitGrad.addColorStop(0, 'rgba(255, 215, 0, 0.4)');
+                    exitGrad.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    ctx.beginPath(); ctx.arc(exit.x, exit.y, size, 0, Math.PI * 2); ctx.fillStyle = exitGrad; ctx.fill();
+                    safeDrawImage(starImages[0], exit.x - size/2, exit.y - size/2, size, size, 1, -time * 0.5);
                 }
             });
             
-            balls.forEach(ball => { const inGold = ball.x > gx; drawBall(ball, inGold ? 1.0 : 0.8); });
+            // Draw balls with grayscale AND scale effect
+            balls.forEach(ball => { 
+                const inZone = isInQuadrant(ball, gameState.currentQuadrant);
+                ctx.save();
+                if (ball.grayscale > 0) {
+                    ctx.filter = 'grayscale(' + (ball.grayscale * 100) + '%) brightness(' + (1 - ball.grayscale * 0.3) + ')';
+                }
+                // Apply scale
+                ctx.translate(ball.x, ball.y);
+                ctx.scale(ball.scale, ball.scale);
+                ctx.translate(-ball.x, -ball.y);
+                drawBall(ball, inZone ? 1.0 : 0.7);
+                ctx.filter = 'none';
+                ctx.restore();
+            });
             
-            // Count balls in golden zone
-            const ballsInZone = balls.filter(b => b.x > gx).length;
+            const ballsInZone = balls.filter(b => isInQuadrant(b, gameState.currentQuadrant)).length;
             const allIn = ballsInZone === balls.length;
             ctx.fillStyle = allIn ? '#4A4' : '#666'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'left';
-            ctx.fillText('In golden zone: ' + ballsInZone + '/' + balls.length, 20, canvas.height - 80);
-            if (allIn) { ctx.fillStyle = '#FFD700'; ctx.font = 'bold 32px Arial'; ctx.textAlign = 'center'; ctx.fillText('🎯 All Safe! 🎯', canvas.width / 2, 160); }
-            if (gameState.nextPortalIsExit) { ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.fillText('Click to place exit (blue)', canvas.width / 2, canvas.height - 100); }
+            ctx.fillText('In safe zone: ' + ballsInZone + '/' + balls.length, 20, canvas.height - 80);
+            if (allIn) { ctx.fillStyle = '#FFD700'; ctx.font = 'bold 32px Arial'; ctx.textAlign = 'center'; ctx.fillText('🎯 All Safe! 🎯', canvas.width / 2, 140); }
+            const portalCount = gameState.portals.filter(p => p.exit).length;
+            ctx.fillStyle = '#666'; ctx.font = '14px Arial'; ctx.textAlign = 'left';
+            ctx.fillText('Portals: ' + portalCount + '/1', 20, canvas.height - 55);
+            if (gameState.nextPortalIsExit) { ctx.fillStyle = '#666'; ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.fillText('Click to place exit (star)', canvas.width / 2, canvas.height - 100); }
         }
         function portalPointerDown(x, y) {
-            if (!gameState.nextPortalIsExit) { gameState.portals.push({ entrance: { x, y }, exit: null }); gameState.nextPortalIsExit = true; }
-            else { const lastP = gameState.portals[gameState.portals.length - 1]; if (lastP && !lastP.exit) { lastP.exit = { x, y }; gameState.nextPortalIsExit = false; } }
+            if (!gameState.nextPortalIsExit) { 
+                gameState.portals = [];
+                gameState.portals.push({ entrance: { x, y }, exit: null }); 
+                gameState.nextPortalIsExit = true; 
+            }
+            else { 
+                const lastP = gameState.portals[gameState.portals.length - 1]; 
+                if (lastP && !lastP.exit) { lastP.exit = { x, y }; gameState.nextPortalIsExit = false; } 
+            }
         }
         
         // HELPERS
@@ -621,9 +1322,49 @@
         
         // INPUT
         function getPointer(e) { const touch = e.touches ? e.touches[0] : e; return { x: touch.clientX, y: touch.clientY }; }
-        canvas.addEventListener('mousedown', (e) => { e.preventDefault(); const { x, y } = getPointer(e), game = games[currentGame]; if (game.onPointerDown) game.onPointerDown(x, y); });
-        canvas.addEventListener('mousemove', (e) => { const { x, y } = getPointer(e); mouseX = x; mouseY = y; const game = games[currentGame]; if (game.onPointerMove) game.onPointerMove(x, y); });
-        canvas.addEventListener('mouseup', (e) => { e.preventDefault(); const game = games[currentGame]; if (game.onPointerUp) game.onPointerUp(); });
+        
+        canvas.addEventListener('mousedown', (e) => { 
+            e.preventDefault(); 
+            isMouseDown = true;
+            const { x, y } = getPointer(e), game = games[currentGame]; 
+            if (game.onPointerDown) game.onPointerDown(x, y); 
+        });
+        canvas.addEventListener('mousemove', (e) => { 
+            const { x, y } = getPointer(e); 
+            mouseX = x; mouseY = y; 
+            const game = games[currentGame]; 
+            if (game.onPointerMove) game.onPointerMove(x, y); 
+        });
+        canvas.addEventListener('mouseup', (e) => { 
+            e.preventDefault(); 
+            isMouseDown = false;
+            const game = games[currentGame]; 
+            if (game.onPointerUp) game.onPointerUp(); 
+        });
+        
+        canvas.addEventListener('mouseleave', (e) => {
+            if (isMouseDown) {
+                const game = games[currentGame];
+                if (game.onPointerUp) game.onPointerUp();
+            }
+        });
+        
+        window.addEventListener('mouseup', (e) => {
+            if (isMouseDown) {
+                isMouseDown = false;
+                const game = games[currentGame];
+                if (game.onPointerUp) game.onPointerUp();
+            }
+        });
+        
+        window.addEventListener('blur', () => {
+            if (isMouseDown) {
+                isMouseDown = false;
+                const game = games[currentGame];
+                if (game.onPointerUp) game.onPointerUp();
+            }
+        });
+        
         canvas.addEventListener('touchstart', (e) => { e.preventDefault(); const { x, y } = getPointer(e), game = games[currentGame]; if (game.onPointerDown) game.onPointerDown(x, y); });
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); const { x, y } = getPointer(e); mouseX = x; mouseY = y; const game = games[currentGame]; if (game.onPointerMove) game.onPointerMove(x, y); });
         canvas.addEventListener('touchend', (e) => { e.preventDefault(); const game = games[currentGame]; if (game.onPointerUp) game.onPointerUp(); });
