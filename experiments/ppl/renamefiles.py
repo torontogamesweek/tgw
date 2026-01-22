@@ -1,6 +1,6 @@
 import os
 
-def rename_files(folder_path='.', prefix='ball'):
+def rename_files(folder_path='.', prefix='ppl'):
     """
     Rename all files in a folder to prefix_1, prefix_2, etc.
     
@@ -41,6 +41,6 @@ def rename_files(folder_path='.', prefix='ball'):
 if __name__ == "__main__":
     # Change these settings as needed
     folder_path = '.'  # Current directory, or specify a path like '/path/to/folder'
-    prefix = 'balls'     # Change this to use a different prefix
+    prefix = 'ppl'     # Change this to use a different prefix
     
     rename_files(folder_path, prefix)
