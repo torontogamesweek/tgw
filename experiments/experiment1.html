@@ -54,7 +54,6 @@
         color: #000;
       }
 
-      /* Category tints */
       .nav-item[data-category="game"] {
         background: rgba(255, 245, 238, 0.7);
       }
@@ -79,7 +78,6 @@
         background: rgba(210, 230, 255, 1);
       }
 
-      /* Separator between category groups */
       .nav-item.group-end {
         border-bottom: 2px solid #ccc;
       }
@@ -118,13 +116,11 @@
   </head>
   <body>
     <div id="nav">
-      <!-- Worlds (cool tint) - watch and influence -->
       <div class="nav-item" data-game="12" data-category="world">Merge<span class="tooltip">Unite all walkers</span></div>
       <div class="nav-item" data-game="13" data-category="world">Inflate<span class="tooltip">Watch them grow, pop to reset</span></div>
       <div class="nav-item" data-game="14" data-category="world">Brush<span class="tooltip">Paint paths for balls</span></div>
       <div class="nav-item" data-game="11" data-category="world">Connect<span class="tooltip">Link people to balls</span></div>
 
-      <!-- Toys (neutral) - satisfying interactions, no fail state -->
       <div class="nav-item" data-game="3" data-category="toy">Pop<span class="tooltip">Pop them all</span></div>
       <div class="nav-item" data-game="8" data-category="toy">Explode<span class="tooltip">Hold to charge, release to burst</span></div>
       <div class="nav-item" data-game="4" data-category="toy">Vacuum<span class="tooltip">Hold to gather, release to scatter</span></div>
@@ -134,7 +130,6 @@
 
       <div class="nav-item" data-game="7" data-category="toy">Magnet<span class="tooltip">Click attract, shift repel</span></div>
 
-      <!-- Games (warm tint) - have goals, stakes -->
       <div class="nav-item" data-game="1" data-category="game">Fling<span class="tooltip">Collect gold, avoid catchers</span></div>
       <div class="nav-item" data-game="6" data-category="game">Bounce<span class="tooltip">Draw lines to reach the star</span></div>
       <div class="nav-item" data-game="10" data-category="game">Defend<span class="tooltip">Recruit guards to protect the core</span></div>
@@ -618,8 +613,6 @@
         }
       }
 
-      // GAME 1: FLING
-      // GAME 1: FLING (IMPROVED)
       class FlingGame extends BaseGame {
         init() {
           super.init();
@@ -664,7 +657,6 @@
               deathType: "explode",
               spawnProgress: animated ? 0 : 1,
               stretchAngle: 0,
-              // Use bestballs for main playable ball
               ballImage: ImageCounter.nextBestBall(),
               useBestBall: true,
             }),
@@ -687,7 +679,6 @@
           });
         }
 
-        // Predict trajectory with bounce - steps scale with power
         predictTrajectory(ball, vx, vy, power) {
           const points = [];
           let x = ball.x;
@@ -697,7 +688,6 @@
           let hasBounced = false;
           let stepsSinceBounce = 0;
 
-          // More power = longer trajectory prediction
           const totalSteps = Math.floor(40 + power * 3);
 
           for (let i = 0; i < totalSteps; i++) {
@@ -706,7 +696,6 @@
             x += pvx;
             y += pvy;
 
-            // Wall bounces
             let bounceThisFrame = false;
             if (x - ball.radius < 0) {
               x = ball.radius;
@@ -826,7 +815,6 @@
             if (speed > 3) ball.trail.push({ x: ball.x, y: ball.y, life: 20 });
             ball.trail = ball.trail.filter((p) => p.life-- > 0);
 
-            // Gold collection
             if (speed > 4) {
               for (let j = s.goldenOrbs.length - 1; j >= 0; j--) {
                 const orb = s.goldenOrbs[j];
@@ -867,7 +855,6 @@
               });
             }
 
-            // Wall collisions
             if (ball.x - ball.radius < 0) {
               ball.x = ball.radius;
               ball.vx *= -0.95;
@@ -900,7 +887,6 @@
         draw() {
           const s = this.state;
 
-          // Draw catchers (spikes only, no people)
           s.catchers.forEach((c) => {
             const op = Math.min(1, c.spawnProgress);
             const scale = 0.5 + c.spawnProgress * 0.5;
@@ -909,13 +895,11 @@
             ctx.translate(c.x, c.y);
             ctx.scale(scale, scale);
 
-            // Rotating starburst
             ctx.save();
             ctx.rotate(c.rotationPhase);
             Renderer.drawStarburst(0, 0, c.radius * 0.5, (c.radius + 18) * (1 + Math.sin(c.pulsePhase) * 0.15), 8, "rgba(255, 60, 60, 0.6)");
             ctx.restore();
 
-            // Danger glow
             const dg = Renderer.createRadialGradient(0, 0, 0, c.radius * 1.2, [
               [0, "rgba(255, 0, 0, 0.25)"],
               [1, "rgba(255, 0, 0, 0)"],
@@ -928,7 +912,6 @@
             ctx.restore();
           });
 
-          // Draw golden orbs
           s.goldenOrbs.forEach((orb) => {
             const ps = 1 + Math.sin(orb.pulse) * 0.2;
             const g = Renderer.createRadialGradient(orb.x, orb.y, 0, orb.radius * ps * 2, [
@@ -951,9 +934,7 @@
 
           super.draw();
 
-          // Draw balls
           this.balls.forEach((ball) => {
-            // Trail
             ball.trail.forEach((p) => {
               const a = p.life / 25;
               ctx.beginPath();
@@ -962,7 +943,6 @@
               ctx.fill();
             });
 
-            // Glow effect
             if (ball.glowTimer > 0) {
               const g = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.5, ball.radius * 1.8, [
                 [0, "rgba(255, 215, 0, " + ball.glowTimer / 120 + ")"],
@@ -977,7 +957,6 @@
             const op = ball.dying ? 1 - ball.deathProgress : ball.spawnProgress < 1 ? ball.spawnProgress : ball.isDragging ? 0.8 : 1.0;
 
             if (ball.isDragging) {
-              // Draw trajectory preview first (behind everything)
               const vx = (ball.dragStartX - ball.x) * 0.45;
               const vy = (ball.dragStartY - ball.y) * 0.45;
               const power = Math.sqrt(vx * vx + vy * vy);
@@ -986,15 +965,12 @@
                 const trajectory = this.predictTrajectory(ball, vx, vy, power);
                 const dotSize = 18;
 
-                // Draw every 2nd point for tighter spacing
                 for (let i = 2; i < trajectory.length; i += 2) {
                   const pt = trajectory[i];
 
-                  // Cycle through all regular ball images for preview
                   const ballImageIndex = (i % Config.NUM_BALL_IMAGES) + 1;
                   const img = Assets.getBallImage(ballImageIndex);
 
-                  // Calculate alpha: clear before bounce, fading after (no quiver/spread)
                   let alpha;
                   if (!pt.bounced) {
                     alpha = 0.6 - pt.progress * 0.2;
@@ -1011,7 +987,6 @@
                 }
               }
 
-              // Draw the pull line (slingshot band)
               const pullDist = Math.sqrt(
                 (ball.dragStartX - ball.x) * (ball.dragStartX - ball.x) + (ball.dragStartY - ball.y) * (ball.dragStartY - ball.y),
               );
@@ -1024,13 +999,11 @@
               ctx.lineCap = "round";
               ctx.stroke();
 
-              // Anchor point
               ctx.beginPath();
               ctx.arc(ball.dragStartX, ball.dragStartY, 5, 0, Math.PI * 2);
               ctx.fillStyle = `rgba(50, 50, 50, ${bandAlpha + 0.15})`;
               ctx.fill();
 
-              // Draw stretched ball (using bestball)
               ctx.save();
               ctx.translate(ball.x, ball.y);
               ctx.rotate(ball.stretchAngle);
@@ -1044,7 +1017,6 @@
               }
               ctx.restore();
             } else {
-              // Draw with bestball image
               const img = Assets.getBestBallImage(ball.ballImage);
               if (Assets.isImageReady(img)) {
                 ctx.save();
@@ -1087,7 +1059,6 @@
           Physics.capSpeed(ball);
           ball.isDragging = false;
 
-          // Snap-back effect on release
           ball.squashX = 1.2;
           ball.squashY = 0.8;
 
@@ -1095,7 +1066,6 @@
         }
       }
 
-      // GAME 2: PADDLE
       class PaddleGame extends BaseGame {
         init() {
           super.init();
@@ -1104,7 +1074,11 @@
             mouseY: canvas.height / 2,
             lastMouseX: canvas.width / 2,
             lastMouseY: canvas.height / 2,
-            personIndex: ImageCounter.nextPerson(),
+            // personIndex: ImageCounter.nextPerson(),
+            personIndex: 6,
+            paddlePulse: 0,
+            squashX: 1,
+            squashY: 1,
           };
           const baseRadius = Config.isMobile ? 25 : 35,
             radiusVariance = Config.isMobile ? 15 : 20;
@@ -1128,6 +1102,10 @@
         }
         update() {
           super.update();
+          this.state.paddlePulse += 0.05;
+          this.state.squashX += (1 - this.state.squashX) * 0.2;
+          this.state.squashY += (1 - this.state.squashY) * 0.2;
+
           const s = this.state,
             mVx = s.mouseX - s.lastMouseX,
             mVy = s.mouseY - s.lastMouseY;
@@ -1221,7 +1199,11 @@
             ball.y += Math.sin(ang) * overlap;
             ball.lastHitTime = Date.now();
             ball.sleepy = false;
-            if (force > 3) ScreenShake.add(force * 0.3);
+            if (force > 3) {
+              ScreenShake.add(force * 0.3);
+              this.state.squashX = 1.06;
+              this.state.squashY = 0.89;
+            }
             Physics.capSpeed(ball);
           }
         }
@@ -1255,12 +1237,19 @@
             }
             Renderer.drawBallWithSquash(ball, op, ball.rotation, ball.squashX, ball.squashY);
           });
-          Renderer.drawPerson(this.state.mouseX, this.state.mouseY + 35, 80, this.state.personIndex);
+          const pulseSize = 80 + Math.sin(this.state.paddlePulse) * 8;
+          const pulseAlpha = 0.4 + Math.sin(this.state.paddlePulse) * 0.15;
           ctx.beginPath();
-          ctx.arc(this.state.mouseX, this.state.mouseY, 55, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(100, 100, 100, 0.3)";
-          ctx.lineWidth = 3;
+          ctx.arc(this.state.mouseX, this.state.mouseY, pulseSize, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(255, 220, 50, " + pulseAlpha + ")";
+          ctx.lineWidth = 60;
           ctx.stroke();
+          ctx.save();
+          ctx.translate(this.state.mouseX, this.state.mouseY + 80);
+          ctx.scale(this.state.squashX, this.state.squashY);
+          ctx.translate(-this.state.mouseX, -(this.state.mouseY + 80));
+          Renderer.drawPerson(this.state.mouseX, this.state.mouseY + 80, 180, this.state.personIndex);
+          ctx.restore();
         }
         onPointerMove(x, y) {
           this.state.mouseX = x;
@@ -1268,7 +1257,6 @@
         }
       }
 
-      // GAME 3: POP
       class PopGame extends BaseGame {
         init() {
           super.init();
@@ -1382,7 +1370,6 @@
         }
       }
 
-      // GAME 4: VACUUM
       class VacuumGame extends BaseGame {
         init() {
           super.init();
@@ -1524,11 +1511,10 @@
         }
       }
 
-      // GAME 5: GRAVITY FLIP
       class GravityFlipGame extends BaseGame {
         init() {
           super.init();
-          this.state = { gravityDir: 1 };
+          this.state = { gravityDir: 1, stars: [], score: 0 };
           for (let i = 0; i < 30; i++)
             this.balls.push(
               this.createBall({
@@ -1539,10 +1525,43 @@
                 radius: 25 + Math.random() * 20,
               }),
             );
+          this.spawnStars();
+        }
+        spawnStars() {
+          this.state.stars = [];
+          for (let i = 0; i < 5; i++) {
+            const onCeiling = Math.random() > 0.5;
+            this.state.stars.push({
+              x: 80 + Math.random() * (canvas.width - 160),
+              y: onCeiling ? 40 + Math.random() * 30 : canvas.height - 40 - Math.random() * 30,
+              radius: 20,
+              onCeiling: onCeiling,
+              pulse: Math.random() * Math.PI * 2,
+              collected: false,
+              respawnTimer: 0,
+              starType: Math.floor(Math.random() * 3),
+            });
+          }
         }
         update() {
           super.update();
           const self = this;
+          const s = this.state;
+
+          s.stars.forEach((star) => {
+            star.pulse += 0.08;
+            if (star.collected) {
+              star.respawnTimer--;
+              if (star.respawnTimer <= 0) {
+                star.collected = false;
+                star.onCeiling = Math.random() > 0.5;
+                star.x = 80 + Math.random() * (canvas.width - 160);
+                star.y = star.onCeiling ? 40 + Math.random() * 30 : canvas.height - 40 - Math.random() * 30;
+                star.starType = Math.floor(Math.random() * 3);
+              }
+            }
+          });
+
           this.balls.forEach(function (ball) {
             ball.vy += 0.25 * self.state.gravityDir;
             ball.vx *= 0.98;
@@ -1576,6 +1595,26 @@
               ball.squashX = 1.15;
               ball.squashY = 0.85;
             }
+
+            s.stars.forEach((star) => {
+              if (star.collected) return;
+              const dist = Physics.distance(ball.x, ball.y, star.x, star.y);
+              if (dist < ball.radius + star.radius) {
+                star.collected = true;
+                star.respawnTimer = 180;
+                s.score++;
+                ScreenShake.add(6);
+                self.particles.addBurst(star.x, star.y, 10, {
+                  speed: 4,
+                  speedVariance: 3,
+                  life: 40,
+                  size: 20,
+                  sizeVariance: 15,
+                  gravity: 0.1,
+                  type: "star",
+                });
+              }
+            });
           });
           for (let i = 0; i < this.balls.length; i++) {
             for (let j = i + 1; j < this.balls.length; j++) {
@@ -1603,6 +1642,32 @@
         }
         draw() {
           super.draw();
+          const s = this.state;
+
+          s.stars.forEach((star) => {
+            if (star.collected) return;
+            const pulseScale = 1 + Math.sin(star.pulse) * 0.15;
+            const size = star.radius * 2 * pulseScale;
+
+            const glow = Renderer.createRadialGradient(star.x, star.y, 0, size * 1.3, [
+              [0, "rgba(255, 220, 100, 0.4)"],
+              [1, "rgba(255, 220, 100, 0)"],
+            ]);
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, size * 1.3, 0, Math.PI * 2);
+            ctx.fill();
+
+            const img = Assets.getStarImage(star.starType);
+            if (Assets.isImageReady(img)) {
+              ctx.save();
+              ctx.translate(star.x, star.y);
+              ctx.rotate(star.pulse * 0.1);
+              ctx.drawImage(img, -size / 2, -size / 2, size, size);
+              ctx.restore();
+            }
+          });
+
           this.balls.forEach(function (ball) {
             Renderer.drawBallWithSquash(ball, 1, 0, ball.squashX, ball.squashY);
           });
@@ -1618,7 +1683,6 @@
         }
       }
 
-      // GAME 6: BOUNCE (IMPROVED)
       class BounceGame extends BaseGame {
         init() {
           super.init();
@@ -1900,7 +1964,6 @@
         }
       }
 
-      // GAME 7-16 and Manager (simplified for brevity - core changes applied)
       class MagnetZonesGame extends BaseGame {
         init() {
           super.init();
@@ -2058,7 +2121,7 @@
             ctx.fillStyle = "rgba(80, 80, 80, " + (0.3 + cA * 0.5) + ")";
             ctx.fill();
             ctx.fillStyle = "#666";
-            ctx.font = "bold 16px Arial";
+            ctx.font = 'bold 16px "Courier New", Courier, monospace';
             ctx.textAlign = "center";
             ctx.fillText(Math.floor(cA * 100) + "%", s.chargeX, s.chargeY + r + 25);
           }
@@ -2102,7 +2165,6 @@
         }
       }
 
-      // GAME 9: ORBITAL (IMPROVED - gentle re-orbit pull)
       class OrbitalGame extends BaseGame {
         init() {
           super.init();
@@ -2145,9 +2207,19 @@
                 dy = s.mouseY - ball.y,
                 dist = Math.sqrt(dx * dx + dy * dy);
               if (dist > 0) {
-                const pullStrength = 0.008;
+                const pullStrength = 0.008; // Adjust: lower = slower pull
                 ball.vx += (dx / dist) * pullStrength;
                 ball.vy += (dy / dist) * pullStrength;
+
+                // Recapture into orbit when close enough and moving slowly
+                const speed = Physics.getSpeed(ball);
+                const captureDistance = 80; // Adjust: higher = captures from further away
+                const captureSpeed = 4; // Adjust: higher = captures faster-moving balls
+                if (dist < ball.originalDistance + captureDistance && speed < captureSpeed) {
+                  ball.orbiting = true;
+                  ball.angle = Math.atan2(ball.y - s.mouseY, ball.x - s.mouseX);
+                  ball.distance = dist;
+                }
               }
             }
           });
@@ -2195,7 +2267,6 @@
         }
       }
 
-      // Placeholder classes for remaining games (simplified versions)
       class DefendGame extends BaseGame {
         init() {
           super.init();
@@ -2451,7 +2522,20 @@
       class ConnectionsGame extends BaseGame {
         init() {
           super.init();
-          this.state = { connections: [], firstEntity: null, hoveredEntity: null, score: 0, exploded: 0, dyingEntities: [] };
+          const baseRadius = Config.isMobile ? 35 : 45;
+          const personHeight = Config.isMobile ? 65 : 80;
+          this.state = {
+            connections: [],
+            firstEntity: null,
+            hoveredEntity: null,
+            score: 0,
+            exploded: 0,
+            dyingEntities: [],
+            isDragging: false,
+            dragStart: null,
+            dragEnd: null,
+            celebrationRings: [],
+          };
           for (let i = 0; i < 8; i++) {
             const a = Math.random() * Math.PI * 2,
               s = 1.5 + Math.random() * 1.5;
@@ -2461,11 +2545,18 @@
                 y: Math.random() * canvas.height,
                 vx: Math.cos(a) * s,
                 vy: Math.sin(a) * s,
-                radius: 25 + Math.random() * 15,
+                radius: baseRadius + Math.random() * 15,
                 type: "ball",
                 rotationSpeed: (Math.random() - 0.5) * 0.03,
                 scale: 1,
                 targetScale: 1,
+                currentScale: 1,
+                wigglePhase: Math.random() * Math.PI * 2,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                shakeIntensity: 0,
               }),
             );
           }
@@ -2477,14 +2568,22 @@
               y: Math.random() * canvas.height,
               vx: Math.cos(a) * s,
               vy: Math.sin(a) * s,
-              radius: 35,
-              clickRadius: 50,
+              radius: baseRadius + 10,
+              clickRadius: baseRadius + 20,
               personImage: ImageCounter.nextPerson(),
+              personHeight: personHeight,
               type: "person",
               rotation: Math.random() * Math.PI * 2,
               rotationSpeed: (Math.random() - 0.5) * 0.02,
               scale: 1,
               targetScale: 1,
+              currentScale: 1,
+              wigglePhase: Math.random() * Math.PI * 2,
+              wiggleAmount: 0,
+              targetWiggle: 0,
+              bounceAnim: 0,
+              shakeAnim: 0,
+              shakeIntensity: 0,
             });
           }
         }
@@ -2496,106 +2595,254 @@
           return null;
         }
 
+        triggerCelebration(entity1, entity2) {
+          // Bounce animation on both
+          entity1.bounceAnim = 1;
+          entity2.bounceAnim = 1;
+
+          // Expanding ring from midpoint
+          const cx = (entity1.x + entity2.x) / 2;
+          const cy = (entity1.y + entity2.y) / 2;
+          this.state.celebrationRings.push({
+            x: cx,
+            y: cy,
+            radius: 0,
+            maxRadius: 120,
+            life: 1,
+            color: `hsl(${Math.random() * 60 + 30}, 100%, 60%)`, // golden/orange range
+          });
+
+          // Hearts burst
+          this.particles.addBurst(cx, cy, 15, {
+            speed: 6,
+            speedVariance: 4,
+            life: 50,
+            size: 35,
+            sizeVariance: 20,
+            gravity: 0.08,
+            type: "heart",
+          });
+
+          ScreenShake.add(6);
+        }
+
+        triggerBadMatch(entity1, entity2) {
+          // Start shaking immediately
+          entity1.shakeAnim = 1;
+          entity1.shakeIntensity = 8;
+          entity2.shakeAnim = 1;
+          entity2.shakeIntensity = 8;
+
+          this.state.dyingEntities.push({
+            entity1: entity1,
+            entity2: entity2,
+            phase: "shake",
+            timer: 5,
+          });
+
+          ScreenShake.add(5);
+        }
+
+        explodeEntities(dying) {
+          const s = this.state;
+          const cx = (dying.entity1.x + dying.entity2.x) / 2;
+          const cy = (dying.entity1.y + dying.entity2.y) / 2;
+
+          ScreenShake.add(20);
+
+          // Immediate KOs
+          for (let j = 0; j < 5; j++) {
+            const a = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+            const sp = 4 + Math.random() * 5;
+            this.particles.add({
+              x: cx,
+              y: cy,
+              vx: Math.cos(a) * sp,
+              vy: Math.sin(a) * sp - 4,
+              size: 55 + Math.random() * 35,
+              life: 50,
+              maxLife: 50,
+              type: "ko",
+              gravity: 0.12,
+              spin: (Math.random() - 0.5) * 0.3,
+              rotation: Math.random() * Math.PI * 2,
+            });
+          }
+
+          // Star burst
+          this.particles.addBurst(cx, cy, 12, {
+            speed: 8,
+            speedVariance: 4,
+            life: 30,
+            size: 20,
+            sizeVariance: 15,
+            gravity: 0.15,
+            type: "star",
+          });
+
+          // Remove connections
+          s.connections = s.connections.filter(
+            (c) => c.entity1 !== dying.entity1 && c.entity2 !== dying.entity1 && c.entity1 !== dying.entity2 && c.entity2 !== dying.entity2,
+          );
+
+          // Remove entities
+          const idx1 = this.balls.indexOf(dying.entity1);
+          const idx2 = this.balls.indexOf(dying.entity2);
+          if (idx1 > idx2) {
+            this.balls.splice(idx1, 1);
+            this.balls.splice(idx2, 1);
+          } else {
+            this.balls.splice(idx2, 1);
+            this.balls.splice(idx1, 1);
+          }
+
+          // Respawn after delay
+          const baseRadius = Config.isMobile ? 35 : 45;
+          const personHeight = Config.isMobile ? 65 : 80;
+          setTimeout(() => {
+            const a1 = Math.random() * Math.PI * 2;
+            const a2 = Math.random() * Math.PI * 2;
+            this.balls.push(
+              this.createBall({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: Math.cos(a1) * 2,
+                vy: Math.sin(a1) * 2,
+                radius: baseRadius + Math.random() * 15,
+                type: "ball",
+                rotationSpeed: (Math.random() - 0.5) * 0.03,
+                scale: 1,
+                targetScale: 1,
+                currentScale: 1,
+                wigglePhase: Math.random() * Math.PI * 2,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                shakeIntensity: 0,
+              }),
+            );
+            this.balls.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              vx: Math.cos(a2) * 1.5,
+              vy: Math.sin(a2) * 1.5,
+              radius: baseRadius + 10,
+              clickRadius: baseRadius + 20,
+              personImage: ImageCounter.nextPerson(),
+              personHeight: personHeight,
+              type: "person",
+              rotation: Math.random() * Math.PI * 2,
+              rotationSpeed: (Math.random() - 0.5) * 0.02,
+              scale: 1,
+              targetScale: 1,
+              currentScale: 1,
+              wigglePhase: Math.random() * Math.PI * 2,
+              wiggleAmount: 0,
+              targetWiggle: 0,
+              bounceAnim: 0,
+              shakeAnim: 0,
+              shakeIntensity: 0,
+            });
+          }, 400);
+        }
+
+        connectEntities(entity1, entity2) {
+          const s = this.state;
+          if (entity1.type === entity2.type) {
+            s.exploded++;
+            this.triggerBadMatch(entity1, entity2);
+          } else {
+            const existingConn = s.connections.find(
+              (c) => (c.entity1 === entity1 && c.entity2 === entity2) || (c.entity2 === entity1 && c.entity1 === entity2),
+            );
+            if (!existingConn) {
+              const dx = entity2.x - entity1.x;
+              const dy = entity2.y - entity1.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              s.connections.push({ entity1, entity2, restLength: Math.min(dist, 150) });
+              s.score++;
+              this.triggerCelebration(entity1, entity2);
+            }
+          }
+        }
+
         update() {
           super.update();
           const s = this.state;
+
+          // Update celebration rings
+          s.celebrationRings = s.celebrationRings.filter((ring) => {
+            ring.radius += 8;
+            ring.life -= 0.04;
+            return ring.life > 0;
+          });
+
+          // Update dying entities
           s.dyingEntities = s.dyingEntities.filter((dying) => {
             dying.timer--;
+
+            // Keep shaking during shake phase
+            if (dying.phase === "shake") {
+              dying.entity1.shakeAnim = 1;
+              dying.entity2.shakeAnim = 1;
+              // Intensify shake as we approach explosion
+              const intensity = 6 + (1 - dying.timer / 25) * 10;
+              dying.entity1.shakeIntensity = intensity;
+              dying.entity2.shakeIntensity = intensity;
+            }
+
             if (dying.timer <= 0) {
-              if (dying.phase === "red") {
-                dying.phase = "grey";
-                dying.timer = 25;
-              } else if (dying.phase === "grey") {
-                dying.phase = "explode";
-                dying.timer = 1;
-              } else if (dying.phase === "explode") {
-                const cx = (dying.entity1.x + dying.entity2.x) / 2,
-                  cy = (dying.entity1.y + dying.entity2.y) / 2;
-                ScreenShake.add(20);
-                for (let j = 0; j < 5; j++) {
-                  const a = -Math.PI / 2 + (Math.random() - 0.5) * 1,
-                    sp = 3 + Math.random() * 4;
-                  this.particles.add({
-                    x: cx,
-                    y: cy,
-                    vx: Math.cos(a) * sp,
-                    vy: Math.sin(a) * sp - 3,
-                    size: 50 + Math.random() * 30,
-                    life: 60,
-                    maxLife: 60,
-                    type: "ko",
-                  });
-                }
-                s.connections = s.connections.filter(
-                  (c) => c.entity1 !== dying.entity1 && c.entity2 !== dying.entity1 && c.entity1 !== dying.entity2 && c.entity2 !== dying.entity2,
-                );
-                const idx1 = this.balls.indexOf(dying.entity1),
-                  idx2 = this.balls.indexOf(dying.entity2);
-                if (idx1 > idx2) {
-                  this.balls.splice(idx1, 1);
-                  this.balls.splice(idx2, 1);
-                } else {
-                  this.balls.splice(idx2, 1);
-                  this.balls.splice(idx1, 1);
-                }
-                setTimeout(() => {
-                  const a1 = Math.random() * Math.PI * 2,
-                    a2 = Math.random() * Math.PI * 2;
-                  this.balls.push(
-                    this.createBall({
-                      x: Math.random() * canvas.width,
-                      y: Math.random() * canvas.height,
-                      vx: Math.cos(a1) * 2,
-                      vy: Math.sin(a1) * 2,
-                      radius: 25 + Math.random() * 15,
-                      type: "ball",
-                      rotationSpeed: (Math.random() - 0.5) * 0.03,
-                      scale: 1,
-                      targetScale: 1,
-                    }),
-                  );
-                  this.balls.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: Math.cos(a2) * 1.5,
-                    vy: Math.sin(a2) * 1.5,
-                    radius: 35,
-                    clickRadius: 50,
-                    personImage: ImageCounter.nextPerson(),
-                    type: "person",
-                    rotation: Math.random() * Math.PI * 2,
-                    rotationSpeed: (Math.random() - 0.5) * 0.02,
-                    scale: 1,
-                    targetScale: 1,
-                  });
-                }, 500);
-                return false;
-              }
+              this.explodeEntities(dying);
+              return false;
             }
             return true;
           });
+
+          // Update spring connections
           s.connections.forEach((conn) => {
             const b1 = conn.entity1,
               b2 = conn.entity2;
             if (!this.balls.includes(b1) || !this.balls.includes(b2)) return;
             const dx = b2.x - b1.x,
-              dy = b2.y - b1.y,
-              dist = Math.sqrt(dx * dx + dy * dy),
-              stretch = dist - conn.restLength,
-              force = stretch * 0.02,
-              fx = (dx / dist) * force,
+              dy = b2.y - b1.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const stretch = dist - conn.restLength;
+            const force = stretch * 0.02;
+            const fx = (dx / dist) * force,
               fy = (dy / dist) * force;
             b1.vx += fx;
             b1.vy += fy;
             b2.vx -= fx;
             b2.vy -= fy;
           });
+
+          // Update all entities
           this.balls.forEach((ball) => {
             const isDying = this.getDeathState(ball);
-            if (!isDying) {
-              ball.scale += (ball.targetScale - ball.scale) * 0.15;
-              ball.rotation += ball.rotationSpeed;
+
+            // Bounce animation (celebration)
+            if (ball.bounceAnim > 0) {
+              ball.bounceAnim -= 0.08;
+              if (ball.bounceAnim < 0) ball.bounceAnim = 0;
             }
+
+            // Shake animation (bad match)
+            if (ball.shakeAnim > 0 && !isDying) {
+              ball.shakeAnim -= 0.05;
+              if (ball.shakeAnim < 0) {
+                ball.shakeAnim = 0;
+                ball.shakeIntensity = 0;
+              }
+            }
+
+            if (!isDying) {
+              ball.currentScale += (ball.targetScale - ball.currentScale) * 0.12;
+              ball.wiggleAmount += (ball.targetWiggle - ball.wiggleAmount) * 0.15;
+              ball.rotation += ball.rotationSpeed;
+              ball.wigglePhase += 0.2;
+            }
+
             const speed = Physics.getSpeed(ball);
             if (speed < 0.3) {
               const a = Math.atan2(ball.vy, ball.vx);
@@ -2609,12 +2856,15 @@
             Physics.capSpeed(ball);
             Physics.handleWallCollision(ball, canvas, 0.8, false);
           });
+
           Physics.handleBallCollisions(this.balls);
         }
 
         draw() {
           const s = this.state;
           super.draw();
+
+          // Draw connections
           s.connections.forEach((conn) => {
             if (!this.balls.includes(conn.entity1) || !this.balls.includes(conn.entity2)) return;
             ctx.beginPath();
@@ -2624,101 +2874,180 @@
             ctx.lineWidth = 3;
             ctx.stroke();
           });
+
+          // Draw celebration rings
+          s.celebrationRings.forEach((ring) => {
+            ctx.beginPath();
+            ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = ring.color.replace(")", `, ${ring.life})`).replace("hsl", "hsla");
+            ctx.lineWidth = 6 * ring.life;
+            ctx.stroke();
+          });
+
+          // Draw drag line
+          if (s.isDragging && s.dragStart && s.dragEnd) {
+            ctx.beginPath();
+            ctx.moveTo(s.dragStart.x, s.dragStart.y);
+            ctx.lineTo(s.dragEnd.x, s.dragEnd.y);
+            ctx.strokeStyle = "rgba(150, 200, 255, 0.5)";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+
+          // Draw entities
           this.balls.forEach((entity) => {
-            const isSel = s.firstEntity === entity,
-              deathState = this.getDeathState(entity);
+            const isSel = s.firstEntity === entity;
+            const deathState = this.getDeathState(entity);
+
             ctx.save();
-            if (deathState) {
-              if (deathState.phase === "red") {
-                const pulse = Math.sin(deathState.timer * 0.3) * 0.3 + 0.7;
-                ctx.filter = `saturate(2) sepia(1) hue-rotate(-50deg) brightness(${pulse})`;
-              } else if (deathState.phase === "grey") {
-                const fadeProgress = 1 - deathState.timer / 25;
-                ctx.filter = `grayscale(1) opacity(${1 - fadeProgress * 0.7})`;
-              }
+
+            // Calculate position offset for shake
+            let offsetX = 0,
+              offsetY = 0;
+            if (entity.shakeAnim > 0) {
+              offsetX = (Math.random() - 0.5) * entity.shakeIntensity;
+              offsetY = (Math.random() - 0.5) * entity.shakeIntensity;
             }
-            const scale = entity.scale || 1;
-            ctx.translate(entity.x, entity.y);
-            ctx.scale(scale, scale);
-            if (deathState && deathState.phase === "grey") {
-              const fadeProgress = 1 - deathState.timer / 25;
-              ctx.scale(1 - fadeProgress * 0.3, 1 - fadeProgress * 0.3);
+
+            // Calculate scale for bounce
+            let bounceScale = 1;
+            if (entity.bounceAnim > 0) {
+              // Squash and stretch: starts big, squashes, then settles
+              const t = entity.bounceAnim;
+              bounceScale = 1 + Math.sin(t * Math.PI * 3) * 0.25 * t;
             }
+
+            const scale = (entity.currentScale || 1) * bounceScale;
+            const wiggle = entity.wiggleAmount * Math.sin(entity.wigglePhase) * 0.04;
+
+            ctx.translate(entity.x + offsetX, entity.y + offsetY);
+            ctx.scale(scale + wiggle, scale - wiggle);
             ctx.translate(-entity.x, -entity.y);
-            if (isSel && !deathState) {
+
+            // Red outline for dying entities
+            if (deathState && deathState.phase === "shake") {
+              const pulse = Math.sin(deathState.timer * 0.8) * 0.5 + 0.5;
+              ctx.shadowColor = `rgba(255, 0, 0, ${0.8 + pulse * 0.2})`;
+              ctx.shadowBlur = 15 + pulse * 10;
+
+              // Draw red outline
+              ctx.beginPath();
+              ctx.arc(entity.x, entity.y, (entity.clickRadius || entity.radius) + 5, 0, Math.PI * 2);
+              ctx.strokeStyle = `rgba(255, 50, 50, ${0.6 + pulse * 0.4})`;
+              ctx.lineWidth = 4;
+              ctx.stroke();
+            }
+
+            // Selection/hover highlight
+            if ((isSel || entity.targetScale > 1) && !deathState) {
               ctx.shadowColor = "rgba(100, 200, 255, 0.8)";
               ctx.shadowBlur = 20;
             }
-            if (entity.type === "person") Renderer.drawPerson(entity.x, entity.y + 10, 55, entity.personImage);
-            else Renderer.drawBall(entity);
+
+            // Celebration glow
+            if (entity.bounceAnim > 0.3) {
+              ctx.shadowColor = "rgba(255, 220, 100, 0.9)";
+              ctx.shadowBlur = 25;
+            }
+
+            if (entity.type === "person") {
+              const height = entity.personHeight || (Config.isMobile ? 65 : 80);
+              Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
+            } else {
+              Renderer.drawBall(entity);
+            }
+
             ctx.restore();
           });
         }
 
-        onPointerMove(x, y) {
-          this.balls.forEach((entity) => {
-            entity.targetScale = 1;
-          });
-          this.state.hoveredEntity = null;
+        findEntityAt(x, y) {
           for (let i = this.balls.length - 1; i >= 0; i--) {
             const entity = this.balls[i];
             if (this.getDeathState(entity)) continue;
-            const clickR = entity.clickRadius || entity.radius,
-              dx = x - entity.x,
+            const clickR = entity.clickRadius || entity.radius;
+            const dx = x - entity.x,
               dy = y - entity.y;
             if (Math.sqrt(dx * dx + dy * dy) < clickR + 10) {
-              this.state.hoveredEntity = entity;
-              entity.targetScale = 1.25;
-              break;
+              return entity;
             }
+          }
+          return null;
+        }
+
+        onPointerMove(x, y) {
+          const s = this.state;
+
+          if (s.isDragging && s.firstEntity) {
+            s.dragEnd = { x, y };
+            s.dragStart = { x: s.firstEntity.x, y: s.firstEntity.y };
+          }
+
+          this.balls.forEach((entity) => {
+            if (s.firstEntity !== entity) {
+              entity.targetScale = 1;
+              entity.targetWiggle = 0;
+            }
+          });
+          s.hoveredEntity = null;
+
+          const entity = this.findEntityAt(x, y);
+          if (entity) {
+            s.hoveredEntity = entity;
+            entity.targetScale = 1.15;
+            entity.targetWiggle = 1;
           }
         }
 
         onPointerDown(x, y) {
           const s = this.state;
-          for (let i = this.balls.length - 1; i >= 0; i--) {
-            const entity = this.balls[i];
-            if (this.getDeathState(entity)) continue;
-            const clickR = entity.clickRadius || entity.radius,
-              dx = x - entity.x,
-              dy = y - entity.y;
-            if (Math.sqrt(dx * dx + dy * dy) < clickR + 10) {
-              if (!s.firstEntity) {
-                s.firstEntity = entity;
-                entity.targetScale = 1.3;
-              } else if (s.firstEntity !== entity) {
-                if (s.firstEntity.type === entity.type) {
-                  s.exploded++;
-                  s.dyingEntities.push({ entity1: s.firstEntity, entity2: entity, phase: "red", timer: 30 });
-                } else {
-                  const existingConn = s.connections.find(
-                    (c) => (c.entity1 === s.firstEntity && c.entity2 === entity) || (c.entity2 === s.firstEntity && c.entity1 === entity),
-                  );
-                  if (!existingConn) {
-                    const dx = entity.x - s.firstEntity.x,
-                      dy = entity.y - s.firstEntity.y,
-                      dist = Math.sqrt(dx * dx + dy * dy);
-                    s.connections.push({ entity1: s.firstEntity, entity2: entity, restLength: Math.min(dist, 150) });
-                    s.score++;
-                    const cx = (s.firstEntity.x + entity.x) / 2,
-                      cy = (s.firstEntity.y + entity.y) / 2;
-                    this.particles.addBurst(cx, cy, 8, {
-                      speed: 3,
-                      speedVariance: 3,
-                      life: 50,
-                      size: 30,
-                      sizeVariance: 20,
-                      gravity: 0.15,
-                      type: "heart",
-                    });
-                  }
-                }
-                s.firstEntity = null;
-              }
-              return;
+          const entity = this.findEntityAt(x, y);
+
+          if (entity) {
+            if (!s.firstEntity) {
+              s.firstEntity = entity;
+              entity.targetScale = 1.2;
+              entity.targetWiggle = 1;
+              s.isDragging = true;
+              s.dragStart = { x: entity.x, y: entity.y };
+              s.dragEnd = { x, y };
+            } else if (s.firstEntity !== entity) {
+              this.connectEntities(s.firstEntity, entity);
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+              s.firstEntity = null;
+              s.isDragging = false;
+              s.dragStart = null;
+              s.dragEnd = null;
+            }
+          } else {
+            if (s.firstEntity) {
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+            }
+            s.firstEntity = null;
+            s.isDragging = false;
+            s.dragStart = null;
+            s.dragEnd = null;
+          }
+        }
+
+        onPointerUp() {
+          const s = this.state;
+          if (s.isDragging && s.dragEnd && s.firstEntity) {
+            const entity = this.findEntityAt(s.dragEnd.x, s.dragEnd.y);
+            if (entity && entity !== s.firstEntity) {
+              this.connectEntities(s.firstEntity, entity);
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+              s.firstEntity = null;
             }
           }
-          s.firstEntity = null;
+          s.isDragging = false;
+          s.dragStart = null;
+          s.dragEnd = null;
         }
       }
 
@@ -2909,7 +3238,7 @@
             ctx.fillStyle = "#4A4";
             ctx.font = "bold 32px Arial";
             ctx.textAlign = "center";
-            ctx.fillText("🌍 One World! 🌍", canvas.width / 2, 160);
+            ctx.fillText("yay", canvas.width / 2, 160);
           }
         }
 
@@ -2960,7 +3289,7 @@
           }
         }
       }
-      // GAME 13: INFLATE (IMPROVED - slower)
+
       class InflateGame extends BaseGame {
         init() {
           super.init();
@@ -3138,7 +3467,6 @@
         }
       }
 
-      // GAME 14: BRUSH (IMPROVED - longer lines, smoother curves)
       class BrushGame extends BaseGame {
         init() {
           super.init();
@@ -3150,7 +3478,7 @@
                 y: Math.random() * canvas.height,
                 vx: (Math.random() - 0.5) * 0.1,
                 vy: (Math.random() - 0.5) * 0.1,
-                radius: 20 + Math.random() * 15,
+                radius: 30 + Math.random() * 15,
                 followingPath: null,
                 pathProgress: 0,
                 pathDirection: 1,
@@ -3294,15 +3622,29 @@
         draw() {
           const self = this;
           this.state.paths.forEach(function (path) {
-            if (path.points.length < 2) return;
+            if (path.points.length < 1) return;
             const age = Date.now() - path.created,
               op = Math.max(0, 1 - age / 12000);
-            self.drawSmoothPath(path.points, op);
+            if (path.points.length === 1) {
+              ctx.beginPath();
+              ctx.arc(path.points[0].x, path.points[0].y, 6, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(100, 180, 255, " + op * 0.6 + ")";
+              ctx.fill();
+            } else {
+              self.drawSmoothPath(path.points, op);
+            }
           });
-          if (this.state.drawing && this.state.currentPath.length > 1) {
+          if (this.state.drawing && this.state.currentPath.length >= 1) {
             ctx.save();
             ctx.globalAlpha = 0.7;
-            this.drawSmoothPath(this.state.currentPath, 1.5);
+            if (this.state.currentPath.length === 1) {
+              ctx.beginPath();
+              ctx.arc(this.state.currentPath[0].x, this.state.currentPath[0].y, 6, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(100, 180, 255, 0.9)";
+              ctx.fill();
+            } else {
+              this.drawSmoothPath(this.state.currentPath, 1.5);
+            }
             ctx.restore();
           }
           this.balls.forEach(function (ball) {
@@ -3321,11 +3663,11 @@
           }
         }
         onPointerUp() {
-          if (this.state.drawing && this.state.currentPath.length > 3) {
+          if (this.state.drawing && this.state.currentPath.length >= 1) {
             const startPt = this.state.currentPath[0],
               endPt = this.state.currentPath[this.state.currentPath.length - 1];
-            const dist = Physics.distance(startPt.x, startPt.y, endPt.x, endPt.y),
-              isLoop = dist < 50;
+            const dist = this.state.currentPath.length > 1 ? Physics.distance(startPt.x, startPt.y, endPt.x, endPt.y) : 0,
+              isLoop = this.state.currentPath.length > 3 && dist < 50;
             this.state.paths.push({ points: this.state.currentPath.slice(), created: Date.now(), isLoop: isLoop });
           }
           this.state.drawing = false;
@@ -3333,7 +3675,6 @@
         }
       }
 
-      // GAME 15: PORTALS
       class PortalsGame extends BaseGame {
         init() {
           super.init();
@@ -3546,52 +3887,106 @@
         }
         onPointerDown(x, y) {
           const s = this.state,
-            inZone = this.isPointInSafeZone(x, y);
+            sz = s.safeZone;
+
           const tooClose = this.balls.some(function (ball) {
             return Physics.distance(x, y, ball.x, ball.y) < ball.radius + 20;
           });
-          if (!inZone) {
-            if (tooClose) return;
-            s.portals = [];
-            s.portals.push({ entrance: { x: x, y: y }, exit: null });
-          } else {
-            const lastP = s.portals[s.portals.length - 1];
-            if (lastP && !lastP.exit) lastP.exit = { x: x, y: y };
-          }
+
+          if (tooClose) return;
+
+          s.portals = [];
+
+          const exitX = sz.x + (Math.random() - 0.5) * sz.radius * 0.8;
+          const exitY = sz.y + (Math.random() - 0.5) * sz.radius * 0.8;
+
+          s.portals.push({
+            entrance: { x: x, y: y },
+            exit: { x: exitX, y: exitY },
+          });
         }
       }
 
-      // GAME 16: WHEELBALL (REDESIGNED - Catch, Aim, Launch)
       class WheelballGame extends BaseGame {
         init() {
           super.init();
           this.state = {
             wheels: [],
             stars: [],
-            gravity: 0.15,
+            splats: [],
+            bumpers: [],
+            gravity: 0.06,
             score: 0,
-            highScore: 0,
             spawnTimer: 0,
-            comboCount: 0,
-            comboTimer: 0,
           };
           this.createWheels();
           this.createStars();
+          this.createBumpers();
+        }
+
+        createBumpers() {
+          const bumperConfigs = [
+            { x: 0.2, y: 0.35, type: 'ball' },
+            { x: 0.8, y: 0.35, type: 'ball' },
+            { x: 0.5, y: 0.25, type: 'ball' },
+            { x: 0.35, y: 0.55, type: 'ball' },
+            { x: 0.65, y: 0.55, type: 'ball' },
+            { x: 0.1, y: 0.25, type: 'ball' },
+            { x: 0.9, y: 0.25, type: 'ball' },
+            { x: 0.15, y: 0.5, type: 'triangle' },
+            { x: 0.85, y: 0.5, type: 'triangle' },
+            { x: 0.3, y: 0.15, type: 'triangle' },
+            { x: 0.7, y: 0.15, type: 'triangle' },
+          ];
+
+          bumperConfigs.forEach((cfg) => {
+            const bumper = {
+              x: canvas.width * cfg.x,
+              y: canvas.height * cfg.y,
+              type: cfg.type,
+              radius: cfg.type === 'triangle' ? 20 : 25,
+              bounceForce: cfg.type === 'triangle' ? 18 : 14,
+              flashTimer: 0,
+              rotation: 0,
+              pulse: Math.random() * Math.PI * 2,
+            };
+            
+            if (cfg.type === 'ball') {
+              bumper.ballImage = ImageCounter.nextBestBall();
+            } else if (cfg.type === 'triangle') {
+              bumper.rotation = cfg.x < 0.5 ? Math.PI / 6 : -Math.PI / 6;
+              bumper.starImage = Math.floor(Math.random() * 3);
+            }
+            
+            this.state.bumpers.push(bumper);
+          });
         }
 
         createWheels() {
-          const configs = [
-            // Bottom flippers - closer together, bigger
-            { x: 0.32, y: 0.82, baseSize: 60, spinDir: 1 },
-            { x: 0.68, y: 0.82, baseSize: 60, spinDir: -1 },
-            // Mid level
-            { x: 0.15, y: 0.55, baseSize: 45, spinDir: 1 },
-            { x: 0.85, y: 0.55, baseSize: 45, spinDir: -1 },
-            { x: 0.5, y: 0.5, baseSize: 50, spinDir: 1 },
-            // Upper catchers
-            { x: 0.3, y: 0.28, baseSize: 40, spinDir: -1 },
-            { x: 0.7, y: 0.28, baseSize: 40, spinDir: 1 },
-          ];
+          // Responsive wheel count based on screen width
+          const screenWidth = canvas.width;
+          const wheelMaxSize = 90 * 1.8; // baseSize * maxSize multiplier
+          const wheelSpacing = wheelMaxSize * 3.1; // Small gap between max-expanded wheels
+          const bottomWheelCount = Math.max(3, Math.floor(screenWidth / wheelSpacing));
+          const bottomY = 0.88;
+          
+          const configs = [];
+          
+          // Bottom row - evenly distributed
+          for (let i = 0; i < bottomWheelCount; i++) {
+            const xPos = (i + 0.5) / bottomWheelCount;
+            configs.push({ x: xPos, y: bottomY, baseSize: 55, spinDir: i % 2 === 0 ? 1 : -1 });
+          }
+          
+          // Middle row
+          const midWheelCount = Math.max(2, Math.floor(screenWidth / (wheelSpacing * 1.5)));
+          for (let i = 0; i < midWheelCount; i++) {
+            const xPos = (i + 0.5) / midWheelCount;
+            // Offset from bottom wheels
+            if (Math.abs(xPos - 0.5) > 0.1 || midWheelCount <= 2) {
+              configs.push({ x: xPos, y: 0.65, baseSize: 90, spinDir: i % 2 === 0 ? -1 : 1 });
+            }
+          }
 
           configs.forEach((cfg) => {
             this.state.wheels.push({
@@ -3602,9 +3997,9 @@
               maxSize: cfg.baseSize * 1.8,
               rotation: Math.random() * Math.PI * 2,
               spinDir: cfg.spinDir,
-              baseSpinSpeed: 0.02 * cfg.spinDir,
+              baseSpinSpeed: 0.2 * cfg.spinDir,
               spinSpeed: 0.02 * cfg.spinDir,
-              ballImage: ImageCounter.nextBall(),
+              ballImage: ImageCounter.nextBestBall(),
               isHeld: false,
               holdTime: 0,
               maxHoldTime: 60,
@@ -3618,14 +4013,16 @@
 
         createStars() {
           const positions = [
-            { x: 0.5, y: 0.12 },
-            { x: 0.2, y: 0.2 },
-            { x: 0.8, y: 0.2 },
-            { x: 0.35, y: 0.38 },
-            { x: 0.65, y: 0.38 },
-            { x: 0.5, y: 0.65 },
-            { x: 0.15, y: 0.72 },
-            { x: 0.85, y: 0.72 },
+            { x: 0.5, y: 0.08 },
+            { x: 0.2, y: 0.12 },
+            { x: 0.8, y: 0.12 },
+            { x: 0.35, y: 0.22 },
+            { x: 0.65, y: 0.22 },
+            { x: 0.15, y: 0.42 },
+            { x: 0.85, y: 0.42 },
+            { x: 0.4, y: 0.38 },
+            { x: 0.6, y: 0.38 },
+            { x: 0.5, y: 0.5 },
           ];
 
           positions.forEach((pos) => {
@@ -3647,20 +4044,32 @@
             this.createBall({
               x: canvas.width * 0.3 + Math.random() * canvas.width * 0.4,
               y: 50,
-              vx: (Math.random() - 0.5) * 3,
-              vy: 1,
+              vx: (Math.random() - 0.5) * 2,
+              vy: 0.5,
               radius: ballRadius,
               captured: false,
               capturedBy: null,
               orbitAngle: 0,
               orbitSpeed: 0.08,
+              useBestBall: true,
+              ballImage: ImageCounter.nextBestBall(),
+              isActive: true,
             }),
           );
         }
 
         launchBall(ball, wheel) {
           const launchAngle = ball.orbitAngle + (Math.PI / 2) * wheel.spinDir;
-          const power = wheel.launchPower || 10;
+          
+          // =============================================
+          // LAUNCH POWER SETTINGS 
+          // =============================================
+          const BASE_LAUNCH_POWER = 10;      // Base launch speed
+          const CHARGE_MULTIPLIER = 0.55;    // How much charge adds to power
+          // =============================================
+          
+          const chargePower = (wheel.launchPower || 0) * CHARGE_MULTIPLIER;
+          const power = BASE_LAUNCH_POWER + chargePower;
 
           ball.vx = Math.cos(launchAngle) * power;
           ball.vy = Math.sin(launchAngle) * power;
@@ -3669,29 +4078,32 @@
 
           wheel.capturedBalls = wheel.capturedBalls.filter((b) => b !== ball);
           wheel.flashTimer = 1;
-          ScreenShake.add(power * 0.5);
+          ScreenShake.add(power * 0.3);
 
-          this.particles.addBurst(ball.x, ball.y, 6, {
-            speed: 3,
-            speedVariance: 2,
-            life: 20,
-            size: 10,
-            sizeVariance: 8,
+          this.particles.addBurst(ball.x, ball.y, 8, {
+            speed: 4,
+            speedVariance: 3,
+            life: 25,
+            size: 15,
+            sizeVariance: 10,
             gravity: 0.05,
             type: "star",
           });
-
-          Physics.capSpeed(ball);
         }
 
         update() {
           super.update();
           const s = this.state;
 
-          if (s.comboTimer > 0) {
-            s.comboTimer--;
-            if (s.comboTimer === 0) s.comboCount = 0;
-          }
+          s.splats = s.splats.filter((sp) => {
+            sp.life--;
+            return sp.life > 0;
+          });
+
+          s.bumpers.forEach((bumper) => {
+            bumper.pulse += 0.05;
+            if (bumper.flashTimer > 0) bumper.flashTimer -= 0.08;
+          });
 
           if (this.balls.length === 0) {
             s.spawnTimer++;
@@ -3705,8 +4117,8 @@
             if (wheel.isHeld) {
               wheel.holdTime = Math.min(wheel.holdTime + 1, wheel.maxHoldTime);
               wheel.size = wheel.baseSize + (wheel.maxSize - wheel.baseSize) * (wheel.holdTime / wheel.maxHoldTime);
-              wheel.spinSpeed = wheel.baseSpinSpeed * (1 + (wheel.holdTime / wheel.maxHoldTime) * 2);
-              wheel.launchPower = 15 + (wheel.holdTime / wheel.maxHoldTime) * 12;
+              wheel.spinSpeed = wheel.baseSpinSpeed * (1 + (wheel.holdTime / wheel.maxHoldTime) * 4);
+              wheel.launchPower = 25 + (wheel.holdTime / wheel.maxHoldTime) * 35;
               wheel.catchRadius = wheel.size * 1.3;
             } else {
               wheel.holdTime = Math.max(0, wheel.holdTime - 2);
@@ -3746,25 +4158,53 @@
             ball.vy += s.gravity;
             ball.x += ball.vx;
             ball.y += ball.vy;
-            ball.vx *= 0.998;
-            ball.vy *= 0.998;
-            Physics.capSpeed(ball);
+            ball.vx *= 0.999;
+            ball.vy *= 0.999;
 
-            const bumperBounce = 0.9;
-            const bumperPush = 3;
+            const bumperBounce = 1.15;
+            const bumperPush = 10;
             if (ball.x - ball.radius < 0) {
               ball.x = ball.radius;
               ball.vx = Math.abs(ball.vx) * bumperBounce + bumperPush;
-              ScreenShake.add(2);
+              ScreenShake.add(4);
             }
             if (ball.x + ball.radius > canvas.width) {
               ball.x = canvas.width - ball.radius;
               ball.vx = -Math.abs(ball.vx) * bumperBounce - bumperPush;
-              ScreenShake.add(2);
+              ScreenShake.add(4);
             }
             if (ball.y - ball.radius < 0) {
               ball.y = ball.radius;
-              ball.vy = Math.abs(ball.vy) * 0.8;
+              ball.vy = Math.abs(ball.vy) * 0.9;
+            }
+
+            // Bumper collisions
+            for (const bumper of s.bumpers) {
+              const dx = ball.x - bumper.x;
+              const dy = ball.y - bumper.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              const minDist = ball.radius + bumper.radius;
+
+              if (dist < minDist && dist > 0) {
+                const nx = dx / dist;
+                const ny = dy / dist;
+                ball.x = bumper.x + nx * (minDist + 2);
+                ball.y = bumper.y + ny * (minDist + 2);
+
+                const force = bumper.bounceForce;
+                ball.vx = nx * force + ball.vx * 0.3;
+                ball.vy = ny * force + ball.vy * 0.3;
+
+                bumper.flashTimer = 1;
+                ScreenShake.add(force * 0.3);
+
+                this.particles.addBurst(
+                  bumper.x + nx * bumper.radius,
+                  bumper.y + ny * bumper.radius,
+                  5,
+                  { speed: 3, speedVariance: 2, life: 20, size: 10, sizeVariance: 6, gravity: 0.05, type: "star" }
+                );
+              }
             }
 
             for (const wheel of s.wheels) {
@@ -3789,15 +4229,14 @@
 
                 const tangentX = -ny * wheel.spinDir;
                 const tangentY = nx * wheel.spinDir;
-                const bounceForce = 6;
-                const spinInfluence = Math.abs(wheel.spinSpeed) * 80;
+                const bounceForce = 12;
+                const spinInfluence = Math.abs(wheel.spinSpeed) * 150;
 
                 ball.vx = nx * bounceForce + tangentX * spinInfluence;
                 ball.vy = ny * bounceForce + tangentY * spinInfluence;
 
                 wheel.flashTimer = 0.5;
-                ScreenShake.add(2);
-                Physics.capSpeed(ball);
+                ScreenShake.add(4);
               }
             }
 
@@ -3807,58 +4246,45 @@
               if (dist < ball.radius + star.radius) {
                 star.collected = true;
                 star.respawnTimer = 180;
-                s.comboCount++;
-                s.comboTimer = 120;
-
-                const points = 50 * s.comboCount;
-                s.score += points;
+                s.score++;
 
                 this.particles.add({
                   x: star.x,
-                  y: star.y - 30,
-                  vx: (Math.random() - 0.5) * 2,
-                  vy: -3,
-                  life: 60,
-                  maxLife: 60,
+                  y: star.y - 20,
+                  vx: 0,
+                  vy: -2,
+                  life: 40,
+                  maxLife: 40,
                   type: "score",
-                  text: "+" + points,
-                  big: s.comboCount > 1,
+                  text: "+1",
                 });
 
-                if (s.comboCount > 1) {
-                  this.particles.add({
-                    x: star.x,
-                    y: star.y - 55,
-                    vx: 0,
-                    vy: -2,
-                    life: 45,
-                    maxLife: 45,
-                    type: "combo",
-                    text: s.comboCount + "x COMBO!",
-                  });
-                }
-
-                this.particles.addBurst(star.x, star.y, 10, {
-                  speed: 4,
-                  speedVariance: 4,
-                  life: 40,
-                  size: 15,
-                  sizeVariance: 15,
-                  gravity: 0.1,
+                this.particles.addBurst(star.x, star.y, 8, {
+                  speed: 3,
+                  speedVariance: 3,
+                  life: 35,
+                  size: 12,
+                  sizeVariance: 10,
+                  gravity: 0.08,
                   type: "star",
                 });
 
-                ScreenShake.add(4 + s.comboCount);
+                ScreenShake.add(4);
               }
             });
 
             if (ball.y > canvas.height + ball.radius) {
+              s.splats.push({
+                x: ball.x,
+                y: canvas.height,
+                radius: ball.radius,
+                life: 120,
+                color: `hsl(${Math.random() * 360}, 60%, 50%)`,
+              });
+              
               this.balls.splice(i, 1);
-              if (s.score > s.highScore) s.highScore = s.score;
               s.score = 0;
-              s.comboCount = 0;
-              s.comboTimer = 0;
-              ScreenShake.add(10);
+              ScreenShake.add(8);
               s.wheels.forEach((w) => {
                 w.capturedBalls = w.capturedBalls.filter((b) => b !== ball);
               });
@@ -3872,20 +4298,62 @@
           ctx.fillStyle = "#FAFAFA";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          // Danger zone at bottom
-          const dangerGrad = ctx.createLinearGradient(0, canvas.height - 80, 0, canvas.height);
-          // dangerGrad.addColorStop(0, "rgba(255, 0, 0, 0)");
-          // dangerGrad.addColorStop(0.5, "rgba(255, 0, 0, 0.05)");
-          // dangerGrad.addColorStop(1, "rgba(255, 0, 0, 0.15)");
-          // ctx.fillStyle = dangerGrad;
-          // ctx.fillRect(0, canvas.height - 80, canvas.width, 80);
+          ctx.fillStyle = "rgba(100, 150, 255, 0.15)";
+          ctx.fillRect(0, 0, 12, canvas.height);
+          ctx.fillRect(canvas.width - 12, 0, 12, canvas.height);
 
-          // Side bumpers
-          ctx.fillStyle = "rgba(100, 150, 255, 0.1)";
-          ctx.fillRect(0, 0, 15, canvas.height);
-          ctx.fillRect(canvas.width - 15, 0, 15, canvas.height);
+          s.splats.forEach((splat) => {
+            const a = splat.life / 120,
+              sq = 1 + (1 - a) * 2;
+            ctx.save();
+            ctx.globalAlpha = a * 0.6;
+            ctx.translate(splat.x, splat.y);
+            ctx.scale(sq, 0.3);
+            ctx.beginPath();
+            ctx.arc(0, 0, splat.radius, 0, Math.PI * 2);
+            ctx.fillStyle = splat.color;
+            ctx.fill();
+            ctx.restore();
+          });
 
-          // Stars
+          // Draw bumpers
+          s.bumpers.forEach((bumper) => {
+            const pulseScale = 1 + Math.sin(bumper.pulse) * 0.05;
+            const flashBoost = bumper.flashTimer * 0.3;
+
+            ctx.save();
+            ctx.translate(bumper.x, bumper.y);
+
+            if (bumper.flashTimer > 0) {
+              ctx.beginPath();
+              ctx.arc(0, 0, bumper.radius * 1.4 * (1 + bumper.flashTimer * 0.2), 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(255, 255, 200, ${bumper.flashTimer * 0.4})`;
+              ctx.fill();
+            }
+
+            if (bumper.type === 'ball') {
+              const size = bumper.radius * 2 * pulseScale;
+              const img = Assets.getBestBallImage(bumper.ballImage);
+              if (Assets.isImageReady(img)) {
+                ctx.drawImage(img, -size / 2, -size / 2, size, size);
+              }
+              ctx.beginPath();
+              ctx.arc(0, 0, bumper.radius * pulseScale, 0, Math.PI * 2);
+              ctx.strokeStyle = `rgba(100, 200, 255, ${0.3 + flashBoost})`;
+              ctx.lineWidth = 2;
+              ctx.stroke();
+            } else if (bumper.type === 'triangle') {
+              const size = bumper.radius * 2.2 * pulseScale;
+              const img = Assets.getStarImage(bumper.starImage);
+              if (Assets.isImageReady(img)) {
+                ctx.rotate(bumper.rotation + bumper.pulse * 0.1);
+                ctx.drawImage(img, -size / 2, -size / 2, size, size);
+              }
+            }
+
+            ctx.restore();
+          });
+
           s.stars.forEach((star) => {
             if (star.collected) return;
             const pulseScale = 1 + Math.sin(star.pulse) * 0.12;
@@ -3910,7 +4378,6 @@
             }
           });
 
-          // Wheels
           s.wheels.forEach((wheel) => {
             const powerRatio = wheel.holdTime / wheel.maxHoldTime;
 
@@ -3959,14 +4426,13 @@
 
             ctx.restore();
 
-            const img = Assets.getBallImage(wheel.ballImage);
+            const img = Assets.getBestBallImage(wheel.ballImage);
             const hubSize = wheel.size * 0.65;
             if (Assets.isImageReady(img)) {
               ctx.drawImage(img, wheel.x - hubSize / 2, wheel.y - hubSize / 2, hubSize, hubSize);
             }
           });
 
-          // Particles
           this.particles.draw((p, alpha) => {
             if (p.type === "star" && p.starIndex !== undefined) {
               const img = Assets.getStarImage(p.starIndex);
@@ -3979,55 +4445,47 @@
               }
               ctx.restore();
             } else if (p.type === "score") {
-              const size = p.big ? 24 : 16;
-              ctx.font = `bold ${size}px monospace`;
-              ctx.textAlign = "center";
-              ctx.fillStyle = p.big ? `rgba(255, 150, 0, ${alpha})` : `rgba(0, 0, 0, ${alpha * 0.7})`;
-              ctx.fillText(p.text, p.x, p.y);
-            } else if (p.type === "combo") {
               ctx.font = "bold 18px monospace";
               ctx.textAlign = "center";
-              ctx.fillStyle = `rgba(255, 100, 50, ${alpha})`;
+              ctx.fillStyle = `rgba(50, 50, 50, ${alpha})`;
               ctx.fillText(p.text, p.x, p.y);
             }
           });
 
-          // Balls
           this.balls.forEach((ball) => {
-            if (ball.captured) {
+            const img = Assets.getBestBallImage(ball.ballImage);
+            if (Assets.isImageReady(img)) {
               ctx.save();
-              ctx.shadowColor = "rgba(100, 255, 100, 0.8)";
-              ctx.shadowBlur = 15;
-              Renderer.drawBall(ball);
+              
+              // Glowing yellow outline for active ball
+              if (ball.isActive) {
+                const glowSize = ball.radius * 2.2;
+                const glow = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.8, ball.radius * 1.8, [
+                  [0, "rgba(255, 220, 50, 0.6)"],
+                  [0.5, "rgba(255, 200, 0, 0.3)"],
+                  [1, "rgba(255, 180, 0, 0)"],
+                ]);
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, ball.radius * 1.8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Yellow stroke
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, ball.radius + 3, 0, Math.PI * 2);
+                ctx.strokeStyle = "rgba(255, 200, 0, 0.8)";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+              }
+              
+              if (ball.captured) {
+                ctx.shadowColor = "rgba(100, 255, 100, 0.8)";
+                ctx.shadowBlur = 15;
+              }
+              ctx.drawImage(img, ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2);
               ctx.restore();
-            } else {
-              Renderer.drawBall(ball);
             }
           });
-
-          // UI
-          // ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-          // ctx.font = "bold 28px monospace";
-          // ctx.textAlign = "right";
-          // ctx.fillText(s.score + "", canvas.width - 20, 40);
-
-          if (s.highScore > 0) {
-            // ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-            // ctx.font = "14px monospace";
-            // ctx.fillText("best " + s.highScore, canvas.width - 20, 60);
-          }
-
-          if (s.comboCount > 1) {
-            // ctx.fillStyle = `rgba(255, 100, 50, ${0.5 + Math.sin(Date.now() * 0.01) * 0.3})`;
-            // ctx.font = "bold 20px monospace";
-            // ctx.textAlign = "left";
-            // ctx.fillText(s.comboCount + "x", 20, 40);
-          }
-
-          // ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-          // ctx.font = "12px monospace";
-          // ctx.textAlign = "center";
-          // ctx.fillText("hold wheel to catch • release to launch", canvas.width / 2, canvas.height - 25);
         }
 
         onPointerDown(x, y) {
@@ -4050,7 +4508,6 @@
         onPointerUp() {
           this.state.wheels.forEach((wheel) => {
             if (wheel.isHeld) {
-              // Launch all captured balls IMMEDIATELY
               wheel.capturedBalls.forEach((ball) => {
                 this.launchBall(ball, wheel);
               });
@@ -4079,11 +4536,11 @@
           15: { name: "Portals", class: PortalsGame },
           16: { name: "Wheelball", class: WheelballGame },
         },
-        currentGameNum: 1,
+        currentGameNum: 12,
         currentGame: null,
         shiftPressed: false,
         init: function () {
-          this.switchGame(1);
+          this.switchGame(12);
         },
         switchGame: function (gameNum) {
           if (gameNum < 1 || gameNum > 16) return;
