@@ -42,6 +42,7 @@
         transition: all 0.2s;
         user-select: none;
         position: relative;
+        
       }
       .nav-item:nth-child(4n) {
         border-right: none;
@@ -52,6 +53,7 @@
       .nav-item.active {
         background: rgba(0, 0, 0, 0.1);
         color: #000;
+        outline: 3px dashed teal;
       }
 
       .nav-item[data-category="game"] {
@@ -4327,7 +4329,7 @@
             if (bumper.flashTimer > 0) {
               ctx.beginPath();
               ctx.arc(0, 0, bumper.radius * 1.4 * (1 + bumper.flashTimer * 0.2), 0, Math.PI * 2);
-              ctx.fillStyle = `rgba(255, 255, 200, ${bumper.flashTimer * 0.4})`;
+              ctx.fillStyle = `rgba(0, 255, 200, ${bumper.flashTimer * 0.4})`;
               ctx.fill();
             }
 
@@ -4459,11 +4461,11 @@
               
               // Glowing yellow outline for active ball
               if (ball.isActive) {
-                const glowSize = ball.radius * 2.2;
-                const glow = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.8, ball.radius * 1.8, [
-                  [0, "rgba(255, 220, 50, 0.6)"],
-                  [0.5, "rgba(255, 200, 0, 0.3)"],
-                  [1, "rgba(255, 180, 0, 0)"],
+                const glowSize = ball.radius * 1.1;
+                const glow = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.8, ball.radius * 1.1, [
+                  [0, "rgba(255, 220, 50, 1)"],
+                  // [0.5, "rgba(255, 200, 0, 0.8)"],
+                  // [1, "rgba(255, 180, 0, 7)"],
                 ]);
                 ctx.fillStyle = glow;
                 ctx.beginPath();
@@ -4472,9 +4474,9 @@
                 
                 // Yellow stroke
                 ctx.beginPath();
-                ctx.arc(ball.x, ball.y, ball.radius + 3, 0, Math.PI * 2);
+                ctx.arc(ball.x, ball.y, ball.radius + .1, 0, Math.PI * 2);
                 ctx.strokeStyle = "rgba(255, 200, 0, 0.8)";
-                ctx.lineWidth = 3;
+                ctx.lineWidth = 1;
                 ctx.stroke();
               }
               
