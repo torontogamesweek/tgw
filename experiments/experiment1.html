@@ -1074,14 +1074,25 @@
             } else {
               const img = Assets.getBestBallImage(ball.ballImage);
               if (Assets.isImageReady(img)) {
-                ctx.save();
-                ctx.globalAlpha = op;
-                ctx.translate(ball.x, ball.y);
-                ctx.rotate(ball.rotation);
-                ctx.scale(ball.squashX, ball.squashY);
-                ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
-                ctx.restore();
-              }
+  ctx.save();
+  ctx.globalAlpha = op;
+  ctx.translate(ball.x, ball.y);
+  ctx.rotate(ball.rotation);
+  ctx.scale(ball.squashX, ball.squashY);
+  ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
+  ctx.restore();
+} else {
+  // Fallback circle
+  ctx.save();
+  ctx.globalAlpha = op;
+  ctx.translate(ball.x, ball.y);
+  ctx.scale(ball.squashX, ball.squashY);
+  ctx.beginPath();
+  ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = '#ff6b6b';
+  ctx.fill();
+  ctx.restore();
+}
             }
           });
         }
