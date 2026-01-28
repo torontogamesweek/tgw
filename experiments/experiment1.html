@@ -152,6 +152,11 @@
         Connect<span class="vote-star" data-vote="Connect">★</span><span class="tooltip">Link people to balls</span>
       </div>
 
+
+      <div class="nav-item" data-game="17" data-category="toy">
+  Trace<span class="vote-star" data-vote="Trace">★</span><span class="tooltip">Hold to gather, release to scatter</span>
+</div>
+
       <div class="nav-item" data-game="3" data-category="toy">
         Pop<span class="vote-star" data-vote="Pop">★</span><span class="tooltip">Pop them all</span>
       </div>
@@ -2231,6 +2236,206 @@
         }
       }
 
+
+
+      
+class ChargeGame extends BaseGame {
+  init() {
+    super.init();
+    this.state = {
+      forceStrength: 0.15,
+      maxForceDistance: 250,
+    };
+
+    const baseRadius = Config.isMobile ? 25 : 35;
+    for (let i = 0; i < 20; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1 + Math.random() * 2;
+      this.balls.push(
+        this.createBall({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: baseRadius + Math.random() * 15,
+          charge: Math.random() > 0.5 ? 1 : -1, // 1 = positive, -1 = negative
+          pulsePhase: Math.random() * Math.PI * 2,
+        })
+      );
+    }
+  }
+
+  update() {
+    super.update();
+    const s = this.state;
+
+    // Apply charge forces between all balls
+    for (let i = 0; i < this.balls.length; i++) {
+      for (let j = i + 1; j < this.balls.length; j++) {
+        const b1 = this.balls[i];
+        const b2 = this.balls[j];
+
+        const dx = b2.x - b1.x;
+        const dy = b2.y - b1.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < s.maxForceDistance && dist > 0) {
+          // Force falls off with distance squared (like real electromagnetism)
+          const forceMagnitude = s.forceStrength * (1 - dist / s.maxForceDistance);
+          
+          // Same charge = repel (positive force), opposite = attract (negative force)
+          const chargeProduct = b1.charge * b2.charge;
+          const force = forceMagnitude * chargeProduct;
+
+          const fx = (dx / dist) * force;
+          const fy = (dy / dist) * force;
+
+          // Apply forces (opposite directions)
+          b1.vx -= fx;
+          b1.vy -= fy;
+          b2.vx += fx;
+          b2.vy += fy;
+        }
+      }
+    }
+
+    // Update balls
+    this.balls.forEach((ball) => {
+      ball.pulsePhase += 0.08;
+
+      ball.vx *= 0.98;
+      ball.vy *= 0.98;
+
+      // Minimum speed to keep things interesting
+      const speed = Physics.getSpeed(ball);
+      if (speed < 0.5) {
+        const angle = Math.random() * Math.PI * 2;
+        ball.vx += Math.cos(angle) * 0.3;
+        ball.vy += Math.sin(angle) * 0.3;
+      }
+
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      Physics.capSpeed(ball);
+
+      ball.squashX = ball.squashX || 1;
+      ball.squashY = ball.squashY || 1;
+      ball.squashX += (1 - ball.squashX) * 0.15;
+      ball.squashY += (1 - ball.squashY) * 0.15;
+
+      // Wall collisions
+      if (ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+        ball.vx *= -0.8;
+        ball.squashX = 0.85;
+        ball.squashY = 1.15;
+      }
+      if (ball.x + ball.radius > canvas.width) {
+        ball.x = canvas.width - ball.radius;
+        ball.vx *= -0.8;
+        ball.squashX = 0.85;
+        ball.squashY = 1.15;
+      }
+      if (ball.y - ball.radius < 0) {
+        ball.y = ball.radius;
+        ball.vy *= -0.8;
+        ball.squashX = 1.15;
+        ball.squashY = 0.85;
+      }
+      if (ball.y + ball.radius > canvas.height) {
+        ball.y = canvas.height - ball.radius;
+        ball.vy *= -0.8;
+        ball.squashX = 1.15;
+        ball.squashY = 0.85;
+      }
+    });
+
+    Physics.handleBallCollisions(this.balls);
+  }
+
+  draw() {
+    super.draw();
+
+    // Draw connection lines between nearby opposite charges
+    ctx.lineWidth = 1;
+    for (let i = 0; i < this.balls.length; i++) {
+      for (let j = i + 1; j < this.balls.length; j++) {
+        const b1 = this.balls[i];
+        const b2 = this.balls[j];
+
+        if (b1.charge !== b2.charge) {
+          const dist = Physics.distance(b1.x, b1.y, b2.x, b2.y);
+          if (dist < 150) {
+            const alpha = (1 - dist / 150) * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(b1.x, b1.y);
+            ctx.lineTo(b2.x, b2.y);
+            ctx.strokeStyle = `rgba(150, 150, 150, ${alpha})`;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // Draw balls with charge indicators
+    this.balls.forEach((ball) => {
+      const isPositive = ball.charge === 1;
+      const color = isPositive ? "rgba(255, 100, 100," : "rgba(100, 150, 255,";
+      const pulseSize = 1 + Math.sin(ball.pulsePhase) * 0.1;
+
+      // Charge aura
+      const auraRadius = ball.radius * 1.4 * pulseSize;
+      const glow = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.5, auraRadius, [
+        [0, color + " 0.25)"],
+        [1, color + " 0)"],
+      ]);
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, auraRadius, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Ball
+      Renderer.drawBallWithSquash(ball, 1, 0, ball.squashX, ball.squashY);
+
+      // Charge symbol
+      ctx.fillStyle = isPositive ? "rgba(255, 80, 80, 0.9)" : "rgba(80, 130, 255, 0.9)";
+      ctx.font = `bold ${ball.radius * 0.8}px Arial`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(isPositive ? "+" : "−", ball.x, ball.y);
+    });
+  }
+
+  onPointerDown(x, y) {
+    // Flip charge of clicked ball
+    for (let i = this.balls.length - 1; i >= 0; i--) {
+      const ball = this.balls[i];
+      if (Physics.contains(ball, x, y)) {
+        ball.charge *= -1;
+        ball.pulsePhase = 0;
+        
+        // Visual feedback
+        ball.squashX = 1.3;
+        ball.squashY = 0.7;
+        ScreenShake.add(3);
+        
+        this.particles.addBurst(ball.x, ball.y, 8, {
+          speed: 3,
+          speedVariance: 2,
+          life: 25,
+          size: 10,
+          sizeVariance: 8,
+          gravity: 0.05,
+          type: "star",
+        });
+        
+        break;
+      }
+    }
+  }
+}
+      
+
       class OrbitalGame extends BaseGame {
         init() {
           super.init();
@@ -3136,6 +3341,224 @@
           s.dragEnd = null;
         }
       }
+
+
+
+      
+     class TraceGame extends BaseGame {
+  init() {
+    super.init();
+    this.state = {
+      trails: [],
+      trailLifetime: 90,
+      minSpeedForTrail: 1,
+      // Define two team colors
+      teamColors: [
+        { main: [255, 120, 100], glow: [255, 150, 130], inner: [255, 220, 210] }, // Red/orange team
+        { main: [100, 180, 255], glow: [150, 200, 255], inner: [220, 240, 255] }, // Blue team
+      ],
+    };
+
+    const baseRadius = Config.isMobile ? 25 : 35;
+    for (let i = 0; i < 15; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 3 + Math.random() * 40;
+      this.balls.push(
+        this.createBall({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: baseRadius + Math.random() * 15,
+          lastTrailX: null,
+          lastTrailY: null,
+          team: i % 2, // Alternate between team 0 and team 1
+        }),
+      );
+    }
+  }
+
+  update() {
+  super.update();
+  const s = this.state;
+
+  // Age and remove old trails
+  s.trails = s.trails.filter((trail) => {
+    trail.age++;
+    return trail.age < s.trailLifetime;
+  });
+
+  // Update balls
+  this.balls.forEach((ball) => {
+    // No gravity, no friction - they move forever
+
+    const speed = Physics.getSpeed(ball);
+
+    // Leave trail if moving fast enough
+    if (speed > s.minSpeedForTrail && ball.lastTrailX !== null) {
+      const dist = Physics.distance(ball.x, ball.y, ball.lastTrailX, ball.lastTrailY);
+      if (dist > 8) {
+        s.trails.push({
+          x1: ball.lastTrailX,
+          y1: ball.lastTrailY,
+          x2: ball.x,
+          y2: ball.y,
+          age: 0,
+          ballImage: ball.ballImage,
+          thickness: Math.min(ball.radius * 0.6, 15 + speed * 0.5),
+          team: ball.team,
+        });
+        ball.lastTrailX = ball.x;
+        ball.lastTrailY = ball.y;
+      }
+    } else {
+      ball.lastTrailX = ball.x;
+      ball.lastTrailY = ball.y;
+    }
+
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    Physics.capSpeed(ball);
+
+    // Wall collisions
+    if (ball.x - ball.radius < 0) {
+      ball.x = ball.radius;
+      ball.vx *= -0.9;
+    }
+    if (ball.x + ball.radius > canvas.width) {
+      ball.x = canvas.width - ball.radius;
+      ball.vx *= -0.9;
+    }
+    if (ball.y - ball.radius < 0) {
+      ball.y = ball.radius;
+      ball.vy *= -0.9;
+    }
+    if (ball.y + ball.radius > canvas.height) {
+      ball.y = canvas.height - ball.radius;
+      ball.vy *= -0.9;
+    }
+
+    // Collision with opposite team's trails only
+    s.trails.forEach((trail) => {
+      if (trail.age < 10) return;
+      if (trail.team === ball.team) return;
+
+      const result = Physics.lineCircleCollision(trail.x1, trail.y1, trail.x2, trail.y2, ball.x, ball.y, ball.radius + trail.thickness * 0.3);
+
+      if (result.collides) {
+        const trailDx = trail.x2 - trail.x1;
+        const trailDy = trail.y2 - trail.y1;
+        const trailLen = Math.sqrt(trailDx * trailDx + trailDy * trailDy);
+        const nx = -trailDy / trailLen;
+        const ny = trailDx / trailLen;
+
+        const dot = ball.vx * nx + ball.vy * ny;
+        ball.vx -= 2 * dot * nx * 0.8;
+        ball.vy -= 2 * dot * ny * 0.8;
+
+        ball.x = result.newX;
+        ball.y = result.newY;
+
+        const speed = Physics.getSpeed(ball);
+        if (speed < 3) {
+          ball.vx *= 1.5;
+          ball.vy *= 1.5;
+        }
+
+        ScreenShake.add(2);
+      }
+    });
+  });
+
+  Physics.handleBallCollisions(this.balls);
+}
+
+  draw() {
+    const s = this.state;
+
+    // Draw trails with team colors
+    s.trails.forEach((trail) => {
+      const lifeRatio = 1 - trail.age / s.trailLifetime;
+      const alpha = lifeRatio * 0.7;
+      const thickness = trail.thickness * lifeRatio;
+      const colors = s.teamColors[trail.team];
+
+      // Glow effect
+      ctx.beginPath();
+      ctx.moveTo(trail.x1, trail.y1);
+      ctx.lineTo(trail.x2, trail.y2);
+      ctx.strokeStyle = `rgba(${colors.glow[0]}, ${colors.glow[1]}, ${colors.glow[2]}, ${alpha * 0.3})`;
+      ctx.lineWidth = thickness + 8;
+      ctx.lineCap = "round";
+      ctx.stroke();
+
+      // Main trail
+      ctx.beginPath();
+      ctx.moveTo(trail.x1, trail.y1);
+      ctx.lineTo(trail.x2, trail.y2);
+      ctx.strokeStyle = `rgba(${colors.main[0]}, ${colors.main[1]}, ${colors.main[2]}, ${alpha})`;
+      ctx.lineWidth = thickness;
+      ctx.lineCap = "round";
+      ctx.stroke();
+
+      // Inner bright line
+      ctx.beginPath();
+      ctx.moveTo(trail.x1, trail.y1);
+      ctx.lineTo(trail.x2, trail.y2);
+      ctx.strokeStyle = `rgba(${colors.inner[0]}, ${colors.inner[1]}, ${colors.inner[2]}, ${alpha * 0.8})`;
+      ctx.lineWidth = thickness * 0.4;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    });
+
+    // Draw balls with team-colored glow
+    this.balls.forEach((ball) => {
+      const speed = Physics.getSpeed(ball);
+      const colors = s.teamColors[ball.team];
+
+      if (speed > s.minSpeedForTrail) {
+        const glowIntensity = Math.min((speed - s.minSpeedForTrail) / 10, 0.5);
+        const glow = Renderer.createRadialGradient(ball.x, ball.y, ball.radius * 0.5, ball.radius * 1.5, [
+          [0, `rgba(${colors.glow[0]}, ${colors.glow[1]}, ${colors.glow[2]}, ${glowIntensity})`],
+          [1, `rgba(${colors.glow[0]}, ${colors.glow[1]}, ${colors.glow[2]}, 0)`],
+        ]);
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius * 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+      }
+
+      Renderer.drawBall(ball, 1, ball.rotation);
+    });
+
+    super.draw();
+
+        }
+
+        onPointerDown(x, y) {
+          // Fling the nearest ball
+          let nearest = null;
+          let nearestDist = Infinity;
+
+          this.balls.forEach((ball) => {
+            const dist = Physics.distance(x, y, ball.x, ball.y);
+            if (dist < nearestDist) {
+              nearestDist = dist;
+              nearest = ball;
+            }
+          });
+
+          if (nearest && nearestDist < 150) {
+            const angle = Math.atan2(nearest.y - y, nearest.x - x);
+            const force = Math.min(150 - nearestDist, 100) * 0.15;
+            nearest.vx += Math.cos(angle) * force;
+            nearest.vy += Math.sin(angle) * force;
+            Physics.capSpeed(nearest);
+            ScreenShake.add(force * 0.3);
+          }
+        }
+      }
+
 
       class MergeSplitGame extends BaseGame {
         init() {
@@ -4764,6 +5187,7 @@ class WheelballGame extends BaseGame {
           14: { name: "Brush", class: BrushGame },
           15: { name: "Portals", class: PortalsGame },
           16: { name: "Wheelball", class: WheelballGame },
+          17: { name: "Trace", class: TraceGame }
         },
         currentGameNum: 12,
         currentGame: null,
@@ -4772,7 +5196,7 @@ class WheelballGame extends BaseGame {
           this.switchGame(12);
         },
         switchGame: function (gameNum) {
-          if (gameNum < 1 || gameNum > 16) return;
+          if (gameNum < 1 || gameNum > 17) return;
           this.currentGameNum = gameNum;
           ScreenShake.reset();
           document.querySelectorAll(".nav-item").forEach(function (item) {
