@@ -4024,7 +4024,9 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
     this.state.currentPath = [];
   }
 }
-      class PortalsGame extends BaseGame {
+
+
+class PortalsGame extends BaseGame {
         init() {
           super.init();
           const safeZoneRadius = Config.isMobile ? 100 : 150;
@@ -4041,6 +4043,7 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
             },
             spawnTimer: 0,
             spawnInterval: 300,
+            entryFlashes: [], // Track flash effects
           };
           for (let i = 0; i < 6; i++) this.spawnBall();
         }
@@ -4058,6 +4061,7 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
               portalCooldown: 0,
               grayscale: 0,
               scale: 1,
+              wasInZone: false,
             }),
           );
         }
@@ -4080,7 +4084,7 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
             const padding = sz.radius + 50;
             sz.x = padding + Math.random() * (canvas.width - padding * 2);
             sz.y = padding + Math.random() * (canvas.height - padding * 2);
-            ScreenShake.add(8);
+            ScreenShake.add(4);
             sz.jumpInterval = Math.max(sz.minJumpInterval, sz.jumpInterval * sz.speedUpRate);
           }
           s.spawnTimer++;
@@ -4088,9 +4092,60 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
             this.spawnBall();
             s.spawnTimer = 0;
           }
+
+          // Update entry flashes
+          for (let i = s.entryFlashes.length - 1; i >= 0; i--) {
+            const flash = s.entryFlashes[i];
+            if (flash.delay && flash.delay > 0) {
+              flash.delay -= 0.05;
+            } else {
+              flash.life -= 0.05;
+              if (flash.isSpark) {
+                flash.x += flash.vx;
+                flash.y += flash.vy;
+                flash.vx *= 0.92;
+                flash.vy *= 0.92;
+              } else {
+                flash.radius += flash.speed || 1.5;
+              }
+            }
+            if (flash.life <= 0) {
+              s.entryFlashes.splice(i, 1);
+            }
+          }
+
           for (let i = this.balls.length - 1; i >= 0; i--) {
             const ball = this.balls[i],
               inZone = this.isInSafeZone(ball);
+
+            // Detect zone entry - celebration!
+            if (inZone && !ball.wasInZone) {
+              // Multiple expanding rings
+              for (let r = 0; r < 3; r++) {
+                s.entryFlashes.push({
+                  x: ball.x,
+                  y: ball.y,
+                  radius: ball.radius * 0.8,
+                  life: 1,
+                  delay: r * 0.15,
+                  speed: 1.5 + r * 0.5,
+                });
+              }
+              // Spark particles shooting out
+              for (let p = 0; p < 6; p++) {
+                const angle = (Math.PI * 2 / 6) * p;
+                s.entryFlashes.push({
+                  x: ball.x,
+                  y: ball.y,
+                  vx: Math.cos(angle) * 3,
+                  vy: Math.sin(angle) * 3,
+                  life: 1,
+                  isSpark: true,
+                });
+              }
+            }
+            ball.wasInZone = inZone;
+
             ball.vx *= 0.99;
             ball.vy *= 0.99;
             const speed = Physics.getSpeed(ball);
@@ -4139,7 +4194,7 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
                 ball.x = portal.exit.x;
                 ball.y = portal.exit.y;
                 ball.portalCooldown = 60;
-                ScreenShake.add(3);
+                ScreenShake.add(1);
               }
             });
           }
@@ -4154,29 +4209,29 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
             timeUntilJump = sz.jumpInterval - sz.jumpTimer,
             isWarning = timeUntilJump < warningTime,
             warningIntensity = isWarning ? 1 - timeUntilJump / warningTime : 0;
-          const grad = ctx.createRadialGradient(sz.x, sz.y, 0, sz.x, sz.y, sz.radius);
-          if (isWarning) {
-            const flash = Math.sin(time * 10 * (1 + warningIntensity)) * 0.5 + 0.5,
-              r = 255,
-              g = Math.floor(215 - warningIntensity * 150),
-              b = Math.floor(warningIntensity * 100 * flash);
-            grad.addColorStop(0, "rgba(" + r + ", " + g + ", " + b + ", " + (0.3 + warningIntensity * 0.2) + ")");
-            grad.addColorStop(0.7, "rgba(" + r + ", " + g + ", " + b + ", 0.15)");
-            grad.addColorStop(1, "rgba(" + r + ", " + g + ", " + b + ", 0.05)");
-          } else {
-            grad.addColorStop(0, "rgba(255, 215, 0, 0.3)");
-            grad.addColorStop(0.7, "rgba(255, 215, 0, 0.15)");
-            grad.addColorStop(1, "rgba(255, 215, 0, 0.05)");
+          
+          // Simple rings instead of gradient
+          const baseColor = isWarning ? [255, Math.floor(180 - warningIntensity * 80), 50] : [255, 215, 0];
+          for (let i = 3; i >= 0; i--) {
+            const ringRadius = sz.radius * (0.4 + i * 0.2);
+            const alpha = (0.15 - i * 0.03) * (isWarning ? 1 + warningIntensity * 0.5 : 1);
+            ctx.beginPath();
+            ctx.arc(sz.x, sz.y, ringRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(" + baseColor[0] + ", " + baseColor[1] + ", " + baseColor[2] + ", " + alpha + ")";
+            ctx.lineWidth = 2;
+            ctx.stroke();
           }
+          
+          // Outer ring
           ctx.beginPath();
           ctx.arc(sz.x, sz.y, sz.radius, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
           ctx.strokeStyle = isWarning
             ? "rgba(255, " + (150 - warningIntensity * 100) + ", 0, " + (0.6 + warningIntensity * 0.4) + ")"
             : "rgba(255, 200, 0, 0.6)";
-          ctx.lineWidth = isWarning ? 4 + warningIntensity * 4 : 4;
+          ctx.lineWidth = isWarning ? 3 + warningIntensity * 3 : 3;
           ctx.stroke();
+          
+          // Inner pulse ring
           const pulse = 1 + Math.sin(time * 2) * 0.05;
           ctx.beginPath();
           ctx.arc(sz.x, sz.y, sz.radius * 0.8 * pulse, 0, Math.PI * 2);
@@ -4185,29 +4240,61 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
             : "rgba(255, 220, 100, 0.2)";
           ctx.lineWidth = 2;
           ctx.stroke();
+
+          // Draw entry flashes (rings and sparks)
+          s.entryFlashes.forEach(function (flash) {
+            if (flash.delay && flash.delay > 0) return;
+            
+            if (flash.isSpark) {
+              // Small dot
+              ctx.beginPath();
+              ctx.arc(flash.x, flash.y, 3, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(255, 220, 100, " + flash.life + ")";
+              ctx.fill();
+            } else {
+              // Expanding ring
+              ctx.beginPath();
+              ctx.arc(flash.x, flash.y, flash.radius, 0, Math.PI * 2);
+              ctx.strokeStyle = "rgba(255, 220, 100, " + (flash.life * 0.6) + ")";
+              ctx.lineWidth = 2;
+              ctx.stroke();
+            }
+          });
+
           s.portals.forEach(function (portal) {
             const ent = portal.entrance,
               portalPulse = 1 + Math.sin(time) * 0.1,
-              size = 70 * portalPulse;
-            const entranceGrad = Renderer.createRadialGradient(ent.x, ent.y, 0, size, [
-              [0, "rgba(255, 150, 100, 0.4)"],
-              [1, "rgba(255, 150, 100, 0)"],
-            ]);
+              size = 50 * portalPulse;
+            
+            // Entrance - simple rings
             ctx.beginPath();
             ctx.arc(ent.x, ent.y, size, 0, Math.PI * 2);
-            ctx.fillStyle = entranceGrad;
-            ctx.fill();
+            ctx.strokeStyle = "rgba(255, 150, 100, 0.5)";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(ent.x, ent.y, size * 0.6, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(255, 150, 100, 0.3)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
             Renderer.drawImage(Assets.stars[1] || Assets.stars[0], ent.x - size / 2, ent.y - size / 2, size, size, 1, time * 0.5);
+            
             if (portal.exit) {
-              const exit = portal.exit,
-                exitGrad = Renderer.createRadialGradient(exit.x, exit.y, 0, size, [
-                  [0, "rgba(255, 215, 0, 0.4)"],
-                  [1, "rgba(255, 215, 0, 0)"],
-                ]);
+              const exit = portal.exit;
+              
+              // Exit - simple rings
               ctx.beginPath();
               ctx.arc(exit.x, exit.y, size, 0, Math.PI * 2);
-              ctx.fillStyle = exitGrad;
-              ctx.fill();
+              ctx.strokeStyle = "rgba(255, 215, 0, 0.5)";
+              ctx.lineWidth = 3;
+              ctx.stroke();
+              ctx.beginPath();
+              ctx.arc(exit.x, exit.y, size * 0.6, 0, Math.PI * 2);
+              ctx.strokeStyle = "rgba(255, 215, 0, 0.3)";
+              ctx.lineWidth = 2;
+              ctx.stroke();
+              
               Renderer.drawImage(Assets.stars[0], exit.x - size / 2, exit.y - size / 2, size, size, 1, -time * 0.5);
               ctx.beginPath();
               ctx.moveTo(ent.x, ent.y);
@@ -4221,13 +4308,35 @@ this.state.currentColor = availableColors[Math.floor(Math.random() * availableCo
           });
           this.balls.forEach(function (ball) {
             const inZone = self.isInSafeZone(ball);
+
+            // Subtle urgency for dying balls
+            const dying = ball.scale < 0.5 || ball.grayscale > 0.5;
+            const urgency = dying ? Math.max(0, 1 - ball.scale) : 0;
+
             ctx.save();
-            if (ball.grayscale > 0) ctx.filter = "grayscale(" + ball.grayscale * 100 + "%) brightness(" + (1 - ball.grayscale * 0.3) + ")";
+
+            // Gentle wobble for dying balls
+            let wobbleX = 0, wobbleY = 0;
+            if (urgency > 0.4) {
+              const wobbleAmt = urgency * 1.5;
+              wobbleX = Math.sin(time * 20) * wobbleAmt;
+              wobbleY = Math.cos(time * 25) * wobbleAmt;
+            }
+
+            // Build filter string
+            let filterStr = "";
+            if (ball.grayscale > 0) {
+              filterStr = "grayscale(" + ball.grayscale * 100 + "%) brightness(" + (1 - ball.grayscale * 0.3) + ")";
+            }
+            if (filterStr) ctx.filter = filterStr;
+
             ctx.globalAlpha = Math.max(0.1, ball.scale);
-            ctx.translate(ball.x, ball.y);
+            ctx.translate(ball.x + wobbleX, ball.y + wobbleY);
             ctx.scale(ball.scale, ball.scale);
-            ctx.translate(-ball.x, -ball.y);
+            ctx.translate(-(ball.x + wobbleX), -(ball.y + wobbleY));
+
             Renderer.drawBall(ball, inZone ? 1.0 : 0.7);
+
             ctx.filter = "none";
             ctx.globalAlpha = 1;
             ctx.restore();
