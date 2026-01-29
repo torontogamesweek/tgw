@@ -4989,11 +4989,11 @@ class WheelballGame extends BaseGame {
           16: { name: "Wheelball", class: WheelballGame },
           17: { name: "Trace", class: TraceGame }
         },
-        currentGameNum: 12,
+        currentGameNum: 14,
         currentGame: null,
         shiftPressed: false,
         init: function () {
-          this.switchGame(12);
+          this.switchGame(14);
         },
         switchGame: function (gameNum) {
           if (gameNum < 1 || gameNum > 17) return;
