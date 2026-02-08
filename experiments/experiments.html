@@ -1,27 +1,42 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Toronto Games Week - Interactive Background Tests</title>
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
     <link href="/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
 
     <!-- Meta Tags -->
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
     <meta name="description" content="Celebrating games in Toronto, Canada" />
 
-    <!--a Open Graph Tags -->
+    <!-- Open Graph Tags -->
     <meta property="og:title" content="Toronto Games Week" />
     <meta property="og:description" content="Celebrating games in Toronto, Canada" />
-    <meta property="og:image" content="https://torontogamesweek.com/experiments/icon.png" />
+
+    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
 
     <!-- Twitter Tags -->
     <meta name="twitter:title" content="Toronto Games Week" />
     <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-    <meta name="twitter:image" content="images/TGWSocialSmall.png" id="indexImage" />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Image Specifications -->
+    <meta
+      property="og:image:alt"
+      content="Poster for TGW - an illustration of a magical city with many tiny elements related to Toronto like a racoon, the TTC, and the beach" />
+
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 
     <style>
       * {
@@ -29,194 +44,220 @@
         padding: 0;
         box-sizing: border-box;
       }
+
       body {
         overflow: hidden;
         overflow-y: auto;
-        background: #f0f0f0;
+        background: #b8d8f0;
         touch-action: none;
         font-family: "Courier New", Courier, monospace, sans-serif;
       }
+
       main {
         position: relative;
         z-index: 1;
-        margin-top: 90vh;
+        margin-top: 100vh;
+        transition: none;
       }
 
       @media (max-width: 767px) {
         main {
-          margin-top: 50vh; /* Less on mobile since nav bar takes space */
+          margin-top: 50vh;
         }
       }
 
-      .logo-background {
-        position: fixed;
-        top: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: -2; /* Behind canvas */
-        pointer-events: none;
-      }
-
-      canvas {
-        display: block;
-        background: #fff;
-      }
-
-      canvas#canvas {
+      .poster-container {
         position: fixed;
         top: 0;
         left: 0;
+        width: 100vw;
+        height: auto;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 4s ease-out;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .poster-container.fade-out {
+        opacity: 0;
+      }
+
+      .poster-container img {
+        display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
+      }
+
+      canvas#canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
         z-index: 1;
         background: transparent;
       }
 
-      #nav {
+      /* Easter egg objects */
+      .easter-egg {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.8);
-        z-index: 100;
-      }
-
-      .vote-hint {
-        width: 100%;
-        font-size: 1.5rem;
-        padding: 0.1rem;
-        text-align: center;
-        background-color: rgb(248, 255, 192);
-      }
-
-      .nav-item {
-        padding: 0px 8px;
-        text-align: center;
+        width: 15px;
+        height: 15px;
         cursor: pointer;
-        font-size: 1rem;
-        font-weight: 600;
-        transition: all 0.2s;
-        user-select: none;
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-
-      .nav-item:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      .nav-item.active {
-        background: rgba(0, 0, 0, 0.1);
-        color: #000;
-        outline: 3px dashed teal;
-      }
-
-      .nav-item[data-category="game"] {
-        background: rgba(255, 245, 237, 0.8);
-      }
-      .nav-item[data-category="game"]:hover {
-        background: rgba(255, 245, 237, 0.9);
-      }
-      .nav-item[data-category="game"].active {
-        background: rgba(255, 245, 237, 1);
-      }
-
-      .nav-item[data-category="toy"] {
-        background: rgba(230, 255, 236, 0.8);
-      }
-
-      .nav-item[data-category="world"] {
-        background: rgba(228, 243, 255, 0.8);
-      }
-      .nav-item[data-category="world"]:hover {
-        background: rgba(225, 240, 255, 0.9);
-      }
-      .nav-item[data-category="world"].active {
-        background: rgba(210, 230, 255, 1);
-      }
-
-      .nav-item .tooltip {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.85);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: normal;
-        white-space: nowrap;
+        z-index: 50;
+        transition:
+          transform 0.2s,
+          filter 0.2s,
+          opacity 0.3s;
         opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s;
-        z-index: 200;
-        margin-top: 5px;
-      }
-      .nav-item .tooltip::before {
-        content: "";
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 6px solid transparent;
-        border-bottom-color: rgba(0, 0, 0, 0.85);
-      }
-      .nav-item:hover .tooltip {
-        opacity: 1;
+        animation: fadeInEasterEgg 1s ease-out 3s forwards;
+        z-index: 2000;
       }
 
-      .vote-star {
-        cursor: pointer;
-        color: #ccc;
-        margin-left: 0.8rem;
-        margin-bottom: 3px;
-        transition: color 0.2s;
-        font-size: 2rem;
+      @keyframes fadeInEasterEgg {
+        to {
+          opacity: 0.7;
+        }
       }
-      .vote-star:hover {
-        color: gold;
+
+      .easter-egg:hover {
+        transform: scale(1.3);
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9));
+        opacity: 1 !important;
       }
-      .vote-star.voted {
-        color: gold;
-        pointer-events: none;
+
+      .easter-egg.active {
+        opacity: 1 !important;
+        filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1));
+      }
+
+      .easter-egg.top-left {
+        top: 2px;
+        left: 2px;
+      }
+
+      .easter-egg.top-right {
+        top: 2px;
+        right: 2px;
+      }
+
+      .easter-egg.bottom-left {
+        bottom: 2px;
+        left: 2px;
+      }
+
+      .easter-egg.bottom-right {
+        bottom: 2px;
+        right: 2px;
+      }
+
+      @media (max-width: 767px) {
+        .easter-egg {
+          width: 45px;
+          height: 45px;
+        }
+
+        .easter-egg.top-left,
+        .easter-egg.top-right {
+          top: 10px;
+        }
+
+        .easter-egg.bottom-left,
+        .easter-egg.bottom-right {
+          bottom: 10px;
+        }
+
+        .easter-egg.top-left,
+        .easter-egg.bottom-left {
+          left: 10px;
+        }
+
+        .easter-egg.top-right,
+        .easter-egg.bottom-right {
+          right: 10px;
+        }
+      }
+    </style>
+
+    <style>
+      #primary-navigation {
+        display: flex;
+        justify-content: flex-end;
+        background-color: #d5ebf400;
+      }
+
+      @media (min-width: 800px) {
+        .nav-toggle-button {
+          display: none;
+        }
+
+        nav ul {
+          display: flex;
+          align-items: center;
+        }
+
+        nav > ul > li {
+          margin: 0;
+          padding: 5px;
+          background-color: #d5ebf422;
+          /* border-radius: 10px; */
+          font-size: 2rem;
+        }
+      }
+      #logo {
+        margin-top: 30px;
+        width: 100vw;
+        margin: 0;
+        padding: 30px 10px;
+        background-color: #a8cfffc5;
       }
     </style>
   </head>
+
   <body>
-    <div class="logo-background">
-      <img src="special/logo.png" alt="Toronto Games Week" />
-    </div>
     <header>
+      <a href="index.html"><img src="special/logo-long.png" alt="Logo" id="logo" /></a>
+
       <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
         <span class="sr-only">Menu</span>
         <span class="icon"></span>
       </button>
 
-      <!-- <nav id="primary-navigation">
+      <nav id="primary-navigation">
         <ul>
+          <!-- <li>
+            <a href="schedule.html" id="scheduleNav">Schedule</a>
+          </li> -->
+          <li></li>
           <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="about.html" id="aboutNav">About</a>
+            <!-- <a href="about.html" id="aboutNav">About</a> -->
           </li>
         </ul>
-      </nav> -->
+      </nav>
     </header>
 
-    <div class="image-container">
-      <canvas id="myCanvas" width="500" height="400"></canvas>
+    <!-- Poster that fades out -->
+    <div class="poster-container" id="posterContainer">
+      <img src="tgwposterforsitelargeclear2.png" alt="Toronto Games Week" id="posterImage" />
     </div>
-    <!-- <main class="no-pointer-events">
+
+    <!-- Easter egg game toggles -->
+    <img src="balls/ball_1.png" class="easter-egg top-left" id="easterConnect" alt="Connect Game" title="Connect Game" />
+    <img src="balls/ball_2.png" class="easter-egg top-right" id="easterPop" alt="Pop Game" title="Pop Game" />
+    <img src="particles/stars/star_1.png" class="easter-egg bottom-right" id="easterBounce" alt="Bounce Game" title="Bounce Game" />
+    <img src="particles/hot/heart.png" class="easter-egg bottom-left" id="easterBrush" alt="Brush Game" title="Brush Game" />
+
+    <!-- Game name display -->
+    <div class="game-name" id="gameName"></div>
+
+    <canvas id="canvas"></canvas>
+
+
+    <main class="no-pointer-events">
       <div class="contentContainer" id="landingPage">
         <div class="content">
           <section class="textBox">
-            <h2></h2>
+            <h2>June 11-17, 2026</h2>
             <p>
               <span class="strong">Toronto Games Week</span> is a collective coordination of events organized independently by dozens of
               organizations, curators, companies, creators, and communities.
@@ -233,6 +274,8 @@
             </div>
           </section>
         </div>
+
+     
 
         <div class="content">
           <section class="textBox">
@@ -293,105 +336,7 @@
             <img src="images/logos/2025/TGW25-Web_Drinkbox-Studios.png" alt="Drinkbox Studios logo" class="logo logo-big" />
           </a>
 
-          <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
-
-          <a href="https://www.epicgames.com/site/en-US/home" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Epic-Games.png" alt="Epic Games logo" class="logo logo-big" />
-          </a>
-          <a href="https://gameartsinternational.network/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_GAIN.png" alt="GAIN logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.interactiveontario.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Interactive-Ontario.png" alt="Interactive Ontario logo" class="logo logo-big" />
-          </a>
-          <a href="https://xpgamesummit.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_XP-Gaming.png" alt="XP Gaming logo" class="logo logo-big" />
-          </a>
-          <a href="https://brokengamescollective.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Broken-Games-Collective.png" alt="Broken Games Collective logo" class="logo logo-big" />
-          </a>
-          <a href="https://makerspace.cobot.me/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_TTL-Makerspace.png" alt="TTL Makerspace logo" class="logo logo-big" />
-          </a>
-          <a href="https://linktr.ee/bonusstagetoronto/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Bonus-Stage.png" alt="Bonus Stage logo" class="logo logo-big" />
-          </a>
-          <a href="https://ladyarcaders.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Lady-Arcaders.png" alt="Lady Arcaders logo" class="logo logo-big" />
-          </a>
-          <a href="https://vividfoundry.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Vivid-Foundry.png" alt="Vivid Foundry logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.dirty-rectangles.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Dirty-Rectangles.png" alt="Dirty Rectangles logo" class="logo logo-big" />
-          </a>
-          <a href="https://tojam.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_TO-Jam.png" alt="Toronto Game Jam logo" class="logo logo-big" />
-          </a>
-          <a href="https://torontopubliclibrary.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Toronto-Public-Library.png" alt="Toronto Public Library logo" class="logo logo-big" />
-          </a>
-          <a href="https://interaccess.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Interaccess.png" alt="Interaccess logo" class="logo logo-big" />
-          </a>
-          <a href="https://werocreative.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_wero.png" alt="Wero logo" class="logo logo-big" />
-          </a>
-          <a href="https://unity.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Unity-Color.png" alt="Unity logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.amd.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_AMD.png" alt="AMD logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.rom.on.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_ROM.png" alt="ROM logo" class="logo logo-big" />
-          </a>
-          <a href="https://kittencupstudio.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Kitten-Cup-Studio.png" alt="Kitten Cup Studio logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.finji.co/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_FINJI.png" alt="FINJI logo" class="logo logo-big" />
-          </a>
-          <a href="https://gamerella.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_GAMERella.png" alt="GAMERella logo" class="logo logo-big" />
-          </a>
-          <a href="https://igda.org/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_IGDA.png" alt="IGDA logo" class="logo logo-big" />
-          </a>
-          <a href="https://handeyesociety.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Hand-Eye-Society.png" alt="Hand Eye Society logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.georgebrown.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_George-Brown-College.png" alt="George Brown College logo" class="logo logo-big" />
-          </a>
-          <a href="" target="blank">
-            <img src="images/logos/2025/TGW25-Web_GRID.png" alt="GRID logo" class="logo logo-big" />
-          </a>
-          <a href="https://cwacanada.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_CODE-CWA.png" alt="CODE CWA logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.anotherstory.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Another-Story-Bookshop.png" alt="Another Story Bookshop logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.trinitysquarevideo.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Trinity-Square-Video.png" alt="Trinity Square Video logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.lockwoodimmersive.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Lockwood-Immersive.png" alt="Lockwood Immersive logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.instagram.com/hypergamestorytime/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Hypergame-Storytime.png" alt="Hypergame Storytime logo" class="logo logo-big" />
-          </a>
-          <a href="https://trainwrecklabs.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Trainwreck-Labs.png" alt="Trainwreck Labs logo" class="logo logo-big" />
-          </a>
-          <a href="https://www.ocadu.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_OCADU.png" alt="OCAD University logo" class="logo logo-big" />
-          </a>
-          <a href="https://xtramagazine.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Xtra.png" alt="Xtra Magazine logo" class="logo logo-big" />
-          </a>
-        </div>
+        
       </div>
 
       <div class="footer-content">
@@ -461,66 +406,2225 @@
         </div>
       </div>
 
-    </main> -->
-    <div id="nav">
-      <p class="vote-hint">click <span class="star">★</span> to vote for the ones you like best</p>
+      <!-- <div id="inventory"></div> -->
+    </main>
 
-      <div class="nav-item" data-game="1" data-category="world">
-        Connect<span class="vote-star" data-vote="Connect">★</span><span class="tooltip">match friends to each other</span>
-      </div>
-
-      <div class="nav-item" data-game="2" data-category="toy">
-        Pop<span class="vote-star" data-vote="Pop">★</span><span class="tooltip">pop balls</span>
-      </div>
-
-      <div class="nav-item" data-game="3" data-category="world">
-        Brush<span class="vote-star" data-vote="Brush">★</span><span class="tooltip">draw lines over balls</span>
-      </div>
-
-      <div class="nav-item" data-game="4" data-category="game">
-        Bounce<span class="vote-star" data-vote="Bounce">★</span><span class="tooltip">draw 3 lines to reach the star</span>
-      </div>
-    </div>
-
-    <canvas id="canvas"></canvas>
-
-    <script src="experiments.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-      // On page load, restore any saved votes
       document.addEventListener("DOMContentLoaded", function () {
-        const savedVotes = JSON.parse(localStorage.getItem("gameVotes") || "[]");
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
 
-        document.querySelectorAll(".vote-star").forEach((star) => {
-          // Restore saved votes
-          if (savedVotes.includes(star.dataset.vote)) {
-            star.classList.add("voted");
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+
+    <script>
+      const Config = {
+        MAX_SPEED: 25,
+        NUM_BALL_IMAGES: 39,
+        NUM_PEOPLE_IMAGES: 29,
+        SCREEN_SHAKE_DECAY: 0.85,
+        SCREEN_SHAKE_MAX: 5,
+        SCREEN_SHAKE_MIN_THRESHOLD: 0.3,
+        isMobile: "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768,
+
+        posterBalls: [
+          { x: 62.9, y: 66.69, size: 5.59, img: 1 },
+          { x: 2.79, y: 78.73, size: 5.66, img: 2 },
+          { x: 6.52, y: 57.48, size: 3.22, img: 3 },
+          { x: 70.13, y: 3.12, size: 5.59, img: 4 },
+          { x: 38.61, y: 10.73, size: 15.54, img: 5 },
+          { x: 2.15, y: 51.7, size: 3.22, img: 6 },
+          { x: 3.8, y: 48.82, size: 3.22, img: 7 },
+          { x: 36.25, y: 42.08, size: 29.94, img: 8 },
+          { x: 5.99, y: 51.75, size: 3.3, img: 9 },
+          { x: 2.72, y: 90.02, size: 6.16, img: 10 },
+          { x: 18.84, y: 23.38, size: 15.54, img: 11 },
+          { x: 85.56, y: 0.69, size: 5.44, img: 12 },
+          { x: 35.38, y: 30.05, size: 16.12, img: 13 },
+          { x: 36.39, y: 42.21, size: 29.8, img: 14 },
+          { x: 31.59, y: 67.64, size: 17.48, img: 15 },
+          { x: 11.17, y: 54.55, size: 3.44, img: 16 },
+          { x: 76.65, y: 5.67, size: 5.59, img: 17 },
+          { x: 65.19, y: 86.85, size: 5.52, img: 18 },
+          { x: 7.38, y: 24.0, size: 5.58, img: 19 },
+          { x: 0.86, y: 16.71, size: 5.8, img: 20 },
+          { x: 54.36, y: 87.75, size: 5.38, img: 21 },
+          { x: 4.23, y: 2.43, size: 12.18, img: 22 },
+          { x: 79.8, y: 2.19, size: 3.08, img: 23 },
+          { x: 88.23, y: 21.64, size: 10.82, img: 24 },
+          { x: 83.74, y: 4.37, size: 2.72, img: 25 },
+          { x: 35.53, y: 1.05, size: 7.02, img: 26 },
+          { x: 64.54, y: 12.03, size: 9.81, img: 27 },
+          { x: 0.43, y: 62.28, size: 15.76, img: 28 },
+          { x: 13.69, y: 86.28, size: 10.67, img: 29 },
+          { x: 70.99, y: 64.4, size: 28.58, img: 30 },
+          { x: 73.57, y: 42.95, size: 10.82, img: 31 },
+          { x: 86.53, y: 34.67, size: 10.6, img: 32 },
+          { x: 23.78, y: 80.48, size: 13.47, img: 33 },
+          { x: 51.36, y: 66.73, size: 14.47, img: 34 },
+          { x: 59.81, y: 83.83, size: 5.59, img: 35 },
+          { x: 9.46, y: 57.54, size: 3.22, img: 36 },
+          { x: 92.4, y: 3.56, size: 5.52, img: 37 },
+          { x: 70.49, y: 11.84, size: 22.21, img: 38 },
+          { x: 7.88, y: 54.72, size: 3.18, img: 39 },
+        ],
+
+        posterPeople: [
+          { x: 23.64, y: 12.66, size: 8.81, img: 0 },
+          { x: 68.33, y: 48.51, size: 6.23, img: 1 },
+          { x: 46.63, y: 78.35, size: 7.59, img: 2 },
+          { x: 69.56, y: 63.4, size: 4.3, img: 3 },
+          { x: 34.24, y: 91.84, size: 4.58, img: 4 },
+          { x: 56.59, y: 39.25, size: 5.66, img: 5 },
+          { x: 58.81, y: 18.08, size: 5.66, img: 6 },
+          { x: 40.27, y: 4.3, size: 7.74, img: 7 },
+          { x: 21.92, y: 61.38, size: 14.9, img: 8 },
+          { x: 79.63, y: 90.93, size: 5.66, img: 9 },
+          { x: 84.82, y: 90.32, size: 6.38, img: 10 },
+          { x: 50.63, y: 20.23, size: 8.95, img: 11 },
+          { x: 23.42, y: 12.49, size: 9.03, img: 12 },
+          { x: 34.81, y: 41.83, size: 4.8, img: 13 },
+          { x: 26.58, y: 37.84, size: 5.23, img: 14 },
+          { x: 56.09, y: 9.23, size: 6.66, img: 15 },
+          { x: 17.41, y: 5.05, size: 6.02, img: 16 },
+          { x: 54.87, y: 29.42, size: 5.52, img: 17 },
+          { x: 19.55, y: 59.58, size: 7.09, img: 18 },
+          { x: 45.77, y: 86.59, size: 9.89, img: 19 },
+          { x: 36.46, y: 24.13, size: 9.53, img: 20 },
+          { x: 32.88, y: 7.8, size: 7.38, img: 21 },
+          { x: 90.04, y: 88.78, size: 6.3, img: 22 },
+          { x: 75.5, y: 34.85, size: 5.52, img: 23 },
+          { x: 74.02, y: 89.27, size: 5.73, img: 24 },
+          { x: 26.29, y: 37.66, size: 5.66, img: 25 },
+          { x: 39.04, y: 83.36, size: 8.81, img: 26 },
+          { x: 47.13, y: 1.75, size: 6.45, img: 27 },
+          { x: 85.39, y: 43.64, size: 12.32, img: 28 },
+        ],
+      };
+
+      const CoordinateSystem = {
+        posterWidth: 0,
+        posterHeight: 0,
+
+        update() {
+          const posterImg = document.getElementById("posterImage");
+          if (!posterImg || !posterImg.complete) return false;
+
+          this.posterWidth = posterImg.width || posterImg.naturalWidth || 1396;
+          this.posterHeight = posterImg.height || posterImg.naturalHeight || 1606;
+
+          console.log("CoordinateSystem updated:", {
+            poster: `${this.posterWidth}x${this.posterHeight}`,
+          });
+
+          return true;
+        },
+
+        posterToCanvas(xPercent, yPercent, sizePercent = null) {
+          const x = (xPercent / 100) * this.posterWidth;
+          const y = (yPercent / 100) * this.posterHeight;
+
+          let size = 50;
+          if (sizePercent !== null) {
+            size = (sizePercent / 100) * this.posterWidth;
           }
 
-          // Handle new votes
-          star.addEventListener("click", function (e) {
-            e.stopPropagation();
+          return { x, y, size };
+        },
+      };
 
-            const gameName = this.dataset.vote;
-            const formData = new FormData();
-            formData.append("entry.840701762", gameName);
+      const PosterTransition = {
+        active: true,
+        fadeProgress: 0,
+        startTime: null,
+        pauseDuration: 100,
+        fadeDuration: 1000,
+        ready: false,
 
-            fetch("https://docs.google.com/forms/d/e/1FAIpQLSeoHLJR6nLckpv-8OQz6PRp-6BKrtSzKKg3hTHmslsoczPzpw/formResponse", {
-              method: "POST",
-              body: formData,
-              mode: "no-cors",
+        init() {
+          const posterImg = document.getElementById("posterImage");
+          const posterContainer = document.getElementById("posterContainer");
+
+          if (!posterImg || !posterContainer) {
+            console.error("Poster elements not found");
+            return;
+          }
+
+          const onPosterReady = () => {
+            setTimeout(() => {
+              if (!CoordinateSystem.update()) {
+                console.error("Failed to update coordinate system");
+                return;
+              }
+
+              // Resize canvas to match poster
+              resizeCanvas();
+
+              this.ready = true;
+              console.log("Poster ready, initializing game");
+              GameManager.init();
+
+              // Start fade transition
+              setTimeout(() => {
+                this.startTime = Date.now();
+                posterContainer.classList.add("fade-out");
+                console.log("Starting poster fade");
+              }, this.pauseDuration);
+            }, 100);
+          };
+
+          if (posterImg.complete && posterImg.naturalWidth > 0) {
+            console.log("Poster already loaded");
+            onPosterReady();
+          } else {
+            console.log("Waiting for poster to load");
+            posterImg.addEventListener("load", onPosterReady);
+            posterImg.addEventListener("error", () => {
+              console.error("Poster failed to load");
             });
+          }
+        },
 
-            this.classList.add("voted");
+        update() {
+          if (!this.active || !this.startTime) return;
 
-            // Save to localStorage
-            const votes = JSON.parse(localStorage.getItem("gameVotes") || "[]");
-            if (!votes.includes(gameName)) {
-              votes.push(gameName);
-              localStorage.setItem("gameVotes", JSON.stringify(votes));
+          const elapsed = Date.now() - this.startTime;
+          const progress = Math.min(elapsed / this.fadeDuration, 1);
+
+          this.fadeProgress = progress;
+
+          if (progress >= 1) {
+            this.active = false;
+            console.log("Poster fade complete");
+          }
+        },
+      };
+
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        const posterImg = document.getElementById("posterImage");
+        if (posterImg && posterImg.complete) {
+          const posterWidth = posterImg.width || posterImg.naturalWidth || 1396;
+          const posterHeight = posterImg.height || posterImg.naturalHeight || 1606;
+
+          canvas.width = posterWidth;
+          canvas.height = posterHeight;
+          canvas.style.width = posterWidth + "px";
+          canvas.style.height = posterHeight + "px";
+
+          console.log("Canvas resized to:", posterWidth, "x", posterHeight);
+        }
+      }
+
+      resizeCanvas();
+
+      const Assets = {
+        balls: [],
+        people: [],
+        stars: [],
+        special: {},
+
+        load() {
+          for (let i = 1; i <= Config.NUM_BALL_IMAGES; i++) {
+            const img = new Image();
+            img.src = "balls/ball_" + i + ".png";
+            this.balls.push(img);
+          }
+          for (let i = 1; i <= Config.NUM_PEOPLE_IMAGES; i++) {
+            const img = new Image();
+            img.src = "ppl/ppl_" + i + ".png";
+            this.people.push(img);
+          }
+          for (let i = 1; i <= 3; i++) {
+            const img = new Image();
+            img.src = "particles/stars/star_" + i + ".png";
+            this.stars.push(img);
+          }
+          this.special.heart = this._loadImage("particles/hot/heart.png");
+          this.special.ko = this._loadImage("particles/hot/ko.png");
+        },
+        _loadImage(src) {
+          const img = new Image();
+          img.src = src;
+          return img;
+        },
+        getBallImage(index) {
+          return this.balls[(index - 1) % this.balls.length];
+        },
+        getPersonImage(index) {
+          return this.people[index % this.people.length];
+        },
+        getStarImage(index) {
+          return this.stars[index % this.stars.length];
+        },
+        isImageReady(img) {
+          return img && img.complete && img.naturalWidth > 0;
+        },
+      };
+
+      const ImageCounter = {
+        ball: 0,
+        person: 0,
+        nextBall() {
+          this.ball = (this.ball + 1) % Config.NUM_BALL_IMAGES;
+          return this.ball + 1;
+        },
+        nextPerson() {
+          const idx = this.person;
+          this.person = (this.person + 1) % Config.NUM_PEOPLE_IMAGES;
+          return idx;
+        },
+      };
+
+      const ScreenShake = {
+        x: 0,
+        y: 0,
+        intensity: 0,
+        add(amount) {
+          this.intensity = Math.min(Math.max(this.intensity, amount * 0.4), Config.SCREEN_SHAKE_MAX);
+        },
+        update() {
+          if (this.intensity > 0) {
+            this.x = (Math.random() - 0.5) * this.intensity;
+            this.y = (Math.random() - 0.5) * this.intensity;
+            this.intensity *= Config.SCREEN_SHAKE_DECAY;
+            if (this.intensity < Config.SCREEN_SHAKE_MIN_THRESHOLD) this.intensity = 0;
+          } else {
+            this.x = 0;
+            this.y = 0;
+          }
+        },
+        reset() {
+          this.x = 0;
+          this.y = 0;
+          this.intensity = 0;
+        },
+      };
+
+      const Physics = {
+        capSpeed(ball) {
+          const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+          if (speed > Config.MAX_SPEED) {
+            const scale = Config.MAX_SPEED / speed;
+            ball.vx *= scale;
+            ball.vy *= scale;
+          }
+        },
+        getSpeed(ball) {
+          return Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+        },
+        distance(x1, y1, x2, y2) {
+          return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        },
+        contains(ball, x, y) {
+          return this.distance(ball.x, ball.y, x, y) < ball.radius;
+        },
+        handleWallCollision(ball, canvasRef, bounce = 0.9, squash = true) {
+          let hit = false;
+          if (ball.x - ball.radius < 0) {
+            ball.x = ball.radius;
+            ball.vx *= -bounce;
+            if (squash && ball.squashX !== undefined) {
+              ball.squashX = 0.85;
+              ball.squashY = 1.15;
+            }
+            hit = true;
+          }
+          if (ball.x + ball.radius > canvasRef.width) {
+            ball.x = canvasRef.width - ball.radius;
+            ball.vx *= -bounce;
+            if (squash && ball.squashX !== undefined) {
+              ball.squashX = 0.85;
+              ball.squashY = 1.15;
+            }
+            hit = true;
+          }
+          if (ball.y - ball.radius < 0) {
+            ball.y = ball.radius;
+            ball.vy *= -bounce;
+            if (squash && ball.squashX !== undefined) {
+              ball.squashX = 1.15;
+              ball.squashY = 0.85;
+            }
+            hit = true;
+          }
+          if (ball.y + ball.radius > canvasRef.height) {
+            ball.y = canvasRef.height - ball.radius;
+            ball.vy *= -bounce;
+            if (squash && ball.squashX !== undefined) {
+              ball.squashX = 1.15;
+              ball.squashY = 0.85;
+            }
+            hit = true;
+          }
+          return hit;
+        },
+        handleBallCollisions(balls, options = {}) {
+          const skipCondition = options.skipCondition || ((b) => b.popping || b.orbiting || b.frozen || b.merging);
+          const pushFactor = options.pushFactor || 0.05;
+
+          for (let i = 0; i < balls.length; i++) {
+            for (let j = i + 1; j < balls.length; j++) {
+              const b1 = balls[i],
+                b2 = balls[j];
+              if (skipCondition(b1) || skipCondition(b2)) continue;
+
+              const dx = b2.x - b1.x;
+              const dy = b2.y - b1.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              const minDist = b1.radius + b2.radius;
+
+              if (dist < minDist && dist > 0) {
+                const ang = Math.atan2(dy, dx);
+                const overlap = minDist - dist;
+                const ax = overlap * Math.cos(ang) * pushFactor;
+                const ay = overlap * Math.sin(ang) * pushFactor;
+                b1.vx -= ax;
+                b1.vy -= ay;
+                b2.vx += ax;
+                b2.vy += ay;
+              }
+            }
+          }
+        },
+        lineCircleCollision(x1, y1, x2, y2, cx, cy, radius) {
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const fx = x1 - cx;
+          const fy = y1 - cy;
+          const a = dx * dx + dy * dy;
+          const b = 2 * (fx * dx + fy * dy);
+          const c = fx * fx + fy * fy - radius * radius;
+          let disc = b * b - 4 * a * c;
+
+          if (disc < 0) return { collides: false };
+
+          disc = Math.sqrt(disc);
+          const t1 = (-b - disc) / (2 * a);
+          const t2 = (-b + disc) / (2 * a);
+
+          if ((t1 >= 0 && t1 <= 1) || (t2 >= 0 && t2 <= 1)) {
+            const t = Math.max(0, Math.min(1, -b / (2 * a)));
+            const closestX = x1 + t * dx;
+            const closestY = y1 + t * dy;
+            const distX = cx - closestX;
+            const distY = cy - closestY;
+            const dist = Math.sqrt(distX * distX + distY * distY);
+
+            if (dist < radius) {
+              const pushDist = radius - dist;
+              return {
+                collides: true,
+                newX: cx + (distX / dist) * pushDist,
+                newY: cy + (distY / dist) * pushDist,
+              };
+            }
+          }
+          return { collides: false };
+        },
+      };
+
+      const Renderer = {
+        drawImage(img, x, y, w, h, opacity = 1, rotation = 0) {
+          if (!Assets.isImageReady(img)) return false;
+          ctx.save();
+          ctx.globalAlpha = opacity;
+          ctx.translate(x + w / 2, y + h / 2);
+          ctx.rotate(rotation);
+          ctx.drawImage(img, -w / 2, -h / 2, w, h);
+          ctx.restore();
+          return true;
+        },
+        drawBall(ball, opacity = 1, rotation = 0) {
+          this.drawBallWithSquash(ball, opacity, rotation, 1, 1);
+        },
+        drawBallWithSquash(ball, opacity = 1, rotation = 0, squashX = 1, squashY = 1) {
+          const img = Assets.getBallImage(ball.ballImage);
+          ctx.save();
+          ctx.globalAlpha = opacity;
+          ctx.translate(ball.x, ball.y);
+          ctx.rotate(rotation);
+          ctx.scale(squashX, squashY);
+          if (Assets.isImageReady(img)) {
+            ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#333";
+            ctx.fill();
+          }
+          ctx.restore();
+        },
+        drawPerson(x, y, height, imageIndex, opacity = 1, rotation = 0) {
+          const img = Assets.getPersonImage(imageIndex);
+          if (Assets.isImageReady(img)) {
+            const aspectRatio = img.naturalWidth / img.naturalHeight;
+            const width = height * aspectRatio;
+            ctx.save();
+            ctx.globalAlpha = opacity;
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.drawImage(img, -width / 2, -height, width, height);
+            ctx.restore();
+          }
+        },
+        createRadialGradient(x, y, r1, r2, stops) {
+          const gradient = ctx.createRadialGradient(x, y, r1, x, y, r2);
+          stops.forEach((s) => gradient.addColorStop(s[0], s[1]));
+          return gradient;
+        },
+      };
+
+      class ParticleSystem {
+        constructor() {
+          this.particles = [];
+        }
+        add(particle) {
+          this.particles.push({
+            x: particle.x,
+            y: particle.y,
+            vx: particle.vx || 0,
+            vy: particle.vy || 0,
+            size: particle.size,
+            type: particle.type,
+            starIndex: particle.starIndex,
+            ballImage: particle.ballImage,
+            radius: particle.radius,
+            life: particle.life || 30,
+            maxLife: particle.maxLife || particle.life || 30,
+            gravity: particle.gravity || 0,
+            spin: particle.spin || 0,
+            rotation: particle.rotation || 0,
+          });
+        }
+        addBurst(x, y, count, config = {}) {
+          const speed = config.speed || 4;
+          const speedVariance = config.speedVariance || 2;
+          const life = config.life || 30;
+          const size = config.size || 15;
+          const sizeVariance = config.sizeVariance || 10;
+          const gravity = config.gravity || 0.1;
+          const type = config.type || "star";
+
+          for (let i = 0; i < count; i++) {
+            const angle = ((Math.PI * 2) / count) * i + Math.random() * 0.3;
+            const particleSpeed = speed + Math.random() * speedVariance;
+            this.add({
+              x: x,
+              y: y,
+              vx: Math.cos(angle) * particleSpeed,
+              vy: Math.sin(angle) * particleSpeed,
+              life: life,
+              maxLife: life,
+              size: size + Math.random() * sizeVariance,
+              rotation: Math.random() * Math.PI * 2,
+              spin: (Math.random() - 0.5) * 0.3,
+              gravity: gravity,
+              type: type,
+              starIndex: Math.floor(Math.random() * 3),
+            });
+          }
+        }
+        update() {
+          this.particles = this.particles.filter((p) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += p.gravity || 0;
+            p.life--;
+            p.rotation = (p.rotation || 0) + (p.spin || 0);
+            return p.life > 0;
+          });
+        }
+        draw(customDrawer) {
+          this.particles.forEach((p) => {
+            const alpha = p.life / (p.maxLife || 30);
+            if (customDrawer) {
+              customDrawer(p, alpha);
+              return;
+            }
+            if (p.type === "star" && p.starIndex !== undefined) {
+              const img = Assets.getStarImage(p.starIndex);
+              Renderer.drawImage(img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+            } else if (p.type === "heart") {
+              Renderer.drawImage(Assets.special.heart, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+            } else if (p.type === "ko") {
+              Renderer.drawImage(Assets.special.ko, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+            } else if (p.ballImage) {
+              const img = Assets.getBallImage(p.ballImage);
+              if (Assets.isImageReady(img)) {
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation);
+                ctx.drawImage(img, -p.radius, -p.radius, p.radius * 2, p.radius * 2);
+                ctx.restore();
+              }
             }
           });
-        });
+        }
+        clear() {
+          this.particles = [];
+        }
+      }
+
+      class BaseGame {
+        constructor() {
+          this.balls = [];
+          this.state = {};
+          this.particles = new ParticleSystem();
+        }
+        init() {
+          this.balls = [];
+          this.state = {};
+          this.particles.clear();
+        }
+        update() {
+          this.particles.update();
+        }
+        draw() {
+          this.particles.draw();
+        }
+        onPointerDown(x, y) {}
+        onPointerMove(x, y) {}
+        onPointerUp() {}
+        createBall(options = {}) {
+          return {
+            x: options.x !== undefined ? options.x : Math.random() * canvas.width,
+            y: options.y !== undefined ? options.y : Math.random() * canvas.height,
+            vx: options.vx || 0,
+            vy: options.vy || 0,
+            radius: options.radius || 30,
+            ballImage: options.ballImage || ImageCounter.nextBall(),
+            rotation: options.rotation || 0,
+            squashX: 1,
+            squashY: 1,
+            ...options,
+          };
+        }
+        updateBallPhysics(ball, options = {}) {
+          const gravity = options.gravity || 0;
+          const friction = options.friction || 0.99;
+          const minSpeed = options.minSpeed || 0;
+          const bounce = options.bounce || 0.9;
+          const squashRecovery = options.squashRecovery || 0.15;
+
+          ball.vy += gravity;
+          ball.vx *= friction;
+          ball.vy *= friction;
+
+          if (minSpeed > 0) {
+            const speed = Physics.getSpeed(ball);
+            if (speed < minSpeed && speed > 0) {
+              const angle = Math.atan2(ball.vy, ball.vx);
+              ball.vx = Math.cos(angle) * minSpeed;
+              ball.vy = Math.sin(angle) * minSpeed;
+            }
+          }
+
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+          Physics.capSpeed(ball);
+
+          if (ball.squashX !== undefined) {
+            ball.squashX += (1 - ball.squashX) * squashRecovery;
+            ball.squashY += (1 - ball.squashY) * squashRecovery;
+          }
+
+          if (ball.rotation !== undefined) {
+            const speed = Physics.getSpeed(ball);
+            ball.rotation += speed * 0.02;
+          }
+
+          Physics.handleWallCollision(ball, canvas, bounce);
+        }
+      }
+
+      // Pop Game
+      class PopGame extends BaseGame {
+        init() {
+          super.init();
+          const baseRadius = Config.isMobile ? 50 : 90;
+          const radiusVariance = Config.isMobile ? 20 : 30;
+
+          for (let i = 0; i < 20; i++) {
+            const a = Math.random() * Math.PI * 2;
+            const s = 0.8 + Math.random() * 0.8;
+            this.balls.push(
+              this.createBall({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: Math.cos(a) * s,
+                vy: Math.sin(a) * s,
+                radius: baseRadius + Math.random() * radiusVariance,
+                popping: false,
+                popProgress: 0,
+                opacity: 1,
+              }),
+            );
+          }
+        }
+        update() {
+          super.update();
+          for (let i = this.balls.length - 1; i >= 0; i--) {
+            const ball = this.balls[i];
+            if (ball.popping) {
+              ball.popProgress += 0.12;
+              ball.opacity = 1 - ball.popProgress;
+              if (ball.popProgress >= 1) this.balls.splice(i, 1);
+              continue;
+            }
+            this.updateBallPhysics(ball, { friction: 0.98, minSpeed: 0.5, bounce: 0.9 });
+          }
+          Physics.handleBallCollisions(this.balls);
+        }
+        draw() {
+          this.particles.draw((p) => {
+            const img = Assets.getBallImage(p.ballImage);
+            if (Assets.isImageReady(img)) {
+              ctx.save();
+              ctx.globalAlpha = p.life / p.maxLife;
+              ctx.translate(p.x, p.y);
+              ctx.rotate(p.rotation);
+              ctx.drawImage(img, -p.size / 2, -p.size / 2, p.size, p.size);
+              ctx.restore();
+            }
+          });
+          this.balls.forEach((ball) => {
+            ctx.save();
+            ctx.globalAlpha = ball.opacity;
+            if (ball.popping) {
+              const sc = 1 + ball.popProgress * 0.8;
+              ctx.translate(ball.x, ball.y);
+              ctx.scale(sc, sc);
+              ctx.rotate(ball.popProgress * 0.5);
+              ctx.translate(-ball.x, -ball.y);
+            }
+            Renderer.drawBall(ball, 1, ball.rotation);
+            ctx.restore();
+          });
+        }
+        onPointerDown(x, y) {
+          for (let i = this.balls.length - 1; i >= 0; i--) {
+            const ball = this.balls[i];
+            if (!ball.popping && Physics.contains(ball, x, y)) {
+              ball.popping = true;
+              ScreenShake.add(ball.radius * 0.08);
+              const nP = Math.floor(ball.radius * 0.25);
+              for (let j = 0; j < nP; j++) {
+                const a = Math.random() * Math.PI * 2;
+                const sp = 3 + Math.random() * 5;
+                this.particles.add({
+                  x: ball.x,
+                  y: ball.y,
+                  vx: Math.cos(a) * sp,
+                  vy: Math.sin(a) * sp - 2,
+                  size: 8 + Math.random() * 15,
+                  life: 40,
+                  maxLife: 40,
+                  rotation: Math.random() * Math.PI,
+                  spin: (Math.random() - 0.5) * 0.2,
+                  gravity: 0.15,
+                  ballImage: ball.ballImage,
+                  radius: (8 + Math.random() * 15) / 2,
+                });
+              }
+              if (ball.radius > 25) {
+                const cR = ball.radius * 0.55;
+                const nC = 2 + Math.floor(Math.random() * 2);
+                for (let j = 0; j < nC; j++) {
+                  const a = ((Math.PI * 2) / nC) * j + Math.random() * 0.5;
+                  const sp = 4 + Math.random() * 4;
+                  this.balls.push(
+                    this.createBall({
+                      x: ball.x,
+                      y: ball.y,
+                      vx: Math.cos(a) * sp,
+                      vy: Math.sin(a) * sp,
+                      radius: cR,
+                      popping: false,
+                      popProgress: 0,
+                      opacity: 1,
+                    }),
+                  );
+                }
+              }
+              break;
+            }
+          }
+        }
+      }
+
+      // Bounce Game
+      class BounceGame extends BaseGame {
+        init() {
+          super.init();
+          const targetRadius = Config.isMobile ? 30 : 50;
+          const maxLineLength = Config.isMobile ? 120 : 200;
+          this.state = {
+            barriers: [],
+            drawing: false,
+            drawStart: null,
+            drawEnd: null,
+            maxBarriers: 3,
+            maxLineLength: maxLineLength,
+            barrierLifetime: 8000,
+            splats: [],
+            score: 0,
+            target: { x: canvas.width / 2, y: canvas.height / 2, radius: targetRadius, pulse: 0, rotation: 0 },
+          };
+          this.isFirstBall = true;
+          this.spawnBall();
+        }
+
+        spawnBall() {
+          const ballRadius = Config.isMobile ? 20 : 30;
+          let spawnX = this.isFirstBall ? this.state.target.x : 100 + Math.random() * (canvas.width - 200);
+          this.isFirstBall = false;
+
+          this.balls.push(
+            this.createBall({
+              x: spawnX,
+              y: 100,
+              vx: (Math.random() - 0.5) * 2,
+              vy: 1,
+              radius: ballRadius,
+              growScale: 1,
+              squishX: 1,
+              squishY: 1,
+              squishRecovery: 0.15,
+              dying: false,
+              deathProgress: 0,
+            }),
+          );
+        }
+
+        update() {
+          super.update();
+          const s = this.state;
+          s.barriers = s.barriers.filter((b) => Date.now() - b.created < s.barrierLifetime);
+          s.splats = s.splats.filter((sp) => sp.life > 0);
+          s.splats.forEach((sp) => sp.life--);
+          s.target.pulse += 0.08;
+          s.target.rotation += 0.02;
+
+          for (let i = this.balls.length - 1; i >= 0; i--) {
+            const ball = this.balls[i];
+            if (ball.dying) {
+              ball.deathProgress += 0.08;
+              if (ball.deathProgress >= 1) {
+                this.balls.splice(i, 1);
+                setTimeout(() => this.spawnBall(), 500);
+              }
+              continue;
+            }
+
+            ball.vy += 0.08;
+            ball.vx *= 0.995;
+            ball.vy *= 0.995;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            ball.squishX += (1 - ball.squishX) * ball.squishRecovery;
+            ball.squishY += (1 - ball.squishY) * ball.squishRecovery;
+            Physics.capSpeed(ball);
+
+            const dx = ball.x - s.target.x;
+            const dy = ball.y - s.target.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < ball.radius * ball.growScale + s.target.radius) {
+              s.score++;
+              ball.growScale += 0.15;
+              ScreenShake.add(12);
+              this.particles.addBurst(s.target.x, s.target.y, 12, {
+                speed: 4,
+                speedVariance: 4,
+                life: 50,
+                size: 30,
+                sizeVariance: 25,
+                gravity: 0.12,
+                type: "star",
+              });
+              s.target.x = 150 + Math.random() * (canvas.width - 300);
+              s.target.y = 250 + Math.random() * (canvas.height - 400);
+              const ang = Math.atan2(dy, dx);
+              ball.vx = Math.cos(ang) * 5;
+              ball.vy = Math.sin(ang) * 5;
+            }
+
+            if (ball.y + ball.radius * ball.growScale >= canvas.height - 5 && !ball.dying) {
+              ball.dying = true;
+              ball.deathProgress = 0;
+              ScreenShake.add(5);
+              s.splats.push({
+                x: ball.x,
+                y: canvas.height,
+                radius: ball.radius * ball.growScale,
+                life: 120,
+                color: `hsl(${Math.random() * 360}, 60%, 50%)`,
+              });
+              continue;
+            }
+
+            if (ball.x - ball.radius * ball.growScale < 0) {
+              ball.x = ball.radius * ball.growScale;
+              ball.vx *= -0.9;
+              ball.squishX = 0.7;
+              ball.squishY = 1.3;
+            }
+            if (ball.x + ball.radius * ball.growScale > canvas.width) {
+              ball.x = canvas.width - ball.radius * ball.growScale;
+              ball.vx *= -0.9;
+              ball.squishX = 0.7;
+              ball.squishY = 1.3;
+            }
+            if (ball.y - ball.radius * ball.growScale < 0) {
+              ball.y = ball.radius * ball.growScale;
+              ball.vy *= -0.9;
+              ball.squishX = 1.4;
+              ball.squishY = 0.6;
+            }
+
+            s.barriers.forEach((barrier) => {
+              const result = Physics.lineCircleCollision(
+                barrier.x1,
+                barrier.y1,
+                barrier.x2,
+                barrier.y2,
+                ball.x,
+                ball.y,
+                ball.radius * ball.growScale,
+              );
+              if (result.collides) {
+                ball.x = result.newX;
+                ball.y = result.newY;
+                const ang = Math.atan2(barrier.y2 - barrier.y1, barrier.x2 - barrier.x1);
+                const nAng = ang + Math.PI / 2;
+                const dot = ball.vx * Math.cos(nAng) + ball.vy * Math.sin(nAng);
+                ball.vx -= 2 * dot * Math.cos(nAng) * 1.1;
+                ball.vy -= 2 * dot * Math.sin(nAng) * 1.1;
+                ball.squishX = 0.75;
+                ball.squishY = 1.25;
+                Physics.capSpeed(ball);
+              }
+            });
+          }
+        }
+
+        draw() {
+          const s = this.state;
+          const t = s.target;
+          const pulseScale = 1 + Math.sin(t.pulse) * 0.15;
+          const glowGrad = Renderer.createRadialGradient(t.x, t.y, t.radius * 0.3, t.radius * 2.5, [
+            [0, "rgba(255, 220, 100, 0.6)"],
+            [1, "rgba(255, 180, 50, 0)"],
+          ]);
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, t.radius * 2.5 * pulseScale, 0, Math.PI * 2);
+          ctx.fillStyle = glowGrad;
+          ctx.fill();
+
+          const size = t.radius * 2.5 * pulseScale;
+          const starImg = Assets.stars[0];
+          if (Assets.isImageReady(starImg)) {
+            ctx.save();
+            ctx.translate(t.x, t.y);
+            ctx.rotate(t.rotation);
+            ctx.drawImage(starImg, -size / 2, -size / 2, size, size);
+            ctx.restore();
+          }
+
+          super.draw();
+
+          s.splats.forEach((splat) => {
+            const a = splat.life / 120;
+            const sq = 1 + (1 - a) * 2;
+            ctx.save();
+            ctx.globalAlpha = a * 0.6;
+            ctx.translate(splat.x, splat.y);
+            ctx.scale(sq, 0.3);
+            ctx.beginPath();
+            ctx.arc(0, 0, splat.radius, 0, Math.PI * 2);
+            ctx.fillStyle = splat.color;
+            ctx.fill();
+            ctx.restore();
+          });
+
+          this.balls.forEach((ball) => {
+            const img = Assets.getBallImage(ball.ballImage);
+            const r = ball.radius * ball.growScale;
+            if (Assets.isImageReady(img)) {
+              if (ball.dying) {
+                ctx.save();
+                const sqY = 1 - ball.deathProgress * 0.8;
+                const sqX = 1 + ball.deathProgress * 0.5;
+                ctx.translate(ball.x, canvas.height);
+                ctx.scale(sqX, sqY);
+                ctx.globalAlpha = 1 - ball.deathProgress;
+                ctx.drawImage(img, -r, -r * 2, r * 2, r * 2);
+                ctx.restore();
+              } else {
+                ctx.save();
+                ctx.translate(ball.x, ball.y);
+                ctx.scale(ball.squishX, ball.squishY);
+                ctx.drawImage(img, -r, -r, r * 2, r * 2);
+                ctx.restore();
+              }
+            }
+          });
+
+          s.barriers.forEach((barrier) => {
+            const age = Date.now() - barrier.created;
+            const op = Math.max(0, 1 - age / s.barrierLifetime);
+            ctx.save();
+            ctx.shadowColor = "rgba(100, 180, 255, 0.8)";
+            ctx.shadowBlur = 15 * op;
+            ctx.beginPath();
+            ctx.moveTo(barrier.x1, barrier.y1);
+            ctx.lineTo(barrier.x2, barrier.y2);
+            ctx.strokeStyle = `rgba(80, 150, 220, ${op})`;
+            ctx.lineWidth = 8;
+            ctx.lineCap = "round";
+            ctx.stroke();
+            ctx.restore();
+            ctx.beginPath();
+            ctx.moveTo(barrier.x1, barrier.y1);
+            ctx.lineTo(barrier.x2, barrier.y2);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${op * 0.9})`;
+            ctx.lineWidth = 4;
+            ctx.lineCap = "round";
+            ctx.stroke();
+          });
+
+          if (s.drawing && s.drawStart) {
+            let dx = s.drawEnd.x - s.drawStart.x;
+            let dy = s.drawEnd.y - s.drawStart.y;
+            let len = Math.sqrt(dx * dx + dy * dy);
+            if (len > s.maxLineLength) {
+              dx = (dx / len) * s.maxLineLength;
+              dy = (dy / len) * s.maxLineLength;
+            }
+            const endX = s.drawStart.x + dx;
+            const endY = s.drawStart.y + dy;
+            ctx.save();
+            ctx.shadowColor = "rgba(100, 180, 255, 0.5)";
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.moveTo(s.drawStart.x, s.drawStart.y);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = len > s.maxLineLength ? "rgba(255, 100, 100, 0.5)" : "rgba(80, 150, 220, 0.5)";
+            ctx.lineWidth = 8;
+            ctx.lineCap = "round";
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+
+        onPointerDown(x, y) {
+          if (this.state.barriers.length >= this.state.maxBarriers) return;
+          this.state.drawing = true;
+          this.state.drawStart = { x, y };
+          this.state.drawEnd = { x, y };
+        }
+
+        onPointerMove(x, y) {
+          if (this.state.drawing) this.state.drawEnd = { x, y };
+        }
+
+        onPointerUp() {
+          const s = this.state;
+          if (s.drawing && s.drawStart && s.drawEnd) {
+            let dx = s.drawEnd.x - s.drawStart.x;
+            let dy = s.drawEnd.y - s.drawStart.y;
+            let len = Math.sqrt(dx * dx + dy * dy);
+            if (len > 20) {
+              if (len > s.maxLineLength) {
+                dx = (dx / len) * s.maxLineLength;
+                dy = (dy / len) * s.maxLineLength;
+              }
+              s.barriers.push({
+                x1: s.drawStart.x,
+                y1: s.drawStart.y,
+                x2: s.drawStart.x + dx,
+                y2: s.drawStart.y + dy,
+                created: Date.now(),
+              });
+            }
+          }
+          s.drawing = false;
+          s.drawStart = null;
+          s.drawEnd = null;
+        }
+      }
+
+      // Connections  
+      class ConnectionsGame extends BaseGame {
+        init() {
+          super.init();
+          this.state = {
+            connections: [],
+            firstEntity: null,
+            hoveredEntity: null,
+            score: 0,
+            exploded: 0,
+            dyingEntities: [],
+            isDragging: false,
+            dragStart: null,
+            dragEnd: null,
+            celebrationRings: [],
+          };
+
+          if (CoordinateSystem.posterWidth && Config.posterBalls && Config.posterPeople) {
+            console.log("Using poster positions for ConnectionsGame");
+            console.log("Using poster positions for ConnectionsGame");
+
+            Config.posterBalls.forEach((posterData, i) => {
+              const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
+              const radius = coords.size / 2;
+
+              const centerX = coords.x + radius;
+              const centerY = coords.y + radius;
+
+              this.balls.push(
+                this.createBall({
+                  x: centerX,
+                  y: centerY,
+                  vx: 0,
+                  vy: 0,
+                  radius: radius,
+                  ballImage: posterData.img,
+                  type: "ball",
+                  rotationSpeed: (Math.random() - 0.5) * 0.02,
+                  rotation: 0,
+                  scale: 1,
+                  targetScale: 1,
+                  currentScale: 1,
+                  wigglePhase: Math.random() * Math.PI * 2,
+                  wiggleAmount: 0,
+                  targetWiggle: 0,
+                  bounceAnim: 0,
+                  shakeAnim: 0,
+                  shakeIntensity: 0,
+                  spawnTime: Date.now(),
+                }),
+              );
+            });
+
+            Config.posterPeople.forEach((posterData, i) => {
+              const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
+              const height = coords.size;
+              const radius = height / 2;
+
+              const centerX = coords.x + radius;
+              const bottomY = coords.y + height;
+
+              this.balls.push({
+                x: centerX,
+                y: bottomY,
+                vx: 0,
+                vy: 0,
+                radius: radius,
+                clickRadius: radius + 20,
+                personImage: posterData.img,
+                personHeight: height,
+                type: "person",
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.015,
+                scale: 1,
+                targetScale: 1,
+                currentScale: 1,
+                wigglePhase: Math.random() * Math.PI * 2,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                shakeIntensity: 0,
+                spawnTime: Date.now(),
+              });
+            });
+
+            console.log(`Created ${this.balls.length} entities from poster`);
+          } else {
+            console.warn("Poster not ready, using fallback positions");
+            // Fallback: Random positions
+            const baseRadius = Config.isMobile ? 35 : 45;
+            const personHeight = Config.isMobile ? 65 : 80;
+
+            for (let i = 0; i < 8; i++) {
+              const a = Math.random() * Math.PI * 2;
+              const s = 1.5 + Math.random() * 1.5;
+              this.balls.push(
+                this.createBall({
+                  x: Math.random() * canvas.width,
+                  y: Math.random() * canvas.height,
+                  vx: Math.cos(a) * s,
+                  vy: Math.sin(a) * s,
+                  radius: baseRadius + Math.random() * 15,
+                  type: "ball",
+                  rotationSpeed: (Math.random() - 0.5) * 0.03,
+                  scale: 1,
+                  targetScale: 1,
+                  currentScale: 1,
+                  wigglePhase: Math.random() * Math.PI * 2,
+                  wiggleAmount: 0,
+                  targetWiggle: 0,
+                  bounceAnim: 0,
+                  shakeAnim: 0,
+                  shakeIntensity: 0,
+                  spawnTime: Date.now(),
+                }),
+              );
+            }
+
+            for (let i = 0; i < 8; i++) {
+              const a = Math.random() * Math.PI * 2;
+              const s = 1 + Math.random();
+              this.balls.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: Math.cos(a) * s,
+                vy: Math.sin(a) * s,
+                radius: baseRadius + 10,
+                clickRadius: baseRadius + 20,
+                personImage: ImageCounter.nextPerson(),
+                personHeight: personHeight,
+                type: "person",
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.02,
+                scale: 1,
+                targetScale: 1,
+                currentScale: 1,
+                wigglePhase: Math.random() * Math.PI * 2,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                shakeIntensity: 0,
+                spawnTime: Date.now(),
+              });
+            }
+          }
+        }
+
+        getDeathState(entity) {
+          for (const dying of this.state.dyingEntities) {
+            if (dying.entity1 === entity || dying.entity2 === entity) return dying;
+          }
+          return null;
+        }
+
+        triggerCelebration(entity1, entity2) {
+          entity1.bounceAnim = 1;
+          entity2.bounceAnim = 1;
+
+          const cx = (entity1.x + entity2.x) / 2;
+          const cy = (entity1.y + entity2.y) / 2;
+          this.state.celebrationRings.push({
+            x: cx,
+            y: cy,
+            radius: 0,
+            maxRadius: 120,
+            life: 1,
+            color: `hsl(${Math.random() * 60 + 30}, 100%, 60%)`,
+          });
+
+          this.particles.addBurst(cx, cy, 15, {
+            speed: 6,
+            speedVariance: 4,
+            life: 50,
+            size: 35,
+            sizeVariance: 20,
+            gravity: 0.08,
+            type: "heart",
+          });
+
+          ScreenShake.add(6);
+        }
+
+        triggerBadMatch(entity1, entity2) {
+          entity1.shakeAnim = 1;
+          entity1.shakeIntensity = 8;
+          entity2.shakeAnim = 1;
+          entity2.shakeIntensity = 8;
+
+          this.state.dyingEntities.push({
+            entity1: entity1,
+            entity2: entity2,
+            phase: "shake",
+            timer: 25,
+          });
+
+          ScreenShake.add(5);
+        }
+
+        explodeEntities(dying) {
+          const s = this.state;
+          const cx = (dying.entity1.x + dying.entity2.x) / 2;
+          const cy = (dying.entity1.y + dying.entity2.y) / 2;
+
+          ScreenShake.add(20);
+
+          for (let j = 0; j < 5; j++) {
+            const a = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+            const sp = 4 + Math.random() * 5;
+            this.particles.add({
+              x: cx,
+              y: cy,
+              vx: Math.cos(a) * sp,
+              vy: Math.sin(a) * sp - 4,
+              size: 55 + Math.random() * 35,
+              life: 50,
+              maxLife: 50,
+              type: "ko",
+              gravity: 0.12,
+              spin: (Math.random() - 0.5) * 0.3,
+              rotation: Math.random() * Math.PI * 2,
+            });
+          }
+
+          this.particles.addBurst(cx, cy, 12, {
+            speed: 8,
+            speedVariance: 4,
+            life: 30,
+            size: 20,
+            sizeVariance: 15,
+            gravity: 0.15,
+            type: "star",
+          });
+
+          s.connections = s.connections.filter(
+            (c) => c.entity1 !== dying.entity1 && c.entity2 !== dying.entity1 && c.entity1 !== dying.entity2 && c.entity2 !== dying.entity2,
+          );
+
+          const idx1 = this.balls.indexOf(dying.entity1);
+          const idx2 = this.balls.indexOf(dying.entity2);
+          if (idx1 > idx2) {
+            this.balls.splice(idx1, 1);
+            this.balls.splice(idx2, 1);
+          } else {
+            this.balls.splice(idx2, 1);
+            this.balls.splice(idx1, 1);
+          }
+
+          const baseRadius = Config.isMobile ? 35 : 45;
+          const personHeight = Config.isMobile ? 65 : 80;
+
+          setTimeout(() => {
+            const a1 = Math.random() * Math.PI * 2;
+            const a2 = Math.random() * Math.PI * 2;
+            this.balls.push(
+              this.createBall({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: Math.cos(a1) * 2,
+                vy: Math.sin(a1) * 2,
+                radius: baseRadius + Math.random() * 15,
+                type: "ball",
+                rotationSpeed: (Math.random() - 0.5) * 0.03,
+                scale: 1,
+                targetScale: 1,
+                currentScale: 1,
+                wigglePhase: Math.random() * Math.PI * 2,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                shakeIntensity: 0,
+                spawnTime: Date.now(),
+              }),
+            );
+            this.balls.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              vx: Math.cos(a2) * 1.5,
+              vy: Math.sin(a2) * 1.5,
+              radius: baseRadius + 10,
+              clickRadius: baseRadius + 20,
+              personImage: ImageCounter.nextPerson(),
+              personHeight: personHeight,
+              type: "person",
+              rotation: Math.random() * Math.PI * 2,
+              rotationSpeed: (Math.random() - 0.5) * 0.02,
+              scale: 1,
+              targetScale: 1,
+              currentScale: 1,
+              wigglePhase: Math.random() * Math.PI * 2,
+              wiggleAmount: 0,
+              targetWiggle: 0,
+              bounceAnim: 0,
+              shakeAnim: 0,
+              shakeIntensity: 0,
+              spawnTime: Date.now(),
+            });
+          }, 400);
+        }
+
+        connectEntities(entity1, entity2) {
+          const s = this.state;
+          if (entity1.type === entity2.type) {
+            s.exploded++;
+            this.triggerBadMatch(entity1, entity2);
+          } else {
+            const existingConn = s.connections.find(
+              (c) => (c.entity1 === entity1 && c.entity2 === entity2) || (c.entity2 === entity1 && c.entity1 === entity2),
+            );
+            if (!existingConn) {
+              const dx = entity2.x - entity1.x;
+              const dy = entity2.y - entity1.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              s.connections.push({ entity1, entity2, restLength: Math.min(dist, 150) });
+              s.score++;
+              this.triggerCelebration(entity1, entity2);
+            }
+          }
+        }
+
+        update() {
+          super.update();
+          const s = this.state;
+
+          s.celebrationRings = s.celebrationRings.filter((ring) => {
+            ring.radius += 8;
+            ring.life -= 0.04;
+            return ring.life > 0;
+          });
+
+          s.dyingEntities = s.dyingEntities.filter((dying) => {
+            dying.timer--;
+
+            if (dying.phase === "shake") {
+              dying.entity1.shakeAnim = 1;
+              dying.entity2.shakeAnim = 1;
+              const intensity = 6 + (1 - dying.timer / 25) * 10;
+              dying.entity1.shakeIntensity = intensity;
+              dying.entity2.shakeIntensity = intensity;
+            }
+
+            if (dying.timer <= 0) {
+              this.explodeEntities(dying);
+              return false;
+            }
+            return true;
+          });
+
+          s.connections.forEach((conn) => {
+            const b1 = conn.entity1;
+            const b2 = conn.entity2;
+            if (!this.balls.includes(b1) || !this.balls.includes(b2)) return;
+
+            const dx = b2.x - b1.x;
+            const dy = b2.y - b1.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const stretch = dist - conn.restLength;
+            const force = stretch * 0.02;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            b1.vx += fx;
+            b1.vy += fy;
+            b2.vx -= fx;
+            b2.vy -= fy;
+          });
+
+          // Check if entities should start moving (2 seconds after spawn)
+          const currentTime = Date.now();
+
+          this.balls.forEach((ball) => {
+            const isDying = this.getDeathState(ball);
+
+            if (ball.bounceAnim > 0) {
+              ball.bounceAnim -= 0.08;
+              if (ball.bounceAnim < 0) ball.bounceAnim = 0;
+            }
+
+            if (ball.shakeAnim > 0 && !isDying) {
+              ball.shakeAnim -= 0.05;
+              if (ball.shakeAnim < 0) {
+                ball.shakeAnim = 0;
+                ball.shakeIntensity = 0;
+              }
+            }
+
+            if (!isDying) {
+              ball.currentScale += (ball.targetScale - ball.currentScale) * 0.12;
+              ball.wiggleAmount += (ball.targetWiggle - ball.wiggleAmount) * 0.15;
+              ball.rotation += ball.rotationSpeed;
+              ball.wigglePhase += 0.2;
+
+              // Start gentle movement 2 seconds after spawn
+              const timeSinceSpawn = currentTime - (ball.spawnTime || 0);
+              if (timeSinceSpawn > 2000) {
+                // Add gentle random drift
+                if (Math.random() < 0.02) {
+                  const angle = Math.random() * Math.PI * 2;
+                  const speed = 0.3 + Math.random() * 0.5;
+                  ball.vx += Math.cos(angle) * speed * 0.1;
+                  ball.vy += Math.sin(angle) * speed * 0.1;
+                }
+
+                ball.vx *= 0.99;
+                ball.vy *= 0.99;
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                Physics.capSpeed(ball);
+                Physics.handleWallCollision(ball, canvas, 0.9, false);
+              }
+            }
+          });
+
+          // Only handle collisions after initial 2 second delay
+          if (currentTime - (this.balls[0]?.spawnTime || 0) > 2000) {
+            Physics.handleBallCollisions(this.balls);
+          }
+        }
+
+        draw() {
+          const s = this.state;
+          super.draw();
+
+          s.connections.forEach((conn) => {
+            if (!this.balls.includes(conn.entity1) || !this.balls.includes(conn.entity2)) return;
+            ctx.beginPath();
+            ctx.moveTo(conn.entity1.x, conn.entity1.y);
+            ctx.lineTo(conn.entity2.x, conn.entity2.y);
+            ctx.strokeStyle = "rgba(100, 200, 100, 0.6)";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          });
+
+          s.celebrationRings.forEach((ring) => {
+            ctx.beginPath();
+            ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = ring.color.replace(")", `, ${ring.life})`).replace("hsl", "hsla");
+            ctx.lineWidth = 6 * ring.life;
+            ctx.stroke();
+          });
+
+          if (s.isDragging && s.dragStart && s.dragEnd) {
+            ctx.beginPath();
+            ctx.moveTo(s.dragStart.x, s.dragStart.y);
+            ctx.lineTo(s.dragEnd.x, s.dragEnd.y);
+            ctx.strokeStyle = "rgba(150, 200, 255, 0.5)";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+
+          this.balls.forEach((entity) => {
+            const isSel = s.firstEntity === entity;
+            const deathState = this.getDeathState(entity);
+
+            ctx.save();
+
+            let offsetX = 0,
+              offsetY = 0;
+            if (entity.shakeAnim > 0) {
+              offsetX = (Math.random() - 0.5) * entity.shakeIntensity;
+              offsetY = (Math.random() - 0.5) * entity.shakeIntensity;
+            }
+
+            let bounceScale = 1;
+            if (entity.bounceAnim > 0) {
+              const t = entity.bounceAnim;
+              bounceScale = 1 + Math.sin(t * Math.PI * 3) * 0.25 * t;
+            }
+
+            const scale = (entity.currentScale || 1) * bounceScale;
+            const wiggle = entity.wiggleAmount * Math.sin(entity.wigglePhase) * 0.04;
+
+            ctx.translate(entity.x + offsetX, entity.y + offsetY);
+            ctx.scale(scale + wiggle, scale - wiggle);
+            ctx.translate(-entity.x, -entity.y);
+
+            if (deathState && deathState.phase === "shake") {
+              const pulse = Math.sin(deathState.timer * 0.8) * 0.5 + 0.5;
+              ctx.shadowColor = `rgba(255, 0, 0, ${0.8 + pulse * 0.2})`;
+              ctx.shadowBlur = 15 + pulse * 10;
+
+              ctx.beginPath();
+              ctx.arc(entity.x, entity.y, (entity.clickRadius || entity.radius) + 5, 0, Math.PI * 2);
+              ctx.strokeStyle = `rgba(255, 50, 50, ${0.6 + pulse * 0.4})`;
+              ctx.lineWidth = 4;
+              ctx.stroke();
+            }
+
+            if ((isSel || entity.targetScale > 1) && !deathState) {
+              ctx.shadowColor = "rgba(100, 200, 255, 0.8)";
+              ctx.shadowBlur = 20;
+            }
+
+            if (entity.bounceAnim > 0.3) {
+              ctx.shadowColor = "rgba(255, 220, 100, 0.9)";
+              ctx.shadowBlur = 25;
+            }
+
+            if (entity.type === "person") {
+              const height = entity.personHeight || (Config.isMobile ? 65 : 80);
+              Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
+            } else {
+              Renderer.drawBall(entity);
+            }
+
+            ctx.restore();
+          });
+        }
+
+        findEntityAt(x, y) {
+          for (let i = this.balls.length - 1; i >= 0; i--) {
+            const entity = this.balls[i];
+            if (this.getDeathState(entity)) continue;
+            const clickR = entity.clickRadius || entity.radius;
+            const dx = x - entity.x;
+            const dy = y - entity.y;
+            if (Math.sqrt(dx * dx + dy * dy) < clickR + 10) {
+              return entity;
+            }
+          }
+          return null;
+        }
+
+        onPointerMove(x, y) {
+          const s = this.state;
+
+          if (s.isDragging && s.firstEntity) {
+            s.dragEnd = { x, y };
+            s.dragStart = { x: s.firstEntity.x, y: s.firstEntity.y };
+          }
+
+          this.balls.forEach((entity) => {
+            if (s.firstEntity !== entity) {
+              entity.targetScale = 1;
+              entity.targetWiggle = 0;
+            }
+          });
+          s.hoveredEntity = null;
+
+          const entity = this.findEntityAt(x, y);
+          if (entity) {
+            s.hoveredEntity = entity;
+            entity.targetScale = 1.15;
+            entity.targetWiggle = 1;
+          }
+        }
+
+        onPointerDown(x, y) {
+          const s = this.state;
+          const entity = this.findEntityAt(x, y);
+
+          if (entity) {
+            if (!s.firstEntity) {
+              s.firstEntity = entity;
+              entity.targetScale = 1.2;
+              entity.targetWiggle = 1;
+              s.isDragging = true;
+              s.dragStart = { x: entity.x, y: entity.y };
+              s.dragEnd = { x, y };
+            } else if (s.firstEntity !== entity) {
+              this.connectEntities(s.firstEntity, entity);
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+              s.firstEntity = null;
+              s.isDragging = false;
+              s.dragStart = null;
+              s.dragEnd = null;
+            }
+          } else {
+            if (s.firstEntity) {
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+            }
+            s.firstEntity = null;
+            s.isDragging = false;
+            s.dragStart = null;
+            s.dragEnd = null;
+          }
+        }
+
+        onPointerUp() {
+          const s = this.state;
+          if (s.isDragging && s.dragEnd && s.firstEntity) {
+            const entity = this.findEntityAt(s.dragEnd.x, s.dragEnd.y);
+            if (entity && entity !== s.firstEntity) {
+              this.connectEntities(s.firstEntity, entity);
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+              s.firstEntity = null;
+            }
+          }
+          s.isDragging = false;
+          s.dragStart = null;
+          s.dragEnd = null;
+        }
+      }
+
+      // Brush Game
+      class BrushGame extends BaseGame {
+        init() {
+          super.init();
+          this.state = {
+            paths: [],
+            drawing: false,
+            currentPath: [],
+            currentColor: null,
+          };
+          this.colors = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
+
+          for (let i = 0; i < 20; i++) {
+            this.balls.push(
+              this.createBall({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.1,
+                vy: (Math.random() - 0.5) * 0.1,
+                radius: 30 + Math.random() * 15,
+                followingPath: null,
+                pathProgress: 0,
+                pathDirection: 1,
+                driftAngle: Math.random() * Math.PI * 2,
+                pathSpeed: 0.003 + Math.random() * 0.001,
+                speedPhase: Math.random() * Math.PI * 2,
+              }),
+            );
+          }
+        }
+
+        update() {
+          super.update();
+          const self = this;
+          this.state.paths = this.state.paths.filter((path) => Date.now() - path.created < 12000);
+
+          this.balls.forEach((ball) => {
+            if (ball.followingPath && ball.followingPath.points) {
+              const path = ball.followingPath;
+              if (!self.state.paths.includes(path)) {
+                ball.followingPath = null;
+                ball.pathProgress = 0;
+                return;
+              }
+
+              ball.speedPhase += 0.05;
+              const oscillation = Math.sin(ball.speedPhase) * 0.003;
+              const totalPoints = path.isLoop ? path.points.length : path.points.length - 1;
+              const dynamicSpeed = ball.pathSpeed + oscillation;
+              ball.pathProgress += dynamicSpeed * ball.pathDirection;
+
+              if (path.isLoop) {
+                if (ball.pathProgress >= 1) ball.pathProgress -= 1;
+                else if (ball.pathProgress < 0) ball.pathProgress += 1;
+              } else {
+                if (ball.pathProgress >= 1) {
+                  ball.pathProgress = 1;
+                  ball.pathDirection = -1;
+                } else if (ball.pathProgress <= 0) {
+                  ball.pathProgress = 0;
+                  ball.pathDirection = 1;
+                }
+              }
+
+              const idx = Math.floor(ball.pathProgress * totalPoints);
+              const clampedIdx = Math.max(0, Math.min(path.points.length - 1, idx));
+              const nextIdx = path.isLoop ? (clampedIdx + 1) % path.points.length : Math.min(clampedIdx + 1, path.points.length - 1);
+              const t = ball.pathProgress * totalPoints - idx;
+              ball.x = path.points[clampedIdx].x + (path.points[nextIdx].x - path.points[clampedIdx].x) * t;
+              ball.y = path.points[clampedIdx].y + (path.points[nextIdx].y - path.points[clampedIdx].y) * t;
+              ball.rotation += (ball.pathDirection > 0 ? 1 : -1) * dynamicSpeed * 8;
+            } else {
+              for (let p = 0; p < self.state.paths.length; p++) {
+                const path = self.state.paths[p];
+                if (path.points.length < 2) continue;
+                for (let i = 0; i < path.points.length; i++) {
+                  const pt = path.points[i];
+                  const dist = Physics.distance(ball.x, ball.y, pt.x, pt.y);
+                  if (dist < ball.radius + 20) {
+                    ball.followingPath = path;
+                    ball.pathProgress = i / (path.points.length - 1);
+                    ball.pathDirection = 1;
+                    ball.speedPhase = Math.random() * Math.PI * 2;
+                    break;
+                  }
+                }
+                if (ball.followingPath) break;
+              }
+
+              if (!ball.followingPath) {
+                ball.driftAngle += (Math.random() - 0.5) * 0.02;
+                ball.vx += Math.cos(ball.driftAngle) * 0.003;
+                ball.vy += Math.sin(ball.driftAngle) * 0.003;
+                const speed = Physics.getSpeed(ball);
+                if (speed > 0.2) {
+                  ball.vx *= 0.2 / speed;
+                  ball.vy *= 0.2 / speed;
+                }
+                ball.rotation += 0.002;
+              }
+
+              ball.vx *= 0.99;
+              ball.vy *= 0.99;
+              ball.x += ball.vx;
+              ball.y += ball.vy;
+              Physics.capSpeed(ball);
+
+              if (ball.x - ball.radius < 0) {
+                ball.x = ball.radius;
+                ball.vx *= -0.8;
+                ball.driftAngle = Math.PI - ball.driftAngle;
+              }
+              if (ball.x + ball.radius > canvas.width) {
+                ball.x = canvas.width - ball.radius;
+                ball.vx *= -0.8;
+                ball.driftAngle = Math.PI - ball.driftAngle;
+              }
+              if (ball.y - ball.radius < 0) {
+                ball.y = ball.radius;
+                ball.vy *= -0.8;
+                ball.driftAngle = -ball.driftAngle;
+              }
+              if (ball.y + ball.radius > canvas.height) {
+                ball.y = canvas.height - ball.radius;
+                ball.vy *= -0.8;
+                ball.driftAngle = -ball.driftAngle;
+              }
+            }
+          });
+
+          Physics.handleBallCollisions(this.balls);
+        }
+
+        catmullRomPoint(p0, p1, p2, p3, t) {
+          const t2 = t * t;
+          const t3 = t2 * t;
+          return {
+            x: 0.5 * (2 * p1.x + (-p0.x + p2.x) * t + (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 + (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3),
+            y: 0.5 * (2 * p1.y + (-p0.y + p2.y) * t + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 + (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3),
+          };
+        }
+
+        drawSmoothPath(points, opacity, color) {
+          if (points.length < 2) return;
+          ctx.save();
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = opacity * 0.6;
+          ctx.lineWidth = 8;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          ctx.beginPath();
+          ctx.moveTo(points[0].x, points[0].y);
+
+          if (points.length === 2) {
+            ctx.lineTo(points[1].x, points[1].y);
+          } else {
+            for (let i = 0; i < points.length - 1; i++) {
+              const p0 = points[Math.max(0, i - 1)];
+              const p1 = points[i];
+              const p2 = points[Math.min(points.length - 1, i + 1)];
+              const p3 = points[Math.min(points.length - 1, i + 2)];
+              const segments = 10;
+              for (let j = 1; j <= segments; j++) {
+                const t = j / segments;
+                const pt = this.catmullRomPoint(p0, p1, p2, p3, t);
+                ctx.lineTo(pt.x, pt.y);
+              }
+            }
+          }
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        draw() {
+          const self = this;
+          this.state.paths.forEach((path) => {
+            if (path.points.length < 1) return;
+            const age = Date.now() - path.created;
+            const op = Math.max(0, 1 - age / 12000);
+            if (path.points.length === 1) {
+              ctx.beginPath();
+              ctx.arc(path.points[0].x, path.points[0].y, 6, 0, Math.PI * 2);
+              ctx.fillStyle = path.color;
+              ctx.globalAlpha = op * 0.6;
+              ctx.fill();
+              ctx.globalAlpha = 1;
+            } else {
+              self.drawSmoothPath(path.points, op, path.color);
+            }
+          });
+
+          if (this.state.drawing && this.state.currentPath.length >= 1) {
+            ctx.save();
+            if (this.state.currentPath.length === 1) {
+              ctx.beginPath();
+              ctx.arc(this.state.currentPath[0].x, this.state.currentPath[0].y, 6, 0, Math.PI * 2);
+              ctx.fillStyle = this.state.currentColor;
+              ctx.globalAlpha = 0.9;
+              ctx.fill();
+            } else {
+              this.drawSmoothPath(this.state.currentPath, 1.5, this.state.currentColor);
+            }
+            ctx.restore();
+          }
+
+          this.balls.forEach((ball) => {
+            Renderer.drawBall(ball, 1, ball.rotation);
+          });
+          super.draw();
+        }
+
+        onPointerDown(x, y) {
+          this.state.drawing = true;
+          this.state.currentPath = [{ x: x, y: y }];
+          const availableColors = this.colors.filter((c) => c !== this.state.currentColor);
+          this.state.currentColor = availableColors[Math.floor(Math.random() * availableColors.length)];
+        }
+
+        onPointerMove(x, y) {
+          if (this.state.drawing) {
+            const lastPt = this.state.currentPath[this.state.currentPath.length - 1];
+            if (Math.abs(x - lastPt.x) > 5 || Math.abs(y - lastPt.y) > 5) {
+              this.state.currentPath.push({ x: x, y: y });
+            }
+          }
+        }
+
+        onPointerUp() {
+          if (this.state.drawing && this.state.currentPath.length >= 1) {
+            const startPt = this.state.currentPath[0];
+            const endPt = this.state.currentPath[this.state.currentPath.length - 1];
+            const dist = this.state.currentPath.length > 1 ? Physics.distance(startPt.x, startPt.y, endPt.x, endPt.y) : 0;
+            const isLoop = this.state.currentPath.length > 3 && dist < 50;
+            this.state.paths.push({
+              points: this.state.currentPath.slice(),
+              created: Date.now(),
+              isLoop: isLoop,
+              color: this.state.currentColor,
+            });
+          }
+          this.state.drawing = false;
+          this.state.currentPath = [];
+        }
+      }
+
+      // Game Manager
+      const GameManager = {
+        games: {
+          1: { name: "Connect", class: ConnectionsGame },
+          2: { name: "Pop", class: PopGame },
+          3: { name: "Bounce", class: BounceGame },
+          4: { name: "Brush", class: BrushGame },
+        },
+        currentGameNum: 1,
+        currentGame: null,
+
+        init() {
+          this.switchGame(1);
+        },
+
+        switchGame(gameNum) {
+          if (gameNum < 1 || gameNum > 4) return;
+          this.currentGameNum = gameNum;
+          ScreenShake.reset();
+
+          // Update easter egg highlights
+          document.querySelectorAll(".easter-egg").forEach((egg, idx) => {
+            egg.classList.toggle("active", idx + 1 === gameNum);
+          });
+
+          // Show game name briefly
+          const gameName = document.getElementById("gameName");
+          gameName.textContent = this.games[gameNum].name;
+          gameName.classList.add("show");
+          setTimeout(() => {
+            gameName.classList.remove("show");
+          }, 1500);
+
+          const GameClass = this.games[gameNum].class;
+          this.currentGame = new GameClass();
+          this.currentGame.init();
+        },
+
+        update() {
+          if (this.currentGame) this.currentGame.update();
+        },
+
+        draw() {
+          if (this.currentGame) this.currentGame.draw();
+        },
+
+        onPointerDown(x, y) {
+          if (this.currentGame && this.currentGame.onPointerDown) {
+            this.currentGame.onPointerDown(x, y);
+          }
+        },
+
+        onPointerMove(x, y) {
+          if (this.currentGame && this.currentGame.onPointerMove) {
+            this.currentGame.onPointerMove(x, y);
+          }
+        },
+
+        onPointerUp() {
+          if (this.currentGame && this.currentGame.onPointerUp) {
+            this.currentGame.onPointerUp();
+          }
+        },
+      };
+
+      // Input Handler
+      const Input = {
+        mouseX: 0,
+        mouseY: 0,
+        isMouseDown: false,
+
+        init() {
+          this.setupMouseEvents();
+          this.setupTouchEvents();
+          this.setupKeyboardEvents();
+          this.setupEasterEggs();
+          this.setupResize();
+        },
+
+        getPointer(e) {
+          const touch = e.touches ? e.touches[0] : e;
+          return { x: touch.clientX, y: touch.clientY };
+        },
+
+        setupMouseEvents() {
+          const self = this;
+          canvas.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            self.isMouseDown = true;
+            const p = self.getPointer(e);
+            GameManager.onPointerDown(p.x, p.y);
+          });
+
+          canvas.addEventListener("mousemove", (e) => {
+            const p = self.getPointer(e);
+            self.mouseX = p.x;
+            self.mouseY = p.y;
+            GameManager.onPointerMove(p.x, p.y);
+          });
+
+          canvas.addEventListener("mouseup", (e) => {
+            e.preventDefault();
+            self.isMouseDown = false;
+            GameManager.onPointerUp();
+          });
+
+          canvas.addEventListener("mouseleave", () => {
+            if (self.isMouseDown) GameManager.onPointerUp();
+          });
+
+          window.addEventListener("mouseup", () => {
+            if (self.isMouseDown) {
+              self.isMouseDown = false;
+              GameManager.onPointerUp();
+            }
+          });
+
+          window.addEventListener("blur", () => {
+            if (self.isMouseDown) {
+              self.isMouseDown = false;
+              GameManager.onPointerUp();
+            }
+          });
+        },
+
+        setupTouchEvents() {
+          const self = this;
+          canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            const p = self.getPointer(e);
+            GameManager.onPointerDown(p.x, p.y);
+          });
+
+          canvas.addEventListener("touchmove", (e) => {
+            e.preventDefault();
+            const p = self.getPointer(e);
+            self.mouseX = p.x;
+            self.mouseY = p.y;
+            GameManager.onPointerMove(p.x, p.y);
+          });
+
+          canvas.addEventListener("touchend", (e) => {
+            e.preventDefault();
+            GameManager.onPointerUp();
+          });
+        },
+
+        setupKeyboardEvents() {
+          document.addEventListener("keydown", (e) => {
+            const num = parseInt(e.key);
+            if (num >= 1 && num <= 4) {
+              GameManager.switchGame(num);
+            }
+          });
+        },
+
+        setupEasterEggs() {
+          document.getElementById("easterConnect").addEventListener("click", () => {
+            GameManager.switchGame(1);
+          });
+
+          document.getElementById("easterPop").addEventListener("click", () => {
+            GameManager.switchGame(2);
+          });
+
+          document.getElementById("easterBounce").addEventListener("click", () => {
+            GameManager.switchGame(3);
+          });
+
+          document.getElementById("easterBrush").addEventListener("click", () => {
+            GameManager.switchGame(4);
+          });
+        },
+
+        setupResize() {
+          window.addEventListener("resize", () => {
+            resizeCanvas();
+            // Reinitialize current game with new dimensions
+            if (GameManager.currentGame) {
+              GameManager.currentGame.init();
+            }
+          });
+        },
+      };
+
+      // Animation Loop
+      function animate() {
+        PosterTransition.update();
+        ScreenShake.update();
+
+        ctx.save();
+        ctx.translate(ScreenShake.x, ScreenShake.y);
+        ctx.clearRect(-10, -10, canvas.width + 20, canvas.height + 20);
+        GameManager.update();
+        GameManager.draw();
+        ctx.restore();
+
+        requestAnimationFrame(animate);
+      }
+
+      // Initialize everything
+      Assets.load();
+      Input.init();
+      PosterTransition.init();
+      animate();
+    </script>
+
+    <script>
+      function setupSponsors() {
+        const slots = document.querySelectorAll(".logo-slot");
+        const logos = [...document.querySelectorAll(".logo-source a")];
+
+        function getVisibleCount() {
+          return window.innerWidth <= 768 ? 3 : 6; // 3 on mobile, 6 on desktop
+        }
+
+        function updateLogos() {
+          const visibleCount = getVisibleCount();
+          const selectedLogos = [...logos].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+          // First fade out current logos
+          slots.forEach((slot) => {
+            const currentLogo = slot.querySelector("img");
+            if (currentLogo) {
+              currentLogo.classList.remove("visible");
+            }
+          });
+
+          setTimeout(() => {
+            slots.forEach((slot, i) => {
+              if (selectedLogos[i]) {
+                const logo = selectedLogos[i].cloneNode(true);
+                slot.innerHTML = "";
+                slot.appendChild(logo);
+                requestAnimationFrame(() => {
+                  logo.querySelector("img").classList.add("visible");
+                });
+              }
+            });
+          }, 1200);
+        }
+
+        updateLogos();
+        setInterval(updateLogos, 6000);
+
+        window.addEventListener(
+          "resize",
+          debounce(() => {
+            updateLogos();
+          }, 250),
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", setupSponsors);
+    </script>
+
+    <script>
+      // Random Activities and Guests Script
+      document.addEventListener("DOMContentLoaded", function () {
+        // All possible activities
+        const allActivities = [
+          "Play massive videogames projected on concrete silos at the waterfront!",
+          "Scour High Park for fungi and butterflies in scavenger hunts!",
+          "Level up your industry knowledge and contacts!",
+          "Learn from a game-designer-turned-bestselling-novelist!",
+          "Play an RPG you found in a Little Free Library!",
+          "Wheel down dark forest paths to the Night Parkcade!",
+          "Use a flight sim to chase a sunset neverending!",
+          "Connect with queer joy and rage in DEI or DIE Variety Show!",
+          "Discover a new favourite pen for journaling about games!",
+          "Rediscover your love of playing with giant parachutes!",
+        ];
+
+        // All possible guests (with HTML for links)
+        const allGuests = [
+          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
+          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
+          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
+          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
+          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
+          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
+        ];
+
+        // Function to get random items from an array
+        function getRandomItems(array, count) {
+          const shuffled = [...array].sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, count);
+        }
+
+        // Function to populate a list with items
+        function populateList(listId, items, useHTML = false) {
+          const list = document.getElementById(listId);
+          if (!list) return;
+
+          list.innerHTML = "";
+
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            if (useHTML) {
+              li.innerHTML = item;
+            } else {
+              li.textContent = item;
+            }
+            list.appendChild(li);
+          });
+        }
+
+        // Populate the activities list with 5 random activities
+        const randomActivities = getRandomItems(allActivities, 5);
+        populateList("activitiesList", randomActivities);
+
+        // Populate the guests list with 3 random guests
+        const randomGuests = getRandomItems(allGuests, 3);
+        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
       });
     </script>
   </body>
