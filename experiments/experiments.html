@@ -66,6 +66,21 @@
         }
       }
 
+      /* .poster-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 4s ease-out;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        
+      } */
+
       .poster-container {
         position: fixed;
         top: 0;
@@ -78,6 +93,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: center;
+        opacity: 0; /* Change this from whatever it was to 0 */
       }
 
       .poster-container.fade-out {
@@ -252,8 +268,7 @@
 
     <canvas id="canvas"></canvas>
 
-
-    <main class="no-pointer-events">
+      <main class="no-pointer-events">
       <div class="contentContainer" id="landingPage">
         <div class="content">
           <section class="textBox">
@@ -275,7 +290,78 @@
           </section>
         </div>
 
-     
+        <!-- <div class="content">
+          <section class="textBox">
+            <h2>At Toronto Games Week, you might:</h2>
+            <ul class="controllerList" id="activitiesList">
+              <li>Play massive videogames projected on concrete silos at the waterfront!</li>
+              <li>Scour High Park for fungi and butterflies in scavenger hunts!</li>
+              <li>Level up your industry knowledge and contacts!</li>
+              <li>Learn from a game-designer-turned-bestselling-novelist!</li>
+              <li>Play an RPG you found in a Little Free Library!</li>
+            </ul>
+            <ul class="controllerList">
+              <li>Frolic in a flickering forest pop-up arcade after dark!</li>
+              <li>Learn open source game tools at a workshop!</li>
+              <li>Play or cheer at a women & femme speedrunning event!</li>
+              <li>Brew a DIY blend at a tea party in the park!</li>
+              <li>Compare working class sci-fi movies and games!</li>
+              <li>Install a game you made on a Gameboy cartridge!</li>
+            </ul>
+            <div class="btndiv">
+              <p class="btn floatingBtn">
+                <a class="" target="_blank" href="blog/2023.html">2023 recap</a>
+              </p>
+
+              <p class="btn floatingBtn">
+                <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
+              </p>
+            </div>
+          </section>
+        </div> -->
+        <!-- 
+        <div class="content">
+          <section class="textBox">
+            <h2>Special Guests:</h2>
+            <ul class="controllerList" id="guestsList">
+              Guests will be populated by JavaScript
+            </ul>
+          </section>
+        </div> -->
+        <!-- 
+        <div class="content">
+          <section class="textBox">
+            <h2>Organize an event!</h2>
+            <p>
+              If you'd like to run a TGW event yourself, there's still time to get in on the fun! We're open to including board/escape
+              room/theatrical/LARPing -- playful culture of all sorts, not just screen based games!
+            </p>
+            <p class="btn floatingBtn">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfj5hbgpI-ATNYESbEnNVPaAeONATGXkaEzocRHVB-QRziiyA/viewform?usp=sf_link"
+                target="_blank"
+                >Submit an Event</a
+              >
+            </p>
+          </section>
+        </div> -->
+
+        <!-- <div class="content">
+          <section class="textBox">
+            <h2>Help out</h2>
+            <p>
+              Would you like to volunteer and help the coalition of community organizations and not-for-profits that make it happen? There's lots of
+              interesting things to do!
+            </p>
+            <p class="btn floatingBtn floatingBtnBlue">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSct8eZvHVT46la0WTR1Lq1Nx_6KS3dEgumXNNak-TG3MbB0Uw/viewform?usp=sf_link"
+                target="_blank"
+                >Volunteer</a
+              >
+            </p>
+          </section>
+        </div> -->
 
         <div class="content">
           <section class="textBox">
@@ -327,16 +413,190 @@
 
         <div class="logo-source" style="display: none">
           <a href="https://www.ontariocreates.ca/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Ontario-Creates.png" alt="Ontario Creates logo" class="logo logo-big" />
+            <img src="/images/logos/2025/TGW25-Web_Ontario-Creates.png" alt="Ontario Creates logo" class="logo logo-big" />
           </a>
           <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_City-of-Toronto.png" alt="City of Toronto logo" class="logo logo-big" /> </a
+            <img src="/images/logos/2025/TGW25-Web_City-of-Toronto.png" alt="City of Toronto logo" class="logo logo-big" /> </a
           ><br />
           <a href="https://www.drinkboxstudios.com/" target="blank">
-            <img src="images/logos/2025/TGW25-Web_Drinkbox-Studios.png" alt="Drinkbox Studios logo" class="logo logo-big" />
+            <img src="/images/logos/2025/TGW25-Web_Drinkbox-Studios.png" alt="Drinkbox Studios logo" class="logo logo-big" />
           </a>
 
-        
+          <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
+
+          <a href="https://www.epicgames.com/site/en-US/home" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Epic-Games.png" alt="Epic Games logo" class="logo logo-big" />
+          </a>
+          <a href="https://gameartsinternational.network/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_GAIN.png" alt="GAIN logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.interactiveontario.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Interactive-Ontario.png" alt="Interactive Ontario logo" class="logo logo-big" />
+          </a>
+          <a href="https://xpgamesummit.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_XP-Gaming.png" alt="XP Gaming logo" class="logo logo-big" />
+          </a>
+          <a href="https://brokengamescollective.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Broken-Games-Collective.png" alt="Broken Games Collective logo" class="logo logo-big" />
+          </a>
+          <a href="https://makerspace.cobot.me/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_TTL-Makerspace.png" alt="TTL Makerspace logo" class="logo logo-big" />
+          </a>
+          <a href="https://linktr.ee/bonusstagetoronto/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Bonus-Stage.png" alt="Bonus Stage logo" class="logo logo-big" />
+          </a>
+          <a href="https://ladyarcaders.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Lady-Arcaders.png" alt="Lady Arcaders logo" class="logo logo-big" />
+          </a>
+          <a href="https://vividfoundry.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Vivid-Foundry.png" alt="Vivid Foundry logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.dirty-rectangles.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Dirty-Rectangles.png" alt="Dirty Rectangles logo" class="logo logo-big" />
+          </a>
+          <a href="https://tojam.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_TO-Jam.png" alt="Toronto Game Jam logo" class="logo logo-big" />
+          </a>
+          <a href="https://torontopubliclibrary.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Toronto-Public-Library.png" alt="Toronto Public Library logo" class="logo logo-big" />
+          </a>
+          <a href="https://interaccess.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Interaccess.png" alt="Interaccess logo" class="logo logo-big" />
+          </a>
+          <a href="https://werocreative.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_wero.png" alt="Wero logo" class="logo logo-big" />
+          </a>
+          <a href="https://unity.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Unity-Color.png" alt="Unity logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.amd.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_AMD.png" alt="AMD logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.rom.on.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_ROM.png" alt="ROM logo" class="logo logo-big" />
+          </a>
+          <a href="https://kittencupstudio.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Kitten-Cup-Studio.png" alt="Kitten Cup Studio logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.finji.co/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_FINJI.png" alt="FINJI logo" class="logo logo-big" />
+          </a>
+          <a href="https://gamerella.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_GAMERella.png" alt="GAMERella logo" class="logo logo-big" />
+          </a>
+          <a href="https://igda.org/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_IGDA.png" alt="IGDA logo" class="logo logo-big" />
+          </a>
+          <a href="https://handeyesociety.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Hand-Eye-Society.png" alt="Hand Eye Society logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.georgebrown.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_George-Brown-College.png" alt="George Brown College logo" class="logo logo-big" />
+          </a>
+          <a href="" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_GRID.png" alt="GRID logo" class="logo logo-big" />
+          </a>
+          <a href="https://cwacanada.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_CODE-CWA.png" alt="CODE CWA logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.anotherstory.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Another-Story-Bookshop.png" alt="Another Story Bookshop logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.trinitysquarevideo.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Trinity-Square-Video.png" alt="Trinity Square Video logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.lockwoodimmersive.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Lockwood-Immersive.png" alt="Lockwood Immersive logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.instagram.com/hypergamestorytime/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Hypergame-Storytime.png" alt="Hypergame Storytime logo" class="logo logo-big" />
+          </a>
+          <a href="https://trainwrecklabs.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Trainwreck-Labs.png" alt="Trainwreck Labs logo" class="logo logo-big" />
+          </a>
+          <a href="https://www.ocadu.ca/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_OCADU.png" alt="OCAD University logo" class="logo logo-big" />
+          </a>
+          <a href="https://xtramagazine.com/" target="blank">
+            <img src="/images/logos/2025/TGW25-Web_Xtra.png" alt="Xtra Magazine logo" class="logo logo-big" />
+          </a>
+        </div>
+
+        <!-- <div class="logo-source" style="display: none">
+          <a href="https://www.ontariocreates.ca/" target="blank"
+            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
+            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo logo-big" /></a
+          ><br />
+          <a href="https://www.drinkboxstudios.com/" target="blank"
+            ><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo logo-big"
+          /></a>
+          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo logo-big" /></a>
+          <a href="https://gameartsinternational.network/" target="blank"
+            ><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo logo-big" /></a>
+          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo logo-big" /></a>
+          <a href="https://www.continueagency.com/" target="blank"
+            ><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo logo-big"
+          /></a>
+          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo logo-big" /></a>
+          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo logo-big" /></a>
+          <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
+            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo logo-big"
+          /></a>
+          <a href="https://ladyarcaders.com/" target="blank"
+            ><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo logo-big"
+          /></a>
+          <a href="https://vividfoundry.com/" target="blank"
+            ><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo logo-big"
+          /></a>
+          <a href="https://linktr.ee/blackbeltcinema" target="blank"
+            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.dirty-rectangles.com/" target="blank"
+            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo logo-big"
+          /></a>
+          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo logo-big" /></a>
+          <a href="https://torontopubliclibrary.ca/" target="blank"
+            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo logo-big"
+          /></a>
+          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo logo-big" /></a>
+          <a href="https://indiegamereviewer.com/" target="blank"
+            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo logo-big"
+          /></a>
+          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo logo-big" /></a>
+          <a href="https://toughguymountain.com/" target="blank"
+            ><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo logo-big"
+          /></a>
+          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo logo-big" /></a>
+          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo logo-big" /></a>
+          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo logo-big" />
+          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo logo-big" /></a>
+          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo logo-big" /></a>
+          <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
+
+          <a href="https://tripledragon.co.uk/" target="blank"
+            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo logo-big" /></a>
+          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo logo-big" /></a>
+          <a href="https://toronto.ubisoft.com/" target="blank"
+            ><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo logo-big"
+          /></a>
+          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo logo-big" /></a>
+          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo logo-big" /></a>
+          <a href="https://mightyyell.com/" target="blank"
+            ><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo logo-big"
+          /></a>
+          <a href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection" target="blank"
+            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo logo-big"
+          /></a>
+          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo logo-big" /></a>
+          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo logo-big" /></a>
+        </div>
+      </div> -->
       </div>
 
       <div class="footer-content">
@@ -405,8 +665,6 @@
           <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
         </div>
       </div>
-
-      <!-- <div id="inventory"></div> -->
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -430,6 +688,7 @@
         MAX_SPEED: 25,
         NUM_BALL_IMAGES: 39,
         NUM_PEOPLE_IMAGES: 29,
+        NUM_OTHER_IMAGES: 14,
         SCREEN_SHAKE_DECAY: 0.85,
         SCREEN_SHAKE_MAX: 5,
         SCREEN_SHAKE_MIN_THRESHOLD: 0.3,
@@ -440,7 +699,7 @@
           { x: 2.79, y: 78.73, size: 5.66, img: 2 },
           { x: 6.52, y: 57.48, size: 3.22, img: 3 },
           { x: 70.13, y: 3.12, size: 5.59, img: 4 },
-          { x: 38.61, y: 10.73, size: 15.54, img: 5 },
+          { x: 38.61, y: 11.73, size: 13.54, img: 5 },
           { x: 2.15, y: 51.7, size: 3.22, img: 6 },
           { x: 3.8, y: 48.82, size: 3.22, img: 7 },
           { x: 36.25, y: 42.08, size: 29.94, img: 8 },
@@ -478,7 +737,7 @@
         ],
 
         posterPeople: [
-          { x: 23.64, y: 12.66, size: 8.81, img: 0 },
+          { x: 0, y: 0, size: 0, img: 0 },
           { x: 68.33, y: 48.51, size: 6.23, img: 1 },
           { x: 46.63, y: 78.35, size: 7.59, img: 2 },
           { x: 69.56, y: 63.4, size: 4.3, img: 3 },
@@ -489,7 +748,7 @@
           { x: 21.92, y: 61.38, size: 14.9, img: 8 },
           { x: 79.63, y: 90.93, size: 5.66, img: 9 },
           { x: 84.82, y: 90.32, size: 6.38, img: 10 },
-          { x: 50.63, y: 20.23, size: 8.95, img: 11 },
+          { x: 50.63, y: 20.23, size: 5.95, img: 11 },
           { x: 23.42, y: 12.49, size: 9.03, img: 12 },
           { x: 34.81, y: 41.83, size: 4.8, img: 13 },
           { x: 26.58, y: 37.84, size: 5.23, img: 14 },
@@ -498,7 +757,7 @@
           { x: 54.87, y: 29.42, size: 5.52, img: 17 },
           { x: 19.55, y: 59.58, size: 7.09, img: 18 },
           { x: 45.77, y: 86.59, size: 9.89, img: 19 },
-          { x: 36.46, y: 24.13, size: 9.53, img: 20 },
+          { x: 36.46, y: 24.13, size: 5.53, img: 20 },
           { x: 32.88, y: 7.8, size: 7.38, img: 21 },
           { x: 90.04, y: 88.78, size: 6.3, img: 22 },
           { x: 75.5, y: 34.85, size: 5.52, img: 23 },
@@ -507,6 +766,22 @@
           { x: 39.04, y: 83.36, size: 8.81, img: 26 },
           { x: 47.13, y: 1.75, size: 6.45, img: 27 },
           { x: 85.39, y: 43.64, size: 12.32, img: 28 },
+        ],
+        posterObjects: [
+          { x: -1.07, y: 27.11, size: 37.17, img: 1 },
+          { x: 2.08, y: 68.2, size: 24.57, img: 2 },
+          { x: 85.24, y: 30.05, size: 15.4, img: 3 },
+          { x: 69.27, y: 47.51, size: 27.0, img: 4 },
+          { x: 49.64, y: 22.69, size: 28.58, img: 5 },
+          { x: 29.66, y: 15.52, size: 12.1, img: 6 },
+          { x: 13.69, y: -2.06, size: 9.5, img: 7 },
+          { x: 39.26, y: 6.31, size: 5.37, img: 8 },
+          { x: 51.8, y: -0.87, size: 15.33, img: 9 },
+          { x: 87.18, y: 7.43, size: 15.97, img: 10 },
+          { x: 6.52, y: 11.42, size: 16.69, img: 11 },
+          { x: 53.58, y: 16.65, size: 6.94, img: 12 },
+          { x: 38.97, y: 91.99, size: 3.87, img: 13 },
+          { x: 53.8, y: 82.14, size: 5.16, img: 14 },
         ],
       };
 
@@ -572,7 +847,6 @@
               console.log("Poster ready, initializing game");
               GameManager.init();
 
-              // Start fade transition
               setTimeout(() => {
                 this.startTime = Date.now();
                 posterContainer.classList.add("fade-out");
@@ -632,6 +906,7 @@
         balls: [],
         people: [],
         stars: [],
+        others: [],
         special: {},
 
         load() {
@@ -644,6 +919,11 @@
             const img = new Image();
             img.src = "ppl/ppl_" + i + ".png";
             this.people.push(img);
+          }
+          for (let i = 1; i <= Config.NUM_OTHER_IMAGES; i++) {
+            const img = new Image();
+            img.src = "other/o_" + i + ".png";
+            this.others.push(img);
           }
           for (let i = 1; i <= 3; i++) {
             const img = new Image();
@@ -666,6 +946,9 @@
         },
         getStarImage(index) {
           return this.stars[index % this.stars.length];
+        },
+        getOtherImage(index) {
+          return this.others[index % this.others.length];
         },
         isImageReady(img) {
           return img && img.complete && img.naturalWidth > 0;
@@ -878,6 +1161,24 @@
             ctx.restore();
           }
         },
+        drawOther(x, y, size, imageIndex, opacity = 1, rotation = 0, grayscale = 0) {
+          const img = Assets.getOtherImage(imageIndex);
+          if (!Assets.isImageReady(img)) return false;
+
+          ctx.save();
+          ctx.globalAlpha = opacity;
+          ctx.translate(x, y);
+          ctx.rotate(rotation);
+
+          // Apply grayscale filter
+          if (grayscale > 0) {
+            ctx.filter = `grayscale(${Math.min(grayscale, 1) * 100}%)`;
+          }
+
+          ctx.drawImage(img, -size / 2, -size / 2, size, size);
+          ctx.restore();
+          return true;
+        },
         createRadialGradient(x, y, r1, r2, stops) {
           const gradient = ctx.createRadialGradient(x, y, r1, x, y, r2);
           stops.forEach((s) => gradient.addColorStop(s[0], s[1]));
@@ -1053,10 +1354,16 @@
       class PopGame extends BaseGame {
         init() {
           super.init();
-          const baseRadius = Config.isMobile ? 50 : 90;
-          const radiusVariance = Config.isMobile ? 20 : 30;
+          const screenSize = Math.min(canvas.width, canvas.height);
+          const baseRadius = Math.max(40, screenSize * 0.08);
+          const radiusVariance = Math.max(15, screenSize * 0.03);
 
-          for (let i = 0; i < 20; i++) {
+          // Calculate how many balls will fit well on screen
+          const screenArea = canvas.width * canvas.height;
+          const averageBallArea = Math.PI * Math.pow(baseRadius + radiusVariance / 2, 2);
+          const numBalls = Math.floor((screenArea * 0.7) / averageBallArea); // Fill 70% of screen
+
+          for (let i = 0; i < numBalls; i++) {
             const a = Math.random() * Math.PI * 2;
             const s = 0.8 + Math.random() * 0.8;
             this.balls.push(
@@ -1180,7 +1487,9 @@
             barrierLifetime: 8000,
             splats: [],
             score: 0,
-            target: { x: canvas.width / 2, y: canvas.height / 2, radius: targetRadius, pulse: 0, rotation: 0 },
+            target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) / 2, radius: targetRadius, pulse: 0, rotation: 0 },
+            posterFadeProgress: 0,
+            posterFadeStart: Date.now(),
           };
           this.isFirstBall = true;
           this.spawnBall();
@@ -1211,6 +1520,12 @@
         update() {
           super.update();
           const s = this.state;
+
+          // Handle poster fade
+          const fadeElapsed = Date.now() - s.posterFadeStart;
+          const fadeDuration = 1000;
+          s.posterFadeProgress = Math.min(fadeElapsed / fadeDuration, 1);
+
           s.barriers = s.barriers.filter((b) => Date.now() - b.created < s.barrierLifetime);
           s.splats = s.splats.filter((sp) => sp.life > 0);
           s.splats.forEach((sp) => sp.life--);
@@ -1243,7 +1558,7 @@
 
             if (dist < ball.radius * ball.growScale + s.target.radius) {
               s.score++;
-              ball.growScale += 0.15;
+              ball.growScale += 0.05;
               ScreenShake.add(12);
               this.particles.addBurst(s.target.x, s.target.y, 12, {
                 speed: 4,
@@ -1255,7 +1570,7 @@
                 type: "star",
               });
               s.target.x = 150 + Math.random() * (canvas.width - 300);
-              s.target.y = 250 + Math.random() * (canvas.height - 400);
+              s.target.y = 150 + Math.random() * (Math.min(canvas.height, window.innerHeight) - 300);
               const ang = Math.atan2(dy, dx);
               ball.vx = Math.cos(ang) * 5;
               ball.vy = Math.sin(ang) * 5;
@@ -1322,6 +1637,21 @@
 
         draw() {
           const s = this.state;
+
+          const posterImg = document.getElementById("posterImage");
+          if (posterImg && Assets.isImageReady(posterImg)) {
+            const fadeProgress = s.posterFadeProgress;
+            const opacity = 0.07 + (1 - fadeProgress) * 0.9; // Fade from 1 to 0.1
+            const grayscale = fadeProgress; // 0 to 1
+
+            ctx.save();
+            ctx.globalAlpha = opacity;
+            ctx.filter = `grayscale(${grayscale * 100}%)`;
+            ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
+            ctx.restore();
+            ctx.filter = "none";
+          }
+
           const t = s.target;
           const pulseScale = 1 + Math.sin(t.pulse) * 0.15;
           const glowGrad = Renderer.createRadialGradient(t.x, t.y, t.radius * 0.3, t.radius * 2.5, [
@@ -1466,7 +1796,7 @@
         }
       }
 
-      // Connections  
+      // Connections
       class ConnectionsGame extends BaseGame {
         init() {
           super.init();
@@ -1481,18 +1811,22 @@
             dragStart: null,
             dragEnd: null,
             celebrationRings: [],
+            clickSpinEntities: [],
           };
 
+          // Calculate responsive sizes
+          const screenSize = Math.min(canvas.width, canvas.height);
+          const standardBallRadius = Math.max(30, screenSize * 0.04);
+          const standardPersonHeight = Math.max(60, screenSize * 0.07);
+
           if (CoordinateSystem.posterWidth && Config.posterBalls && Config.posterPeople) {
-            console.log("Using poster positions for ConnectionsGame");
             console.log("Using poster positions for ConnectionsGame");
 
             Config.posterBalls.forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
-              const radius = coords.size / 2;
-
-              const centerX = coords.x + radius;
-              const centerY = coords.y + radius;
+              const originalRadius = coords.size / 2;
+              const centerX = coords.x + originalRadius;
+              const centerY = coords.y + originalRadius;
 
               this.balls.push(
                 this.createBall({
@@ -1500,7 +1834,9 @@
                   y: centerY,
                   vx: 0,
                   vy: 0,
-                  radius: radius,
+                  radius: originalRadius,
+                  originalRadius: originalRadius,
+                  targetRadius: standardBallRadius,
                   ballImage: posterData.img,
                   type: "ball",
                   rotationSpeed: (Math.random() - 0.5) * 0.02,
@@ -1515,27 +1851,31 @@
                   shakeAnim: 0,
                   shakeIntensity: 0,
                   spawnTime: Date.now(),
+                  transitionStarted: false,
                 }),
               );
             });
 
             Config.posterPeople.forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
-              const height = coords.size;
-              const radius = height / 2;
-
-              const centerX = coords.x + radius;
-              const bottomY = coords.y + height;
+              const originalHeight = coords.size;
+              const originalRadius = originalHeight / 2;
+              const centerX = coords.x + coords.size * 0.5; // Assumes aspect ratio ~1:1
+              const bottomY = coords.y + coords.size;
 
               this.balls.push({
                 x: centerX,
                 y: bottomY,
                 vx: 0,
                 vy: 0,
-                radius: radius,
-                clickRadius: radius + 20,
+                radius: originalRadius,
+                originalRadius: originalRadius,
+                targetRadius: standardPersonHeight / 2,
+                clickRadius: originalRadius + 20,
                 personImage: posterData.img,
-                personHeight: height,
+                personHeight: originalHeight,
+                originalPersonHeight: originalHeight,
+                targetPersonHeight: standardPersonHeight,
                 type: "person",
                 rotation: Math.random() * Math.PI * 2,
                 rotationSpeed: (Math.random() - 0.5) * 0.015,
@@ -1549,15 +1889,61 @@
                 shakeAnim: 0,
                 shakeIntensity: 0,
                 spawnTime: Date.now(),
+                transitionStarted: false,
               });
             });
 
-            console.log(`Created ${this.balls.length} entities from poster`);
+            Config.posterObjects.forEach((posterData, i) => {
+              const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
+              const radius = coords.size / 2;
+              const centerX = coords.x + radius;
+              const centerY = coords.y + radius;
+
+              const distToLeft = centerX;
+              const distToRight = canvas.width - centerX;
+              const distToTop = centerY;
+              const distToBottom = canvas.height - centerY;
+              const minDist = Math.min(distToLeft, distToRight, distToTop, distToBottom);
+
+              let exitAngle;
+              if (minDist === distToLeft) exitAngle = Math.PI;
+              else if (minDist === distToRight) exitAngle = 0;
+              else if (minDist === distToTop) exitAngle = -Math.PI / 2;
+              else exitAngle = Math.PI / 2;
+              exitAngle += (Math.random() - 0.5) * 0.5;
+
+              this.balls.push({
+                x: centerX,
+                y: centerY,
+                vx: 0,
+                vy: 0,
+                radius: radius,
+                clickRadius: 0,
+                otherImage: posterData.img - 1,
+                type: "other",
+                rotation: 0,
+                rotationSpeed: (Math.random() - 0.3) * 0.008,
+                spinAngle: exitAngle,
+                spinSpeed: 0,
+                spinDistance: 0,
+                originalX: centerX,
+                originalY: centerY,
+                scale: 1,
+                currentScale: 1,
+                targetScale: 0,
+                wigglePhase: 0,
+                wiggleAmount: 0,
+                targetWiggle: 0,
+                bounceAnim: 0,
+                shakeAnim: 0,
+                spawnTime: Date.now(),
+                opacity: 1,
+                fadeOutStart: Date.now() + 100,
+                isStaticObject: true,
+              });
+            });
           } else {
             console.warn("Poster not ready, using fallback positions");
-            // Fallback: Random positions
-            const baseRadius = Config.isMobile ? 35 : 45;
-            const personHeight = Config.isMobile ? 65 : 80;
 
             for (let i = 0; i < 8; i++) {
               const a = Math.random() * Math.PI * 2;
@@ -1568,7 +1954,7 @@
                   y: Math.random() * canvas.height,
                   vx: Math.cos(a) * s,
                   vy: Math.sin(a) * s,
-                  radius: baseRadius + Math.random() * 15,
+                  radius: standardBallRadius,
                   type: "ball",
                   rotationSpeed: (Math.random() - 0.5) * 0.03,
                   scale: 1,
@@ -1593,10 +1979,10 @@
                 y: Math.random() * canvas.height,
                 vx: Math.cos(a) * s,
                 vy: Math.sin(a) * s,
-                radius: baseRadius + 10,
-                clickRadius: baseRadius + 20,
+                radius: standardBallRadius,
+                clickRadius: standardBallRadius + 20,
                 personImage: ImageCounter.nextPerson(),
-                personHeight: personHeight,
+                personHeight: standardPersonHeight,
                 type: "person",
                 rotation: Math.random() * Math.PI * 2,
                 rotationSpeed: (Math.random() - 0.5) * 0.02,
@@ -1715,8 +2101,9 @@
             this.balls.splice(idx1, 1);
           }
 
-          const baseRadius = Config.isMobile ? 35 : 45;
-          const personHeight = Config.isMobile ? 65 : 80;
+          const screenSize = Math.min(canvas.width, canvas.height);
+          const baseRadius = Math.max(30, screenSize * 0.04);
+          const personHeight = Math.max(60, screenSize * 0.07);
 
           setTimeout(() => {
             const a1 = Math.random() * Math.PI * 2;
@@ -1816,6 +2203,15 @@
             return true;
           });
 
+          s.clickSpinEntities = s.clickSpinEntities.filter((spinData) => {
+            spinData.progress += 0.035;
+            if (spinData.progress >= 1) return false;
+
+            const easeOut = 1 - Math.pow(1 - spinData.progress, 3);
+            spinData.entity.rotation = spinData.startRotation + easeOut * spinData.targetSpin;
+            return true;
+          });
+
           s.connections.forEach((conn) => {
             const b1 = conn.entity1;
             const b2 = conn.entity2;
@@ -1834,11 +2230,48 @@
             b2.vy -= fy;
           });
 
-          // Check if entities should start moving (2 seconds after spawn)
           const currentTime = Date.now();
 
           this.balls.forEach((ball) => {
             const isDying = this.getDeathState(ball);
+
+            if (ball.isStaticObject) {
+              const timeSinceFade = currentTime - ball.fadeOutStart;
+
+              if (timeSinceFade <= 0) {
+                ball.currentScale = 1;
+                ball.opacity = 1;
+                ball.x = ball.originalX;
+                ball.y = ball.originalY;
+                return;
+              }
+
+              const fadeDuration = 2000;
+              const progress = Math.min(timeSinceFade / fadeDuration, 1);
+              const easeProgress = progress * progress;
+
+              ball.opacity = 1 - progress;
+
+              if (progress >= 1) {
+                const idx = this.balls.indexOf(ball);
+                if (idx !== -1) this.balls.splice(idx, 1);
+                return;
+              }
+
+              if (progress > 0.7) {
+                const shrinkProgress = (progress - 0.7) / 0.3;
+                ball.currentScale = 1 - shrinkProgress * 0.3;
+              } else {
+                ball.currentScale = 1;
+              }
+
+              ball.rotation += ball.rotationSpeed * 0.5;
+              ball.spinSpeed = easeProgress * 0.5;
+              ball.spinDistance += ball.spinSpeed;
+              ball.x = ball.originalX + Math.cos(ball.spinAngle) * ball.spinDistance;
+              ball.y = ball.originalY + Math.sin(ball.spinAngle) * ball.spinDistance;
+              return;
+            }
 
             if (ball.bounceAnim > 0) {
               ball.bounceAnim -= 0.08;
@@ -1859,19 +2292,34 @@
               ball.rotation += ball.rotationSpeed;
               ball.wigglePhase += 0.2;
 
-              // Start gentle movement 2 seconds after spawn
               const timeSinceSpawn = currentTime - (ball.spawnTime || 0);
-              if (timeSinceSpawn > 2000) {
-                // Add gentle random drift
-                if (Math.random() < 0.02) {
-                  const angle = Math.random() * Math.PI * 2;
-                  const speed = 0.3 + Math.random() * 0.5;
-                  ball.vx += Math.cos(angle) * speed * 0.1;
-                  ball.vy += Math.sin(angle) * speed * 0.1;
+              if (timeSinceSpawn > 800 && !ball.isStaticObject) {
+                if (!ball.transitionStarted) {
+                  ball.transitionStarted = true;
                 }
 
-                ball.vx *= 0.99;
-                ball.vy *= 0.99;
+                if (ball.targetRadius !== undefined) {
+                  const transitionSpeed = 0.02;
+                  ball.radius += (ball.targetRadius - ball.radius) * transitionSpeed;
+                  if (ball.type === "person" && ball.clickRadius) {
+                    ball.clickRadius = ball.radius + 20;
+                  }
+                }
+
+                if (ball.targetPersonHeight !== undefined) {
+                  const transitionSpeed = 0.02;
+                  ball.personHeight += (ball.targetPersonHeight - ball.personHeight) * transitionSpeed;
+                }
+
+                if (Math.random() < 0.04) {
+                  const angle = Math.random() * Math.PI * 2;
+                  const speed = 0.8 + Math.random() * 1.2;
+                  ball.vx += Math.cos(angle) * speed * 0.15;
+                  ball.vy += Math.sin(angle) * speed * 0.15;
+                }
+
+                ball.vx *= 0.985;
+                ball.vy *= 0.985;
                 ball.x += ball.vx;
                 ball.y += ball.vy;
                 Physics.capSpeed(ball);
@@ -1880,14 +2328,24 @@
             }
           });
 
-          // Only handle collisions after initial 2 second delay
           if (currentTime - (this.balls[0]?.spawnTime || 0) > 2000) {
-            Physics.handleBallCollisions(this.balls);
+            Physics.handleBallCollisions(this.balls, {
+              skipCondition: (b) => b.popping || b.orbiting || b.frozen || b.merging || b.isStaticObject,
+            });
           }
         }
 
         draw() {
           const s = this.state;
+
+          // Draw poster background for testing
+          // const posterImg = document.getElementById("posterImage");
+          // if (posterImg && Assets.isImageReady(posterImg)) {
+          //   ctx.save();
+          //   ctx.globalAlpha = 0.3; // Semi-transparent so you can see alignment
+          //   ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
+          //   ctx.restore();
+          // }
           super.draw();
 
           s.connections.forEach((conn) => {
@@ -1908,18 +2366,32 @@
             ctx.stroke();
           });
 
-          if (s.isDragging && s.dragStart && s.dragEnd) {
-            ctx.beginPath();
-            ctx.moveTo(s.dragStart.x, s.dragStart.y);
-            ctx.lineTo(s.dragEnd.x, s.dragEnd.y);
-            ctx.strokeStyle = "rgba(150, 200, 255, 0.5)";
-            ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
-            ctx.stroke();
-            ctx.setLineDash([]);
-          }
+          this.balls.forEach((entity) => {
+            if (entity.type === "other") {
+              const img = Assets.getOtherImage(entity.otherImage);
+              if (!Assets.isImageReady(img)) return;
+
+              const opacity = entity.opacity || 1;
+              const scale = entity.currentScale || 1;
+
+              ctx.save();
+              ctx.globalAlpha = opacity;
+              ctx.translate(entity.x, entity.y);
+              ctx.rotate(entity.rotation);
+
+              const aspectRatio = img.naturalWidth / img.naturalHeight;
+              const displayWidth = entity.radius * 2 * scale * aspectRatio;
+              const displayHeight = entity.radius * 2 * scale;
+
+              ctx.drawImage(img, -displayWidth / 2, -displayHeight / 2, displayWidth, displayHeight);
+              ctx.restore();
+              return;
+            }
+          });
 
           this.balls.forEach((entity) => {
+            if (entity.type === "other") return;
+
             const isSel = s.firstEntity === entity;
             const deathState = this.getDeathState(entity);
 
@@ -1947,19 +2419,36 @@
 
             if (deathState && deathState.phase === "shake") {
               const pulse = Math.sin(deathState.timer * 0.8) * 0.5 + 0.5;
-              ctx.shadowColor = `rgba(255, 0, 0, ${0.8 + pulse * 0.2})`;
-              ctx.shadowBlur = 15 + pulse * 10;
 
-              ctx.beginPath();
-              ctx.arc(entity.x, entity.y, (entity.clickRadius || entity.radius) + 5, 0, Math.PI * 2);
-              ctx.strokeStyle = `rgba(255, 50, 50, ${0.6 + pulse * 0.4})`;
-              ctx.lineWidth = 4;
-              ctx.stroke();
+              if (entity.type === "person") {
+                const glowY = entity.y + 15;
+                const glowRadius = (entity.clickRadius || entity.radius) * 1.3;
+
+                ctx.save();
+                ctx.globalAlpha = 0.4 + pulse * 0.3;
+                const gradient = ctx.createRadialGradient(entity.x, glowY, 0, entity.x, glowY, glowRadius);
+                gradient.addColorStop(0, "rgba(255, 50, 50, 0.8)");
+                gradient.addColorStop(0.5, "rgba(255, 50, 50, 0.4)");
+                gradient.addColorStop(1, "rgba(255, 50, 50, 0)");
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(entity.x, glowY, glowRadius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+              } else {
+                ctx.shadowColor = `rgba(255, 0, 0, ${0.8 + pulse * 0.2})`;
+                ctx.shadowBlur = 15 + pulse * 10;
+                ctx.beginPath();
+                ctx.arc(entity.x, entity.y, (entity.clickRadius || entity.radius) + 5, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 50, 50, ${0.6 + pulse * 0.4})`;
+                ctx.lineWidth = 4;
+                ctx.stroke();
+              }
             }
 
             if ((isSel || entity.targetScale > 1) && !deathState) {
-              ctx.shadowColor = "rgba(100, 200, 255, 0.8)";
-              ctx.shadowBlur = 20;
+              ctx.shadowColor = "rgba(255, 220, 100, 0.9)";
+              ctx.shadowBlur = 25;
             }
 
             if (entity.bounceAnim > 0.3) {
@@ -1976,12 +2465,23 @@
 
             ctx.restore();
           });
+
+          if (s.isDragging && s.dragStart && s.dragEnd) {
+            ctx.beginPath();
+            ctx.moveTo(s.dragStart.x, s.dragStart.y);
+            ctx.lineTo(s.dragEnd.x, s.dragEnd.y);
+            ctx.strokeStyle = "rgba(100, 200, 100, 0.8)";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
         }
 
         findEntityAt(x, y) {
           for (let i = this.balls.length - 1; i >= 0; i--) {
             const entity = this.balls[i];
-            if (this.getDeathState(entity)) continue;
+            if (this.getDeathState(entity) || entity.isStaticObject) continue;
             const clickR = entity.clickRadius || entity.radius;
             const dx = x - entity.x;
             const dy = y - entity.y;
@@ -2011,8 +2511,8 @@
           const entity = this.findEntityAt(x, y);
           if (entity) {
             s.hoveredEntity = entity;
-            entity.targetScale = 1.15;
-            entity.targetWiggle = 1;
+            entity.targetScale = 1.18;
+            entity.targetWiggle = 1.2;
           }
         }
 
@@ -2030,6 +2530,23 @@
               s.dragEnd = { x, y };
             } else if (s.firstEntity !== entity) {
               this.connectEntities(s.firstEntity, entity);
+              s.firstEntity.targetScale = 1;
+              s.firstEntity.targetWiggle = 0;
+              s.firstEntity = null;
+              s.isDragging = false;
+              s.dragStart = null;
+              s.dragEnd = null;
+            } else {
+              const spinDirection = Math.random() < 0.5 ? 1 : -1;
+              const targetSpin = spinDirection * (Math.PI * 0.5 + Math.random() * Math.PI * 0.3);
+
+              s.clickSpinEntities.push({
+                entity: entity,
+                startRotation: entity.rotation,
+                targetSpin: targetSpin,
+                progress: 0,
+              });
+
               s.firstEntity.targetScale = 1;
               s.firstEntity.targetWiggle = 0;
               s.firstEntity = null;
@@ -2066,7 +2583,6 @@
         }
       }
 
-      // Brush Game
       class BrushGame extends BaseGame {
         init() {
           super.init();
@@ -2075,34 +2591,76 @@
             drawing: false,
             currentPath: [],
             currentColor: null,
+            pathLifetime: 15000,
           };
           this.colors = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
 
-          for (let i = 0; i < 20; i++) {
+          for (let i = 0; i < 40; i++) {
             this.balls.push(
               this.createBall({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 vx: (Math.random() - 0.5) * 0.1,
                 vy: (Math.random() - 0.5) * 0.1,
-                radius: 30 + Math.random() * 15,
+                radius: 50 + Math.random() * 30,
                 followingPath: null,
                 pathProgress: 0,
                 pathDirection: 1,
                 driftAngle: Math.random() * Math.PI * 2,
                 pathSpeed: 0.003 + Math.random() * 0.001,
                 speedPhase: Math.random() * Math.PI * 2,
+                magnetTarget: null,
+                magnetProgress: 0,
               }),
             );
           }
+
+
         }
 
         update() {
           super.update();
           const self = this;
-          this.state.paths = this.state.paths.filter((path) => Date.now() - path.created < 12000);
+          this.state.paths = this.state.paths.filter((path) => Date.now() - path.created < this.state.pathLifetime);
 
           this.balls.forEach((ball) => {
+            // --- Magnetic snap animation ---
+            if (ball.magnetTarget && ball.magnetTarget.points) {
+              const path = ball.magnetTarget;
+              if (!self.state.paths.includes(path)) {
+                ball.magnetTarget = null;
+                ball.magnetProgress = 0;
+                return;
+              }
+
+              ball.magnetProgress += 0.08;
+
+              let closestIdx = 0;
+              let closestDist = Infinity;
+              for (let i = 0; i < path.points.length; i++) {
+                const d = Physics.distance(ball.x, ball.y, path.points[i].x, path.points[i].y);
+                if (d < closestDist) {
+                  closestDist = d;
+                  closestIdx = i;
+                }
+              }
+
+              const targetPt = path.points[closestIdx];
+              const ease = ball.magnetProgress * ball.magnetProgress;
+              ball.x += (targetPt.x - ball.x) * ease * 0.3;
+              ball.y += (targetPt.y - ball.y) * ease * 0.3;
+
+              if (ball.magnetProgress >= 1) {
+                ball.followingPath = path;
+                ball.pathProgress = closestIdx / Math.max(1, path.points.length - 1);
+                ball.pathDirection = 1;
+                ball.speedPhase = Math.random() * Math.PI * 2;
+                ball.magnetTarget = null;
+                ball.magnetProgress = 0;
+              }
+              return;
+            }
+
             if (ball.followingPath && ball.followingPath.points) {
               const path = ball.followingPath;
               if (!self.state.paths.includes(path)) {
@@ -2138,6 +2696,7 @@
               ball.y = path.points[clampedIdx].y + (path.points[nextIdx].y - path.points[clampedIdx].y) * t;
               ball.rotation += (ball.pathDirection > 0 ? 1 : -1) * dynamicSpeed * 8;
             } else {
+              // Check for nearby paths — magnet snap
               for (let p = 0; p < self.state.paths.length; p++) {
                 const path = self.state.paths[p];
                 if (path.points.length < 2) continue;
@@ -2145,17 +2704,15 @@
                   const pt = path.points[i];
                   const dist = Physics.distance(ball.x, ball.y, pt.x, pt.y);
                   if (dist < ball.radius + 20) {
-                    ball.followingPath = path;
-                    ball.pathProgress = i / (path.points.length - 1);
-                    ball.pathDirection = 1;
-                    ball.speedPhase = Math.random() * Math.PI * 2;
+                    ball.magnetTarget = path;
+                    ball.magnetProgress = 0;
                     break;
                   }
                 }
-                if (ball.followingPath) break;
+                if (ball.magnetTarget) break;
               }
 
-              if (!ball.followingPath) {
+              if (!ball.magnetTarget) {
                 ball.driftAngle += (Math.random() - 0.5) * 0.02;
                 ball.vx += Math.cos(ball.driftAngle) * 0.003;
                 ball.vy += Math.sin(ball.driftAngle) * 0.003;
@@ -2196,7 +2753,10 @@
             }
           });
 
-          Physics.handleBallCollisions(this.balls);
+          Physics.handleBallCollisions(this.balls, {
+            skipCondition: (b) => b.popping || b.orbiting || b.frozen || b.merging,
+            pushFactor: 0.04,
+          });
         }
 
         catmullRomPoint(p0, p1, p2, p3, t) {
@@ -2244,7 +2804,7 @@
           this.state.paths.forEach((path) => {
             if (path.points.length < 1) return;
             const age = Date.now() - path.created;
-            const op = Math.max(0, 1 - age / 12000);
+            const op = Math.max(0, 1 - age / self.state.pathLifetime);
             if (path.points.length === 1) {
               ctx.beginPath();
               ctx.arc(path.points[0].x, path.points[0].y, 6, 0, Math.PI * 2);
@@ -2270,6 +2830,21 @@
             }
             ctx.restore();
           }
+
+          // Magnetic snap ring
+          this.balls.forEach((ball) => {
+            if (ball.magnetTarget && ball.magnetProgress > 0) {
+              const progress = ball.magnetProgress;
+              ctx.save();
+              ctx.beginPath();
+              ctx.arc(ball.x, ball.y, ball.radius + 8 * (1 - progress), 0, Math.PI * 2);
+              ctx.strokeStyle = ball.magnetTarget.color || "#fff";
+              ctx.globalAlpha = 0.3 * (1 - progress);
+              ctx.lineWidth = 2;
+              ctx.stroke();
+              ctx.restore();
+            }
+          });
 
           this.balls.forEach((ball) => {
             Renderer.drawBall(ball, 1, ball.rotation);
@@ -2310,7 +2885,6 @@
           this.state.currentPath = [];
         }
       }
-
       // Game Manager
       const GameManager = {
         games: {
@@ -2392,7 +2966,11 @@
 
         getPointer(e) {
           const touch = e.touches ? e.touches[0] : e;
-          return { x: touch.clientX, y: touch.clientY };
+          const rect = canvas.getBoundingClientRect();
+          return {
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top,
+          };
         },
 
         setupMouseEvents() {
@@ -2518,6 +3096,7 @@
       animate();
     </script>
 
+      
     <script>
       function setupSponsors() {
         const slots = document.querySelectorAll(".logo-slot");
@@ -2560,7 +3139,7 @@
           "resize",
           debounce(() => {
             updateLogos();
-          }, 250),
+          }, 250)
         );
       }
 
