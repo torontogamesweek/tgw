@@ -148,31 +148,29 @@
       }
 
       #logo {
-  width: 100%;
-  display: block;
-  /* NO margin or padding here anymore */
-}
-
-#logo-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100vw;
-  margin-top: 40px;
-  padding: 20px 3px 10px 3px;
-}
-      @media (min-width: 767px) {
-
-#logo-wrapper {
-  margin-top: 10px;
-  padding: 15px 3px 0 3px;
-}
+        width: 100%;
+        display: block;
+        /* NO margin or padding here anymore */
       }
 
+      #logo-wrapper {
+        position: relative;
+        display: inline-block;
+        width: 100vw;
+        margin-top: 40px;
+        padding: 20px 3px 10px 3px;
+      }
+      @media (min-width: 767px) {
+        #logo-wrapper {
+          margin-top: 10px;
+          padding: 15px 3px 0 3px;
+        }
+      }
 
-#logo-wrapper picture {
-  position: relative;
-  display: block;
-}
+      #logo-wrapper picture {
+        position: relative;
+        display: block;
+      }
 
       .logo-ball-btn {
         position: absolute;
@@ -181,7 +179,7 @@
         border-radius: 50%;
         cursor: pointer;
         padding: 0;
-        height: 0; 
+        height: 0;
         z-index: 10;
         transition:
           transform 0.2s,
@@ -283,9 +281,11 @@
         }
 
         #logo {
-    width: 100vw;
-  }
+          width: 100vw;
+        }
       }
+
+      
     </style>
 
     <style>
@@ -378,24 +378,24 @@
       }
 
       .no-pointer-events {
-  pointer-events: none;
-}
+        pointer-events: none;
+      }
 
-/* Re-enable pointer events on interactive content */
-.textBox,
-.logo-container,
-.logo-slot,
-.footer-content,
-.social-horizontal,
-.footer-credit,
-nav,
-#primary-navigation,
-#nav-toggle,
-#logo-wrapper,
-.logo-ball-btn,
-iframe {
-  pointer-events: auto;
-}
+      /* Re-enable pointer events on interactive content */
+      .textBox,
+      .logo-container,
+      .logo-slot,
+      .footer-content,
+      .social-horizontal,
+      .footer-credit,
+      nav,
+      #primary-navigation,
+      #nav-toggle,
+      #logo-wrapper,
+      .logo-ball-btn,
+      iframe {
+        pointer-events: auto;
+      }
     </style>
   </head>
 
@@ -985,12 +985,14 @@ iframe {
           const posterWidth = posterImg.width || posterImg.naturalWidth || 1396;
           const posterHeight = posterImg.height || posterImg.naturalHeight || 1606;
 
-          canvas.width = posterWidth;
-          canvas.height = posterHeight;
-          canvas.style.width = posterWidth + "px";
-          canvas.style.height = posterHeight + "px";
+          // Extend canvas to cover the full scrollable content area
+          const mainEl = document.querySelector("main");
+          const totalHeight = mainEl ? mainEl.offsetTop + mainEl.offsetHeight : posterHeight;
 
-          console.log("Canvas resized to:", posterWidth, "x", posterHeight);
+          canvas.width = posterWidth;
+          canvas.height = Math.max(posterHeight, totalHeight);
+          canvas.style.width = posterWidth + "px";
+          canvas.style.height = Math.max(posterHeight, totalHeight) + "px";
         }
       }
 
@@ -1671,7 +1673,7 @@ iframe {
             barrierLifetime: 8000,
             splats: [],
             score: 0,
-target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) * 0.6, radius: targetRadius, pulse: 0, rotation: 0 },
+            target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) * 0.6, radius: targetRadius, pulse: 0, rotation: 0 },
             posterFadeProgress: 0,
             posterFadeStart: Date.now(),
           };
@@ -1764,9 +1766,9 @@ target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) * 
               });
               s.target.x = 150 + Math.random() * (canvas.width - 300);
 
-const groundY = Math.min(canvas.height, window.innerHeight);
-s.target.x = 150 + Math.random() * (canvas.width - 300);
-s.target.y = 150 + Math.random() * (groundY - 300 - s.target.radius);
+              const groundY = Math.min(canvas.height, window.innerHeight);
+              s.target.x = 150 + Math.random() * (canvas.width - 300);
+              s.target.y = 150 + Math.random() * (groundY - 300 - s.target.radius);
               const ang = Math.atan2(dy, dx);
               ball.vx = Math.cos(ang) * 5;
               ball.vy = Math.sin(ang) * 5;
@@ -1842,7 +1844,7 @@ s.target.y = 150 + Math.random() * (groundY - 300 - s.target.radius);
           const posterImg = document.getElementById("posterImage");
           if (posterImg && Assets.isImageReady(posterImg)) {
             const fadeProgress = s.posterFadeProgress;
-            const opacity = 0.07 + (1 - fadeProgress) * 0.9; // Fade from 1 to 0.1
+            const opacity = 0.01 + (1 - fadeProgress) * 0.0010; // Fade from 1 to 0.1
             const grayscale = fadeProgress; // 0 to 1
 
             ctx.save();
