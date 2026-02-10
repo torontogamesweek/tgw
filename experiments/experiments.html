@@ -123,86 +123,6 @@
           background: transparent;
         }
       }
-
-      /* Easter egg objects */
-      .easter-egg {
-        position: fixed;
-        width: 19px;
-        height: 19px;
-        cursor: pointer;
-        z-index: 50;
-        transition:
-          transform 0.2s,
-          filter 0.2s,
-          opacity 0.3s;
-        opacity: 0;
-        animation: fadeInEasterEgg 1s ease-out 3s forwards;
-        z-index: 2000;
-      }
-
-      @keyframes fadeInEasterEgg {
-        to {
-          opacity: 0.7;
-        }
-      }
-
-      .easter-egg:hover {
-        transform: scale(1.3);
-        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9));
-        opacity: 1 !important;
-      }
-
-      .easter-egg.active {
-        opacity: 1 !important;
-        filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1));
-      }
-
-      .easter-egg.top-left {
-        top: 2px;
-        left: 2px;
-      }
-
-      .easter-egg.top-right {
-        top: 2px;
-        right: 2px;
-      }
-
-      .easter-egg.bottom-left {
-        bottom: 2px;
-        left: 2px;
-      }
-
-      .easter-egg.bottom-right {
-        bottom: 2px;
-        right: 2px;
-      }
-
-      @media (max-width: 767px) {
-        .easter-egg {
-          width: 9px;
-          height: 9px;
-        }
-
-        .easter-egg.top-left,
-        .easter-egg.top-right {
-          top: 10px;
-        }
-
-        .easter-egg.bottom-left,
-        .easter-egg.bottom-right {
-          bottom: 10px;
-        }
-
-        .easter-egg.top-left,
-        .easter-egg.bottom-left {
-          left: 10px;
-        }
-
-        .easter-egg.top-right,
-        .easter-egg.bottom-right {
-          right: 10px;
-        }
-      }
     </style>
 
     <style>
@@ -228,11 +148,101 @@
       }
 
       #logo {
-        margin-top: 40px;
-        width: 100vw;
-        /* margin: 0; */
-        padding: 20px 3px 10px 3px;
-        /* background-color: #b8d8f092; */
+  width: 100%;
+  display: block;
+  /* NO margin or padding here anymore */
+}
+
+#logo-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  margin-top: 40px;
+  padding: 20px 3px 10px 3px;
+}
+
+#logo-wrapper picture {
+  position: relative;
+  display: block;
+}
+
+      .logo-ball-btn {
+        position: absolute;
+        border: none;
+        background: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+        height: 0; 
+        z-index: 10;
+        transition:
+          transform 0.2s,
+          filter 0.2s;
+        /* background-color: red; */
+        z-index: 2;
+      }
+
+      .logo-ball-btn:hover {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+      }
+
+      .logo-ball-btn.active {
+        filter: drop-shadow(0 0 16px rgba(76, 175, 80, 1));
+      }
+
+      /* Desktop positions */
+      .logo-ball-btn[data-game="1"] {
+        left: 1.9%;
+        top: 16.88%;
+        width: 7.22%;
+        padding-bottom: 7.22%;
+      }
+      .logo-ball-btn[data-game="2"] {
+        left: 34.8%;
+        top: 19.68%;
+        width: 7.02%;
+        padding-bottom: 7.02%;
+      }
+      .logo-ball-btn[data-game="3"] {
+        left: 86.59%;
+        top: 13.62%;
+        width: 7.73%;
+        padding-bottom: 7.73%;
+      }
+      .logo-ball-btn[data-game="4"] {
+        left: 61.87%;
+        top: 16.42%;
+        width: 7.2%;
+        padding-bottom: 7.2%;
+      }
+
+      /* Mobile positions */
+      @media (max-width: 767px) {
+        .logo-ball-btn[data-game="1"] {
+          left: 2%;
+          top: 5%;
+          width: 12.35%;
+          padding-bottom: 12.35%;
+        }
+        .logo-ball-btn[data-game="2"] {
+          left: 59.67%;
+          top: 8.83%;
+          width: 11.16%;
+          padding-bottom: 11.16%;
+        }
+        .logo-ball-btn[data-game="3"] {
+          left: 78.08%;
+          top: 44.68%;
+          width: 10.95%;
+          padding-bottom: 10.95%;
+        }
+        .logo-ball-btn[data-game="4"] {
+          left: 34.44%;
+          top: 43.32%;
+          width: 11.35%;
+          padding-bottom: 11.35%;
+        }
       }
 
       .nav-toggle-button {
@@ -264,12 +274,8 @@
         }
 
         #logo {
-          margin-top: 30px;
-          width: 100vw;
-          margin: 0;
-          padding: 40px 10px 10px 10px;
-          /* background-color: #b8d8f092; */
-        }
+    width: 100vw;
+  }
       }
     </style>
 
@@ -366,12 +372,16 @@
 
   <body>
     <header>
-      <a href="index.html">
+      <div id="logo-wrapper">
         <picture>
           <source media="(max-width: 767px)" srcset="special/mobile-logo.png" />
           <img src="special/desktop-logo.png" alt="Logo" id="logo" />
+          <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
+          <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
+          <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
+          <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
         </picture>
-      </a>
+      </div>
 
       <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
         <span class="sr-only">Menu</span>
@@ -380,13 +390,9 @@
 
       <nav id="primary-navigation">
         <ul>
-          <!-- <li>
-            <a href="schedule.html" id="scheduleNav">Schedule</a>
-          </li> -->
           <li></li>
-          <li>
-            <a href="about.html" id="aboutNav">About</a>
-          </li>
+          <li><a href="experiments.html" id="experiments">Home</a></li>
+          <li><a href="" id="aboutNav">About</a></li>
         </ul>
       </nav>
     </header>
@@ -395,12 +401,6 @@
     <div class="poster-container" id="posterContainer">
       <img src="tgwposterforsitelargeclear2.png" alt="Toronto Games Week" id="posterImage" />
     </div>
-
-    <!-- Easter egg game toggles -->
-    <img src="balls/ball_1.png" class="easter-egg bottom-right" id="easterConnect" alt="Connect Game" title="Connect Game" />
-    <img src="balls/ball_2.png" class="easter-egg top-right" id="easterPop" alt="Pop Game" title="Pop Game" />
-    <img src="particles/stars/star_1.png" class="easter-egg top-left" id="easterBounce" alt="Bounce Game" title="Bounce Game" />
-    <img src="particles/hot/heart.png" class="easter-egg bottom-left" id="easterBrush" alt="Brush Game" title="Brush Game" />
 
     <!-- Game name display -->
     <div class="game-name" id="gameName">o</div>
@@ -773,7 +773,6 @@
           { x: 18.84, y: 23.38, size: 15.54, img: 11 },
           { x: 85.56, y: 0.69, size: 5.44, img: 12 },
           { x: 35.38, y: 30.05, size: 16.12, img: 13 },
-          { x: 36.39, y: 42.21, size: 29.8, img: 14 },
           { x: 31.59, y: 67.64, size: 17.48, img: 15 },
           { x: 11.17, y: 54.55, size: 3.44, img: 16 },
           { x: 76.65, y: 5.67, size: 5.59, img: 17 },
@@ -827,7 +826,6 @@
           { x: 90.04, y: 88.78, size: 6.3, img: 22 },
           { x: 75.5, y: 34.85, size: 5.52, img: 23 },
           { x: 74.02, y: 89.27, size: 5.73, img: 24 },
-          { x: 26.29, y: 37.66, size: 5.66, img: 25 },
           { x: 39.04, y: 83.36, size: 8.81, img: 26 },
           { x: 47.13, y: 1.75, size: 6.45, img: 27 },
           { x: 85.39, y: 43.64, size: 12.32, img: 28 },
@@ -849,6 +847,8 @@
           { x: 53.8, y: 82.14, size: 5.16, img: 14 },
         ],
       };
+
+      Config.OUTLINE_WIDTH = Config.isMobile ? 6 : 5;
 
       const CoordinateSystem = {
         posterWidth: 0,
@@ -1137,7 +1137,7 @@
         },
         handleBallCollisions(balls, options = {}) {
           const skipCondition = options.skipCondition || ((b) => b.popping || b.orbiting || b.frozen || b.merging);
-          const pushFactor = options.pushFactor || 0.05;
+          const pushFactor = options.pushFactor || 0.3;
 
           for (let i = 0; i < balls.length; i++) {
             for (let j = i + 1; j < balls.length; j++) {
@@ -1220,6 +1220,8 @@
           ctx.globalAlpha = opacity;
           ctx.translate(ball.x, ball.y);
           ctx.rotate(rotation);
+          ctx.scale(ball.squishX, ball.squishY);
+
           ctx.scale(squashX, squashY);
           if (Assets.isImageReady(img)) {
             ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
@@ -1295,6 +1297,44 @@
           const gradient = ctx.createRadialGradient(x, y, r1, x, y, r2);
           stops.forEach((s) => gradient.addColorStop(s[0], s[1]));
           return gradient;
+        },
+        drawOutline(img, x, y, w, h, outlineWidth = 3, outlineColor = "rgba(255, 220, 100, 0.9)") {
+          if (!Assets.isImageReady(img)) return;
+
+          // Create offscreen canvas (reuse if possible)
+          if (!this._outlineCanvas) {
+            this._outlineCanvas = document.createElement("canvas");
+            this._outlineCtx = this._outlineCanvas.getContext("2d");
+          }
+          const oc = this._outlineCanvas;
+          const octx = this._outlineCtx;
+
+          const pad = outlineWidth + 2;
+          oc.width = w + pad * 2;
+          oc.height = h + pad * 2;
+          octx.clearRect(0, 0, oc.width, oc.height);
+
+          // Draw the image shifted in all directions (the outline)
+          octx.globalCompositeOperation = "source-over";
+          for (let dx = -outlineWidth; dx <= outlineWidth; dx++) {
+            for (let dy = -outlineWidth; dy <= outlineWidth; dy++) {
+              if (dx * dx + dy * dy <= outlineWidth * outlineWidth) {
+                octx.drawImage(img, pad + dx, pad + dy, w, h);
+              }
+            }
+          }
+
+          // Color the entire silhouette
+          octx.globalCompositeOperation = "source-in";
+          octx.fillStyle = outlineColor;
+          octx.fillRect(0, 0, oc.width, oc.height);
+
+          // Cut out the original shape from the middle
+          octx.globalCompositeOperation = "destination-out";
+          octx.drawImage(img, pad, pad, w, h);
+
+          // Draw the outline onto the main canvas
+          ctx.drawImage(oc, x - pad, y - pad);
         },
       };
 
@@ -1455,7 +1495,7 @@
 
           if (ball.rotation !== undefined) {
             const speed = Physics.getSpeed(ball);
-            ball.rotation += speed * 0.02;
+            ball.rotation += speed * 0.005;
           }
 
           Physics.handleWallCollision(ball, canvas, bounce);
@@ -1588,9 +1628,10 @@
       class BounceGame extends BaseGame {
         init() {
           super.init();
-          const targetRadius = Config.isMobile ? 30 : 50;
           const isMobileVertical = Config.isMobile && window.innerHeight > window.innerWidth;
-          const maxLineLength = isMobileVertical ? 70 : Config.isMobile ? 120 : 200;
+          const targetRadius = isMobileVertical ? 15 : Config.isMobile ? 30 : 50;
+
+          const maxLineLength = isMobileVertical ? 70 : Config.isMobile ? 18 : 200;
           this.state = {
             barriers: [],
             drawing: false,
@@ -1601,7 +1642,7 @@
             barrierLifetime: 8000,
             splats: [],
             score: 0,
-            target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) / 2, radius: targetRadius, pulse: 0, rotation: 0 },
+            target: { x: canvas.width / 2, y: canvas.height / 2, radius: targetRadius, pulse: 0, rotation: 0 },
             posterFadeProgress: 0,
             posterFadeStart: Date.now(),
           };
@@ -1617,6 +1658,8 @@
           this.balls.push(
             this.createBall({
               x: spawnX,
+              rotation: 0,
+              rotationSpeed: 0,
               y: 100,
               vx: (Math.random() - 0.5) * 2,
               vy: 1,
@@ -1664,6 +1707,9 @@
             ball.y += ball.vy;
             ball.squishX += (1 - ball.squishX) * ball.squishRecovery;
             ball.squishY += (1 - ball.squishY) * ball.squishRecovery;
+            ball.rotationSpeed += ball.vx * 0.0005;
+            ball.rotationSpeed *= 0.98;
+            ball.rotation += ball.rotationSpeed;
             Physics.capSpeed(ball);
 
             const dx = ball.x - s.target.x;
@@ -1674,12 +1720,16 @@
               s.score++;
               ball.growScale += 0.05;
               ScreenShake.add(12);
+              const isMobileVertical = Config.isMobile && window.innerHeight > window.innerWidth;
+              const burstSize = isMobileVertical ? 15 : Config.isMobile ? 20 : 30;
+              const burstSizeVariance = isMobileVertical ? 12 : Config.isMobile ? 18 : 25;
+
               this.particles.addBurst(s.target.x, s.target.y, 12, {
                 speed: 4,
                 speedVariance: 4,
                 life: 50,
-                size: 30,
-                sizeVariance: 25,
+                size: burstSize,
+                sizeVariance: burstSizeVariance,
                 gravity: 0.12,
                 type: "star",
               });
@@ -1690,13 +1740,14 @@
               ball.vy = Math.sin(ang) * 5;
             }
 
-            if (ball.y + ball.radius * ball.growScale >= canvas.height - 5 && !ball.dying) {
+            const groundY = Math.min(canvas.height, window.innerHeight);
+            if (ball.y + ball.radius * ball.growScale >= groundY - 5 && !ball.dying) {
               ball.dying = true;
               ball.deathProgress = 0;
               ScreenShake.add(5);
               s.splats.push({
                 x: ball.x,
-                y: canvas.height,
+                y: groundY,
                 radius: ball.radius * ball.growScale,
                 life: 120,
                 color: `hsl(${Math.random() * 360}, 60%, 50%)`,
@@ -1709,18 +1760,21 @@
               ball.vx *= -0.9;
               ball.squishX = 0.7;
               ball.squishY = 1.3;
+              ball.rotationSpeed += ball.vy * 0.004;
             }
             if (ball.x + ball.radius * ball.growScale > canvas.width) {
               ball.x = canvas.width - ball.radius * ball.growScale;
               ball.vx *= -0.9;
               ball.squishX = 0.7;
               ball.squishY = 1.3;
+              ball.rotationSpeed += ball.vy * 0.004;
             }
             if (ball.y - ball.radius * ball.growScale < 0) {
               ball.y = ball.radius * ball.growScale;
               ball.vy *= -0.9;
               ball.squishX = 1.4;
               ball.squishY = 0.6;
+              ball.rotationSpeed += ball.vx * 0.004;
             }
 
             s.barriers.forEach((barrier) => {
@@ -1744,6 +1798,7 @@
                 ball.squishX = 0.75;
                 ball.squishY = 1.25;
                 Physics.capSpeed(ball);
+                ball.rotationSpeed += (ball.vx + ball.vy) * 0.003;
               }
             });
           }
@@ -1811,7 +1866,7 @@
                 ctx.save();
                 const sqY = 1 - ball.deathProgress * 0.8;
                 const sqX = 1 + ball.deathProgress * 0.5;
-                ctx.translate(ball.x, canvas.height);
+                ctx.translate(ball.x, Math.min(canvas.height, window.innerHeight));
                 ctx.scale(sqX, sqY);
                 ctx.globalAlpha = 1 - ball.deathProgress;
                 ctx.drawImage(img, -r, -r * 2, r * 2, r * 2);
@@ -1819,6 +1874,8 @@
               } else {
                 ctx.save();
                 ctx.translate(ball.x, ball.y);
+                ctx.rotate(ball.rotation);
+
                 ctx.scale(ball.squishX, ball.squishY);
                 ctx.drawImage(img, -r, -r, r * 2, r * 2);
                 ctx.restore();
@@ -1935,7 +1992,7 @@
           if (CoordinateSystem.posterWidth && Config.posterBalls && Config.posterPeople) {
             console.log("Using poster positions for ConnectionsGame");
 
-            Config.posterBalls.slice(0, Config.NUM_BESTBALL_IMAGES).forEach((posterData, i) => {
+            Config.posterBalls.forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
               const originalRadius = coords.size / 2;
               const centerX = coords.x + originalRadius;
@@ -1949,9 +2006,9 @@
                   vy: 0,
                   radius: originalRadius,
                   originalRadius: originalRadius,
-                  targetRadius: standardBallRadius,
+                  targetRadius: originalRadius * 0.5 + standardBallRadius * 0.5,
                   ballImage: posterData.img,
-                  useBest: true,
+                  // useBest: true,
                   type: "ball",
                   rotationSpeed: (Math.random() - 0.5) * 0.02,
                   rotation: 0,
@@ -1970,7 +2027,7 @@
               );
             });
 
-            Config.posterPeople.slice(0, Config.NUM_BESTPPL_IMAGES + 1).forEach((posterData, i) => {
+            Config.posterPeople.forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
               const originalHeight = coords.size;
               const originalRadius = originalHeight / 2;
@@ -1984,10 +2041,10 @@
                 vy: 0,
                 radius: originalRadius,
                 originalRadius: originalRadius,
-                targetRadius: standardPersonHeight / 2,
-                clickRadius: originalRadius + 20,
+                targetPersonHeight: originalHeight * 0.5 + standardPersonHeight * 0.5,
+                clickRadius: originalRadius + (Config.isMobile ? 8 : 20),
                 personImage: posterData.img,
-                useBest: true,
+                // useBest: true,
                 personHeight: originalHeight,
                 originalPersonHeight: originalHeight,
                 targetPersonHeight: standardPersonHeight,
@@ -2037,7 +2094,7 @@
                 otherImage: posterData.img - 1,
                 type: "other",
                 rotation: 0,
-                rotationSpeed: (Math.random() - 0.3) * 0.008,
+                rotationSpeed: (Math.random() - 0.3) * 0.004,
                 spinAngle: exitAngle,
                 spinSpeed: 0,
                 spinDistance: 0,
@@ -2209,8 +2266,10 @@
             (c) => c.entity1 !== dying.entity1 && c.entity2 !== dying.entity1 && c.entity1 !== dying.entity2 && c.entity2 !== dying.entity2,
           );
 
-          const idx1 = this.balls.indexOf(dying.entity1);
-          const idx2 = this.balls.indexOf(dying.entity2);
+          const deadEntity1 = dying.entity1;
+          const deadEntity2 = dying.entity2;
+          const idx1 = this.balls.indexOf(deadEntity1);
+          const idx2 = this.balls.indexOf(deadEntity2);
           if (idx1 > idx2) {
             this.balls.splice(idx1, 1);
             this.balls.splice(idx2, 1);
@@ -2223,57 +2282,64 @@
           const baseRadius = Math.max(30, screenSize * 0.04);
           const personHeight = Math.max(60, screenSize * 0.07);
 
-          setTimeout(() => {
-            const a1 = Math.random() * Math.PI * 2;
-            const a2 = Math.random() * Math.PI * 2;
-            this.balls.push(
-              this.createBall({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: Math.cos(a1) * 2,
-                vy: Math.sin(a1) * 2,
-                radius: baseRadius + Math.random() * 15,
-                type: "ball",
-                useBest: true,
-                ballImage: Math.floor(Math.random() * Config.NUM_BESTBALL_IMAGES) + 1,
-                rotationSpeed: (Math.random() - 0.5) * 0.03,
-                scale: 1,
-                targetScale: 1,
-                currentScale: 1,
-                wigglePhase: Math.random() * Math.PI * 2,
-                wiggleAmount: 0,
-                targetWiggle: 0,
-                bounceAnim: 0,
-                shakeAnim: 0,
-                shakeIntensity: 0,
-                spawnTime: Date.now(),
-              }),
-            );
-            this.balls.push({
-              x: Math.random() * canvas.width,
-              y: Math.random() * canvas.height,
-              vx: Math.cos(a2) * 1.5,
-              vy: Math.sin(a2) * 1.5,
-              radius: baseRadius + 10,
-              clickRadius: baseRadius + 20,
-              personImage: Math.floor(Math.random() * Config.NUM_BESTPPL_IMAGES),
-              useBest: true,
-              personHeight: personHeight,
-              type: "person",
-              rotation: Math.random() * Math.PI * 2,
-              rotationSpeed: (Math.random() - 0.5) * 0.02,
-              scale: 1,
-              targetScale: 1,
-              currentScale: 1,
-              wigglePhase: Math.random() * Math.PI * 2,
-              wiggleAmount: 0,
-              targetWiggle: 0,
-              bounceAnim: 0,
-              shakeAnim: 0,
-              shakeIntensity: 0,
-              spawnTime: Date.now(),
-            });
-          }, 400);
+          const replaceExploded = true; // do want to replace exploded balls or pppl
+
+          if (replaceExploded) {
+            setTimeout(() => {
+              [deadEntity1, deadEntity2].forEach((dead) => {
+                const a = Math.random() * Math.PI * 2;
+                const s = 1 + Math.random() * 1.5;
+                if (dead.type === "ball") {
+                  this.balls.push(
+                    this.createBall({
+                      x: Math.random() * canvas.width,
+                      y: Math.random() * canvas.height,
+                      vx: Math.cos(a) * s,
+                      vy: Math.sin(a) * s,
+                      radius: dead.targetRadius || dead.radius,
+                      ballImage: dead.ballImage,
+                      type: "ball",
+                      rotationSpeed: (Math.random() - 0.5) * 0.03,
+                      scale: 1,
+                      targetScale: 1,
+                      currentScale: 1,
+                      wigglePhase: Math.random() * Math.PI * 2,
+                      wiggleAmount: 0,
+                      targetWiggle: 0,
+                      bounceAnim: 0,
+                      shakeAnim: 0,
+                      shakeIntensity: 0,
+                      spawnTime: Date.now(),
+                    }),
+                  );
+                } else if (dead.type === "person") {
+                  this.balls.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: Math.cos(a) * s,
+                    vy: Math.sin(a) * s,
+                    radius: dead.targetRadius || dead.radius,
+                    clickRadius: baseRadius + 20,
+                    personImage: dead.personImage,
+                    personHeight: dead.targetPersonHeight || dead.personHeight,
+                    type: "person",
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.02,
+                    scale: 1,
+                    targetScale: 1,
+                    currentScale: 1,
+                    wigglePhase: Math.random() * Math.PI * 2,
+                    wiggleAmount: 0,
+                    targetWiggle: 0,
+                    bounceAnim: 0,
+                    shakeAnim: 0,
+                    shakeIntensity: 0,
+                    spawnTime: Date.now(),
+                  });
+                }
+              });
+            }, 400);
+          }
         }
 
         connectEntities(entity1, entity2) {
@@ -2423,7 +2489,7 @@
                   const transitionSpeed = 0.02;
                   ball.radius += (ball.targetRadius - ball.radius) * transitionSpeed;
                   if (ball.type === "person" && ball.clickRadius) {
-                    ball.clickRadius = ball.radius + 20;
+                    ball.clickRadius = ball.radius + (Config.isMobile ? 8 : 20);
                   }
                 }
 
@@ -2475,7 +2541,7 @@
             ctx.moveTo(conn.entity1.x, conn.entity1.y);
             ctx.lineTo(conn.entity2.x, conn.entity2.y);
             ctx.strokeStyle = "rgba(100, 200, 100, 0.6)";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 5;
             ctx.stroke();
           });
 
@@ -2528,7 +2594,8 @@
             let bounceScale = 1;
             if (entity.bounceAnim > 0) {
               const t = entity.bounceAnim;
-              bounceScale = 1 + Math.sin(t * Math.PI * 3) * 0.25 * t;
+              const bounceStrength = Config.isMobile ? 0.4 : 0.25;
+              bounceScale = 1 + Math.sin(t * Math.PI * 3) * bounceStrength * t;
             }
 
             const scale = (entity.currentScale || 1) * bounceScale;
@@ -2538,58 +2605,58 @@
             ctx.scale(scale + wiggle, scale - wiggle);
             ctx.translate(-entity.x, -entity.y);
 
+            const getEntityOutlineInfo = (entity) => {
+              if (entity.type === "person") {
+                const img = Assets.getPersonImage(entity.personImage);
+                const height = entity.personHeight || (Config.isMobile ? 40 : 80);
+                if (!Assets.isImageReady(img)) return null;
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                const width = height * aspectRatio;
+                return { img, x: entity.x - width / 2, y: entity.y + 15 - height, w: width, h: height };
+              } else {
+                const img = Assets.getBallImage(entity.ballImage);
+                const r = entity.radius;
+                if (!Assets.isImageReady(img)) return null;
+                return { img, x: entity.x - r, y: entity.y - r, w: r * 2, h: r * 2 };
+              }
+            };
+
             if (deathState && deathState.phase === "shake") {
               const pulse = Math.sin(deathState.timer * 0.8) * 0.5 + 0.5;
-
-              if (entity.type === "person") {
-                const glowY = entity.y + 15;
-                const glowRadius = (entity.clickRadius || entity.radius) * 1.3;
-
-                ctx.save();
-                ctx.globalAlpha = 0.4 + pulse * 0.3;
-                const gradient = ctx.createRadialGradient(entity.x, glowY, 0, entity.x, glowY, glowRadius);
-                gradient.addColorStop(0, "rgba(255, 50, 50, 0.8)");
-                gradient.addColorStop(0.5, "rgba(255, 50, 50, 0.4)");
-                gradient.addColorStop(1, "rgba(255, 50, 50, 0)");
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(entity.x, glowY, glowRadius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-              } else {
-                ctx.shadowColor = `rgba(255, 0, 0, ${0.8 + pulse * 0.2})`;
-                ctx.shadowBlur = 15 + pulse * 10;
-                ctx.beginPath();
-                ctx.arc(entity.x, entity.y, (entity.clickRadius || entity.radius) + 5, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(255, 50, 50, ${0.6 + pulse * 0.4})`;
-                ctx.lineWidth = 4;
-                ctx.stroke();
+              const deathOutlineWidth = Math.round(Config.OUTLINE_WIDTH + pulse * 3);
+              const alpha = 0.6 + pulse * 0.4;
+              const deathOutlineColor = `rgba(255, 50, 50, ${alpha})`;
+              const info = getEntityOutlineInfo(entity);
+              if (info) {
+                Renderer.drawOutline(info.img, info.x, info.y, info.w, info.h, deathOutlineWidth, deathOutlineColor);
               }
             }
 
             if ((isSel || entity.targetScale > 1) && !deathState) {
-              ctx.shadowColor = "rgba(255, 220, 100, 0.9)";
-              ctx.shadowBlur = 25;
+              const hoverOutlineWidth = Config.OUTLINE_WIDTH;
+              const hoverOutlineColor = "rgba(255, 220, 100, 0.9)";
+              const info2 = getEntityOutlineInfo(entity);
+              if (info2) {
+                Renderer.drawOutline(info2.img, info2.x, info2.y, info2.w, info2.h, hoverOutlineWidth, hoverOutlineColor);
+              }
             }
 
             if (entity.bounceAnim > 0.3) {
-              ctx.shadowColor = "rgba(255, 220, 100, 0.9)";
-              ctx.shadowBlur = 25;
+              const t = entity.bounceAnim;
+              const bounceOutlineWidth = Math.round(Config.OUTLINE_WIDTH + entity.bounceAnim * 4);
+              const bounceAlpha = Math.min(1, entity.bounceAnim * 1.2);
+              const bounceOutlineColor = `rgba(255, 220, 100, ${bounceAlpha})`;
+              const info3 = getEntityOutlineInfo(entity);
+              if (info3) {
+                Renderer.drawOutline(info3.img, info3.x, info3.y, info3.w, info3.h, bounceOutlineWidth, bounceOutlineColor);
+              }
             }
 
             if (entity.type === "person") {
               const height = entity.personHeight || (Config.isMobile ? 40 : 80);
-              if (entity.useBest) {
-                Renderer.drawBestPerson(entity.x, entity.y + 15, height, entity.personImage);
-              } else {
-                Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
-              }
+              Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
             } else {
-              if (entity.useBest) {
-                Renderer.drawBestBall(entity);
-              } else {
-                Renderer.drawBall(entity);
-              }
+              Renderer.drawBall(entity);
             }
 
             ctx.restore();
@@ -2600,7 +2667,7 @@
             ctx.moveTo(s.dragStart.x, s.dragStart.y);
             ctx.lineTo(s.dragEnd.x, s.dragEnd.y);
             ctx.strokeStyle = "rgba(100, 200, 100, 0.8)";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 4;
             ctx.setLineDash([5, 5]);
             ctx.stroke();
             ctx.setLineDash([]);
@@ -2608,19 +2675,23 @@
         }
 
         findEntityAt(x, y) {
+          let bestEntity = null;
+          let bestDist = Infinity;
           for (let i = this.balls.length - 1; i >= 0; i--) {
             const entity = this.balls[i];
             if (this.getDeathState(entity) || entity.isStaticObject) continue;
             const clickR = entity.clickRadius || entity.radius;
+            const hitY = entity.type === "person" ? entity.y + 15 - (entity.personHeight || 60) / 2 : entity.y;
             const dx = x - entity.x;
-            const dy = y - entity.y;
-            if (Math.sqrt(dx * dx + dy * dy) < clickR + 10) {
-              return entity;
+            const dy = y - hitY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < clickR + 10 && dist < bestDist) {
+              bestDist = dist;
+              bestEntity = entity;
             }
           }
-          return null;
+          return bestEntity;
         }
-
         onPointerMove(x, y) {
           const s = this.state;
 
@@ -2734,8 +2805,8 @@
                 vx: (Math.random() - 0.5) * 0.1,
                 vy: (Math.random() - 0.5) * 0.1,
                 radius: Config.isMobile ? 20 + Math.random() * 15 : 50 + Math.random() * 30,
-                ballImage: (i % Config.NUM_BESTBALL_IMAGES) + 1,
-                useBest: true,
+                ballImage: (i % Config.NUM_BALL_IMAGES) + 1,
+                // useBest: true,
                 followingPath: null,
                 pathProgress: 0,
                 pathDirection: 1,
@@ -2886,7 +2957,7 @@
 
           Physics.handleBallCollisions(this.balls, {
             skipCondition: (b) => b.popping || b.orbiting || b.frozen || b.merging,
-            pushFactor: 0.04,
+            pushFactor: 0.02,
           });
         }
 
@@ -3040,9 +3111,9 @@
           this.currentGameNum = gameNum;
           ScreenShake.reset();
 
-          // Update easter egg highlights
-          document.querySelectorAll(".easter-egg").forEach((egg, idx) => {
-            egg.classList.toggle("active", idx + 1 === gameNum);
+          // Update logo button highlights
+          document.querySelectorAll(".logo-game-btn").forEach((btn) => {
+            btn.classList.toggle("active", parseInt(btn.dataset.game) === gameNum);
           });
 
           const GameClass = this.games[gameNum].class;
@@ -3173,23 +3244,16 @@
         },
 
         setupEasterEggs() {
-          document.getElementById("easterConnect").addEventListener("click", () => {
-            GameManager.switchGame(1);
-          });
-
-          document.getElementById("easterPop").addEventListener("click", () => {
-            GameManager.switchGame(2);
-          });
-
-          document.getElementById("easterBounce").addEventListener("click", () => {
-            GameManager.switchGame(3);
-          });
-
-          document.getElementById("easterBrush").addEventListener("click", () => {
-            GameManager.switchGame(4);
+          document.querySelectorAll(".logo-ball-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const gameNum = parseInt(btn.dataset.game);
+              GameManager.switchGame(gameNum);
+              // Update active state
+              document.querySelectorAll(".logo-ball-btn").forEach((b) => b.classList.remove("active"));
+              btn.classList.add("active");
+            });
           });
         },
-
         setupResize() {
           window.addEventListener("resize", () => {
             resizeCanvas();
