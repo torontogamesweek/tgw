@@ -1642,7 +1642,7 @@
             barrierLifetime: 8000,
             splats: [],
             score: 0,
-            target: { x: canvas.width / 2, y: canvas.height / 2, radius: targetRadius, pulse: 0, rotation: 0 },
+target: { x: canvas.width / 2, y: Math.min(canvas.height, window.innerHeight) * 0.6, radius: targetRadius, pulse: 0, rotation: 0 },
             posterFadeProgress: 0,
             posterFadeStart: Date.now(),
           };
@@ -1734,7 +1734,10 @@
                 type: "star",
               });
               s.target.x = 150 + Math.random() * (canvas.width - 300);
-              s.target.y = 150 + Math.random() * (Math.min(canvas.height, window.innerHeight) - 300);
+
+const groundY = Math.min(canvas.height, window.innerHeight);
+s.target.x = 150 + Math.random() * (canvas.width - 300);
+s.target.y = 150 + Math.random() * (groundY - 300 - s.target.radius);
               const ang = Math.atan2(dy, dx);
               ball.vx = Math.cos(ang) * 5;
               ball.vy = Math.sin(ang) * 5;
