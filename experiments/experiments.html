@@ -62,7 +62,7 @@
 
       @media (max-width: 767px) {
         main {
-          margin-top: 50vh;
+          margin-top: 75vh;
         }
       }
 
@@ -114,11 +114,21 @@
         background: transparent;
       }
 
+      @media (max-width: 768px) {
+        canvas#canvas {
+          position: absolute;
+          top: 200px;
+          left: 0;
+          z-index: 1;
+          background: transparent;
+        }
+      }
+
       /* Easter egg objects */
       .easter-egg {
         position: fixed;
-        width: 15px;
-        height: 15px;
+        width: 19px;
+        height: 19px;
         cursor: pointer;
         z-index: 50;
         transition:
@@ -169,8 +179,8 @@
 
       @media (max-width: 767px) {
         .easter-egg {
-          width: 45px;
-          height: 45px;
+          width: 9px;
+          height: 9px;
         }
 
         .easter-egg.top-left,
@@ -196,10 +206,37 @@
     </style>
 
     <style>
+      /* this is to fix a layout bug  */
+      .game-name {
+        pointer-events: none;
+        opacity: 0;
+        z-index: -1;
+      }
+
       #primary-navigation {
-        display: flex;
+        /* display: flex; */
         justify-content: flex-end;
-        background-color: #d5ebf400;
+        background-color: #d5ebf4;
+      }
+
+      @media (min-width: 800px) {
+        #primary-navigation {
+          /* display: flex; */
+          justify-content: flex-end;
+          background-color: #d5ebf400;
+        }
+      }
+
+      #logo {
+        margin-top: 40px;
+        width: 100vw;
+        /* margin: 0; */
+        padding: 20px 3px 10px 3px;
+        /* background-color: #b8d8f092; */
+      }
+
+      .nav-toggle-button {
+        background: #b9d8ef;
       }
 
       @media (min-width: 800px) {
@@ -212,27 +249,129 @@
           align-items: center;
         }
 
+        @media (min-width: 767px) {
+          nav ul {
+            padding: 0;
+          }
+        }
+
         nav > ul > li {
           margin: 0;
-          padding: 5px;
+          padding: 0 15px 0 15px;
           background-color: #d5ebf422;
           /* border-radius: 10px; */
           font-size: 2rem;
         }
+
+        #logo {
+          margin-top: 30px;
+          width: 100vw;
+          margin: 0;
+          padding: 40px 10px 10px 10px;
+          /* background-color: #b8d8f092; */
+        }
       }
-      #logo {
-        margin-top: 30px;
-        width: 100vw;
-        margin: 0;
-        padding: 30px 10px;
-        background-color: #a8cfffc5;
+    </style>
+
+    <style>
+      /* Sponsor box */
+      .sponsorbox {
+        margin: 3rem 0 0 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .logo-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+        min-height: 120px;
+        max-width: 97rem;
+        width: 100%;
+      }
+
+      .logo-slot {
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-slot a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .logo {
+        width: 80px;
+        height: 50px;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255);
+        border-radius: 5px;
+        padding: 0.3rem 0.5rem;
+        border: 1px dotted var(--white);
+      }
+
+      .logo-big {
+        width: 80px;
+        height: 50px;
+      }
+
+      .logo.visible {
+        opacity: 1;
+      }
+
+      @media (min-width: 768px) {
+        .logo-slot {
+          width: 100%;
+          height: 180px;
+        }
+
+        .logo,
+        .logo-big {
+          width: 160px;
+          height: 120px;
+          padding: 0.5rem 1rem;
+          border: 2px solid #271b189c;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sponsorbox {
+          margin: 0;
+        }
+
+        .logo-container {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 5px;
+        }
+
+        .logo-slot:nth-child(n + 4) {
+          display: none;
+        }
       }
     </style>
   </head>
 
   <body>
     <header>
-      <a href="index.html"><img src="special/logo-long.png" alt="Logo" id="logo" /></a>
+      <a href="index.html">
+        <picture>
+          <source media="(max-width: 767px)" srcset="special/mobile-logo.png" />
+          <img src="special/desktop-logo.png" alt="Logo" id="logo" />
+        </picture>
+      </a>
 
       <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
         <span class="sr-only">Menu</span>
@@ -246,7 +385,7 @@
           </li> -->
           <li></li>
           <li>
-            <!-- <a href="about.html" id="aboutNav">About</a> -->
+            <a href="about.html" id="aboutNav">About</a>
           </li>
         </ul>
       </nav>
@@ -258,21 +397,21 @@
     </div>
 
     <!-- Easter egg game toggles -->
-    <img src="balls/ball_1.png" class="easter-egg top-left" id="easterConnect" alt="Connect Game" title="Connect Game" />
+    <img src="balls/ball_1.png" class="easter-egg bottom-right" id="easterConnect" alt="Connect Game" title="Connect Game" />
     <img src="balls/ball_2.png" class="easter-egg top-right" id="easterPop" alt="Pop Game" title="Pop Game" />
-    <img src="particles/stars/star_1.png" class="easter-egg bottom-right" id="easterBounce" alt="Bounce Game" title="Bounce Game" />
+    <img src="particles/stars/star_1.png" class="easter-egg top-left" id="easterBounce" alt="Bounce Game" title="Bounce Game" />
     <img src="particles/hot/heart.png" class="easter-egg bottom-left" id="easterBrush" alt="Brush Game" title="Brush Game" />
 
     <!-- Game name display -->
-    <div class="game-name" id="gameName"></div>
+    <div class="game-name" id="gameName">o</div>
 
     <canvas id="canvas"></canvas>
 
-      <main class="no-pointer-events">
+    <main class="no-pointer-events">
       <div class="contentContainer" id="landingPage">
         <div class="content">
           <section class="textBox">
-            <h2>June 11-17, 2026</h2>
+            <h2>Join us!</h2>
             <p>
               <span class="strong">Toronto Games Week</span> is a collective coordination of events organized independently by dozens of
               organizations, curators, companies, creators, and communities.
@@ -521,82 +660,6 @@
             <img src="/images/logos/2025/TGW25-Web_Xtra.png" alt="Xtra Magazine logo" class="logo logo-big" />
           </a>
         </div>
-
-        <!-- <div class="logo-source" style="display: none">
-          <a href="https://www.ontariocreates.ca/" target="blank"
-            ><img src="images/logos/OntarioCreatesLogo.png" alt="Ontario Creates logo" class="logo logo-big"
-          /></a>
-          <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank"
-            ><img src="images/logos/TorontoLogo.png" alt="City of Toronto logo" class="logo logo-big" /></a
-          ><br />
-          <a href="https://www.drinkboxstudios.com/" target="blank"
-            ><img src="images/logos/DBLogo.png" alt="Drinkbox logo" class="logo logo-big"
-          /></a>
-          <a href="https://epicgames.com/" target="blank"><img src="images/logos/EpicGamesLogo.png" alt="EpicGamesLogo" class="logo logo-big" /></a>
-          <a href="https://gameartsinternational.network/" target="blank"
-            ><img src="images/logos/GAINLogo.png" alt="GAIN logo" class="logo logo-big"
-          /></a>
-          <a href="https://www.interactiveontario.com/" target="blank"><img src="images/logos/IOLogo.png" alt="IO logo" class="logo logo-big" /></a>
-          <a href="https://xpgamesummit.com/" target="blank"><img src="images/logos/XPGamingLogo.png" alt="XP logo" class="logo logo-big" /></a>
-          <a href="https://www.continueagency.com/" target="blank"
-            ><img src="images/logos/ContinueLogo.png" alt="Continue logo" class="logo logo-big"
-          /></a>
-          <a href="https://brokengamescollective.com/" target="blank"><img src="images/logos/BGCLogo.png" alt="BGC logo" class="logo logo-big" /></a>
-          <a href="https://makerspace.cobot.me/" target="blank"><img src="images/logos/TTLLogo.png" alt="TTL logo" class="logo logo-big" /></a>
-          <a href="https://linktr.ee/bonusstagetoronto/" target="blank"
-            ><img src="images/logos/BonusStageLogo.png" alt="Bonus Stage logo" class="logo logo-big"
-          /></a>
-          <a href="https://ladyarcaders.com/" target="blank"
-            ><img src="images/logos/LadyArcadersLogo.png" alt="Lady Arcaders logo" class="logo logo-big"
-          /></a>
-          <a href="https://vividfoundry.com/" target="blank"
-            ><img src="images/logos/VividFoundryLogo.png" alt="Vivid Foundry logo" class="logo logo-big"
-          /></a>
-          <a href="https://linktr.ee/blackbeltcinema" target="blank"
-            ><img src="images/logos/BBCLogo.png" alt="Black Belt Cinema logo" class="logo logo-big"
-          /></a>
-          <a href="https://www.dirty-rectangles.com/" target="blank"
-            ><img src="images/logos/DirtyRectanglesLogo.png" alt="Dirty Rectangles logo" class="logo logo-big"
-          /></a>
-          <a href="https://tojam.ca/" target="blank"><img src="images/logos/TOJamLogo.png" alt="Toronto Game Jam logo" class="logo logo-big" /></a>
-          <a href="https://torontopubliclibrary.ca/" target="blank"
-            ><img src="images/logos/TPLLogo.png" alt="Toronto Public Library logo" class="logo logo-big"
-          /></a>
-          <a href="https://longslice.com/" target="blank"><img src="images/logos/LongsliceLogo.png" alt="Longslice logo" class="logo logo-big" /></a>
-          <a href="https://indiegamereviewer.com/" target="blank"
-            ><img src="images/logos/IGRLogo.png" alt="Indie Game Reviewer logo" class="logo logo-big"
-          /></a>
-          <a href="https://interaccess.ca/" target="blank"><img src="images/logos/IALogo.png" alt="Interaccess logo" class="logo logo-big" /></a>
-          <a href="https://toughguymountain.com/" target="blank"
-            ><img src="images/logos/TGMLogo.png" alt="Tough Guy Mountain logo" class="logo logo-big"
-          /></a>
-          <a href="https://werocreative.com/" target="blank"><img src="images/logos/WeroLogo.png" alt="Wero logo" class="logo logo-big" /></a>
-          <a href="https://soundcloud.com/iamdjxl" target="blank"><img src="images/logos/DJXLLogo.png" alt="DJXL logo" class="logo logo-big" /></a>
-          <img src="images/logos/PRMoisanLogo.png" alt="PRMoisan logo" class="logo logo-big" />
-          <a href="https://fitc.ca/" target="blank"><img src="images/logos/FITCLogo.png" alt="FITC logo" class="logo logo-big" /></a>
-          <a href="https://jaliresearch.com/" target="blank"><img src="images/logos/JaliLogo.png" alt="Jali logo" class="logo logo-big" /></a>
-          <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
-
-          <a href="https://tripledragon.co.uk/" target="blank"
-            ><img src="images/logos/TripleDragonLogo.png" alt="TripleDragon logo" class="logo logo-big"
-          /></a>
-          <a href="https://www.getluckyvr.com/" target="blank"><img src="images/logos/LuckyVRLogo.png" alt="LuckyVR logo" class="logo logo-big" /></a>
-          <a href="https://xsolla.com" target="blank"><img src="images/logos/XsollaLogo.png" alt="Xsolla logo" class="logo logo-big" /></a>
-          <a href="https://toronto.ubisoft.com/" target="blank"
-            ><img src="images/logos/UbisoftLogo.png" alt="Ubisoft logo" class="logo logo-big"
-          /></a>
-          <a href="https://www.torontofilmschool.ca/" target="blank"><img src="images/logos/TFSLogo.png" alt="TFS logo" class="logo logo-big" /></a>
-          <a href="https://handeyesociety.com/" target="blank"><img src="images/logos/HESLogo.png" alt="HES logo" class="logo logo-big" /></a>
-          <a href="https://mightyyell.com/" target="blank"
-            ><img src="images/logos/MightyYellLogo.png" alt="Mighty Yell logo" class="logo logo-big"
-          /></a>
-          <a href="https://collections.utm.utoronto.ca/collections/syd-bolton-collection" target="blank"
-            ><img src="images/logos/UTMLogo.png" alt="UTM logo" class="logo logo-big"
-          /></a>
-          <a href="https://mackenzie.art/" target="blank"><img src="images/logos/MAGLogo.png" alt="MAG logo" class="logo logo-big" /></a>
-          <a href="https://cwacanada.ca/" target="blank"><img src="images/logos/CWALogo.png" alt="CWA logo" class="logo logo-big" /></a>
-        </div>
-      </div> -->
       </div>
 
       <div class="footer-content">
@@ -687,7 +750,9 @@
       const Config = {
         MAX_SPEED: 25,
         NUM_BALL_IMAGES: 39,
+        NUM_BESTBALL_IMAGES: 15,
         NUM_PEOPLE_IMAGES: 29,
+        NUM_BESTPPL_IMAGES: 21,
         NUM_OTHER_IMAGES: 14,
         SCREEN_SHAKE_DECAY: 0.85,
         SCREEN_SHAKE_MAX: 5,
@@ -905,6 +970,8 @@
       const Assets = {
         balls: [],
         people: [],
+        bestballs: [],
+        bestppl: [],
         stars: [],
         others: [],
         special: {},
@@ -919,6 +986,16 @@
             const img = new Image();
             img.src = "ppl/ppl_" + i + ".png";
             this.people.push(img);
+          }
+          for (let i = 1; i <= Config.NUM_BESTBALL_IMAGES; i++) {
+            const img = new Image();
+            img.src = "bestballs/ball_" + i + ".png";
+            this.bestballs.push(img);
+          }
+          for (let i = 1; i <= Config.NUM_BESTPPL_IMAGES; i++) {
+            const img = new Image();
+            img.src = "bestppl/ppl_" + i + ".png";
+            this.bestppl.push(img);
           }
           for (let i = 1; i <= Config.NUM_OTHER_IMAGES; i++) {
             const img = new Image();
@@ -943,6 +1020,12 @@
         },
         getPersonImage(index) {
           return this.people[index % this.people.length];
+        },
+        getBestBallImage(index) {
+          return this.bestballs[(index - 1) % this.bestballs.length];
+        },
+        getBestPersonImage(index) {
+          return this.bestppl[index % this.bestppl.length];
         },
         getStarImage(index) {
           return this.stars[index % this.stars.length];
@@ -1161,6 +1244,35 @@
             ctx.restore();
           }
         },
+        drawBestBall(ball, opacity = 1, rotation = 0) {
+          const img = Assets.getBestBallImage(ball.ballImage);
+          ctx.save();
+          ctx.globalAlpha = opacity;
+          ctx.translate(ball.x, ball.y);
+          ctx.rotate(rotation);
+          if (Assets.isImageReady(img)) {
+            ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#333";
+            ctx.fill();
+          }
+          ctx.restore();
+        },
+        drawBestPerson(x, y, height, imageIndex, opacity = 1, rotation = 0) {
+          const img = Assets.getBestPersonImage(imageIndex);
+          if (Assets.isImageReady(img)) {
+            const aspectRatio = img.naturalWidth / img.naturalHeight;
+            const width = height * aspectRatio;
+            ctx.save();
+            ctx.globalAlpha = opacity;
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.drawImage(img, -width / 2, -height, width, height);
+            ctx.restore();
+          }
+        },
         drawOther(x, y, size, imageIndex, opacity = 1, rotation = 0, grayscale = 0) {
           const img = Assets.getOtherImage(imageIndex);
           if (!Assets.isImageReady(img)) return false;
@@ -1355,13 +1467,13 @@
         init() {
           super.init();
           const screenSize = Math.min(canvas.width, canvas.height);
-          const baseRadius = Math.max(40, screenSize * 0.08);
-          const radiusVariance = Math.max(15, screenSize * 0.03);
+          const baseRadius = Config.isMobile ? Math.max(25, screenSize * 0.05) : Math.max(40, screenSize * 0.08);
+          const radiusVariance = Config.isMobile ? Math.max(10, screenSize * 0.02) : Math.max(15, screenSize * 0.03);
 
-          // Calculate how many balls will fit well on screen
+          // Use all ball images and fill up the canvas
           const screenArea = canvas.width * canvas.height;
           const averageBallArea = Math.PI * Math.pow(baseRadius + radiusVariance / 2, 2);
-          const numBalls = Math.floor((screenArea * 0.7) / averageBallArea); // Fill 70% of screen
+          const numBalls = Math.max(Config.NUM_BALL_IMAGES, Math.floor((screenArea * 0.85) / averageBallArea));
 
           for (let i = 0; i < numBalls; i++) {
             const a = Math.random() * Math.PI * 2;
@@ -1373,6 +1485,7 @@
                 vx: Math.cos(a) * s,
                 vy: Math.sin(a) * s,
                 radius: baseRadius + Math.random() * radiusVariance,
+                ballImage: (i % Config.NUM_BALL_IMAGES) + 1,
                 popping: false,
                 popProgress: 0,
                 opacity: 1,
@@ -1476,7 +1589,8 @@
         init() {
           super.init();
           const targetRadius = Config.isMobile ? 30 : 50;
-          const maxLineLength = Config.isMobile ? 120 : 200;
+          const isMobileVertical = Config.isMobile && window.innerHeight > window.innerWidth;
+          const maxLineLength = isMobileVertical ? 70 : Config.isMobile ? 120 : 200;
           this.state = {
             barriers: [],
             drawing: false,
@@ -1816,13 +1930,12 @@
 
           // Calculate responsive sizes
           const screenSize = Math.min(canvas.width, canvas.height);
-          const standardBallRadius = Math.max(30, screenSize * 0.04);
-          const standardPersonHeight = Math.max(60, screenSize * 0.07);
-
+          const standardBallRadius = Config.isMobile ? Math.max(20, screenSize * 0.035) : Math.max(30, screenSize * 0.05);
+          const standardPersonHeight = Config.isMobile ? Math.max(45, screenSize * 0.055) : Math.max(60, screenSize * 0.08);
           if (CoordinateSystem.posterWidth && Config.posterBalls && Config.posterPeople) {
             console.log("Using poster positions for ConnectionsGame");
 
-            Config.posterBalls.forEach((posterData, i) => {
+            Config.posterBalls.slice(0, Config.NUM_BESTBALL_IMAGES).forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
               const originalRadius = coords.size / 2;
               const centerX = coords.x + originalRadius;
@@ -1838,6 +1951,7 @@
                   originalRadius: originalRadius,
                   targetRadius: standardBallRadius,
                   ballImage: posterData.img,
+                  useBest: true,
                   type: "ball",
                   rotationSpeed: (Math.random() - 0.5) * 0.02,
                   rotation: 0,
@@ -1856,7 +1970,7 @@
               );
             });
 
-            Config.posterPeople.forEach((posterData, i) => {
+            Config.posterPeople.slice(0, Config.NUM_BESTPPL_IMAGES + 1).forEach((posterData, i) => {
               const coords = CoordinateSystem.posterToCanvas(posterData.x, posterData.y, posterData.size);
               const originalHeight = coords.size;
               const originalRadius = originalHeight / 2;
@@ -1873,6 +1987,7 @@
                 targetRadius: standardPersonHeight / 2,
                 clickRadius: originalRadius + 20,
                 personImage: posterData.img,
+                useBest: true,
                 personHeight: originalHeight,
                 originalPersonHeight: originalHeight,
                 targetPersonHeight: standardPersonHeight,
@@ -1945,7 +2060,7 @@
           } else {
             console.warn("Poster not ready, using fallback positions");
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < Config.NUM_BESTBALL_IMAGES; i++) {
               const a = Math.random() * Math.PI * 2;
               const s = 1.5 + Math.random() * 1.5;
               this.balls.push(
@@ -1956,6 +2071,8 @@
                   vy: Math.sin(a) * s,
                   radius: standardBallRadius,
                   type: "ball",
+                  useBest: true,
+                  ballImage: i + 1,
                   rotationSpeed: (Math.random() - 0.5) * 0.03,
                   scale: 1,
                   targetScale: 1,
@@ -1971,7 +2088,7 @@
               );
             }
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < Config.NUM_BESTPPL_IMAGES; i++) {
               const a = Math.random() * Math.PI * 2;
               const s = 1 + Math.random();
               this.balls.push({
@@ -1981,7 +2098,8 @@
                 vy: Math.sin(a) * s,
                 radius: standardBallRadius,
                 clickRadius: standardBallRadius + 20,
-                personImage: ImageCounter.nextPerson(),
+                personImage: i,
+                useBest: true,
                 personHeight: standardPersonHeight,
                 type: "person",
                 rotation: Math.random() * Math.PI * 2,
@@ -2116,6 +2234,8 @@
                 vy: Math.sin(a1) * 2,
                 radius: baseRadius + Math.random() * 15,
                 type: "ball",
+                useBest: true,
+                ballImage: Math.floor(Math.random() * Config.NUM_BESTBALL_IMAGES) + 1,
                 rotationSpeed: (Math.random() - 0.5) * 0.03,
                 scale: 1,
                 targetScale: 1,
@@ -2136,7 +2256,8 @@
               vy: Math.sin(a2) * 1.5,
               radius: baseRadius + 10,
               clickRadius: baseRadius + 20,
-              personImage: ImageCounter.nextPerson(),
+              personImage: Math.floor(Math.random() * Config.NUM_BESTPPL_IMAGES),
+              useBest: true,
               personHeight: personHeight,
               type: "person",
               rotation: Math.random() * Math.PI * 2,
@@ -2457,10 +2578,18 @@
             }
 
             if (entity.type === "person") {
-              const height = entity.personHeight || (Config.isMobile ? 65 : 80);
-              Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
+              const height = entity.personHeight || (Config.isMobile ? 40 : 80);
+              if (entity.useBest) {
+                Renderer.drawBestPerson(entity.x, entity.y + 15, height, entity.personImage);
+              } else {
+                Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
+              }
             } else {
-              Renderer.drawBall(entity);
+              if (entity.useBest) {
+                Renderer.drawBestBall(entity);
+              } else {
+                Renderer.drawBall(entity);
+              }
             }
 
             ctx.restore();
@@ -2595,14 +2724,18 @@
           };
           this.colors = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
 
-          for (let i = 0; i < 40; i++) {
+          const brushBallCount = Config.isMobile ? 25 : 40;
+          const brushRadius = Config.isMobile ? 20 + Math.random() * 15 : 50 + Math.random() * 30;
+          for (let i = 0; i < brushBallCount; i++) {
             this.balls.push(
               this.createBall({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 vx: (Math.random() - 0.5) * 0.1,
                 vy: (Math.random() - 0.5) * 0.1,
-                radius: 50 + Math.random() * 30,
+                radius: Config.isMobile ? 20 + Math.random() * 15 : 50 + Math.random() * 30,
+                ballImage: (i % Config.NUM_BESTBALL_IMAGES) + 1,
+                useBest: true,
                 followingPath: null,
                 pathProgress: 0,
                 pathDirection: 1,
@@ -2614,8 +2747,6 @@
               }),
             );
           }
-
-
         }
 
         update() {
@@ -2847,7 +2978,11 @@
           });
 
           this.balls.forEach((ball) => {
-            Renderer.drawBall(ball, 1, ball.rotation);
+            if (ball.useBest) {
+              Renderer.drawBestBall(ball, 1, ball.rotation);
+            } else {
+              Renderer.drawBall(ball, 1, ball.rotation);
+            }
           });
           super.draw();
         }
@@ -2909,14 +3044,6 @@
           document.querySelectorAll(".easter-egg").forEach((egg, idx) => {
             egg.classList.toggle("active", idx + 1 === gameNum);
           });
-
-          // Show game name briefly
-          const gameName = document.getElementById("gameName");
-          gameName.textContent = this.games[gameNum].name;
-          gameName.classList.add("show");
-          setTimeout(() => {
-            gameName.classList.remove("show");
-          }, 1500);
 
           const GameClass = this.games[gameNum].class;
           this.currentGame = new GameClass();
@@ -3096,8 +3223,19 @@
       animate();
     </script>
 
-      
     <script>
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
       function setupSponsors() {
         const slots = document.querySelectorAll(".logo-slot");
         const logos = [...document.querySelectorAll(".logo-source a")];
@@ -3139,7 +3277,7 @@
           "resize",
           debounce(() => {
             updateLogos();
-          }, 250)
+          }, 250),
         );
       }
 
