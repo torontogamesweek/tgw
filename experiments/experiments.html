@@ -17,14 +17,14 @@
     <meta property="og:title" content="Toronto Games Week" />
     <meta property="og:description" content="Celebrating games in Toronto, Canada" />
 
-    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" />
+    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
 
     <!-- Twitter Tags -->
     <meta name="twitter:title" content="Toronto Games Week" />
     <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" id="indexImage" />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Image Specifications -->
@@ -37,7 +37,6 @@
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
-
     <style>
       * {
         margin: 0;
@@ -66,20 +65,7 @@
         }
       }
 
-      /* .poster-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: auto;
-        z-index: 2;
-        pointer-events: none;
-        transition: opacity 4s ease-out;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        
-      } */
+     
 
       .poster-container {
         position: fixed;
@@ -93,7 +79,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        opacity: 0; /* Change this from whatever it was to 0 */
+        opacity: 0; 
       }
 
       .poster-container.fade-out {
@@ -284,8 +270,6 @@
           width: 100vw;
         }
       }
-
-      
     </style>
 
     <style>
@@ -403,8 +387,8 @@
     <header>
       <div id="logo-wrapper">
         <picture>
-          <source media="(max-width: 767px)" srcset="special/mobile-logo.png" />
-          <img src="special/desktop-logo.png" alt="Logo" id="logo" />
+          <source media="(max-width: 767px)" srcset="special/mobile-logo.webp" />
+          <img src="special/desktop-logo.webp" alt="Logo" id="logo" />
           <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
           <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
           <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
@@ -775,6 +759,8 @@
       });
     </script>
 
+    <script src="sprites/sprite-manifest.js"></script>
+    <script src="sprite-assets.js"></script>
     <script>
       const Config = {
         MAX_SPEED: 25,
@@ -928,18 +914,19 @@
           }
 
           const onPosterReady = () => {
-            setTimeout(() => {
+            setTimeout(async () => {
               if (!CoordinateSystem.update()) {
                 console.error("Failed to update coordinate system");
                 return;
               }
-
-              // Resize canvas to match poster
               resizeCanvas();
 
+              await Assets.load();
+              GameManager.init(); // ← Keep this one
+
               this.ready = true;
-              console.log("Poster ready, initializing game");
-              GameManager.init();
+              console.log("Poster ready, all assets loaded, initializing game");
+              GameManager.init(); // ← REMOVE this duplicate
 
               setTimeout(() => {
                 this.startTime = Date.now();
@@ -985,7 +972,11 @@
           const posterWidth = posterImg.width || posterImg.naturalWidth || 1396;
           const posterHeight = posterImg.height || posterImg.naturalHeight || 1606;
 
-          // Extend canvas to cover the full scrollable content area
+          // Store poster area dimensions for games that need it
+          canvas.posterAreaWidth = posterWidth;
+          canvas.posterAreaHeight = posterHeight;
+
+          // Extend canvas to cover full scrollable content
           const mainEl = document.querySelector("main");
           const totalHeight = mainEl ? mainEl.offsetTop + mainEl.offsetHeight : posterHeight;
 
@@ -997,77 +988,6 @@
       }
 
       resizeCanvas();
-
-      const Assets = {
-        balls: [],
-        people: [],
-        bestballs: [],
-        bestppl: [],
-        stars: [],
-        others: [],
-        special: {},
-
-        load() {
-          for (let i = 1; i <= Config.NUM_BALL_IMAGES; i++) {
-            const img = new Image();
-            img.src = "balls/ball_" + i + ".png";
-            this.balls.push(img);
-          }
-          for (let i = 1; i <= Config.NUM_PEOPLE_IMAGES; i++) {
-            const img = new Image();
-            img.src = "ppl/ppl_" + i + ".png";
-            this.people.push(img);
-          }
-          for (let i = 1; i <= Config.NUM_BESTBALL_IMAGES; i++) {
-            const img = new Image();
-            img.src = "bestballs/ball_" + i + ".png";
-            this.bestballs.push(img);
-          }
-          for (let i = 1; i <= Config.NUM_BESTPPL_IMAGES; i++) {
-            const img = new Image();
-            img.src = "bestppl/ppl_" + i + ".png";
-            this.bestppl.push(img);
-          }
-          for (let i = 1; i <= Config.NUM_OTHER_IMAGES; i++) {
-            const img = new Image();
-            img.src = "other/o_" + i + ".png";
-            this.others.push(img);
-          }
-          for (let i = 1; i <= 3; i++) {
-            const img = new Image();
-            img.src = "particles/stars/star_" + i + ".png";
-            this.stars.push(img);
-          }
-          this.special.heart = this._loadImage("particles/hot/heart.png");
-          this.special.ko = this._loadImage("particles/hot/ko.png");
-        },
-        _loadImage(src) {
-          const img = new Image();
-          img.src = src;
-          return img;
-        },
-        getBallImage(index) {
-          return this.balls[(index - 1) % this.balls.length];
-        },
-        getPersonImage(index) {
-          return this.people[index % this.people.length];
-        },
-        getBestBallImage(index) {
-          return this.bestballs[(index - 1) % this.bestballs.length];
-        },
-        getBestPersonImage(index) {
-          return this.bestppl[index % this.bestppl.length];
-        },
-        getStarImage(index) {
-          return this.stars[index % this.stars.length];
-        },
-        getOtherImage(index) {
-          return this.others[index % this.others.length];
-        },
-        isImageReady(img) {
-          return img && img.complete && img.naturalWidth > 0;
-        },
-      };
 
       const ImageCounter = {
         ball: 0,
@@ -1232,140 +1152,10 @@
       };
 
       const Renderer = {
-        drawImage(img, x, y, w, h, opacity = 1, rotation = 0) {
-          if (!Assets.isImageReady(img)) return false;
-          ctx.save();
-          ctx.globalAlpha = opacity;
-          ctx.translate(x + w / 2, y + h / 2);
-          ctx.rotate(rotation);
-          ctx.drawImage(img, -w / 2, -h / 2, w, h);
-          ctx.restore();
-          return true;
-        },
-        drawBall(ball, opacity = 1, rotation = 0) {
-          this.drawBallWithSquash(ball, opacity, rotation, 1, 1);
-        },
-        drawBallWithSquash(ball, opacity = 1, rotation = 0, squashX = 1, squashY = 1) {
-          const img = Assets.getBallImage(ball.ballImage);
-          ctx.save();
-          ctx.globalAlpha = opacity;
-          ctx.translate(ball.x, ball.y);
-          ctx.rotate(rotation);
-          ctx.scale(ball.squishX, ball.squishY);
-
-          ctx.scale(squashX, squashY);
-          if (Assets.isImageReady(img)) {
-            ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
-          } else {
-            ctx.beginPath();
-            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#333";
-            ctx.fill();
-          }
-          ctx.restore();
-        },
-        drawPerson(x, y, height, imageIndex, opacity = 1, rotation = 0) {
-          const img = Assets.getPersonImage(imageIndex);
-          if (Assets.isImageReady(img)) {
-            const aspectRatio = img.naturalWidth / img.naturalHeight;
-            const width = height * aspectRatio;
-            ctx.save();
-            ctx.globalAlpha = opacity;
-            ctx.translate(x, y);
-            ctx.rotate(rotation);
-            ctx.drawImage(img, -width / 2, -height, width, height);
-            ctx.restore();
-          }
-        },
-        drawBestBall(ball, opacity = 1, rotation = 0) {
-          const img = Assets.getBestBallImage(ball.ballImage);
-          ctx.save();
-          ctx.globalAlpha = opacity;
-          ctx.translate(ball.x, ball.y);
-          ctx.rotate(rotation);
-          if (Assets.isImageReady(img)) {
-            ctx.drawImage(img, -ball.radius, -ball.radius, ball.radius * 2, ball.radius * 2);
-          } else {
-            ctx.beginPath();
-            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#333";
-            ctx.fill();
-          }
-          ctx.restore();
-        },
-        drawBestPerson(x, y, height, imageIndex, opacity = 1, rotation = 0) {
-          const img = Assets.getBestPersonImage(imageIndex);
-          if (Assets.isImageReady(img)) {
-            const aspectRatio = img.naturalWidth / img.naturalHeight;
-            const width = height * aspectRatio;
-            ctx.save();
-            ctx.globalAlpha = opacity;
-            ctx.translate(x, y);
-            ctx.rotate(rotation);
-            ctx.drawImage(img, -width / 2, -height, width, height);
-            ctx.restore();
-          }
-        },
-        drawOther(x, y, size, imageIndex, opacity = 1, rotation = 0, grayscale = 0) {
-          const img = Assets.getOtherImage(imageIndex);
-          if (!Assets.isImageReady(img)) return false;
-
-          ctx.save();
-          ctx.globalAlpha = opacity;
-          ctx.translate(x, y);
-          ctx.rotate(rotation);
-
-          // Apply grayscale filter
-          if (grayscale > 0) {
-            ctx.filter = `grayscale(${Math.min(grayscale, 1) * 100}%)`;
-          }
-
-          ctx.drawImage(img, -size / 2, -size / 2, size, size);
-          ctx.restore();
-          return true;
-        },
         createRadialGradient(x, y, r1, r2, stops) {
           const gradient = ctx.createRadialGradient(x, y, r1, x, y, r2);
           stops.forEach((s) => gradient.addColorStop(s[0], s[1]));
           return gradient;
-        },
-        drawOutline(img, x, y, w, h, outlineWidth = 3, outlineColor = "rgba(255, 220, 100, 0.9)") {
-          if (!Assets.isImageReady(img)) return;
-
-          // Create offscreen canvas (reuse if possible)
-          if (!this._outlineCanvas) {
-            this._outlineCanvas = document.createElement("canvas");
-            this._outlineCtx = this._outlineCanvas.getContext("2d");
-          }
-          const oc = this._outlineCanvas;
-          const octx = this._outlineCtx;
-
-          const pad = outlineWidth + 2;
-          oc.width = w + pad * 2;
-          oc.height = h + pad * 2;
-          octx.clearRect(0, 0, oc.width, oc.height);
-
-          // Draw the image shifted in all directions (the outline)
-          octx.globalCompositeOperation = "source-over";
-          for (let dx = -outlineWidth; dx <= outlineWidth; dx++) {
-            for (let dy = -outlineWidth; dy <= outlineWidth; dy++) {
-              if (dx * dx + dy * dy <= outlineWidth * outlineWidth) {
-                octx.drawImage(img, pad + dx, pad + dy, w, h);
-              }
-            }
-          }
-
-          // Color the entire silhouette
-          octx.globalCompositeOperation = "source-in";
-          octx.fillStyle = outlineColor;
-          octx.fillRect(0, 0, oc.width, oc.height);
-
-          // Cut out the original shape from the middle
-          octx.globalCompositeOperation = "destination-out";
-          octx.drawImage(img, pad, pad, w, h);
-
-          // Draw the outline onto the main canvas
-          ctx.drawImage(oc, x - pad, y - pad);
         },
       };
 
@@ -1429,6 +1219,7 @@
             return p.life > 0;
           });
         }
+
         draw(customDrawer) {
           this.particles.forEach((p) => {
             const alpha = p.life / (p.maxLife || 30);
@@ -1437,25 +1228,28 @@
               return;
             }
             if (p.type === "star" && p.starIndex !== undefined) {
-              const img = Assets.getStarImage(p.starIndex);
-              Renderer.drawImage(img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+              const frame = Assets.getStarImage(p.starIndex);
+              if (frame) SpriteRenderer.drawFrame(frame, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
             } else if (p.type === "heart") {
-              Renderer.drawImage(Assets.special.heart, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+              const frame = Assets.getParticle("heart");
+              if (frame) SpriteRenderer.drawFrame(frame, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
             } else if (p.type === "ko") {
-              Renderer.drawImage(Assets.special.ko, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
+              const frame = Assets.getParticle("ko");
+              if (frame) SpriteRenderer.drawFrame(frame, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size, alpha, p.rotation);
             } else if (p.ballImage) {
-              const img = Assets.getBallImage(p.ballImage);
-              if (Assets.isImageReady(img)) {
+              const frame = Assets.getBallImage(p.ballImage);
+              if (Assets.isImageReady(frame)) {
                 ctx.save();
                 ctx.globalAlpha = alpha;
                 ctx.translate(p.x, p.y);
                 ctx.rotate(p.rotation);
-                ctx.drawImage(img, -p.radius, -p.radius, p.radius * 2, p.radius * 2);
+                ctx.drawImage(frame.img, frame.sx, frame.sy, frame.sw, frame.sh, -p.radius, -p.radius, p.radius * 2, p.radius * 2);
                 ctx.restore();
               }
             }
           });
         }
+
         clear() {
           this.particles = [];
         }
@@ -1580,13 +1374,13 @@
         }
         draw() {
           this.particles.draw((p) => {
-            const img = Assets.getBallImage(p.ballImage);
-            if (Assets.isImageReady(img)) {
+            const frame = Assets.getBallImage(p.ballImage);
+            if (Assets.isImageReady(frame)) {
               ctx.save();
               ctx.globalAlpha = p.life / p.maxLife;
               ctx.translate(p.x, p.y);
               ctx.rotate(p.rotation);
-              ctx.drawImage(img, -p.size / 2, -p.size / 2, p.size, p.size);
+              ctx.drawImage(frame.img, frame.sx, frame.sy, frame.sw, frame.sh, -p.size / 2, -p.size / 2, p.size, p.size);
               ctx.restore();
             }
           });
@@ -1600,10 +1394,11 @@
               ctx.rotate(ball.popProgress * 0.5);
               ctx.translate(-ball.x, -ball.y);
             }
-            Renderer.drawBall(ball, 1, ball.rotation);
+            SpriteRenderer.drawBall(ball, 1, ball.rotation);
             ctx.restore();
           });
         }
+
         onPointerDown(x, y) {
           for (let i = this.balls.length - 1; i >= 0; i--) {
             const ball = this.balls[i];
@@ -1774,17 +1569,17 @@
               ball.vy = Math.sin(ang) * 5;
             }
 
-            const groundY = Math.min(canvas.height, window.innerHeight);
+            const groundY = window.innerHeight + window.scrollY;
             if (ball.y + ball.radius * ball.growScale >= groundY - 5 && !ball.dying) {
               ball.dying = true;
               ball.deathProgress = 0;
               ScreenShake.add(5);
               s.splats.push({
                 x: ball.x,
-                y: groundY,
+                y: window.innerHeight + window.scrollY,
                 radius: ball.radius * ball.growScale,
                 life: 120,
-                color: `hsl(${Math.random() * 360}, 60%, 50%)`,
+                colour: `hsl(${Math.random() * 360}, 60%, 50%)`,
               });
               continue;
             }
@@ -1844,13 +1639,15 @@
           const posterImg = document.getElementById("posterImage");
           if (posterImg && Assets.isImageReady(posterImg)) {
             const fadeProgress = s.posterFadeProgress;
-            const opacity = 0.01 + (1 - fadeProgress) * 0.0010; // Fade from 1 to 0.1
+            const opacity = 0.07 + (1 - fadeProgress) * 0.9; // Fade from 1 to 0.1
             const grayscale = fadeProgress; // 0 to 1
 
             ctx.save();
             ctx.globalAlpha = opacity;
             ctx.filter = `grayscale(${grayscale * 100}%)`;
-            ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
+            const drawW = canvas.posterAreaWidth || canvas.width;
+            const drawH = canvas.posterAreaHeight || canvas.height;
+            ctx.drawImage(posterImg, 0, 0, drawW, drawH);
             ctx.restore();
             ctx.filter = "none";
           }
@@ -1867,12 +1664,12 @@
           ctx.fill();
 
           const size = t.radius * 2.5 * pulseScale;
-          const starImg = Assets.stars[0];
-          if (Assets.isImageReady(starImg)) {
+          const starFrame = Assets.getStarImage(0); // ← Changed from Assets.stars[0]
+          if (Assets.isImageReady(starFrame)) {
             ctx.save();
             ctx.translate(t.x, t.y);
             ctx.rotate(t.rotation);
-            ctx.drawImage(starImg, -size / 2, -size / 2, size, size);
+            ctx.drawImage(starFrame.img, starFrame.sx, starFrame.sy, starFrame.sw, starFrame.sh, -size / 2, -size / 2, size, size);
             ctx.restore();
           }
 
@@ -1887,15 +1684,15 @@
             ctx.scale(sq, 0.3);
             ctx.beginPath();
             ctx.arc(0, 0, splat.radius, 0, Math.PI * 2);
-            ctx.fillStyle = splat.color;
+            ctx.fillStyle = splat.colour;
             ctx.fill();
             ctx.restore();
           });
 
           this.balls.forEach((ball) => {
-            const img = Assets.getBallImage(ball.ballImage);
+            const frame = Assets.getBallImage(ball.ballImage);
             const r = ball.radius * ball.growScale;
-            if (Assets.isImageReady(img)) {
+            if (Assets.isImageReady(frame)) {
               if (ball.dying) {
                 ctx.save();
                 const sqY = 1 - ball.deathProgress * 0.8;
@@ -1903,25 +1700,23 @@
                 ctx.translate(ball.x, Math.min(canvas.height, window.innerHeight));
                 ctx.scale(sqX, sqY);
                 ctx.globalAlpha = 1 - ball.deathProgress;
-                ctx.drawImage(img, -r, -r * 2, r * 2, r * 2);
+                ctx.drawImage(frame.img, frame.sx, frame.sy, frame.sw, frame.sh, -r, -r * 2, r * 2, r * 2);
                 ctx.restore();
               } else {
                 ctx.save();
                 ctx.translate(ball.x, ball.y);
                 ctx.rotate(ball.rotation);
-
                 ctx.scale(ball.squishX, ball.squishY);
-                ctx.drawImage(img, -r, -r, r * 2, r * 2);
+                ctx.drawImage(frame.img, frame.sx, frame.sy, frame.sw, frame.sh, -r, -r, r * 2, r * 2);
                 ctx.restore();
               }
             }
           });
-
           s.barriers.forEach((barrier) => {
             const age = Date.now() - barrier.created;
             const op = Math.max(0, 1 - age / s.barrierLifetime);
             ctx.save();
-            ctx.shadowColor = "rgba(100, 180, 255, 0.8)";
+            ctx.shadowColour = "rgba(100, 180, 255, 0.8)";
             ctx.shadowBlur = 15 * op;
             ctx.beginPath();
             ctx.moveTo(barrier.x1, barrier.y1);
@@ -1951,7 +1746,7 @@
             const endX = s.drawStart.x + dx;
             const endY = s.drawStart.y + dy;
             ctx.save();
-            ctx.shadowColor = "rgba(100, 180, 255, 0.5)";
+            ctx.shadowColour = "rgba(100, 180, 255, 0.5)";
             ctx.shadowBlur = 10;
             ctx.beginPath();
             ctx.moveTo(s.drawStart.x, s.drawStart.y);
@@ -2229,7 +2024,7 @@
             radius: 0,
             maxRadius: 120,
             life: 1,
-            color: `hsl(${Math.random() * 60 + 30}, 100%, 60%)`,
+            colour: `hsl(${Math.random() * 60 + 30}, 100%, 60%)`,
           });
 
           this.particles.addBurst(cx, cy, 15, {
@@ -2563,8 +2358,10 @@
           // const posterImg = document.getElementById("posterImage");
           // if (posterImg && Assets.isImageReady(posterImg)) {
           //   ctx.save();
-          //   ctx.globalAlpha = 0.3; // Semi-transparent so you can see alignment
-          //   ctx.drawImage(posterImg, 0, 0, canvas.width, canvas.height);
+          //   ctx.globalAlpha = 0.3;
+          //   const drawW = canvas.posterAreaWidth || canvas.width;
+          //   const drawH = canvas.posterAreaHeight || canvas.height;
+          //   ctx.drawImage(posterImg, 0, 0, drawW, drawH);
           //   ctx.restore();
           // }
           super.draw();
@@ -2582,15 +2379,15 @@
           s.celebrationRings.forEach((ring) => {
             ctx.beginPath();
             ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
-            ctx.strokeStyle = ring.color.replace(")", `, ${ring.life})`).replace("hsl", "hsla");
+            ctx.strokeStyle = ring.colour.replace(")", `, ${ring.life})`).replace("hsl", "hsla");
             ctx.lineWidth = 6 * ring.life;
             ctx.stroke();
           });
 
           this.balls.forEach((entity) => {
             if (entity.type === "other") {
-              const img = Assets.getOtherImage(entity.otherImage);
-              if (!Assets.isImageReady(img)) return;
+              const frame = Assets.getOtherImage(entity.otherImage);
+              if (!Assets.isImageReady(frame)) return;
 
               const opacity = entity.opacity || 1;
               const scale = entity.currentScale || 1;
@@ -2600,11 +2397,11 @@
               ctx.translate(entity.x, entity.y);
               ctx.rotate(entity.rotation);
 
-              const aspectRatio = img.naturalWidth / img.naturalHeight;
+              const aspectRatio = frame.aspectRatio; // ← Changed
               const displayWidth = entity.radius * 2 * scale * aspectRatio;
               const displayHeight = entity.radius * 2 * scale;
 
-              ctx.drawImage(img, -displayWidth / 2, -displayHeight / 2, displayWidth, displayHeight);
+              ctx.drawImage(frame.img, frame.sx, frame.sy, frame.sw, frame.sh, -displayWidth / 2, -displayHeight / 2, displayWidth, displayHeight);
               ctx.restore();
               return;
             }
@@ -2641,56 +2438,58 @@
 
             const getEntityOutlineInfo = (entity) => {
               if (entity.type === "person") {
-                const img = Assets.getPersonImage(entity.personImage);
+                const frame = Assets.getPersonImage(entity.personImage);
                 const height = entity.personHeight || (Config.isMobile ? 40 : 80);
-                if (!Assets.isImageReady(img)) return null;
-                const aspectRatio = img.naturalWidth / img.naturalHeight;
-                const width = height * aspectRatio;
-                return { img, x: entity.x - width / 2, y: entity.y + 15 - height, w: width, h: height };
+                if (!Assets.isImageReady(frame)) return null;
+                const width = height * frame.aspectRatio;
+                return { frame, x: entity.x - width / 2, y: entity.y + 15 - height, w: width, h: height };
               } else {
-                const img = Assets.getBallImage(entity.ballImage);
+                const frame = Assets.getBallImage(entity.ballImage);
                 const r = entity.radius;
-                if (!Assets.isImageReady(img)) return null;
-                return { img, x: entity.x - r, y: entity.y - r, w: r * 2, h: r * 2 };
+                if (!Assets.isImageReady(frame)) return null;
+                return { frame, x: entity.x - r, y: entity.y - r, w: r * 2, h: r * 2 };
               }
             };
 
+            // Death state outline (red pulsing)
             if (deathState && deathState.phase === "shake") {
               const pulse = Math.sin(deathState.timer * 0.8) * 0.5 + 0.5;
               const deathOutlineWidth = Math.round(Config.OUTLINE_WIDTH + pulse * 3);
               const alpha = 0.6 + pulse * 0.4;
-              const deathOutlineColor = `rgba(255, 50, 50, ${alpha})`;
+              const deathOutlineColour = `rgba(255, 50, 50, ${alpha})`;
               const info = getEntityOutlineInfo(entity);
               if (info) {
-                Renderer.drawOutline(info.img, info.x, info.y, info.w, info.h, deathOutlineWidth, deathOutlineColor);
+                SpriteRenderer.drawOutline(info.frame, info.x, info.y, info.w, info.h, deathOutlineWidth, deathOutlineColour);
               }
             }
 
+            // Hover/selection outline (yellow)
             if ((isSel || entity.targetScale > 1) && !deathState) {
               const hoverOutlineWidth = Config.OUTLINE_WIDTH;
-              const hoverOutlineColor = "rgba(255, 220, 100, 0.9)";
-              const info2 = getEntityOutlineInfo(entity);
-              if (info2) {
-                Renderer.drawOutline(info2.img, info2.x, info2.y, info2.w, info2.h, hoverOutlineWidth, hoverOutlineColor);
+              const hoverOutlineColour = "rgba(255, 220, 100, 0.9)";
+              const info = getEntityOutlineInfo(entity); // ← Use "info" here
+              if (info) {
+                SpriteRenderer.drawOutline(info.frame, info.x, info.y, info.w, info.h, hoverOutlineWidth, hoverOutlineColour);
               }
             }
 
+            // Bounce celebration outline (yellow glow)
             if (entity.bounceAnim > 0.3) {
-              const t = entity.bounceAnim;
               const bounceOutlineWidth = Math.round(Config.OUTLINE_WIDTH + entity.bounceAnim * 4);
               const bounceAlpha = Math.min(1, entity.bounceAnim * 1.2);
-              const bounceOutlineColor = `rgba(255, 220, 100, ${bounceAlpha})`;
-              const info3 = getEntityOutlineInfo(entity);
-              if (info3) {
-                Renderer.drawOutline(info3.img, info3.x, info3.y, info3.w, info3.h, bounceOutlineWidth, bounceOutlineColor);
+              const bounceOutlineColour = `rgba(255, 220, 100, ${bounceAlpha})`;
+              const info = getEntityOutlineInfo(entity); // ← Use "info" here
+              if (info) {
+                SpriteRenderer.drawOutline(info.frame, info.x, info.y, info.w, info.h, bounceOutlineWidth, bounceOutlineColour);
               }
             }
 
+            // Draw the actual entity
             if (entity.type === "person") {
               const height = entity.personHeight || (Config.isMobile ? 40 : 80);
-              Renderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
+              SpriteRenderer.drawPerson(entity.x, entity.y + 15, height, entity.personImage);
             } else {
-              Renderer.drawBall(entity);
+              SpriteRenderer.drawBall(entity);
             }
 
             ctx.restore();
@@ -2824,10 +2623,10 @@
             paths: [],
             drawing: false,
             currentPath: [],
-            currentColor: null,
+            currentColour: null,
             pathLifetime: 15000,
           };
-          this.colors = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
+          this.colours = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
 
           const brushBallCount = Config.isMobile ? 25 : 40;
           const brushRadius = Config.isMobile ? 20 + Math.random() * 15 : 50 + Math.random() * 30;
@@ -3004,10 +2803,10 @@
           };
         }
 
-        drawSmoothPath(points, opacity, color) {
+        drawSmoothPath(points, opacity, colour) {
           if (points.length < 2) return;
           ctx.save();
-          ctx.strokeStyle = color;
+          ctx.strokeStyle = colour;
           ctx.globalAlpha = opacity * 0.6;
           ctx.lineWidth = 8;
           ctx.lineCap = "round";
@@ -3044,12 +2843,12 @@
             if (path.points.length === 1) {
               ctx.beginPath();
               ctx.arc(path.points[0].x, path.points[0].y, 6, 0, Math.PI * 2);
-              ctx.fillStyle = path.color;
+              ctx.fillStyle = path.colour;
               ctx.globalAlpha = op * 0.6;
               ctx.fill();
               ctx.globalAlpha = 1;
             } else {
-              self.drawSmoothPath(path.points, op, path.color);
+              self.drawSmoothPath(path.points, op, path.colour);
             }
           });
 
@@ -3058,11 +2857,11 @@
             if (this.state.currentPath.length === 1) {
               ctx.beginPath();
               ctx.arc(this.state.currentPath[0].x, this.state.currentPath[0].y, 6, 0, Math.PI * 2);
-              ctx.fillStyle = this.state.currentColor;
+              ctx.fillStyle = this.state.currentColour;
               ctx.globalAlpha = 0.9;
               ctx.fill();
             } else {
-              this.drawSmoothPath(this.state.currentPath, 1.5, this.state.currentColor);
+              this.drawSmoothPath(this.state.currentPath, 1.5, this.state.currentColour);
             }
             ctx.restore();
           }
@@ -3074,7 +2873,7 @@
               ctx.save();
               ctx.beginPath();
               ctx.arc(ball.x, ball.y, ball.radius + 8 * (1 - progress), 0, Math.PI * 2);
-              ctx.strokeStyle = ball.magnetTarget.color || "#fff";
+              ctx.strokeStyle = ball.magnetTarget.colour || "#fff";
               ctx.globalAlpha = 0.3 * (1 - progress);
               ctx.lineWidth = 2;
               ctx.stroke();
@@ -3084,9 +2883,9 @@
 
           this.balls.forEach((ball) => {
             if (ball.useBest) {
-              Renderer.drawBestBall(ball, 1, ball.rotation);
+              SpriteRenderer.drawBestBall(ball, 1, ball.rotation);
             } else {
-              Renderer.drawBall(ball, 1, ball.rotation);
+              SpriteRenderer.drawBall(ball, 1, ball.rotation);
             }
           });
           super.draw();
@@ -3095,8 +2894,8 @@
         onPointerDown(x, y) {
           this.state.drawing = true;
           this.state.currentPath = [{ x: x, y: y }];
-          const availableColors = this.colors.filter((c) => c !== this.state.currentColor);
-          this.state.currentColor = availableColors[Math.floor(Math.random() * availableColors.length)];
+          const availableColours = this.colours.filter((c) => c !== this.state.currentColour);
+          this.state.currentColour = availableColours[Math.floor(Math.random() * availableColours.length)];
         }
 
         onPointerMove(x, y) {
@@ -3118,7 +2917,7 @@
               points: this.state.currentPath.slice(),
               created: Date.now(),
               isLoop: isLoop,
-              color: this.state.currentColor,
+              colour: this.state.currentColour,
             });
           }
           this.state.drawing = false;
@@ -3290,8 +3089,8 @@
         },
         setupResize() {
           window.addEventListener("resize", () => {
+            CoordinateSystem.update();
             resizeCanvas();
-            // Reinitialize current game with new dimensions
             if (GameManager.currentGame) {
               GameManager.currentGame.init();
             }
@@ -3314,8 +3113,6 @@
         requestAnimationFrame(animate);
       }
 
-      // Initialize everything
-      Assets.load();
       Input.init();
       PosterTransition.init();
       animate();
