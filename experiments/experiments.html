@@ -466,7 +466,8 @@
 
     <!-- Poster that fades out -->
     <div class="poster-container" id="posterContainer">
-<img src="tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />    </div>
+      <img src="tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+    </div>
 
     <!-- Game name display -->
     <div class="game-name" id="gameName">o</div>
@@ -965,27 +966,24 @@
             console.error("Poster elements not found");
             return;
           }
+          const onPosterReady = () => {
+            setTimeout(async () => {
+              if (!CoordinateSystem.update()) {
+                console.error("Failed to update coordinate system");
+                return;
+              }
+              resizeCanvas();
 
-const onPosterReady = () => {
-  setTimeout(async () => {
-    if (!CoordinateSystem.update()) {
-      console.error("Failed to update coordinate system");
-      return;
-    }
-    resizeCanvas();
+              await Assets.load();
+              await GameManager.init();
+              this.ready = true;
 
-    GameManager.init();
-    this.ready = true;
+              this.startTime = Date.now();
+              posterContainer.classList.add("fade-out");
+              console.log("Starting poster fade");
+            }, 100);
+          };
 
-    this.startTime = Date.now();
-    posterContainer.classList.add("fade-out");
-    console.log("Starting poster fade");
-
-    Assets.load().then(() => {
-      console.log("All assets loaded");
-    });
-  }, 100);
-};
           if (posterImg.complete && posterImg.naturalWidth > 0) {
             console.log("Poster already loaded");
             onPosterReady();
@@ -3012,6 +3010,13 @@ const onPosterReady = () => {
         }
       }
       // Game Manager
+      const GAME_ASSETS = {
+        1: ["balls", "ppl", "other", "stars", "particles"], // Connections
+        2: ["balls"], // Pop
+        3: ["balls", "stars"], // Bounce
+        4: ["balls", "stars"], // Brush
+      };
+
       const GameManager = {
         games: {
           1: { name: "Connect", class: ConnectionsGame },
@@ -3022,11 +3027,10 @@ const onPosterReady = () => {
         currentGameNum: 1,
         currentGame: null,
 
-        init() {
-          this.switchGame(1);
+        async init() {
+          await this.switchGame(1);
         },
-
-        switchGame(gameNum) {
+        async switchGame(gameNum) {
           if (gameNum < 1 || gameNum > 4) return;
           this.currentGameNum = gameNum;
           ScreenShake.reset();
@@ -3035,6 +3039,9 @@ const onPosterReady = () => {
           document.querySelectorAll(".logo-game-btn").forEach((btn) => {
             btn.classList.toggle("active", parseInt(btn.dataset.game) === gameNum);
           });
+
+          // Load only the sheets this game needs (already-loaded ones are skipped)
+          await Assets.loadSheets(GAME_ASSETS[gameNum]);
 
           const GameClass = this.games[gameNum].class;
           this.currentGame = new GameClass();
@@ -3241,59 +3248,61 @@ const onPosterReady = () => {
         };
       }
 
-
       function setupSponsors() {
-  const slots = document.querySelectorAll(".logo-slot");
-  const sourceLinks = [...document.querySelectorAll(".logo-source a")];
+        const slots = document.querySelectorAll(".logo-slot");
+        const sourceLinks = [...document.querySelectorAll(".logo-source a")];
 
-  // Extract data but don't keep the images in DOM
-  const logoData = sourceLinks.map(a => ({
-    href: a.href,
-    src: a.querySelector("img").getAttribute("src"),
-    alt: a.querySelector("img").getAttribute("alt"),
-  }));
+        // Extract data but don't keep the images in DOM
+        const logoData = sourceLinks.map((a) => ({
+          href: a.href,
+          src: a.querySelector("img").getAttribute("src"),
+          alt: a.querySelector("img").getAttribute("alt"),
+        }));
 
-  // Remove the source div entirely so browsers don't preload images
-  const sourceDiv = document.querySelector(".logo-source");
-  if (sourceDiv) sourceDiv.remove();
+        // Remove the source div entirely so browsers don't preload images
+        const sourceDiv = document.querySelector(".logo-source");
+        if (sourceDiv) sourceDiv.remove();
 
-  function getVisibleCount() {
-    return window.innerWidth <= 768 ? 3 : 6;
-  }
-
-  function updateLogos() {
-    const visibleCount = getVisibleCount();
-    const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
-
-    slots.forEach((slot) => {
-      const currentLogo = slot.querySelector("img");
-      if (currentLogo) currentLogo.classList.remove("visible");
-    });
-
-    setTimeout(() => {
-      slots.forEach((slot, i) => {
-        slot.innerHTML = "";
-        if (selected[i]) {
-          const a = document.createElement("a");
-          a.href = selected[i].href;
-          a.target = "_blank";
-          const img = document.createElement("img");
-          img.src = selected[i].src;
-          img.alt = selected[i].alt;
-          img.className = "logo logo-big";
-          img.loading = "lazy";
-          a.appendChild(img);
-          slot.appendChild(a);
-          requestAnimationFrame(() => img.classList.add("visible"));
+        function getVisibleCount() {
+          return window.innerWidth <= 768 ? 3 : 6;
         }
-      });
-    }, 1200);
-  }
 
-  updateLogos();
-  setInterval(updateLogos, 6000);
-  window.addEventListener("resize", debounce(() => updateLogos(), 250));
-}
+        function updateLogos() {
+          const visibleCount = getVisibleCount();
+          const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+          slots.forEach((slot) => {
+            const currentLogo = slot.querySelector("img");
+            if (currentLogo) currentLogo.classList.remove("visible");
+          });
+
+          setTimeout(() => {
+            slots.forEach((slot, i) => {
+              slot.innerHTML = "";
+              if (selected[i]) {
+                const a = document.createElement("a");
+                a.href = selected[i].href;
+                a.target = "_blank";
+                const img = document.createElement("img");
+                img.src = selected[i].src;
+                img.alt = selected[i].alt;
+                img.className = "logo logo-big";
+                img.loading = "lazy";
+                a.appendChild(img);
+                slot.appendChild(a);
+                requestAnimationFrame(() => img.classList.add("visible"));
+              }
+            });
+          }, 1200);
+        }
+
+        updateLogos();
+        setInterval(updateLogos, 6000);
+        window.addEventListener(
+          "resize",
+          debounce(() => updateLogos(), 250),
+        );
+      }
 
       document.addEventListener("DOMContentLoaded", setupSponsors);
     </script>

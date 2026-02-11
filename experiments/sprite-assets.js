@@ -12,32 +12,43 @@ const Assets = {
   _loaded: false,
 
 
-  async load() {
+async load() {
     const tier = Config.isMobile ? "mobile" : "desktop";
     this._manifest = SpriteManifest[tier];
+    // Don't load everything — just init the manifest.
+    // Individual sheets are loaded on demand via loadSheets().
+    this._loaded = true;
+    console.log(`Assets manifest ready (${tier} tier)`);
+  },
+
+  async loadSheets(sheetNames) {
+    if (!this._manifest) return;
     const promises = [];
 
-    for (const [name, info] of Object.entries(this._manifest.sheets)) {
-      promises.push(this._loadImage(info.file, (img) => {
-        this._sheets[name] = img;
-      }, name));
+    for (const name of sheetNames) {
+      // Skip if already loaded
+      if (this._sheets[name] || this._named[name]) continue;
+
+      const sheetInfo = this._manifest.sheets[name];
+      if (sheetInfo) {
+        promises.push(this._loadImage(sheetInfo.file, (img) => {
+          this._sheets[name] = img;
+        }, name));
+        continue;
+      }
+
+      const namedInfo = (this._manifest.named || {})[name];
+      if (namedInfo) {
+        promises.push(this._loadImage(namedInfo.file, (img) => {
+          this._named[name] = img;
+        }, name));
+      }
     }
 
-    for (const [name, info] of Object.entries(this._manifest.named || {})) {
-      promises.push(this._loadImage(info.file, (img) => {
-        this._named[name] = img;
-      }, name));
+    if (promises.length > 0) {
+      await Promise.all(promises);
+      console.log(`Loaded sheets: ${sheetNames.filter(n => !this._sheets[n] || promises.length).join(", ")}`);
     }
-
-    for (const [name, info] of Object.entries(this._manifest.separate || {})) {
-      promises.push(this._loadImage(info.file, (img) => {
-        this._separate[name] = img;
-      }, name));
-    }
-
-    await Promise.all(promises);
-    this._loaded = true;
-    console.log(`All assets loaded (${tier} tier, ${promises.length} files)`);
   },
 
   _loadImage(src, onLoad, label) {
