@@ -48,7 +48,6 @@
         overflow: hidden;
         overflow-y: auto;
         background: #b8d8f0;
-        touch-action: none;
         font-family: "Courier New", Courier, monospace, sans-serif;
       }
 
@@ -3130,12 +3129,32 @@
 
         setupTouchEvents() {
           const self = this;
-          canvas.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            self.isMouseDown = true;
-            const p = self.getPointer(e);
-            GameManager.onPointerDown(p.x, p.y);
-          });
+          canvas.addEventListener(
+            "touchstart",
+            (e) => {
+              // Don't preventDefault here - let scrolling work by default
+              const p = self.getPointer(e);
+
+              // Only capture the touch if the user tapped on something interactive
+              const game = GameManager.currentGame;
+              let hitSomething = false;
+
+              if (game instanceof ConnectionsGame) {
+                hitSomething = game.findEntityAt(p.x, p.y) !== null;
+              } else if (game instanceof PopGame) {
+                hitSomething = game.balls.some((b) => !b.popping && Physics.contains(b, p.x, p.y));
+              } else if (game instanceof BounceGame || game instanceof BrushGame) {
+                hitSomething = true; // these games use draw gestures
+              }
+
+              if (hitSomething) {
+                e.preventDefault();
+                self.isMouseDown = true;
+                GameManager.onPointerDown(p.x, p.y);
+              }
+            },
+            { passive: false },
+          );
 
           window.addEventListener(
             "touchmove",
