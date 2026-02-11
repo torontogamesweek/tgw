@@ -466,8 +466,7 @@
 
     <!-- Poster that fades out -->
     <div class="poster-container" id="posterContainer">
-      <img src="tgwposterforsitelargeclear2.png" alt="Toronto Games Week" id="posterImage" />
-    </div>
+<img src="tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />    </div>
 
     <!-- Game name display -->
     <div class="game-name" id="gameName">o</div>
@@ -967,26 +966,26 @@
             return;
           }
 
-          const onPosterReady = () => {
-            setTimeout(async () => {
-              if (!CoordinateSystem.update()) {
-                console.error("Failed to update coordinate system");
-                return;
-              }
-              resizeCanvas();
+const onPosterReady = () => {
+  setTimeout(async () => {
+    if (!CoordinateSystem.update()) {
+      console.error("Failed to update coordinate system");
+      return;
+    }
+    resizeCanvas();
 
-              await Assets.load();
-              GameManager.init();
-              this.ready = true;
+    GameManager.init();
+    this.ready = true;
 
-              setTimeout(() => {
-                this.startTime = Date.now();
-                posterContainer.classList.add("fade-out");
-                console.log("Starting poster fade");
-              }, this.pauseDuration);
-            }, 100);
-          };
+    this.startTime = Date.now();
+    posterContainer.classList.add("fade-out");
+    console.log("Starting poster fade");
 
+    Assets.load().then(() => {
+      console.log("All assets loaded");
+    });
+  }, 100);
+};
           if (posterImg.complete && posterImg.naturalWidth > 0) {
             console.log("Poster already loaded");
             onPosterReady();
@@ -3242,50 +3241,59 @@
         };
       }
 
+
       function setupSponsors() {
-        const slots = document.querySelectorAll(".logo-slot");
-        const logos = [...document.querySelectorAll(".logo-source a")];
+  const slots = document.querySelectorAll(".logo-slot");
+  const sourceLinks = [...document.querySelectorAll(".logo-source a")];
 
-        function getVisibleCount() {
-          return window.innerWidth <= 768 ? 3 : 6; // 3 on mobile, 6 on desktop
+  // Extract data but don't keep the images in DOM
+  const logoData = sourceLinks.map(a => ({
+    href: a.href,
+    src: a.querySelector("img").getAttribute("src"),
+    alt: a.querySelector("img").getAttribute("alt"),
+  }));
+
+  // Remove the source div entirely so browsers don't preload images
+  const sourceDiv = document.querySelector(".logo-source");
+  if (sourceDiv) sourceDiv.remove();
+
+  function getVisibleCount() {
+    return window.innerWidth <= 768 ? 3 : 6;
+  }
+
+  function updateLogos() {
+    const visibleCount = getVisibleCount();
+    const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+    slots.forEach((slot) => {
+      const currentLogo = slot.querySelector("img");
+      if (currentLogo) currentLogo.classList.remove("visible");
+    });
+
+    setTimeout(() => {
+      slots.forEach((slot, i) => {
+        slot.innerHTML = "";
+        if (selected[i]) {
+          const a = document.createElement("a");
+          a.href = selected[i].href;
+          a.target = "_blank";
+          const img = document.createElement("img");
+          img.src = selected[i].src;
+          img.alt = selected[i].alt;
+          img.className = "logo logo-big";
+          img.loading = "lazy";
+          a.appendChild(img);
+          slot.appendChild(a);
+          requestAnimationFrame(() => img.classList.add("visible"));
         }
+      });
+    }, 1200);
+  }
 
-        function updateLogos() {
-          const visibleCount = getVisibleCount();
-          const selectedLogos = [...logos].sort(() => Math.random() - 0.5).slice(0, visibleCount);
-
-          // First fade out current logos
-          slots.forEach((slot) => {
-            const currentLogo = slot.querySelector("img");
-            if (currentLogo) {
-              currentLogo.classList.remove("visible");
-            }
-          });
-
-          setTimeout(() => {
-            slots.forEach((slot, i) => {
-              if (selectedLogos[i]) {
-                const logo = selectedLogos[i].cloneNode(true);
-                slot.innerHTML = "";
-                slot.appendChild(logo);
-                requestAnimationFrame(() => {
-                  logo.querySelector("img").classList.add("visible");
-                });
-              }
-            });
-          }, 1200);
-        }
-
-        updateLogos();
-        setInterval(updateLogos, 6000);
-
-        window.addEventListener(
-          "resize",
-          debounce(() => {
-            updateLogos();
-          }, 250),
-        );
-      }
+  updateLogos();
+  setInterval(updateLogos, 6000);
+  window.addEventListener("resize", debounce(() => updateLogos(), 250));
+}
 
       document.addEventListener("DOMContentLoaded", setupSponsors);
     </script>
