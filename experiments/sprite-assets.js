@@ -345,3 +345,4 @@ const SpriteRenderer = {
     return this.drawFrame(frame, x, y, w, h, opacity, rotation);
   },
 };
+
