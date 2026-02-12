@@ -478,7 +478,7 @@
       <div class="contentContainer" id="landingPage">
         <div class="content">
           <section class="textBox">
-            <h2>Join us?</h2>
+            <h2 id="join-heading">Join us?</h2>
             <p>
               <span class="strong">Toronto Games Week</span> is a collective coordination of events organized independently by dozens of
               organizations, curators, companies, creators, and communities.
@@ -496,7 +496,7 @@
           </section>
         </div>
 
-        <!-- <div class="content">
+        <div class="content">
           <section class="textBox">
             <h2>At Toronto Games Week, you might:</h2>
             <ul class="controllerList" id="activitiesList">
@@ -506,15 +506,15 @@
               <li>Learn from a game-designer-turned-bestselling-novelist!</li>
               <li>Play an RPG you found in a Little Free Library!</li>
             </ul>
-            <ul class="controllerList">
+            <!-- <ul class="controllerList">
               <li>Frolic in a flickering forest pop-up arcade after dark!</li>
               <li>Learn open source game tools at a workshop!</li>
               <li>Play or cheer at a women & femme speedrunning event!</li>
               <li>Brew a DIY blend at a tea party in the park!</li>
               <li>Compare working class sci-fi movies and games!</li>
               <li>Install a game you made on a Gameboy cartridge!</li>
-            </ul>
-            <div class="btndiv">
+            </ul> -->
+            <!-- <div class="btndiv">
               <p class="btn floatingBtn">
                 <a class="" target="_blank" href="blog/2023.html">2023 recap</a>
               </p>
@@ -522,9 +522,9 @@
               <p class="btn floatingBtn">
                 <a class="" target="_blank" href="blog/2024.html">2024 recap</a>
               </p>
-            </div>
+            </div> -->
           </section>
-        </div> -->
+        </div>
         <!-- 
         <div class="content">
           <section class="textBox">
@@ -534,7 +534,7 @@
             </ul>
           </section>
         </div> -->
-        <!-- 
+
         <div class="content">
           <section class="textBox">
             <h2>Organize an event!</h2>
@@ -550,9 +550,9 @@
               >
             </p>
           </section>
-        </div> -->
+        </div>
 
-        <!-- <div class="content">
+        <div class="content">
           <section class="textBox">
             <h2>Help out</h2>
             <p>
@@ -567,7 +567,7 @@
               >
             </p>
           </section>
-        </div> -->
+        </div>
 
         <div class="content">
           <section class="textBox">
@@ -575,8 +575,9 @@
 
             <p>Were you at Toronto Games Week 2025?</p>
             <p>
-              Did you bike over to play games under a ufo? Invent giant parachute games with an armoured knight? Colour with your face on a giant silo with
-              Olivia Chow? Find a giant rat in the depths of Toronto? Relive the glory!</p>
+              Did you bike over to play games under a ufo? Invent giant parachute games with an armoured knight? Colour with your face on a giant silo
+              with Olivia Chow? Find a giant rat in the depths of Toronto? Relive the glory!
+            </p>
 
             <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; margin: 20px 0">
               <iframe
@@ -799,6 +800,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
+      // Personal invite handler
+      (function () {
+        var hash = location.hash;
+        if (!hash.startsWith("#invite=")) return;
+
+        try {
+          var encoded = hash.slice("#invite=".length);
+          var data = JSON.parse(decodeURIComponent(atob(encoded)));
+          if (!data.friend) return;
+
+          // Create the invite banner and insert it at the top of main content
+          var banner = document.createElement("div");
+          banner.className = "textBox";
+          banner.style.background = "#d5ebf4";
+          banner.style.border = "2px dotted #271b18";
+          banner.style.padding = "1.5rem";
+          banner.style.marginBottom = "1rem";
+
+          var heading = document.createElement("h2");
+          heading.textContent = "Hey " + data.friend + ", you are invited!";
+          banner.appendChild(heading);
+
+          var fromLine = document.createElement("p");
+          fromLine.innerHTML = "<strong>" + data.from + "</strong> wants you at Toronto Games Week.";
+          banner.appendChild(fromLine);
+
+          if (data.reason) {
+            var reasonBlock = document.createElement("blockquote");
+            reasonBlock.style.borderLeft = "3px solid #271b18";
+            reasonBlock.style.paddingLeft = "1rem";
+            reasonBlock.style.margin = "1rem 0";
+            reasonBlock.style.fontStyle = "italic";
+            reasonBlock.textContent = data.reason;
+            banner.appendChild(reasonBlock);
+
+            var sig = document.createElement("p");
+            sig.textContent = "-- " + data.from;
+            banner.appendChild(sig);
+          }
+
+          // Wrap it in the same content div structure as the rest of the page
+          var wrapper = document.createElement("div");
+          wrapper.className = "content";
+          wrapper.appendChild(banner);
+
+          // Insert before the first content section
+          var landing = document.getElementById("landingPage");
+          if (landing && landing.firstChild) {
+            landing.insertBefore(wrapper, landing.firstChild);
+          }
+
+          // Update the page title
+          document.title = data.friend + ", you are invited to Toronto Games Week!";
+        } catch (e) {
+          // Invalid invite data, just show normal site
+        }
+      })();
+    </script>
+
+    <script>
       document.addEventListener("DOMContentLoaded", function () {
         const navToggle = document.getElementById("nav-toggle");
         const primaryNav = document.getElementById("primary-navigation");
@@ -808,6 +869,137 @@
           navToggle.setAttribute("aria-expanded", !isExpanded);
           primaryNav.classList.toggle("expanded");
         });
+      });
+    </script>
+
+    <script>
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      function setupSponsors() {
+        const slots = document.querySelectorAll(".logo-slot");
+        const sourceLinks = [...document.querySelectorAll(".logo-source a")];
+
+        // Extract data but don't keep the images in DOM
+        const logoData = sourceLinks.map((a) => ({
+          href: a.href,
+          src: a.querySelector("img").getAttribute("src"),
+          alt: a.querySelector("img").getAttribute("alt"),
+        }));
+
+        // Remove the source div entirely so browsers don't preload images
+        const sourceDiv = document.querySelector(".logo-source");
+        if (sourceDiv) sourceDiv.remove();
+
+        function getVisibleCount() {
+          return window.innerWidth <= 768 ? 3 : 6;
+        }
+
+        function updateLogos() {
+          const visibleCount = getVisibleCount();
+          const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+          slots.forEach((slot) => {
+            const currentLogo = slot.querySelector("img");
+            if (currentLogo) currentLogo.classList.remove("visible");
+          });
+
+          setTimeout(() => {
+            slots.forEach((slot, i) => {
+              slot.innerHTML = "";
+              if (selected[i]) {
+                const a = document.createElement("a");
+                a.href = selected[i].href;
+                a.target = "_blank";
+                const img = document.createElement("img");
+                img.src = selected[i].src;
+                img.alt = selected[i].alt;
+                img.className = "logo logo-big";
+                img.loading = "lazy";
+                a.appendChild(img);
+                slot.appendChild(a);
+                requestAnimationFrame(() => img.classList.add("visible"));
+              }
+            });
+          }, 1200);
+        }
+
+        updateLogos();
+        setInterval(updateLogos, 6000);
+        window.addEventListener(
+          "resize",
+          debounce(() => updateLogos(), 250),
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", setupSponsors);
+    </script>
+
+    <script>
+      // Random Activities and Guests Script
+      document.addEventListener("DOMContentLoaded", function () {
+        // All possible activities
+        const allActivities = [
+          "Play massive videogames projected on concrete silos at the waterfront!",
+          "Scour High Park for fungi and butterflies in scavenger hunts!",
+          "Frolic in a flickering forest pop-up arcade after dark!",
+          "Level up your industry knowledge and contacts!",
+          "Brew a DIY blend at a tea party in the park!",
+          "Wheel down dark forest paths to the Night Parkcade!",
+          "Rediscover your love of playing with giant parachutes!",
+          "Learn open source game tools!",
+        ];
+
+        // All possible guests (with HTML for links)
+        const allGuests = [
+          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
+          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
+          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
+          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
+          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
+          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
+        ];
+
+        // Function to get random items from an array
+        function getRandomItems(array, count) {
+          const shuffled = [...array].sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, count);
+        }
+
+        // Function to populate a list with items
+        function populateList(listId, items, useHTML = false) {
+          const list = document.getElementById(listId);
+          if (!list) return;
+
+          list.innerHTML = "";
+
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            if (useHTML) {
+              li.innerHTML = item;
+            } else {
+              li.textContent = item;
+            }
+            list.appendChild(li);
+          });
+        }
+
+        // Populate the activities list with 5 random activities
+        const randomActivities = getRandomItems(allActivities, 5);
+        populateList("activitiesList", randomActivities);
+
+        // Populate the guests list with 3 random guests
+        const randomGuests = getRandomItems(allGuests, 3);
+        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
       });
     </script>
 
@@ -3231,139 +3423,6 @@
       Input.init();
       PosterTransition.init();
       animate();
-    </script>
-
-    <script>
-      function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-          const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-          };
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-        };
-      }
-
-      function setupSponsors() {
-        const slots = document.querySelectorAll(".logo-slot");
-        const sourceLinks = [...document.querySelectorAll(".logo-source a")];
-
-        // Extract data but don't keep the images in DOM
-        const logoData = sourceLinks.map((a) => ({
-          href: a.href,
-          src: a.querySelector("img").getAttribute("src"),
-          alt: a.querySelector("img").getAttribute("alt"),
-        }));
-
-        // Remove the source div entirely so browsers don't preload images
-        const sourceDiv = document.querySelector(".logo-source");
-        if (sourceDiv) sourceDiv.remove();
-
-        function getVisibleCount() {
-          return window.innerWidth <= 768 ? 3 : 6;
-        }
-
-        function updateLogos() {
-          const visibleCount = getVisibleCount();
-          const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
-
-          slots.forEach((slot) => {
-            const currentLogo = slot.querySelector("img");
-            if (currentLogo) currentLogo.classList.remove("visible");
-          });
-
-          setTimeout(() => {
-            slots.forEach((slot, i) => {
-              slot.innerHTML = "";
-              if (selected[i]) {
-                const a = document.createElement("a");
-                a.href = selected[i].href;
-                a.target = "_blank";
-                const img = document.createElement("img");
-                img.src = selected[i].src;
-                img.alt = selected[i].alt;
-                img.className = "logo logo-big";
-                img.loading = "lazy";
-                a.appendChild(img);
-                slot.appendChild(a);
-                requestAnimationFrame(() => img.classList.add("visible"));
-              }
-            });
-          }, 1200);
-        }
-
-        updateLogos();
-        setInterval(updateLogos, 6000);
-        window.addEventListener(
-          "resize",
-          debounce(() => updateLogos(), 250),
-        );
-      }
-
-      document.addEventListener("DOMContentLoaded", setupSponsors);
-    </script>
-
-    <script>
-      // Random Activities and Guests Script
-      document.addEventListener("DOMContentLoaded", function () {
-        // All possible activities
-        const allActivities = [
-          "Play massive videogames projected on concrete silos at the waterfront!",
-          "Scour High Park for fungi and butterflies in scavenger hunts!",
-          "Level up your industry knowledge and contacts!",
-          "Learn from a game-designer-turned-bestselling-novelist!",
-          "Play an RPG you found in a Little Free Library!",
-          "Wheel down dark forest paths to the Night Parkcade!",
-          "Use a flight sim to chase a sunset neverending!",
-          "Connect with queer joy and rage in DEI or DIE Variety Show!",
-          "Discover a new favourite pen for journaling about games!",
-          "Rediscover your love of playing with giant parachutes!",
-        ];
-
-        // All possible guests (with HTML for links)
-        const allGuests = [
-          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
-          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
-          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
-          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
-          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
-          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
-        ];
-
-        // Function to get random items from an array
-        function getRandomItems(array, count) {
-          const shuffled = [...array].sort(() => Math.random() - 0.5);
-          return shuffled.slice(0, count);
-        }
-
-        // Function to populate a list with items
-        function populateList(listId, items, useHTML = false) {
-          const list = document.getElementById(listId);
-          if (!list) return;
-
-          list.innerHTML = "";
-
-          items.forEach((item) => {
-            const li = document.createElement("li");
-            if (useHTML) {
-              li.innerHTML = item;
-            } else {
-              li.textContent = item;
-            }
-            list.appendChild(li);
-          });
-        }
-
-        // Populate the activities list with 5 random activities
-        const randomActivities = getRandomItems(allActivities, 5);
-        populateList("activitiesList", randomActivities);
-
-        // Populate the guests list with 3 random guests
-        const randomGuests = getRandomItems(allGuests, 3);
-        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
-      });
     </script>
   </body>
 </html>

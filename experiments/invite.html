@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invite a Friend - Toronto Games Week</title>
+<link href="/styles.css" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+</head>
+<body style="background:#b8d8f0; font-family:'PT Mono', monospace; max-width:600px; margin:40px auto; padding:0 20px; color:#271b18;">
+
+<h1>Toronto Games Week - Invite a Friend</h1>
+<p>Fill this out to generate a personal invite link. When your friend opens it, the TGW site will greet them by name with your message.</p>
+
+<br>
+<label>Your Name<br>
+<input type="text" id="your-name" size="40" style="font-family:inherit; padding:6px; width:100%;"></label>
+<br><br>
+
+<label>Friend's Name<br>
+<input type="text" id="friend-name" size="40" style="font-family:inherit; padding:6px; width:100%;"></label>
+<br><br>
+
+<label>Why should they come? (your personal pitch)<br>
+<textarea id="personal-reason" rows="4" cols="42" style="font-family:inherit; padding:6px; width:100%;"></textarea></label>
+<br><br>
+
+<button onclick="generateLink()" style="font-family:inherit; padding:10px 20px; cursor:pointer;">Generate Invite Link</button>
+
+<div id="link-output" hidden style="margin-top:20px; padding:16px; background:#d5ebf4; border:2px dotted #271b18;">
+  <strong>Share this link with your friend:</strong><br><br>
+  <textarea id="generated-link" rows="3" cols="50" readonly style="font-family:inherit; width:100%; padding:6px;"></textarea><br>
+  <button onclick="copyLink()" id="copy-btn" style="font-family:inherit; padding:6px 16px; cursor:pointer; margin-top:8px;">Copy to clipboard</button>
+  <span id="copy-msg"></span>
+</div>
+
+<script>
+function generateLink() {
+  var from = document.getElementById('your-name').value.trim();
+  var friend = document.getElementById('friend-name').value.trim();
+  if (!from || !friend) { alert('Please fill in both names.'); return; }
+
+  var data = {
+    from: from,
+    friend: friend,
+    reason: document.getElementById('personal-reason').value.trim()
+  };
+
+  var encoded = btoa(encodeURIComponent(JSON.stringify(data)));
+  var url = 'https://torontogamesweek.com/experiments/experiments.html/#invite=' + encoded;
+
+  document.getElementById('generated-link').value = url;
+  document.getElementById('link-output').hidden = false;
+}
+
+function copyLink() {
+  var el = document.getElementById('generated-link');
+  el.select();
+  navigator.clipboard.writeText(el.value).then(function() {
+    document.getElementById('copy-msg').textContent = ' Copied!';
+  });
+}
+</script>
+
+</body>
+</html>
