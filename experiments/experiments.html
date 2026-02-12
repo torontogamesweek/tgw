@@ -420,6 +420,60 @@
         pointer-events: auto;
       }
     </style>
+
+      <style>
+      .invite-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(184, 216, 240, 0.85);
+        opacity: 1;
+        transition: opacity 1.5s ease;
+        pointer-events: auto;
+        padding: 1.5rem;
+      }
+
+      .invite-overlay.fading {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .invite-card {
+        background: #d5ebf4;
+        border: 2px dotted #271b18;
+        border-radius: 5px;
+        padding: 2rem 2.5rem;
+        max-width: 550px;
+        width: 100%;
+      }
+
+      .invite-card .invite-headline {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #271b18;
+        line-height: 1.3;
+      }
+
+      .invite-card .invite-reason {
+        margin-top: 0.6rem;
+        font-style: italic;
+        font-weight: normal;
+        font-size: 1rem;
+        color: #271b18;
+      }
+
+      .invite-card .invite-sig {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #271b189c;
+      }
+    </style>
   </head>
 
   <script>
@@ -842,58 +896,58 @@
           var data = JSON.parse(decodeURIComponent(atob(encoded)));
           if (!data.friend) return;
 
-          // Support both old links (no verb) and new links (with verb)
           var verb = data.verb || "you've been invited";
 
-          // Build the verb + destination string
-          var verbLine;
+          // Build single headline
+          var headlineText;
           if (verb.endsWith(':')) {
-            verbLine = verb + ' Toronto Games Week.';
+            headlineText = data.friend + ', ' + verb + ' Toronto Games Week.';
           } else {
-            verbLine = verb + ' to Toronto Games Week.';
+            headlineText = data.friend + ', ' + verb + ' to Toronto Games Week.';
           }
 
-          // Create the invite banner
-          var banner = document.createElement("div");
-          banner.className = "textBox";
-          banner.style.cssText = "background:#d5ebf4;border:2px dotted #271b18;padding:1.5rem 1.8rem;margin-bottom:1rem;";
+          // Build the card
+          var card = document.createElement("div");
+          card.className = "invite-card";
 
-          // Friend's name, big and bold
-          var nameEl = document.createElement("div");
-          nameEl.style.cssText = "font-size:1.5rem;font-weight:bold;color:#271b18;line-height:1.2;";
-          nameEl.textContent = data.friend + ",";
-          banner.appendChild(nameEl);
+          var headline = document.createElement("div");
+          headline.className = "invite-headline";
+          headline.textContent = headlineText;
+          card.appendChild(headline);
 
-          // Verb line
-          var verbEl = document.createElement("div");
-          verbEl.style.cssText = "font-size:1rem;color:#271b18;";
-          verbEl.textContent = verbLine;
-          banner.appendChild(verbEl);
-
-          // Reason (if provided) — just an italic quote, no label
           if (data.reason) {
-            var reasonText = document.createElement("div");
-            reasonText.style.cssText = "margin-top:0.6rem;font-style:italic;font-size:1rem;color:#271b18;";
-            reasonText.textContent = '\u201C' + data.reason + '\u201D';
-            banner.appendChild(reasonText);
+            var reason = document.createElement("div");
+            reason.className = "invite-reason";
+            reason.textContent = data.reason;
+            card.appendChild(reason);
           }
 
-          // Signature
           var sig = document.createElement("div");
-          sig.style.cssText = "margin-top:0.5rem;font-size:0.9rem;color:#271b189c;";
+          sig.className = "invite-sig";
           sig.textContent = "\u2014 " + data.from;
-          banner.appendChild(sig);
+          card.appendChild(sig);
 
-          // Wrap in content div
-          var wrapper = document.createElement("div");
-          wrapper.className = "content";
-          wrapper.appendChild(banner);
+          // Build the overlay
+          var overlay = document.createElement("div");
+          overlay.className = "invite-overlay";
+          overlay.appendChild(card);
+          document.body.appendChild(overlay);
 
-          // Insert before the first content section
-          var landing = document.getElementById("landingPage");
-          if (landing && landing.firstChild) {
-            landing.insertBefore(wrapper, landing.firstChild);
-          }
+          // Show for 3.5 seconds, then fade over 1.5s, then remove
+          setTimeout(function () {
+            overlay.classList.add("fading");
+            setTimeout(function () {
+              overlay.remove();
+            }, 1500);
+          }, 3500);
+
+          // Also allow clicking to dismiss early
+          overlay.addEventListener("click", function () {
+            overlay.classList.add("fading");
+            setTimeout(function () {
+              overlay.remove();
+            }, 1500);
+          });
 
           // Update the page title
           document.title = data.friend + ", " + verb + " Toronto Games Week!";
