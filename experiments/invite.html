@@ -81,7 +81,6 @@
     color: #c0392b;
   }
 
-  /* Verb shuffle row */
   .verb-row {
     display: flex;
     align-items: center;
@@ -141,7 +140,6 @@
     background: rgba(0,0,0,0.05);
   }
 
-  /* Preview */
   .preview-label {
     font-size: 0.8rem;
     color: #271b189c;
@@ -209,7 +207,7 @@
               <label>The summons</label>
               <div class="verb-row">
                 <div class="verb-display" id="verb-display">
-                  <span class="verb-text" id="verb-text">you've been summoned</span>
+                  <span class="verb-text" id="verb-text">you've been summoned to</span>
                 </div>
                 <button class="shuffle-btn" onclick="shuffleVerb()">shuffle</button>
               </div>
@@ -245,6 +243,7 @@
   </main>
 
 <script>
+
 var verbs = [
   "you've been summoned to",
   "you've been chosen, come to",
@@ -260,6 +259,7 @@ var verbs = [
   "you've levelled up! Next stop:",
   "ready or not, you're invited to"
 ];
+
 var REASON_MAX = 150;
 var currentVerbIndex = 0;
 
@@ -280,13 +280,6 @@ function shuffleVerb() {
   }, 150);
 }
 
-function buildHeadline(friend, verb) {
-  if (verb.endsWith(':')) {
-    return friend + ', ' + verb + ' Toronto Games Week.';
-  }
-  return friend + ', ' + verb + ' to Toronto Games Week.';
-}
-
 function updatePreview() {
   var from = document.getElementById('your-name').value.trim();
   var friend = document.getElementById('friend-name').value.trim();
@@ -303,15 +296,15 @@ function updatePreview() {
     countEl.classList.remove('near-limit');
   }
 
-  // Headline (name + verb on one line)
+  // Headline — just name + verb + Toronto Games Week
   var headlineEl = document.getElementById('preview-headline');
   if (friend) {
-    headlineEl.textContent = buildHeadline(friend, verb);
+    headlineEl.textContent = friend + ', ' + verb + ' Toronto Games Week.';
   } else {
-    headlineEl.innerHTML = '<span class="preview-placeholder">Friend</span>, ' + (verb.endsWith(':') ? verb + ' Toronto Games Week.' : verb + ' to Toronto Games Week.');
+    headlineEl.innerHTML = '<span class="preview-placeholder">Friend</span>, ' + verb + ' Toronto Games Week.';
   }
 
-  // Reason — no quotation marks
+  // Reason
   var reasonEl = document.getElementById('preview-reason');
   if (reason) {
     reasonEl.style.display = 'block';

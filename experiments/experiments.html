@@ -421,7 +421,7 @@
       }
     </style>
 
-      <style>
+    <style>
       .invite-overlay {
         position: fixed;
         top: 0;
@@ -477,36 +477,43 @@
   </head>
 
   <script>
-(function() {
-  var hash = location.hash;
-  if (!hash.startsWith('#invite=')) return;
-  try {
-    var encoded = hash.slice('#invite='.length);
-    var data = JSON.parse(decodeURIComponent(atob(encoded)));
-    if (!data.friend) return;
+    (function () {
+      var hash = location.hash;
+      if (!hash.startsWith("#invite=")) return;
+      try {
+        var encoded = hash.slice("#invite=".length);
+        var data = JSON.parse(decodeURIComponent(atob(encoded)));
+        if (!data.friend) return;
 
-    var banner = document.createElement('div');
-    banner.className = 'content';
-    banner.innerHTML =
-      '<section class="textBox">' +
-      '<h2>Hey ' + data.friend + ', you are invited!</h2>' +
-      '<p><strong>' + data.from + '</strong> wants you at Toronto Games Week.</p>' +
-      (data.reason
-        ? '<blockquote style="border-left:3px solid #271b18; padding-left:1rem; margin:1rem 0; font-style:italic;">' +
-          data.reason + '</blockquote>' +
-          '<p>-- ' + data.from + '</p>'
-        : '') +
-      '</section>';
+        var banner = document.createElement("div");
+        banner.className = "content";
+        banner.innerHTML =
+          '<section class="textBox">' +
+          "<h2>Hey " +
+          data.friend +
+          ", you are invited!</h2>" +
+          "<p><strong>" +
+          data.from +
+          "</strong> wants you at Toronto Games Week.</p>" +
+          (data.reason
+            ? '<blockquote style="border-left:3px solid #271b18; padding-left:1rem; margin:1rem 0; font-style:italic;">' +
+              data.reason +
+              "</blockquote>" +
+              "<p>-- " +
+              data.from +
+              "</p>"
+            : "") +
+          "</section>";
 
-    var landing = document.getElementById('landingPage');
-    if (landing && landing.firstChild) {
-      landing.insertBefore(banner, landing.firstChild);
-    }
+        var landing = document.getElementById("landingPage");
+        if (landing && landing.firstChild) {
+          landing.insertBefore(banner, landing.firstChild);
+        }
 
-    document.title = data.friend + ', you are invited to Toronto Games Week!';
-  } catch(e) {}
-})();
-</script>
+        document.title = data.friend + ", you are invited to Toronto Games Week!";
+      } catch (e) {}
+    })();
+  </script>
 
   <body>
     <header>
@@ -885,8 +892,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-<script>
-      // Personal invite handler
+    <script>
       (function () {
         var hash = location.hash;
         if (!hash.startsWith("#invite=")) return;
@@ -896,17 +902,10 @@
           var data = JSON.parse(decodeURIComponent(atob(encoded)));
           if (!data.friend) return;
 
-          var verb = data.verb || "you've been invited";
+          var verb = data.verb || "you've been invited to";
 
-          // Build single headline
-          var headlineText;
-          if (verb.endsWith(':')) {
-            headlineText = data.friend + ', ' + verb + ' Toronto Games Week.';
-          } else {
-            headlineText = data.friend + ', ' + verb + ' to Toronto Games Week.';
-          }
+          var headlineText = data.friend + ", " + verb + " Toronto Games Week.";
 
-          // Build the card
           var card = document.createElement("div");
           card.className = "invite-card";
 
@@ -927,7 +926,6 @@
           sig.textContent = "\u2014 " + data.from;
           card.appendChild(sig);
 
-          // Build the overlay
           var overlay = document.createElement("div");
           overlay.className = "invite-overlay";
           overlay.appendChild(card);
@@ -941,7 +939,7 @@
             }, 1500);
           }, 3500);
 
-          // Also allow clicking to dismiss early
+          // Click to dismiss early
           overlay.addEventListener("click", function () {
             overlay.classList.add("fading");
             setTimeout(function () {
