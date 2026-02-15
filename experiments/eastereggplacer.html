@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Ball Position Mapper</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', monospace; background: #1a1a2e; color: #eee; }
+
+        #controls {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.95); padding: 12px 20px; z-index: 1000;
+            display: flex; gap: 15px; align-items: center; flex-wrap: wrap;
+            border-bottom: 2px solid #333;
+        }
+        #controls button {
+            padding: 8px 18px; border: none; border-radius: 5px;
+            cursor: pointer; font-size: 14px; font-weight: bold; color: #fff;
+        }
+        .btn-desktop { background: #2196F3; }
+        .btn-mobile { background: #9C27B0; }
+        .btn-export { background: #4CAF50; }
+        .btn-desktop.active, .btn-mobile.active { outline: 3px solid #fff; }
+
+        #info {
+            flex-grow: 1; font-size: 12px; color: #aaa; text-align: right;
+        }
+
+        #workspace {
+            margin-top: 60px; display: flex; justify-content: center;
+            padding: 20px; min-height: calc(100vh - 60px);
+            align-items: flex-start;
+        }
+
+        #imageWrapper {
+            position: relative; display: inline-block;
+            background: #000; border: 2px solid #444;
+        }
+        #imageWrapper img {
+            display: block; max-width: 90vw; height: auto;
+        }
+
+        .ball-marker {
+            position: absolute;
+            border: 3px dashed rgba(76, 175, 80, 0.8);
+            border-radius: 50%;
+            cursor: move;
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.15s;
+            background: rgba(76, 175, 80, 0.08);
+        }
+        .ball-marker:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+        .ball-marker.selected {
+            border-color: #FFD700; border-style: solid;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            background: rgba(255, 215, 0, 0.08);
+        }
+        .ball-marker .label {
+            position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.85); color: #4CAF50; padding: 2px 8px;
+            border-radius: 3px; font-size: 11px; font-weight: bold;
+            white-space: nowrap; pointer-events: none;
+        }
+        .ball-marker.selected .label { color: #FFD700; }
+
+        .resize-handle {
+            position: absolute; bottom: -6px; right: -6px;
+            width: 14px; height: 14px; background: #4CAF50;
+            border: 2px solid #fff; border-radius: 50%;
+            cursor: nwse-resize; display: none;
+        }
+        .ball-marker.selected .resize-handle { display: block; }
+        .resize-handle:hover { background: #FFD700; transform: scale(1.3); }
+
+        #output {
+            position: fixed; top: 60px; right: 10px;
+            background: rgba(0,0,0,0.95); color: #0f0; padding: 15px;
+            border-radius: 8px; max-width: 550px; max-height: calc(100vh - 80px);
+            overflow-y: auto; font-family: monospace; font-size: 12px;
+            white-space: pre-wrap; display: none; z-index: 999;
+            border: 1px solid #4CAF50;
+        }
+        #output.show { display: block; }
+        #output button {
+            margin-top: 10px; padding: 6px 14px; background: #2196F3;
+            color: #fff; border: none; border-radius: 4px; cursor: pointer;
+            font-weight: bold;
+        }
+
+        .game-label { font-size: 10px; color: rgba(255,255,255,0.7); pointer-events: none; }
+
+        #instructions {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.85); padding: 10px 20px; border-radius: 8px;
+            font-size: 12px; color: #aaa; border: 1px solid #333; z-index: 100;
+        }
+        #instructions kbd {
+            background: #333; padding: 1px 6px; border-radius: 3px;
+            border: 1px solid #555; color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="controls">
+    <button class="btn-desktop active" onclick="switchImage('desktop')">Desktop Logo</button>
+    <button class="btn-mobile" onclick="switchImage('mobile')">Mobile Logo</button>
+    <button class="btn-export" onclick="exportCode()">Export Code</button>
+    <div id="info">Click a circle to select, drag to move, drag corner handle to resize</div>
+</div>
+
+<div id="workspace">
+    <div id="imageWrapper">
+        <img id="logoImg" src="" alt="Logo">
+    </div>
+</div>
+
+<div id="output"></div>
+
+<div id="instructions">
+    Drag circles over the 4 logo balls. Drag corner handle to resize. <kbd>Arrow keys</kbd> = 1px nudge. <kbd>+</kbd>/<kbd>-</kbd> = resize.
+</div>
+
+<script>
+const GAMES = [
+    { id: 'controller', name: '1: Connect', color: '#4CAF50' },
+    { id: 'eightball',  name: '2: Pop',     color: '#2196F3' },
+    { id: 'crossword',  name: '3: Bounce',  color: '#FF9800' },
+    { id: 'dice',       name: '4: Brush',   color: '#E91E63' },
+];
+
+// Store positions for each image mode: { x%, y%, size% }
+const savedPositions = {
+    desktop: {
+        controller: { x: 1.5,  y: 10, size: 18 },
+        eightball:  { x: 27,   y: 5,  size: 18 },
+        crossword:  { x: 61,   y: 15, size: 16 },
+        dice:       { x: 88,   y: 10, size: 16 },
+    },
+    mobile: {
+        controller: { x: 2,  y: 5,  size: 14 },
+        eightball:  { x: 52, y: 2,  size: 14 },
+        crossword:  { x: 30, y: 48, size: 13 },
+        dice:       { x: 73, y: 40, size: 13 },
+    }
+};
+
+let currentMode = 'desktop';
+let markers = [];
+let selectedMarker = null;
+let isDragging = false;
+let isResizing = false;
+let dragOffset = { x: 0, y: 0 };
+let resizeStart = { mouseX: 0, mouseY: 0, size: 0 };
+
+const imgEl = document.getElementById('logoImg');
+const wrapper = document.getElementById('imageWrapper');
+
+const imagePaths = {
+    desktop: 'special/desktop-logo.png',
+    mobile: 'special/mobile-logo.png'
+};
+
+function switchImage(mode) {
+    // Save current positions before switching
+    saveCurrentPositions();
+
+    currentMode = mode;
+    document.querySelectorAll('#controls button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.btn-${mode}`).classList.add('active');
+
+    imgEl.src = imagePaths[mode];
+    imgEl.onload = () => {
+        createMarkers();
+    };
+    if (imgEl.complete && imgEl.naturalWidth > 0) {
+        createMarkers();
+    }
+}
+
+function saveCurrentPositions() {
+    const imgW = imgEl.width || imgEl.naturalWidth;
+    const imgH = imgEl.height || imgEl.naturalHeight;
+    if (!imgW || !imgH) return;
+
+    markers.forEach(m => {
+        const rect = m.el.getBoundingClientRect();
+        const wrapRect = wrapper.getBoundingClientRect();
+        const x = parseFloat(m.el.style.left);
+        const y = parseFloat(m.el.style.top);
+        const size = parseFloat(m.el.style.width);
+
+        savedPositions[currentMode][m.id] = {
+            x: (x / imgW) * 100,
+            y: (y / imgH) * 100,
+            size: (size / imgW) * 100
+        };
+    });
+}
+
+function createMarkers() {
+    // Remove old markers
+    markers.forEach(m => m.el.remove());
+    markers = [];
+    selectedMarker = null;
+
+    const imgW = imgEl.width || imgEl.naturalWidth;
+    const imgH = imgEl.height || imgEl.naturalHeight;
+
+    GAMES.forEach((game, i) => {
+        const pos = savedPositions[currentMode][game.id];
+        const el = document.createElement('div');
+        el.className = 'ball-marker';
+
+        const px = (pos.x / 100) * imgW;
+        const py = (pos.y / 100) * imgH;
+        const psize = (pos.size / 100) * imgW;
+
+        el.style.left = px + 'px';
+        el.style.top = py + 'px';
+        el.style.width = psize + 'px';
+        el.style.height = psize + 'px';
+        el.style.borderColor = game.color;
+
+        el.innerHTML = `
+            <div class="label" style="background: ${game.color}22; color: ${game.color}">${game.name}</div>
+            <span class="game-label">${game.name}</span>
+            <div class="resize-handle" style="background: ${game.color}"></div>
+        `;
+
+        el.addEventListener('mousedown', (e) => onMarkerMouseDown(e, i));
+        el.querySelector('.resize-handle').addEventListener('mousedown', (e) => onResizeMouseDown(e, i));
+
+        wrapper.appendChild(el);
+        markers.push({ el, id: game.id, game });
+    });
+}
+
+function onMarkerMouseDown(e, idx) {
+    if (e.target.classList.contains('resize-handle')) return;
+    e.preventDefault(); e.stopPropagation();
+
+    selectedMarker = markers[idx];
+    markers.forEach(m => m.el.classList.remove('selected'));
+    selectedMarker.el.classList.add('selected');
+    isDragging = true;
+
+    const rect = selectedMarker.el.getBoundingClientRect();
+    dragOffset.x = e.clientX - rect.left;
+    dragOffset.y = e.clientY - rect.top;
+
+    updateInfo();
+}
+
+function onResizeMouseDown(e, idx) {
+    e.preventDefault(); e.stopPropagation();
+
+    selectedMarker = markers[idx];
+    markers.forEach(m => m.el.classList.remove('selected'));
+    selectedMarker.el.classList.add('selected');
+    isResizing = true;
+
+    resizeStart.mouseX = e.clientX;
+    resizeStart.mouseY = e.clientY;
+    resizeStart.size = parseFloat(selectedMarker.el.style.width);
+}
+
+document.addEventListener('mousemove', (e) => {
+    if (isDragging && selectedMarker) {
+        const wrapRect = wrapper.getBoundingClientRect();
+        let newX = e.clientX - wrapRect.left - dragOffset.x;
+        let newY = e.clientY - wrapRect.top - dragOffset.y;
+        selectedMarker.el.style.left = newX + 'px';
+        selectedMarker.el.style.top = newY + 'px';
+        updateInfo();
+    }
+    if (isResizing && selectedMarker) {
+        const delta = Math.max(e.clientX - resizeStart.mouseX, e.clientY - resizeStart.mouseY);
+        const newSize = Math.max(15, resizeStart.size + delta);
+        selectedMarker.el.style.width = newSize + 'px';
+        selectedMarker.el.style.height = newSize + 'px';
+        updateInfo();
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+    isResizing = false;
+});
+
+// Keyboard nudge
+document.addEventListener('keydown', (e) => {
+    if (!selectedMarker) return;
+    let x = parseFloat(selectedMarker.el.style.left);
+    let y = parseFloat(selectedMarker.el.style.top);
+    let size = parseFloat(selectedMarker.el.style.width);
+    let handled = false;
+
+    switch(e.key) {
+        case 'ArrowLeft':  x -= 1; handled = true; break;
+        case 'ArrowRight': x += 1; handled = true; break;
+        case 'ArrowUp':    y -= 1; handled = true; break;
+        case 'ArrowDown':  y += 1; handled = true; break;
+        case '+': case '=': size = Math.max(15, size + 2); handled = true; break;
+        case '-': case '_': size = Math.max(15, size - 2); handled = true; break;
+    }
+
+    if (handled) {
+        e.preventDefault();
+        selectedMarker.el.style.left = x + 'px';
+        selectedMarker.el.style.top = y + 'px';
+        selectedMarker.el.style.width = size + 'px';
+        selectedMarker.el.style.height = size + 'px';
+        updateInfo();
+    }
+});
+
+// Click on empty space deselects
+wrapper.addEventListener('mousedown', (e) => {
+    if (e.target === imgEl || e.target === wrapper) {
+        markers.forEach(m => m.el.classList.remove('selected'));
+        selectedMarker = null;
+        updateInfo();
+    }
+});
+
+function updateInfo() {
+    const infoEl = document.getElementById('info');
+    if (!selectedMarker) {
+        infoEl.textContent = 'Click a circle to select, drag to move, drag corner to resize';
+        return;
+    }
+    const imgW = imgEl.width || imgEl.naturalWidth;
+    const imgH = imgEl.height || imgEl.naturalHeight;
+    const x = parseFloat(selectedMarker.el.style.left);
+    const y = parseFloat(selectedMarker.el.style.top);
+    const size = parseFloat(selectedMarker.el.style.width);
+    const xPct = ((x / imgW) * 100).toFixed(2);
+    const yPct = ((y / imgH) * 100).toFixed(2);
+    const sizePct = ((size / imgW) * 100).toFixed(2);
+    infoEl.textContent = `${selectedMarker.game.name} | x: ${xPct}% y: ${yPct}% size: ${sizePct}% | ${currentMode} mode`;
+}
+
+function exportCode() {
+    saveCurrentPositions();
+
+    const output = document.getElementById('output');
+    let code = `/* Easter Egg Ball Positions (as % of logo image dimensions) */\n\n`;
+    code += `const LOGO_BALL_POSITIONS = {\n`;
+
+    ['desktop', 'mobile'].forEach(mode => {
+        code += `  ${mode}: {\n`;
+        GAMES.forEach((game, i) => {
+            const p = savedPositions[mode][game.id];
+            // Calculate center position and radius as percentages
+            const imgW = 100; // already in %
+            const centerX = (p.x + p.size / 2).toFixed(2);
+            const centerY_pctW = p.size; // size is % of width
+            // We need center Y as % of height — but we store top-left y% of height and size% of width
+            // For the CSS approach, we want top/left/width/height as percentages
+            code += `    ${game.id}: { left: '${p.x.toFixed(2)}%', top: '${p.y.toFixed(2)}%', size: '${p.size.toFixed(2)}%' },  // Game ${i+1}: ${game.name}\n`;
+        });
+        code += `  },\n`;
+    });
+    code += `};\n`;
+
+    code += `\n/* ---- Ready-to-use CSS approach ---- */\n\n`;
+    code += `/* Add this HTML inside your logo wrapper: */\n`;
+    code += `/*\n`;
+    code += `<div id="logo-wrapper" style="position: relative; display: inline-block;">\n`;
+    code += `  <picture>\n`;
+    code += `    <source media="(max-width: 767px)" srcset="special/mobile-logo.png" />\n`;
+    code += `    <img src="special/desktop-logo.png" alt="Logo" id="logo" />\n`;
+    code += `  </picture>\n`;
+    GAMES.forEach((game, i) => {
+        code += `  <button class="logo-ball-btn" data-game="${i+1}" aria-label="${game.name}"></button>\n`;
+    });
+    code += `</div>\n*/\n\n`;
+
+    code += `/* CSS for desktop: */\n`;
+    GAMES.forEach((game, i) => {
+        const p = savedPositions.desktop[game.id];
+        code += `.logo-ball-btn:nth-child(${i+1}) {\n`;
+        code += `  /* ${game.name} */\n`;
+        code += `  left: ${p.x.toFixed(2)}%; top: ${p.y.toFixed(2)}%;\n`;
+        code += `  width: ${p.size.toFixed(2)}%; padding-bottom: ${p.size.toFixed(2)}%;\n`;
+        code += `}\n`;
+    });
+
+    code += `\n/* CSS for mobile (max-width: 767px): */\n`;
+    GAMES.forEach((game, i) => {
+        const p = savedPositions.mobile[game.id];
+        code += `.logo-ball-btn:nth-child(${i+1}) {\n`;
+        code += `  /* ${game.name} */\n`;
+        code += `  left: ${p.x.toFixed(2)}%; top: ${p.y.toFixed(2)}%;\n`;
+        code += `  width: ${p.size.toFixed(2)}%; padding-bottom: ${p.size.toFixed(2)}%;\n`;
+        code += `}\n`;
+    });
+
+    output.innerHTML = '';
+    const pre = document.createElement('pre');
+    pre.textContent = code;
+    output.appendChild(pre);
+
+    const copyBtn = document.createElement('button');
+    copyBtn.textContent = 'Copy to Clipboard';
+    copyBtn.onclick = async () => {
+        try {
+            await navigator.clipboard.writeText(code);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => copyBtn.textContent = 'Copy to Clipboard', 2000);
+        } catch(e) {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = code; document.body.appendChild(ta);
+            ta.select(); document.execCommand('copy');
+            document.body.removeChild(ta);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => copyBtn.textContent = 'Copy to Clipboard', 2000);
+        }
+    };
+    output.appendChild(copyBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Close';
+    closeBtn.style.marginLeft = '10px';
+    closeBtn.onclick = () => output.classList.remove('show');
+    output.appendChild(closeBtn);
+
+    output.classList.add('show');
+}
+
+// Initialize
+switchImage('desktop');
+</script>
+</body>
+</html>

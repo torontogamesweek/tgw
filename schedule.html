@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -6,7 +6,7 @@
     <title>Toronto Games Week</title>
 
     <!-- Stylesheets -->
-    <link href="../styles.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
 
     <!-- Meta Tags -->
@@ -17,14 +17,14 @@
     <meta property="og:title" content="Toronto Games Week" />
     <meta property="og:description" content="Celebrating games in Toronto, Canada" />
 
-    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" />
+    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="webpage" />
 
     <!-- Twitter Tags -->
     <meta name="twitter:title" content="Toronto Games Week" />
     <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" id="indexImage" />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Image Specifications -->
@@ -32,29 +32,22 @@
       property="og:image:alt"
       content="Poster for TGW - an illustration of a magical city with many tiny elements related to Toronto like a racoon, the TTC, and the beach" />
 
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
 
     <style>
-      /* Base canvas setup */
-      canvas {
-        position: absolute; /* Mobile default */
-        width: 100%;
-        background-image: none;
-        height: auto;
-        left: 0;
-        top: 0;
-      }
+      
 
       .image-container {
         position: relative;
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(1000px * (9 / 16)); /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+        height: calc(1000px * (9 / 16));
+        /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
       }
 
       .gcal-icon {
@@ -127,7 +120,6 @@
         align-items: center;
         gap: 2rem;
         padding: 10px 5px;
-        background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
         background-repeat: repeat-y;
         background-position: center top;
         background-size: 100% auto;
@@ -141,7 +133,7 @@
       }
 
       #topboxcontainer2025 {
-        /* margin-top: 15rem; */
+        margin-top: 15rem;
         /* margin: 0 2px; */
       }
 
@@ -158,10 +150,7 @@
         width: 100vw;
       }
 
-      #primary-navigation {
-        /* z-index: 50; */
-      }
-
+    
       .contentContainer {
         position: relative;
         z-index: 1;
@@ -197,7 +186,7 @@
         /* padding: 0 2rem 2rem 3rem; */
         padding: 0;
         border-radius: 10px;
-        background-color: hsla(0, 0%, 100%, 0.9);
+        background-color: hsla(0, 0%, 100%, 0.95);
         pointer-events: none;
         text-align: center;
         align-items: center;
@@ -230,7 +219,8 @@
         padding: 0.15rem 0.3rem;
         border-radius: 13px;
         font-size: 0.9rem;
-        display: inline-block; /* keep the background color wrapped tight */
+        display: inline-block;
+        /* keep the background color wrapped tight */
         font-family: "Alegreya", sans-serif;
         margin: 0.25rem 0.25rem;
       }
@@ -342,394 +332,200 @@
         color: white;
       }
 
-      /* Header */
-      nav {
-        /* position: static; */
-      }
-
-      nav a {
-        pointer-events: auto;
-        background-color: white;
-      }
-
-      nav ul {
-        background-color: rgb(255, 255, 255);
-      }
-
-      @media screen and (min-width: 900px) {
-      }
-
-      @media (min-width: 768px) {
-        header {
-          height: 0;
-        }
-
+    
         canvas {
-          position: absolute; /* Reset for desktop */
+          position: absolute;
+          /* Reset for desktop */
         }
 
-        nav li,
-        nav ul,
-        nav {
-          background-color: rgba(255, 255, 255, 0);
-          padding: 10px 10px 0 10px;
-        }
-
-        nav {
-          margin: 0;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0);
-        }
-        nav a {
-          color: rgb(45, 45, 45); /* Adjust based on background */
-          text-shadow: 0 0 5px white; /* Soft glow effect */
-          background-color: rgba(255, 255, 255, 0);
-        }
-
-        nav > ul > li {
-          font-size: 1.5rem;
-          margin: 0 10px;
-        }
-
-        header {
-          position: relative;
-        }
-      }
-
-      .logo-container {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 1rem;
-        justify-items: center;
-        align-items: center;
-        min-height: 120px;
-        max-width: 97rem;
-        width: 100%;
-      }
-
-      .logo-slot {
-        width: 100%;
-        height: 140px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .logo-slot a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-      }
-
-      .logo {
-        width: 80px; /* Smaller for mobile */
-        height: 50px; /* Smaller for mobile */
-        object-fit: contain;
-        opacity: 0;
-        transition: opacity 1.2s ease-in-out;
-        pointer-events: auto;
-        background-color: rgba(255, 255, 255);
-        border-radius: 5px;
-        padding: 0.3rem 0.5rem; /* Less padding on mobile */
-        border: 1px dotted var(--white);
-      }
-
-      .logo-big {
-        width: 80px; /* Same size for consistency */
-        height: 50px;
-      }
-
-      /* Make them bigger on desktop while keeping them uniform */
-      @media (min-width: 768px) {
-        .logo-slot {
-          width: 100%;
-          height: 180px;
-        }
-
-        .logo,
-        .logo-big {
-          width: 160px; /* Bigger but uniform width */
-          height: 120px; /* Bigger but uniform height */
-          padding: 0.5rem 1rem; /* More padding on desktop */
-          border: 2px solid #271b189c; /* Thicker border on desktop */
-        }
-      }
-
-      .logo.visible {
-        opacity: 1;
-      }
-
-      /* Mobile styles */
-      @media (max-width: 768px) {
-        .sponsorbox {
-          margin: 0;
-        }
-
-        .logo-container {
-          grid-template-columns: repeat(3, 1fr);
-          gap: 5px;
-        }
-
-        /* Hide slots 4-6 on mobile */
-        .logo-slot:nth-child(n + 4) {
-          display: none;
-        }
-      }
-
-      .no-pointer-events {
-        pointer-events: none;
-      }
-
-      /* Base */
-      main {
-        position: relative;
-        z-index: 1;
-      }
+    
     </style>
   </head>
 
+  <script>
+    (function () {
+      var hash = location.hash;
+      if (!hash.startsWith("#invite=")) return;
+      try {
+        var encoded = hash.slice("#invite=".length);
+        var data = JSON.parse(decodeURIComponent(atob(encoded)));
+        if (!data.friend) return;
+
+        var banner = document.createElement("div");
+        banner.className = "content";
+        banner.innerHTML =
+          '<section class="textBox">' +
+          "<h2>Hey " +
+          data.friend +
+          ", you are invited!</h2>" +
+          "<p><strong>" +
+          data.from +
+          "</strong> wants you at Toronto Games Week.</p>" +
+          (data.reason
+            ? '<blockquote style="border-left:3px solid #271b18; padding-left:1rem; margin:1rem 0; font-style:italic;">' +
+              data.reason +
+              "</blockquote>" +
+              "<p>-- " +
+              data.from +
+              "</p>"
+            : "") +
+          "</section>";
+
+        var landing = document.getElementById("landingPage");
+        if (landing && landing.firstChild) {
+          landing.insertBefore(banner, landing.firstChild);
+        }
+
+        document.title = data.friend + ", you are invited to Toronto Games Week!";
+      } catch (e) {}
+    })();
+  </script>
+
   <body>
     <header>
+      <div id="logo-wrapper">
+        <picture>
+          <source media="(max-width: 767px)" srcset="images/2026/special/mobile-logo.webp" />
+          <img src="images/2026/special/desktop-logo.webp" alt="Logo" id="logo" />
+          <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
+          <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
+          <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
+          <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
+        </picture>
+      </div>
+
       <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
         <span class="sr-only">Menu</span>
         <span class="icon"></span>
       </button>
 
-      <nav id="primary-navigation">
+      <nav id="primary-navigation" aria-label="Main navigation">
         <ul>
           <li>
-            <a href="./index.html">Home</a>
+            <a href="index.html">
+              <img src="images/2026/nav/home.png" alt="Home" />
+              <span class="sr-only">Home</span>
+            </a>
           </li>
-          <!-- <li>
-            <a href="schedule.html" id="scheduleNav">Schedule</a>
-          </li> -->
           <li>
-            <a href="about.html" id="aboutNav">About</a>
+            <a href="schedule.html" id="scheduleNav">
+              <img src="images/2026/nav/schedule.png" alt="Schedule" />
+              <span class="sr-only">Schedule</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">
+              <img src="images/2026/nav/about.png" alt="About" />
+              <span class="sr-only">About</span>
+            </a>
           </li>
         </ul>
       </nav>
     </header>
 
+    <!-- Poster that fades out -->
+    <div class="poster-container" id="posterContainer">
+      <img src="images/2026/tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+    </div>
+
+    <!-- Game name display -->
+    <div class="game-name" id="gameName">o</div>
+
+    <canvas id="canvas"></canvas>
+
     <main class="no-pointer-events" id="main2025">
-      <!-- Add HTML here -->
-
-      <div class="headerImgDiv">
-        <img id="letterImg" src="/images/TGW_Poster_Assets_2025/Logo.png" alt="A type treatment of Toronto Games Week" />
-        <!-- <p id="caption">A celebration of playable arts & culture</p> -->
-        <br />
-        <br />
-      </div>
-
       <div id="topboxcontainer2025">
         <section class="textBox2025" id="topbox2025">
-          <h2>Toronto Games Week Schedule (June 12-18, 2025)</h2>
-          <p>Come explore the many events, gatherings, and happenings of Toronto Games Week 2025!</p>
-          <p>
-            You can add the full schedule to your calendar (<a href="https://calendar.google.com/calendar/u/0/r?cid=torontogamesweek@gmail.com"
-              >Gcal link</a
-            >) or add individual events using the calendar icons.
-          </p>
-          <p>Use the buttons below to check out specific days!</p>
-          <section class="textBox-btn" id="daySelector">
-            <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
-              Th<br />
-              12
-            </button>
-            <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri 13">Fr<br />13</button>
-            <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat 14">Sa<br />14</button>
-            <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun 15">Su<br />15</button>
-            <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon 16">Mo<br />16</button>
-            <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue 17">Tu<br />17</button>
-            <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed 18">We<br />18</button>
+          <h2>Coming this spring!</h2>
 
-            <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All" id="allDaysButton">All<br />Days</button>
-          </section>
+          <p>Be the first to get the schedule by subscribing to our newsletter:</p>
+          <div id="newsletterSignup">
+            <script
+              async
+              data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
+              src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"></script>
+          </div>
+
+          <p style="margin-bottom: 2rem; background-color: white"></p>
+
+          <!-- <h2>Toronto Games Week Schedule (June 12-18, 2025)</h2> -->
+          <!-- <p>Come explore the many events, gatherings, and happenings of Toronto Games Week 2025!</p> -->
+          <!-- <p>
+          You can add the full schedule to your calendar (<a
+            href="https://calendar.google.com/calendar/u/0/r?cid=torontogamesweek@gmail.com">Gcal link</a>) or add
+          individual events using the calendar icons.
+        </p> -->
+          <!-- <p>Use the buttons below to check out specific days!</p> -->
+          <!-- <section class="textBox-btn" id="daySelector">
+          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
+            Th<br />
+            12
+          </button>
+          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri 13">Fr<br />13</button>
+          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat 14">Sa<br />14</button>
+          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun 15">Su<br />15</button>
+          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon 16">Mo<br />16</button>
+          <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue 17">Tu<br />17</button>
+          <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed 18">We<br />18</button>
+
+          <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All"
+            id="allDaysButton">All<br />Days</button>
+        </section> -->
         </section>
       </div>
-      <div id="schedule-container"></div>
+      <!-- <div id="schedule-container"></div> -->
 
-      <div class="sponsorbox">
-        <div class="logo-container">
-          <div class="logo-slot"></div>
-          <div class="logo-slot"></div>
-          <div class="logo-slot"></div>
-          <div class="logo-slot"></div>
-          <div class="logo-slot"></div>
-          <div class="logo-slot"></div>
-        </div>
-      </div>
-
-      <div class="logo-source" style="display: none">
-        <a href="https://www.ontariocreates.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Ontario-Creates.png" alt="Ontario Creates logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.toronto.ca/business-economy/industry-sector-support/creative-technology/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_City-of-Toronto.png" alt="City of Toronto logo" class="logo logo-big" /> </a
-        ><br />
-        <a href="https://www.drinkboxstudios.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Drinkbox-Studios.png" alt="Drinkbox Studios logo" class="logo logo-big" />
+      <!-- <div class="footer-content">
+      <div class="social-horizontal">
+        <a href="https://www.facebook.com/profile.php?id=61568893716436" target="_blank" rel="noopener"
+          class="social-icon facebook" aria-label="Follow us on Facebook">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
         </a>
 
-        <a href="https://www.resolume.com/" target="blank"><img src="images/logos/resolume.png" alt="Resolume logo" class="logo logo-big" /></a>
+        <a href="https://bsky.app/profile/torontogamesweek.com" target="_blank" rel="noopener"
+          class="social-icon bluesky" aria-label="Follow us on Bluesky">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
+          </svg>
+        </a>
 
-        <a href="https://www.epicgames.com/site/en-US/home" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Epic-Games.png" alt="Epic Games logo" class="logo logo-big" />
+        <a href="https://www.instagram.com/torontogamesweek/" target="_blank" rel="noopener"
+          class="social-icon instagram" aria-label="Follow us on Instagram">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+          </svg>
         </a>
-        <a href="https://gameartsinternational.network/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_GAIN.png" alt="GAIN logo" class="logo logo-big" />
+
+        <a href="https://www.tiktok.com/@torontogamesweek" target="_blank" rel="noopener" class="social-icon tiktok"
+          aria-label="Follow us on TikTok">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+          </svg>
         </a>
-        <a href="https://www.interactiveontario.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Interactive-Ontario.png" alt="Interactive Ontario logo" class="logo logo-big" />
-        </a>
-        <a href="https://xpgamesummit.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_XP-Gaming.png" alt="XP Gaming logo" class="logo logo-big" />
-        </a>
-        <a href="https://brokengamescollective.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Broken-Games-Collective.png" alt="Broken Games Collective logo" class="logo logo-big" />
-        </a>
-        <a href="https://makerspace.cobot.me/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_TTL-Makerspace.png" alt="TTL Makerspace logo" class="logo logo-big" />
-        </a>
-        <a href="https://linktr.ee/bonusstagetoronto/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Bonus-Stage.png" alt="Bonus Stage logo" class="logo logo-big" />
-        </a>
-        <a href="https://ladyarcaders.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Lady-Arcaders.png" alt="Lady Arcaders logo" class="logo logo-big" />
-        </a>
-        <a href="https://vividfoundry.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Vivid-Foundry.png" alt="Vivid Foundry logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.dirty-rectangles.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Dirty-Rectangles.png" alt="Dirty Rectangles logo" class="logo logo-big" />
-        </a>
-        <a href="https://tojam.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_TO-Jam.png" alt="Toronto Game Jam logo" class="logo logo-big" />
-        </a>
-        <a href="https://torontopubliclibrary.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Toronto-Public-Library.png" alt="Toronto Public Library logo" class="logo logo-big" />
-        </a>
-        <a href="https://interaccess.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Interaccess.png" alt="Interaccess logo" class="logo logo-big" />
-        </a>
-        <a href="https://werocreative.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_wero.png" alt="Wero logo" class="logo logo-big" />
-        </a>
-        <a href="https://unity.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Unity-Color.png" alt="Unity logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.amd.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_AMD.png" alt="AMD logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.rom.on.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_ROM.png" alt="ROM logo" class="logo logo-big" />
-        </a>
-        <a href="https://kittencupstudio.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Kitten-Cup-Studio.png" alt="Kitten Cup Studio logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.finji.co/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_FINJI.png" alt="FINJI logo" class="logo logo-big" />
-        </a>
-        <a href="https://gamerella.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_GAMERella.png" alt="GAMERella logo" class="logo logo-big" />
-        </a>
-        <a href="https://igda.org/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_IGDA.png" alt="IGDA logo" class="logo logo-big" />
-        </a>
-        <a href="https://handeyesociety.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Hand-Eye-Society.png" alt="Hand Eye Society logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.georgebrown.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_George-Brown-College.png" alt="George Brown College logo" class="logo logo-big" />
-        </a>
-        <a href="" target="blank">
-          <img src="images/logos/2025/TGW25-Web_GRID.png" alt="GRID logo" class="logo logo-big" />
-        </a>
-        <a href="https://cwacanada.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_CODE-CWA.png" alt="CODE CWA logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.anotherstory.ca/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Another-Story-Bookshop.png" alt="Another Story Bookshop logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.trinitysquarevideo.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Trinity-Square-Video.png" alt="Trinity Square Video logo" class="logo logo-big" />
-        </a>
-        <a href="https://www.lockwoodimmersive.com/" target="blank">
-          <img src="images/logos/2025/TGW25-Web_Lockwood-Immersive.png" alt="Lockwood Immersive logo" class="logo logo-big" />
+
+        <a href="https://torontogamesweek.eo.page/76xn9" target="_blank" rel="noopener" class="social-icon newsletter"
+          aria-label="Subscribe to our newsletter">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
         </a>
       </div>
 
-      <div class="footer-content">
-        <div class="social-horizontal">
-          <a
-            href="https://www.facebook.com/profile.php?id=61568893716436"
-            target="_blank"
-            rel="noopener"
-            class="social-icon facebook"
-            aria-label="Follow us on Facebook">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://bsky.app/profile/torontogamesweek.com"
-            target="_blank"
-            rel="noopener"
-            class="social-icon bluesky"
-            aria-label="Follow us on Bluesky">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.instagram.com/torontogamesweek/"
-            target="_blank"
-            rel="noopener"
-            class="social-icon instagram"
-            aria-label="Follow us on Instagram">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.tiktok.com/@torontogamesweek"
-            target="_blank"
-            rel="noopener"
-            class="social-icon tiktok"
-            aria-label="Follow us on TikTok">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://torontogamesweek.eo.page/76xn9"
-            target="_blank"
-            rel="noopener"
-            class="social-icon newsletter"
-            aria-label="Subscribe to our newsletter">
-            <svg viewBox="0 0 24 24">
-              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-            </svg>
-          </a>
-        </div>
-
-        <div class="footer-credit">
-          <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
-        </div>
+      <div class="footer-credit">
+        <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
       </div>
+    </div> -->
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const navToggle = document.getElementById("nav-toggle");
@@ -742,9 +538,143 @@
         });
       });
     </script>
-    <script>
-      // Add Javascript Here
 
+    <script>
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      function setupSponsors() {
+        const slots = document.querySelectorAll(".logo-slot");
+        const sourceLinks = [...document.querySelectorAll(".logo-source a")];
+
+        // Extract data but don't keep the images in DOM
+        const logoData = sourceLinks.map((a) => ({
+          href: a.href,
+          src: a.querySelector("img").getAttribute("src"),
+          alt: a.querySelector("img").getAttribute("alt"),
+        }));
+
+        // Remove the source div entirely so browsers don't preload images
+        const sourceDiv = document.querySelector(".logo-source");
+        if (sourceDiv) sourceDiv.remove();
+
+        function getVisibleCount() {
+          return window.innerWidth <= 768 ? 3 : 6;
+        }
+
+        function updateLogos() {
+          const visibleCount = getVisibleCount();
+          const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+
+          slots.forEach((slot) => {
+            const currentLogo = slot.querySelector("img");
+            if (currentLogo) currentLogo.classList.remove("visible");
+          });
+
+          setTimeout(() => {
+            slots.forEach((slot, i) => {
+              slot.innerHTML = "";
+              if (selected[i]) {
+                const a = document.createElement("a");
+                a.href = selected[i].href;
+                a.target = "_blank";
+                const img = document.createElement("img");
+                img.src = selected[i].src;
+                img.alt = selected[i].alt;
+                img.className = "logo logo-big";
+                img.loading = "lazy";
+                a.appendChild(img);
+                slot.appendChild(a);
+                requestAnimationFrame(() => img.classList.add("visible"));
+              }
+            });
+          }, 1200);
+        }
+
+        updateLogos();
+        setInterval(updateLogos, 6000);
+        window.addEventListener(
+          "resize",
+          debounce(() => updateLogos(), 250),
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", setupSponsors);
+    </script>
+
+    <script>
+      // Random Activities and Guests Script
+      document.addEventListener("DOMContentLoaded", function () {
+        // All possible activities
+        const allActivities = [
+          "Play massive videogames projected on concrete silos at the waterfront!",
+          "Scour High Park for fungi and butterflies in scavenger hunts!",
+          "Frolic in a flickering forest pop-up arcade after dark!",
+          "Level up your industry knowledge and contacts!",
+          "Brew a DIY blend at a tea party in the park!",
+          "Wheel down dark forest paths to the Night Parkcade!",
+          "Rediscover your love of playing with giant parachutes!",
+          "Learn open source game tools!",
+        ];
+
+        // All possible guests (with HTML for links)
+        const allGuests = [
+          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
+          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
+          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
+          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
+          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
+          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
+        ];
+
+        // Function to get random items from an array
+        function getRandomItems(array, count) {
+          const shuffled = [...array].sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, count);
+        }
+
+        // Function to populate a list with items
+        function populateList(listId, items, useHTML = false) {
+          const list = document.getElementById(listId);
+          if (!list) return;
+
+          list.innerHTML = "";
+
+          items.forEach((item) => {
+            const li = document.createElement("li");
+            if (useHTML) {
+              li.innerHTML = item;
+            } else {
+              li.textContent = item;
+            }
+            list.appendChild(li);
+          });
+        }
+
+        // Populate the activities list with 5 random activities
+        const randomActivities = getRandomItems(allActivities, 5);
+        populateList("activitiesList", randomActivities);
+
+        // Populate the guests list with 3 random guests
+        const randomGuests = getRandomItems(allGuests, 3);
+        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
+      });
+    </script>
+
+    <script src="images/2026/sprites/sprite-manifest.js"></script>
+    <script src="2026-sprite-assets.js"></script>
+    <script src="2026-play.js"></script>
+
+    <script>
       // Parse CSV with proper handling of newlines in quoted fields
       const parseCSV = (csvText) => {
         const result = [];
@@ -1051,55 +981,6 @@
 
       // Call the function when the page loads
       document.addEventListener("DOMContentLoaded", handleLoaded);
-    </script>
-
-    <script>
-      function setupSponsors() {
-        const slots = document.querySelectorAll(".logo-slot");
-        const logos = [...document.querySelectorAll(".logo-source a")];
-
-        function getVisibleCount() {
-          return window.innerWidth <= 768 ? 3 : 6; // 3 on mobile, 6 on desktop
-        }
-
-        function updateLogos() {
-          const visibleCount = getVisibleCount();
-          const selectedLogos = [...logos].sort(() => Math.random() - 0.5).slice(0, visibleCount);
-
-          // First fade out current logos
-          slots.forEach((slot) => {
-            const currentLogo = slot.querySelector("img");
-            if (currentLogo) {
-              currentLogo.classList.remove("visible");
-            }
-          });
-
-          setTimeout(() => {
-            slots.forEach((slot, i) => {
-              if (selectedLogos[i]) {
-                const logo = selectedLogos[i].cloneNode(true);
-                slot.innerHTML = "";
-                slot.appendChild(logo);
-                requestAnimationFrame(() => {
-                  logo.querySelector("img").classList.add("visible");
-                });
-              }
-            });
-          }, 1200);
-        }
-
-        updateLogos();
-        setInterval(updateLogos, 6000);
-
-        window.addEventListener(
-          "resize",
-          debounce(() => {
-            updateLogos();
-          }, 250)
-        );
-      }
-
-      document.addEventListener("DOMContentLoaded", setupSponsors);
     </script>
   </body>
 </html>

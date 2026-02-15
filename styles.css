@@ -277,6 +277,8 @@ table {
 /***********************/
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -299,6 +301,7 @@ body {
   line-height: 1.25;
   background: hsl(200 20% 88%);
   background: white;
+  background: #b8d8f0;
 
   text-align: center;
   position: relative;
@@ -376,7 +379,7 @@ canvas {
   top: 0;
   width: 100%;
   height: 100%;
-  /* background-image: url("images/TGWIllustrations.png"); */
+  /* background-image: url("images/2024/TGWIllustrations.png"); */
   background-size: cover;
   background-position: center;
 }
@@ -1083,12 +1086,51 @@ li {
   margin-left: 1.5rem; /* Adjust as needed */
   position: relative; /* Needed for absolute positioning */
 }
-
 .controllerList li::before {
-  content: "🎮 ";
+  content: "";
   position: absolute;
-  left: -1.5rem; /* Adjust to align with the left margin of the list item */
+  left: -2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("images/2026/sprites/desktop/bestballs.webp");
+  background-size: 6rem 6rem; /* 800px scaled to 4×1.5rem = 6rem */
+  background-repeat: no-repeat;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+/* Row 1 */
+.controllerList li:nth-child(1)::before {
+  background-position: 0 0;
+} /* alien */
+.controllerList li:nth-child(2)::before {
+  background-position: -1.5rem 0;
+} /* eye */
+.controllerList li:nth-child(3)::before {
+  background-position: -3rem 0;
+} /* puzzle */
+.controllerList li:nth-child(4)::before {
+  background-position: -4.5rem 0;
+} /* swirl */
+
+/* Row 2 */
+.controllerList li:nth-child(5)::before {
+  background-position: 0 -1.5rem;
+} /* tetris */
+.controllerList li:nth-child(6)::before {
+  background-position: -1.5rem -1.5rem;
+} /* arrows */
+.controllerList li:nth-child(7)::before {
+  background-position: -3rem -1.5rem;
+} /* controller */
+.controllerList li:nth-child(8)::before {
+  background-position: -4.5rem -1.5rem;
+} /* stars */
+
+/* Row 3 */
+.controllerList li:nth-child(9)::before {
+  background-position: 0 -3rem;
+} /* space */
 
 .controllerList li p,
 .controllerList li {
@@ -1103,21 +1145,11 @@ li {
     position: relative; /* Needed for absolute positioning */
   }
 
-  .controllerList li::before {
-    content: "🎮 ";
-    position: absolute;
-    left: -3rem; /* Adjust to align with the left margin of the list item */
-  }
-
   .controllerList li p,
   .controllerList li {
     font-size: 1.3rem;
     padding: 0.4rem;
     margin-left: 2rem; /* Offset to align with the bullet point */
-  }
-
-  .controllerList li::before {
-    content: "🎮 ";
   }
 
   li {
@@ -1126,34 +1158,6 @@ li {
     padding: 1rem;
     list-style-type: none;
   }
-}
-
-.controllerList li:nth-child(2)::before {
-  content: "👾 ";
-}
-.controllerList li:nth-child(3)::before {
-  content: "⚒️ ";
-}
-.controllerList li:nth-child(4)::before {
-  content: "🕹️ ";
-}
-.controllerList li:nth-child(5)::before {
-  content: "🔥 ";
-}
-.controllerList li:nth-child(6)::before {
-  content: "✨ ";
-}
-
-.controllerList li:nth-child(7)::before {
-  content: "💯 ";
-}
-
-.controllerList li:nth-child(8)::before {
-  content: "🤩 ";
-}
-
-.controllerList li:nth-child(9)::before {
-  content: "🎉 ";
 }
 
 /***********************/
@@ -1342,21 +1346,6 @@ header {
 /***** NAV MOBILE ******/
 /***********************/
 
-nav {
-  position: absolute;
-  text-align: right;
-  top: 0;
-  background-color: rgb(209 223 234);
-  width: 100%;
-  transform: scale(1, 0);
-  transform-origin: top;
-  transition: transform 400ms ease-in-out;
-}
-
-nav ul {
-  /* padding: 0; */
-}
-
 nav li {
   margin: 1em 1em 0 1em;
   list-style-type: none;
@@ -1373,6 +1362,28 @@ nav > ul > li {
   font-size: 1.5rem;
   text-decoration: none;
   margin: 10px;
+}
+
+@media (max-width: 799px) {
+  nav {
+    top: 4rem;
+  }
+  nav ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  nav li {
+    margin: 0;
+    padding: 0.75em 1.5em;
+  }
+
+  nav > ul > li {
+    margin: 0;
+    padding: 0.75em 1.5em;
+  }
 }
 
 /*************************/
@@ -1454,7 +1465,7 @@ nav > ul > li {
   z-index: 99999;
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   margin: 0 0.95em;
   height: 100%;
   display: flex;
@@ -1523,6 +1534,12 @@ nav.expanded a {
   }
 }
 
+@media (max-width: 800px) {
+  #primary-navigation {
+    margin-top: 4rem;
+  }
+}
+
 /***********************/
 /******* FOOTER ********/
 /***********************/
@@ -1538,7 +1555,6 @@ footer {
 
 @media (min-width: 800px) {
 }
-
 
 #Surface {
   position: fixed;
@@ -2522,7 +2538,7 @@ footer {
   margin-top: 5rem;
   height: 20rem;
   background-repeat: round;
-  background: url(images/wallpaper.png);
+  background: url(images/2023/wallpaper.png);
 }
 
 /* calendar */
@@ -2728,135 +2744,584 @@ footer {
   }
 }
 
-
 /* Horizontal social bar */
 .social-horizontal {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0 10px 0;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 10px 0;
 }
 
 /* Better spacing on desktop */
 @media (min-width: 768px) {
-    .social-horizontal {
-        gap: 4rem;
-        
-    }
+  .social-horizontal {
+    gap: 4rem;
+  }
 
-        .social-icon {
-        width: 1rem;
-        height: 1rem;
-    }
+  .social-icon {
+    width: 1rem;
+    height: 1rem;
+  }
 }
 
 /* Icon styles */
 .social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .social-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.05);
-    opacity: 0;
-    transition: opacity 0.2s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .social-icon:hover {
-    transform: translateY(-1px);
-    border-color: #dee2e6;
-    background: #ffffff;
+  transform: translateY(-1px);
+  border-color: #dee2e6;
+  background: #ffffff;
 }
 
 .social-icon:hover::before {
-    opacity: 1;
+  opacity: 1;
 }
 
 .social-icon svg {
-    width: 3rem;
-    height: 3rem;
-    transition: transform 0.2s ease;
+  width: 3rem;
+  height: 3rem;
+  transition: transform 0.2s ease;
 }
 
 .social-icon:hover svg {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 /* Platform-specific subtle colors */
-.facebook svg { 
-    fill: #6c757d;
+.facebook svg {
+  fill: #6c757d;
 }
 
-.bluesky svg { 
-    fill: #6c757d;
+.bluesky svg {
+  fill: #6c757d;
 }
 
-.instagram svg { 
-    fill: #6c757d;
+.instagram svg {
+  fill: #6c757d;
 }
 
-.tiktok svg { 
-    fill: #495057;
+.tiktok svg {
+  fill: #495057;
 }
 
-.newsletter svg { 
-    fill: #6c757d;
+.newsletter svg {
+  fill: #6c757d;
 }
 
 /* Subtle hover color hints */
-.facebook:hover svg { 
-    fill: #4267B2;
+.facebook:hover svg {
+  fill: #4267b2;
 }
 
-.bluesky:hover svg { 
-    fill: #0085FF;
+.bluesky:hover svg {
+  fill: #0085ff;
 }
 
-.instagram:hover svg { 
-    fill: #E4405F;
+.instagram:hover svg {
+  fill: #e4405f;
 }
 
-.tiktok:hover svg { 
-    fill: #000000;
+.tiktok:hover svg {
+  fill: #000000;
 }
 
-.newsletter:hover svg { 
-    fill: #6B73FF;
+.newsletter:hover svg {
+  fill: #6b73ff;
+}
+
+.footer-content {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.903);
+  bottom: 0;
+  z-index: 10000;
+  pointer-events: all;
+  width: 100vw;
+  border-top: 2px dashed black;
+}
+
+.footer-credit {
+  font-size: 0.9rem;
+  /* color: rgb(95, 67, 61); */
+  /* margin: 1rem; */
+  padding: 1rem;
+  /* border-top: 1px solid rgba(95, 67, 61, 0.3); */
+}
+
+/* added styles  */
+
+main {
+  position: relative;
+  z-index: 1;
+  margin-top: 80vh;
+  transition: none;
+}
+
+@media (max-width: 767px) {
+  main {
+    margin-top: 75vh;
+  }
+}
+
+.poster-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 4s ease-out;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  opacity: 0;
+}
+
+.poster-container.fade-out {
+  opacity: 0;
+}
+
+.poster-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+canvas#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  canvas#canvas {
+    position: absolute;
+    top: 130px;
+    left: 0;
+    z-index: 1;
+    background: transparent;
+  }
+}
+
+/* this is to fix a layout bug  */
+.game-name {
+  pointer-events: none;
+  opacity: 0;
+  z-index: -1;
+}
+
+#primary-navigation {
+  /* display: flex; */
+  justify-content: flex-end;
+  background-color: #b8d8f0;
+  padding-left: 25px;
+  z-index: 200;
+}
+
+@media (min-width: 800px) {
+  #primary-navigation {
+    /* display: flex; */
+    justify-content: flex-end;
+    background-color: #b8d8f0;
+  }
+}
+
+/* Hide text visually but keep it available for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Make images responsive */
+#primary-navigation img {
+  height: 55px;
+  max-height: 100%;
+  display: block;
+}
+
+/* Optional: Add hover/focus states */
+#primary-navigation a:hover img,
+#primary-navigation a:focus img {
+  opacity: 0.8;
+}
+
+#logo {
+  width: 100%;
+  display: block;
+  /* NO margin or padding here anymore */
+}
+
+#logo-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  /* margin-top: 40px; */
+  padding: 20px 3px 10px 3px;
+}
+@media (min-width: 767px) {
+  #logo-wrapper {
+    margin-top: 10px;
+    padding: 15px 3px 0 3px;
+  }
+}
+
+#logo-wrapper picture {
+  position: relative;
+  display: block;
+}
+
+.logo-ball-btn {
+  position: absolute;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  height: 0;
+  z-index: 10;
+  transition:
+    transform 0.2s,
+    filter 0.2s;
+  /* background-color: red; */
+  z-index: 2;
+}
+
+.logo-ball-btn:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+}
+
+.logo-ball-btn.active {
+  filter: drop-shadow(0 0 16px rgba(76, 175, 80, 1));
+}
+
+/* Desktop positions */
+.logo-ball-btn[data-game="1"] {
+  left: 1.9%;
+  top: 16.88%;
+  width: 7.22%;
+  padding-bottom: 7.22%;
+}
+.logo-ball-btn[data-game="2"] {
+  left: 34.8%;
+  top: 19.68%;
+  width: 7.02%;
+  padding-bottom: 7.02%;
+}
+.logo-ball-btn[data-game="3"] {
+  left: 86.59%;
+  top: 13.62%;
+  width: 7.73%;
+  padding-bottom: 7.73%;
+}
+.logo-ball-btn[data-game="4"] {
+  left: 61.87%;
+  top: 16.42%;
+  width: 7.2%;
+  padding-bottom: 7.2%;
+}
+
+/* Mobile positions */
+@media (max-width: 767px) {
+  .logo-ball-btn[data-game="1"] {
+    left: 2%;
+    top: 5%;
+    width: 12.35%;
+    padding-bottom: 12.35%;
+  }
+  .logo-ball-btn[data-game="2"] {
+    left: 59.67%;
+    top: 8.83%;
+    width: 11.16%;
+    padding-bottom: 11.16%;
+  }
+  .logo-ball-btn[data-game="3"] {
+    left: 78.08%;
+    top: 44.68%;
+    width: 10.95%;
+    padding-bottom: 10.95%;
+  }
+  .logo-ball-btn[data-game="4"] {
+    left: 34.44%;
+    top: 43.32%;
+    width: 11.35%;
+    padding-bottom: 11.35%;
+  }
+}
+
+.nav-toggle-button {
+  background: #b9d8ef;
+  right: 0;
+}
+
+@media (min-width: 800px) {
+  .nav-toggle-button {
+    display: none;
+    right: 0;
+  }
+
+  nav ul {
+    display: flex;
+    align-items: center;
+    background-color: #b8d8f0b6;
+  }
+
+  @media (min-width: 767px) {
+    nav ul {
+      padding: 0;
+    }
+  }
+
+  nav > ul > li {
+    margin: 0;
+    padding: 0 15px 0 15px;
+    background-color: #d5ebf422;
+    /* border-radius: 10px; */
+    font-size: 2rem;
+  }
+
+  #logo {
+    width: 100vw;
+  }
+}
+
+/* ============================================
+   PURE CSS - TRANSPARENT CENTER, YELLOW RING
+   ============================================ */
+
+.logo-ball-btn {
+  transition: all 0.4s ease;
+  background: transparent;
+  border: none;
+}
+
+.logo-ball-btn:hover {
+  background: radial-gradient(circle, transparent 0%, transparent 60%, rgba(255, 215, 0, 0.4) 60%, rgba(255, 215, 0, 0.6) 80%);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Sponsor box */
+.sponsorbox {
+  margin: 3rem 0 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  min-height: 120px;
+  max-width: 97rem;
+  width: 100%;
+}
+
+.logo-slot {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-slot a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  width: 80px;
+  height: 50px;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255);
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  border: 1px dotted var(--white);
+}
+
+.logo-big {
+  width: 80px;
+  height: 50px;
+}
+
+.logo.visible {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .logo-slot {
+    width: 100%;
+    height: 180px;
+  }
+
+  .logo,
+  .logo-big {
+    width: 160px;
+    height: 120px;
+    padding: 0.5rem 1rem;
+    border: 2px solid #271b189c;
+  }
+}
+
+@media (max-width: 768px) {
+  .sponsorbox {
+    margin: 0;
+  }
+
+  .logo-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+
+  .logo-slot:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}
+
+/* Re-enable pointer events on interactive content */
+.textBox,
+.logo-container,
+.logo-slot,
+.footer-content,
+.social-horizontal,
+.footer-credit,
+nav,
+#primary-navigation,
+#nav-toggle,
+#logo-wrapper,
+.logo-ball-btn,
+iframe {
+  pointer-events: auto;
 }
 
 
-  .footer-content {
-        /* max-width: 1200px; */
-        margin: 0 auto;
-        background-color: rgba(255, 255, 255, 0.903);
-        bottom: 0;
-        z-index: 10000;
-        pointer-events: all;
-        width: 100vw;
-        border-top: 2px dashed black;
-      }
+.invite-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(184, 216, 240, 0.85);
+  opacity: 1;
+  transition: opacity 1.5s ease;
+  pointer-events: auto;
+  padding: 1.5rem;
+  z-index: 3000;
+}
 
-      .footer-credit {
-        font-size: 0.9rem;
-        /* color: rgb(95, 67, 61); */
-        /* margin: 1rem; */
-        padding: 1rem;
-        /* border-top: 1px solid rgba(95, 67, 61, 0.3); */
-      }
+.invite-overlay.fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.invite-card {
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  overflow: hidden;
+  transform: rotate(-2deg);
+}
+
+.invite-card .postcard-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  border: 2px solid black;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.invite-card .postcard-overlay {
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  left: 4%;
+  right: 64%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  overflow: hidden;
+  text-align: left;
+}
+
+.invite-card .invite-headline {
+  font-size: clamp(0.25rem, 1.6vw, 1.2rem);
+  font-weight: bold;
+  color: #271b18;
+  line-height: 1.35;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.invite-card .invite-reason {
+  margin-top: 0.3rem;
+  font-style: italic;
+  font-weight: normal;
+  font-size: clamp(0.48rem, 1.3vw, 1.2rem);
+  color: #271b18;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.invite-card .invite-sig {
+  margin-top: 0.35rem;
+  font-size: clamp(0.42rem, 1.1vw, 1.2rem);
+  color: #271b189c;
+}

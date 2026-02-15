@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+    <title>Toronto Games Week Schedule</title>
+
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <meta property="og:title" content="Toronto Games Week Schedule" />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+    <meta property="og:image" content="https://torontogamesweek.com//images/2023/TGWSocial.png" />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <meta name="twitter:title" content="Toronto Games Week Schedule" />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/images/2023/TGWSocialSmall.png" />
+    <meta name="twitter:site" content="@omarieclaire" />
+
+    <style>
+      /* Three.js canvas as fixed background */
+      #threejs-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      #threejs-bg.interactive {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+
+  <header>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span></span>
+    </label>
+    <div>
+      <a href=""><img /></a>
+    </div>
+
+    <nav id="primary-navigation">
+      <ul>
+        <li>
+          <a href="/index.html">Home</a>
+        </li>
+        <li></li>
+        <li>
+          <a href="/about.html" id="aboutNav">About</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <!-- Three.js background canvas container -->
+    <div id="threejs-bg"></div>
+
+    <!-- Shader definitions -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+      uniform float time;
+      uniform vec3 color;
+
+      varying vec2 vUv;
+
+      void main() {
+        vec3 red = vec3(1.1, 0.0, 0.0);
+        vec3 orange = vec3(0.7, 0.5, 0.0);
+        vec3 yellow = vec3(0.3, 1.3, 0.0);
+        vec3 green = vec3(0.0, 0.5, 0.0);
+        vec3 blue = vec3(0.0, 0.0, 0.5);
+        vec3 purple = vec3(0.5, 0.0, 1.0);
+
+        float colorMix = clamp(vUv.y, 0.0, 1.0);
+        vec3 color;
+
+        if (colorMix < 0.2) {
+          color = mix(red, orange, (colorMix / 0.4));
+        } else if (colorMix < 0.4) {
+          color = mix(orange, yellow, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.6) {
+          color = mix(yellow, green, (colorMix - 0.4) / 0.2);
+        } else if (colorMix < 0.8) {
+          color = mix(green, blue, (colorMix - 0.6) / 0.2);
+        } else {
+          color = mix(blue, purple, (colorMix - 0.8) / 0.2);
+        }
+
+        float pulse = abs(sin(time * 1.0));
+        float strength = pow(pulse, 3.0) * 0.6;
+
+        gl_FragColor = vec4(color * strength, 0.8 * strength);
+      }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <script src="https://unpkg.com/three@0.129.0/build/three.min.js"></script>
+
+    <!-- Inline Three.js background (replaces playableBackground.js) -->
+    <script>
+      (function () {
+        const container = document.getElementById("threejs-bg");
+
+        // Set up the scene
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xc2d1dd);
+
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // Create irregularly-shaped objects with random initial velocities
+        const objects = [];
+        const numObjects = 20;
+
+        for (let i = 0; i < numObjects; i++) {
+          const geometry = new THREE.TorusGeometry(
+            Math.random() * 0.3 + 1,
+            0.3,
+            3,
+            1000
+          );
+
+          const color = new THREE.Color(
+            Math.random(),
+            Math.random(),
+            Math.random()
+          );
+
+          const mat = new THREE.ShaderMaterial({
+            uniforms: {
+              time: { value: 1.0 },
+              randomColor: { value: color },
+            },
+            vertexShader: document.getElementById("vertexShader").textContent,
+            fragmentShader:
+              document.getElementById("fragmentShader").textContent,
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+          });
+
+          const object = new THREE.Mesh(geometry, mat);
+
+          object.rotation.x = Math.random() * Math.PI * 2;
+          object.rotation.y = Math.random() * Math.PI * 2;
+          object.rotation.z = Math.random() * Math.PI * 2;
+
+          object.position.x = Math.random() * 20 - 10;
+          object.position.y = Math.random() * 20 - 10;
+          object.position.z = Math.random() * 20 - 10;
+          object.velocity = new THREE.Vector3(
+            Math.random() * 0.1 - 0.005,
+            Math.random() * 0.01 - 0.005,
+            Math.random() * 0.01 - 0.005
+          );
+          scene.add(object);
+          objects.push(object);
+        }
+
+        // Click to remove objects (enable pointer events on the canvas)
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        container.classList.add("interactive");
+
+        function onClick(event) {
+          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+          const intersects = raycaster.intersectObjects(objects);
+          if (intersects.length > 0) {
+            const object = intersects[0].object;
+            scene.remove(object);
+            const idx = objects.indexOf(object);
+            if (idx > -1) objects.splice(idx, 1);
+          }
+        }
+        renderer.domElement.addEventListener("click", onClick);
+
+        // Render loop
+        function animate() {
+          requestAnimationFrame(animate);
+          for (let i = 0; i < objects.length; i++) {
+            const object = objects[i];
+            object.material.uniforms.time.value += 0.01;
+
+            object.rotation.x += 0.01;
+            object.rotation.y += 0.02;
+
+            // Update object position based on velocity
+            object.position.add(object.velocity);
+
+            // Bounce object off walls
+            if (object.position.x > 10 || object.position.x < -10) {
+              object.velocity.x *= -1;
+            }
+            if (object.position.y > 10 || object.position.y < -10) {
+              object.velocity.y *= -1;
+            }
+            if (object.position.z > 10 || object.position.z < -10) {
+              object.velocity.z *= -1;
+            }
+          }
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle resize
+        window.addEventListener("resize", function () {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      })();
+    </script>
+
+    <main class="">
+      <img
+        class="landingImg"
+        src="/images/2023/schedule.png"
+        alt="An abstract illustration of the toronto cityline and some controllers"
+        style="position: relative; top: 60px" />
+
+      <div class="contentContainer" id="landingPage">
+        <p class="title highlight sticky">Schedule archive for 2023</p>
+
+        <div class="content">
+          <h2 id="fullSchedule">Full Schedule</h2>
+
+          <section class="textBox-btn" id="daySelector">
+            <a role="button" href="#day1" class="btn-d1" data-day="Thu 1">Th<br />1</a>
+            <a role="button" href="#day2" class="btn-d2" data-day="Fri 2">Fr<br />2</a>
+            <a role="button" href="#day3" class="btn-d3" data-day="Sat 3">Sa<br />3</a>
+            <a role="button" href="#day4" class="btn-d4" data-day="Sun 4">Su<br />4</a>
+            <a role="button" href="#day5" class="btn-d5" data-day="Mon 5">Mo<br />5</a>
+            <a role="button" href="#day6" class="btn-d6" data-day="Tue 6">Tu<br />6</a>
+            <a role="button" href="#day7" class="btn-d7" data-day="Wed 7">We<br />7</a>
+          </section>
+
+          <div class="calendar">
+            <div class="event">
+              <img src="/images/2023/icons/KICKOFF.png" alt="KICKOFF" class="eventIcon" />
+              <h3 class="date" id="day1">Thursday June 1, 8pm-10:30pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Toronto Games Week Kick-off</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/GxK4FWYwFPKVe8Gt8" target="_blank">See-Scape</a>
+                  </p>
+                  <p class="details">
+                    Special guest
+                    <a href="https://braceyourselfgames.com/ryan-bio/">Ryan Clark</a>
+                    (Crypt of the Necrodancer, Phantom Brigade) will be doing a talk about market fit and 20 years of making indie games, followed by
+                    a social. Hosted by
+                    <a href="https://www.dirty-rectangles.com/" target="blank">Dirty Rectangles.</a>
+                    FREE!
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/NIGHT.png" alt="NIGHT PARKCADE" class="eventIcon" />
+              <h3 class="date" id="day2">Friday June 2, 9-10:30pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Night Parkcade</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/iBUHWR9ggdHKE5RX9" target="_blank">Trinity Bellwoods</a>
+                  </p>
+                  <p class="details">
+                    Pop-up arcade in a park after dark! We'll be projecting videogames for people to play near on the tennis courts close to the Queen
+                    St. W. Entrance of Trinity Bellwoods. We'll start at sundown and go until our batteries run dry! Featuring queer games curated by
+                    <a href="https://saganyee.com/" target="blank">Sagan Yee</a>
+                    and
+                    <a href="https://leecyb.org/" target="blank">Lee Wilkins</a>. FREE.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/PRESERVE.png" alt="PRESERVE" class="eventIcon" />
+              <h3 class="date" id="day3">Saturday June 3, 1pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Preservation Through Play: Saving Videogame History and Context</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/K8HxeCd8nCDXAHkbA" target="_blank">Toronto Public Library (Fort York branch)</a>
+                  </p>
+                  <p class="details">
+                    Collector and preservationist Derek Quenneville and game curator Chris Young will give a talk on various approaches to keeping
+                    videogame history alive, including 3D scanning, cultural context, and hands-on play.
+                    <br /><br />Attendees will get to try ancient artifacts of Nintendo, including the Game Boy Sewing Machine (2000), Game Boy Camera
+                    and Printer (1998), the Family BASIC keyboard (1984), and the Nintendo Virtual Boy game system (1995). Hosted by Derek
+                    Quenneville.
+                    <a href="https://www.torontopubliclibrary.ca/detail.jsp?Entt=RDMEVT480542&R=EVT480542" target="blank"
+                      >FREE, but registration is required.</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+              <p class="category">Academics</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/WORKSHOP.png" alt="WORKSHOP" class="eventIcon" />
+              <h3 class="date">Saturday, June 3, 1-4pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Walking on the Web: An Introduction to Unity through Personal Walking Sims</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/pYiybMt7A34PYPrn7" target="_blank">InterAccess</a>
+                  </p>
+                  <p class="details">
+                    We'll discuss the tools Unity has to offer, as well as games as a form of autobiographical expression. No game development
+                    experience necessary, you'll leave this workshop with a personal digital museum created by you & playable in a browser.
+                    Participants will have the opportunity to showcase their creations in an online exhibition during Vector Festival 2023.
+                    <a
+                      href="https://www.eventbrite.ca/e/walking-on-the-web-an-introduction-to-unity-through-persona-tickets-637563839607"
+                      target="blank"
+                      >Tickets required</a
+                    >. Hosted by
+                    <a href="https://interaccess.org/" target="blank">InterAccess.</a>
+                  </p>
+                </div>
+              </div>
+              <p class="category">NextGen Creators</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/HOOK.png" alt="HOOK" class="eventIcon" />
+              <h3 class="date">Saturday June 3, 3-6pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Indie Superboost: Refining Your Game Hook Workshop</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/jfPFG89WnzDHSWxk9" target="_blank">OCAD Game:Play Lab, 3rd Floor</a>
+                  </p>
+                  <p class="details">
+                    <a href="https://braceyourselfgames.com/ryan-bio/">Ryan Clark</a>
+                    (Founder & CEO at Brace Yourself Games) will be joining us to discuss refining your game hook. Members of the indie dev community
+                    are invited to bring their game ideas and trailers to this interactive workshop where Ryan Clark will walk people through his
+                    thoughts on market fit and game hooks, offering critiques on how to improve. Hosted by
+                    <a href="https://interactiveontario.com/programs/indie-superboost/" target="blank">Interactive Ontario</a>. Supported by CMF and
+                    Ubisoft Toronto.
+                    <a
+                      href="https://www.eventbrite.ca/e/indie-superboost-refining-your-game-hook-tickets-636630698557?aff=ebdsoporgprofile"
+                      target="blank"
+                      >Register here.</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/NEXTGEN.png" alt="NEXTGEN SHOWCASE" class="eventIcon" />
+              <h3 class="date">Saturday June 3, 7pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">NextGen Showcase</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/tqpcTLpp4He9gsyz5?coh=178572&entry=tt" target="_blank">OCAD (205 Richmond St W, 7th Floor)</a>
+                  </p>
+                  <p class="details">
+                    A showcase of some of the most promising young creators from York University, Sheridan, OCAD, and others, selected by visiting
+                    curator
+                    <a href="https://www.linkedin.com/in/susie-buchan-b52789220/?originalSubdomain=uk">Susie Buchan</a>.
+                    <a href="https://zo-ii.com" target="blank">Zuraida Buter</a>, a veteran curator of world-renowned festivals A MAZE. / Berlin and
+                    IndieCade EU, will be giving a short talk geared to advise young creators on how to get their games into international showcases,
+                    and why they may want that. Hosted by <a href="https://ampd.yorku.ca/profile/yifat-shaik/" target="blank">Yifat Shaik</a> and
+                    supported by <a href="https://computationalarts.ampd.yorku.ca/" target="blank">Digital Media at York University</a>. FREE!
+                  </p>
+                </div>
+              </div>
+              <p class="category">NextGen Creators</p>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/WALK.png" alt="Nuville Walking Game" class="eventIcon" />
+              <h3 class="date" id="day4">Sunday June 4, 1pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Nuville Augmented Walking Game</p>
+                  <p class="details">
+                    Nuville is an augmented walking game for smartphones with a cyberpunk twist. You are a hacker (obviously), disguised as a tourist
+                    (?!), scrambling the data of the AI building the megapolis Nuville. This process is a no-code operation. Use your whole body and
+                    observational wits as you execute a series of whimsical prompts hidden in an out-of-this-world podcast. <br /><br />
+                    Nuville is a Raaralab production, made in partnership with the Toronto Council Fire Native Cultural Center and supported by the
+                    Canada Council for the Arts and Myseum of Toronto. Find out more at
+                    <a href="https://www.nuville.net/" target="blank">nuville.net/</a>
+                    and
+                    <a href="https://forms.gle/R5gy7aqag2WD1dg16" target="blank">sign up here.</a>
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/TEA.png" alt="TEA PARTY" class="eventIcon" />
+              <h3 class="date">Sunday June 4, 3-5pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Pekoe Tea Party & Cribbage with Grandpas</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/dCce4xxRhdTQcBPY7" target="_blank">Grange Park</a>
+                  </p>
+                  <p class="details">
+                    Come meet the creators of two of Canada's coziest videogames, the upcoming
+                    <a href="https://store.steampowered.com/app/1626350/Pekoe/">Pekoe</a>
+                    releasing at the end of June (stay tuned!!) and Vancouver's
+                    <a href="http://cribbagewithgrandpas.com/">Cribbage With Grandpas</a>! <br /><br />Bring a blanket and some tea (literally and/or
+                    figuratively), we'll dish on a variety of cozy subjects and even play some cribbage together! If you are interested, just come to
+                    the park. It's a small park. We'll be easy to spot!
+                  </p>
+                </div>
+              </div>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/RACCOONS.png" alt="BOOK LAUNCH" class="eventIcon" />
+              <h3 class="date">Sunday June 4, 7-9pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">WE ARE RACCOONS Book Launch</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/GwPKUSyZoL1DruXB6" target="_blank">The Local, 396 Roncesvalles Ave</a>
+                  </p>
+                  <p class="details">
+                    Six game designer friends get a non-player character to work in each of their very different games—and accidentally create the
+                    first superintelligence in the process. Sci-fi novelist Jim Munroe will be launching his seventh book
+                    <a href="https://jimmunroe.net/WAR/" target="blank">WE ARE RACCOONS</a>
+                    and signing copies. (Conveniently located right next door to the following screening event!)
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/SAT2.png" alt="SCREENING" class="eventIcon" />
+              <h3 class="date">Sunday June 4, 9:30pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Saturnalia Talk and Screening</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/5Cuat591nwF8dpfW6" target="_blank">Revue Cinema, 400 Roncesvalles Ave</a>
+                  </p>
+                  <p class="details">
+                    A talk by Pietro Righi Riva, the Italian director of the survival horror videogame Saturnalia, followed by a screening of a
+                    classic of Italian Giallo cinema that influenced its visual style, Blood & Black Lace. Supported by the Italian Cultural Institute
+                    of Toronto and the Sardegna Film Commission Foundation. Hosted by Rue Morgue and Stompbox. Click here for more
+                    <a href="https://revuecinema.ca/films/blood-and-black-lace/" target="blank">information</a>
+                    and
+                    <a
+                      href="https://www.eventbrite.ca/e/blood-black-lace-presented-by-toronto-games-week-rue-morgue-stompbox-tickets-611416712847"
+                      target="blank"
+                      >tickets</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+              <p class="category">Enthusiasts</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/GAIA.png" alt="GAIA" class="eventIcon" />
+              <h3 class="date" id="day5">Monday June 5-7, 10-4pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Game Arts International Assembly (GAIA)</p>
+                  <p class="details">
+                    <a href="https://GAIASymposium.net/" target="blank">GAIA</a>
+                    is a three day professional development symposium serving 20+ international game curators, festival directors, and community
+                    organizers hailing from almost a dozen countries. Hosted by
+                    <a href="https://gameartsinternational.network/" target="blank">Game Arts International Network (GAIN)</a> and supported by the
+                    Canada Council for the Arts. This is a closed event, for further info contact info@gameartsinternational.network.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Event Organizers</p>
+              <p class="category">Curators</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/CTR.png" alt="COMIC LAUNCH" class="eventIcon" />
+              <h3 class="date">Monday June 5, 6:30pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">"If You Don't Like the Game, Change the Rules" Comic Launch</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/XM6oG9f6PrXUfLbA9" target="_blank">Palmerston Public Library Theatre, 560 Palmerston Ave</a>
+                  </p>
+                  <p class="details">
+                    Join us for a lively conversation about games and work! At the launch of a comic exploring alternative labour modes like co-ops
+                    and unions, attendees will read the comic and then participate in a panel discussion with co-op studio workers and union
+                    organizers.<br /><br />
+                    Hosted by Marie LeBlanc Flanagan (<a href="http://gameartsinternational.network">Game Arts International Network</a>) and
+                    featuring Pablo F. Quarta (<a href="https://matajuegos.itch.io/">Matajuegos Coop</a>, Argentina), Michael Iantorno (Concordia
+                    University), D. Squinkifer (<a href="https://softchaos.games/">Soft Chaos cooperative</a>, Montreal), Skylar Hinnant (<a
+                      href="https://twitter.com/ZeniMaxWorkers"
+                      >Zenimax Workers United - CWA</a
+                    >, USA), and Daniel Korn (<a href="https://twitter.com/GWU_Toronto">Game Workers Unite Toronto</a>). Supported by
+                    <a href="https://cmf-fmc.ca/" target="_blank">CMF</a>.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Academics</p>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/IGDA.png" alt="IGDA PANEL" class="eventIcon" />
+              <h3 class="date" id="day6">Tuesday June 6, 7pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Branching Stories: Unraveling Narrative Design</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/Ezsjggs3WQdwskQy5" target="_blank">George Brown College, Room 240</a>
+                  </p>
+                  <p class="details">
+                    Discover the captivating stories behind your favourite games as we bring together a stellar panel of esteemed narrative designers!
+                    <a href="https://www.linkedin.com/in/nuha-alkadi-b493a3106/">Nuha Alkadi </a>
+                    (she/her),
+                    <a href="https://www.linkedin.com/in/josh-m-labelle/">Josh Labelle</a>
+                    (he/him), and
+                    <a href="https://www.linkedin.com/in/kaitlin-tremblay-22a18a67/">Kait Tremblay</a>
+                    (they/she) will delve into the realm of narrative design and its many permutations and processes across different studios and
+                    games. We'll then move across the street for drinks and snacks, our usual monthly meet and mingle.<br /><br />
+
+                    Moderated by narrative designer
+                    <a href="https://www.linkedin.com/in/fdimitrovska/">Franci Dimitrovska</a>, we're excited to bring you an engaging exploration of
+                    the storytelling craft that shapes the very fabric of gaming. Whether you're an industry veteran, an aspiring narrative designer,
+                    or curious about the magic behind unforgettable stories, this panel is not to be missed! Join us for a celebration of the rich
+                    narratives that make gaming an art form.<br /><br />
+
+                    Don't be shy. First-timers are definitely welcome! These events are FREE to attend and YOU DON'T NEED TO BE AN IGDA MEMBER. If
+                    you're planning to come, please
+                    <a href="https://www.meetup.com/igda-toronto/events/293466555/">RSVP in advance</a>
+                    so we can prepare our headcount and after-drinks venue.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/WORKSHOP.png" alt="WORKSHOP" class="eventIcon" />
+              <h3 class="date" id="day7">Wednesday June 7, 5-6:30pm</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">Creators Spotlight: Rise of the Indie Game Entrepreneur</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/tqpcTLpp4He9gsyz5?coh=178572&entry=tt" target="_blank">Artscape Daniels Launchpad</a>
+                  </p>
+                  <p class="details">
+                    Featuring successful indie game creators who are also emerging entrepreneurs. Join us on Wednesday June 7th for a panel discussion
+                    with Emily Flynn-Jones President and CEO of Killjoy Games, Shala Chen Co-Founder and CEO of City From Naught, Sally Luc Co-Founder
+                    of Thousand Stars Studio, moderated by Victoria Evans of Digital Vic. Discover their journeys and transformations into
+                    entrepreneurs. Get an inside look at the realities of starting your own studio, building your team, and navigating the ups and
+                    downs of indie studio life.
+                    <a href="https://www.eventbrite.ca/e/creators-spotlight-rise-of-the-indie-game-entrepreneur-tickets-645435463847" target="blank"
+                      >Tickets here</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+
+            <div class="event">
+              <img src="/images/2023/icons/CLOSING.png" alt="CLOSING SHOWCASE" class="eventIcon" />
+              <h3 class="date">Wednesday June 7, 6:30pm-12am</h3>
+              <div class="DescAndImg">
+                <div class="desc">
+                  <p class="title">IO Connect: Summer Showcase</p>
+                  <p class="location">
+                    <span aria-hidden="true">📍</span>
+                    <a href="https://goo.gl/maps/jrt7ZeRG82bhEGDW9" target="_blank">Artscape Daniels Launchpad</a>
+                  </p>
+                  <p class="details">
+                    Join the Ontario video game industry for the IO Connect: Summer Showcase closing off Toronto Games Week. The event includes food,
+                    drink, networking, and the showcasing of a selection of Ontario Indies, including several 2023 Toronto Game Jam participants. The
+                    event will also feature the launch of Endlight, from Toronto's Bigpants Studio. Hosted by
+                    <a href="https://interactiveontario.com/" target="blank">Interactive Ontario</a> and supported by
+                    <a href="https://ontariocreates.ca/" target="blank">Ontario Creates</a>, Canada Media Fund, Toronto Film School, XP Gaming,
+                    Artscape Daniels Launchpad, ACTRA Toronto & TOJam.
+                    <a href="https://www.eventbrite.ca/e/io-connect-summer-showcase-tickets-636605914427?aff=ebdsoporgprofile" target="blank"
+                      >Tickets here</a
+                    >.
+                  </p>
+                </div>
+              </div>
+              <p class="category">Industry</p>
+            </div>
+          </div>
+        </div>
+        <img class="footerImg" src="/images/2023/wallpaper.png" alt="Some repeating illustrations of controllers in purple and orange" />
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+  </body>
+</html>

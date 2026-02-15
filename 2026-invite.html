@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Games Week</title>
+
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week" />
+    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
+
+    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="webpage" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week" />
+    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.webp" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Image Specifications -->
+    <meta
+      property="og:image:alt"
+      content="Poster for TGW - an illustration of a magical city with many tiny elements related to Toronto like a racoon, the TTC, and the beach" />
+
+    <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
+
+
+    
+    <style>
+      main {
+        margin-top: 20vh;
+      }
+
+      .contentContainer {
+        max-width: 90vw;
+      }
+      .content {
+        max-width: 90vw;
+      }
+
+      /* ── Invite layout ── */
+
+      .invite-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: 800px) {
+        .invite-layout {
+          flex-direction: row;
+          align-items: stretch;
+          gap: 2rem;
+        }
+
+        .invite-form-side {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .invite-preview-side {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          margin-top: -3rem;
+        }
+
+        .preview-box {
+          flex: 1;
+        }
+      }
+
+      /* ── Form fields ── */
+
+      .invite-form-side label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      .invite-form-side input,
+      .invite-form-side textarea {
+        font-size: 1rem;
+        width: 100%;
+        padding: 0.5rem;
+        border: 2px solid #271b189c;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.8rem;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .invite-form-side textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      /* ── Validation error state ── */
+
+      .invite-form-side input.field-error,
+      .invite-form-side textarea.field-error {
+        border-color: #c0392b;
+        box-shadow: 0 0 0 1px #c0392b;
+      }
+
+      .invite-form-side input.field-error::placeholder,
+      .invite-form-side textarea.field-error::placeholder {
+        color: #c0392b;
+        opacity: 0.7;
+      }
+
+      /* ── Char count ── */
+
+      .char-count {
+        font-family: "PT Mono", monospace;
+        font-size: 0.75rem;
+        color: #271b189c;
+        text-align: right;
+        margin-top: -0.6rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .char-count.near-limit {
+        color: #c0392b;
+      }
+
+      /* ── Verb row ── */
+
+      .verb-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .verb-display {
+        font-family: "PT Mono", monospace;
+        font-size: 1rem;
+        flex: 1;
+        padding: 0.5rem;
+        border: 2px solid #271b189c;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        min-height: 2.5rem;
+        display: flex;
+        align-items: center;
+        user-select: none;
+        overflow: hidden;
+      }
+
+      .verb-text {
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+      }
+
+      .verb-text.rolling-out {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      .verb-text.rolling-in {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      /* ── Shuffle button (darker hover) ── */
+
+      .shuffle-btn {
+        font-family: "PT Mono", monospace;
+        font-size: 0.85rem;
+        background-color: #deeffc;
+        color: #271b18;
+        border: 2px solid #271b189c;
+        border-radius: 5px;
+        padding: 0.5rem 0.7rem;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition:
+          background-color 0.15s,
+          border-color 0.15s,
+          transform 0.1s;
+        height: 100%;
+        user-select: none;
+      }
+
+      .shuffle-btn:hover {
+        background-color: #a8d4f0;
+        border-color: #271b18;
+      }
+
+      .shuffle-btn:active {
+        background-color: #7bbde3;
+        transform: scale(0.96);
+      }
+
+      /* ── Preview label ── */
+
+      .preview-label {
+        font-size: 0.8rem;
+        color: #271b189c;
+        margin-bottom: 0.4rem;
+      }
+
+      /* ── Preview box: postcard image with overlay ── */
+
+      .preview-box {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        max-width: 620px;
+        transform: rotate(-2deg);
+      }
+
+      .preview-box .postcard-bg {
+        display: block;
+        width: 100%;
+        height: auto;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .postcard-bg {
+        border: 2px solid black;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      /*
+        Postcard white area measurements (from the image):
+        - Horizontal: lines run from ~5% to ~33% (curve starts ~35%)
+        - Vertical: first line ~8%, last line ~92%
+        We span the full white zone and let flexbox center the text.
+      */
+      .postcard-overlay {
+        position: absolute;
+        top: 6%;
+        bottom: 6%;
+        left: 4%;
+        right: 64%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.25rem;
+        overflow: hidden;
+      }
+
+      .preview-headline {
+        font-size: clamp(0.25rem, 1.6vw, 1rem);
+        font-weight: bold;
+        color: #271b18;
+        line-height: 1.35;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .preview-reason {
+        margin-top: 0.3rem;
+        font-style: italic;
+        font-weight: normal;
+        font-size: clamp(0.48rem, 1.3vw, 0.88rem);
+        color: #271b18;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .preview-sig {
+        margin-top: 0.35rem;
+        font-size: clamp(0.42rem, 1.1vw, 0.8rem);
+        color: #271b189c;
+      }
+
+      .preview-placeholder {
+        color: #271b184d;
+      }
+
+      /* ── Button row ── */
+
+      .invite-btn-row {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      /* ── "Now send this link to a friend!" confirmation ── */
+
+      .copy-confirm {
+        font-family: "PT Mono", monospace;
+        font-size: 2rem;
+        color: #271b189c;
+        margin-top: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .copy-confirm.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div id="logo-wrapper">
+        <picture>
+          <source media="(max-width: 767px)" srcset="images/2026/special/mobile-logo.webp" />
+          <img src="images/2026/special/desktop-logo.webp" alt="Logo" id="logo" />
+          <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
+          <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
+          <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
+          <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
+        </picture>
+      </div>
+
+      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+        <span class="sr-only">Menu</span>
+        <span class="icon"></span>
+      </button>
+
+      <nav id="primary-navigation" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">
+              <img src="images/2026/nav/home.png" alt="Home" />
+              <span class="sr-only">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" id="scheduleNav">
+              <img src="images/2026/nav/schedule.png" alt="Schedule" />
+              <span class="sr-only">Schedule</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">
+              <img src="images/2026/nav/about.png" alt="About" />
+              <span class="sr-only">About</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Poster that fades out -->
+    <div class="poster-container" id="posterContainer">
+      <img src="images/2026/tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+    </div>
+
+    <!-- Game name display -->
+    <div class="game-name" id="gameName">o</div>
+
+    <canvas id="canvas"></canvas>
+
+    <main class="no-pointer-events">
+      <div class="contentContainer" id="landingPage">
+        <div class="contentContainer">
+          <div class="content">
+            <section class="textBox">
+              <h2>Invite a Friend to TGW?</h2>
+              <p>Fill this in to create a personal invite link for a friend.</p>
+
+              <br />
+
+              <div class="invite-layout">
+                <!-- LEFT: form inputs -->
+                <div class="invite-form-side">
+                  <label for="friend-name">Your Friend's Name</label>
+                  <input
+                    type="text"
+                    id="friend-name"
+                    placeholder=""
+                    maxlength="33"
+                    oninput="
+                      clearError(this);
+                      updatePreview();
+                    " />
+
+                  <label>The summons</label>
+                  <div class="verb-row">
+                    <div class="verb-display" id="verb-display">
+                      <span class="verb-text" id="verb-text">you've been summoned to</span>
+                    </div>
+                    <button class="shuffle-btn" onclick="shuffleVerb()">shuffle</button>
+                  </div>
+
+                  <label for="personal-reason">
+                    Why should they come?
+                    <span style="font-weight: normal; color: #271b189c"></span>
+                  </label>
+                  <textarea id="personal-reason" placeholder="" oninput="updatePreview()" maxlength="100"></textarea>
+                  <div class="char-count" id="char-count">0 / 80</div>
+
+                  <label for="your-name">Your Name</label>
+                  <input
+                    type="text"
+                    id="your-name"
+                    placeholder=""
+                    maxlength="33"
+                    oninput="
+                      clearError(this);
+                      updatePreview();
+                    " />
+                </div>
+
+                <!-- RIGHT: postcard preview -->
+                <div class="invite-preview-side">
+                  <!-- <p class="preview-label">Your friend will see:</p> -->
+                  <div class="preview-box">
+                    <img class="postcard-bg" src="images/2026/postcard.png" alt="Postcard preview" />
+                    <div class="postcard-overlay">
+                      <div class="preview-headline" id="preview-headline">
+                        <span class="preview-placeholder">Friend</span>, you've been summoned to Toronto Games Week.
+                      </div>
+                      <div class="preview-reason" id="preview-reason" style="display: none"></div>
+                      <div class="preview-sig" id="preview-sig">&mdash; <span class="preview-placeholder">You</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="invite-btn-row">
+                <p class="btn floatingBtn">
+                  <a
+                    href="#"
+                    onclick="
+                      generateAndCopy();
+                      return false;
+                    "
+                    id="gen-btn"
+                    >Copy Invite Link</a
+                  >
+                </p>
+                <p class="copy-confirm" id="copy-confirm">Now you can send this link to a friend!</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-content">
+        <div class="social-horizontal">
+          <a
+            href="https://www.facebook.com/profile.php?id=61568893716436"
+            target="_blank"
+            rel="noopener"
+            class="social-icon facebook"
+            aria-label="Follow us on Facebook">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+          </a>
+          <a
+            href="https://bsky.app/profile/torontogamesweek.com"
+            target="_blank"
+            rel="noopener"
+            class="social-icon bluesky"
+            aria-label="Follow us on Bluesky">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/torontogamesweek/"
+            target="_blank"
+            rel="noopener"
+            class="social-icon instagram"
+            aria-label="Follow us on Instagram">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+          <a
+            href="https://www.tiktok.com/@torontogamesweek"
+            target="_blank"
+            rel="noopener"
+            class="social-icon tiktok"
+            aria-label="Follow us on TikTok">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+            </svg>
+          </a>
+          <a
+            href="https://torontogamesweek.eo.page/76xn9"
+            target="_blank"
+            rel="noopener"
+            class="social-icon newsletter"
+            aria-label="Subscribe to our newsletter">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="footer-credit">
+          <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      var verbs = [
+        "you've been summoned to",
+        "you've been chosen, come to",
+        "you've been dealt into",
+        "you've unlocked an invite to",
+        "this is your quest: come to",
+        "it's your turn! Come to",
+        "the dice have spoken. You're going to",
+        "a wild invite appeared! Come to",
+        "new quest unlocked: journey to",
+        "the stars have aligned, come to",
+        "plot twist! Come to",
+        "you've levelled up! Next stop:",
+        "ready or not, you're invited to",
+      ];
+
+      var REASON_MAX = 100;
+      var currentVerbIndex = 0;
+
+      /* ── Validation helpers ── */
+
+      function clearError(el) {
+        el.classList.remove("field-error");
+        if (el.placeholder === "put a name here") {
+          el.placeholder = "";
+        }
+      }
+
+      function showFieldError(el) {
+        el.classList.add("field-error");
+        el.placeholder = "put a name here";
+
+        setTimeout(function () {
+          el.classList.remove("field-error");
+        }, 3000);
+      }
+
+      /* ── Shuffle verb ── */
+
+      function shuffleVerb() {
+        var textEl = document.getElementById("verb-text");
+        textEl.classList.add("rolling-out");
+
+        setTimeout(function () {
+          currentVerbIndex = (currentVerbIndex + 1) % verbs.length;
+          textEl.textContent = verbs[currentVerbIndex];
+          textEl.classList.remove("rolling-out");
+          textEl.classList.add("rolling-in");
+          void textEl.offsetWidth;
+          setTimeout(function () {
+            textEl.classList.remove("rolling-in");
+          }, 20);
+          updatePreview();
+        }, 150);
+      }
+
+      /* ── Live preview ── */
+
+      function updatePreview() {
+        var from = document.getElementById("your-name").value.trim();
+        var friend = document.getElementById("friend-name").value.trim();
+        var reason = document.getElementById("personal-reason").value.trim();
+        var verb = verbs[currentVerbIndex];
+
+        // Character count
+        var countEl = document.getElementById("char-count");
+        var len = document.getElementById("personal-reason").value.length;
+        countEl.textContent = len + " / " + REASON_MAX;
+        if (len >= REASON_MAX - 10) {
+          countEl.classList.add("near-limit");
+        } else {
+          countEl.classList.remove("near-limit");
+        }
+
+        // Headline
+        var headlineEl = document.getElementById("preview-headline");
+        if (friend) {
+          headlineEl.innerHTML = "<strong>" + friend + "</strong>,<br>" + verb + " Toronto Games Week.";
+        } else {
+          headlineEl.innerHTML = '<span class="preview-placeholder">Friend</span>,<br>' + verb + " Toronto Games Week.";
+        }
+
+        // Reason
+        var reasonEl = document.getElementById("preview-reason");
+        if (reason) {
+          reasonEl.style.display = "block";
+          reasonEl.textContent = reason;
+        } else {
+          reasonEl.style.display = "none";
+        }
+
+        // Signature
+        var sigEl = document.getElementById("preview-sig");
+        if (from) {
+          sigEl.textContent = "\u2014 " + from;
+        } else {
+          sigEl.innerHTML = '&mdash; <span class="preview-placeholder">You</span>';
+        }
+      }
+
+      /* ── Generate & copy link ── */
+
+      function generateAndCopy() {
+        var friendEl = document.getElementById("friend-name");
+        var yourEl = document.getElementById("your-name");
+        var from = yourEl.value.trim();
+        var friend = friendEl.value.trim();
+        var hasError = false;
+
+        if (!friend) {
+          showFieldError(friendEl);
+          hasError = true;
+        }
+        if (!from) {
+          showFieldError(yourEl);
+          hasError = true;
+        }
+        if (hasError) return;
+
+        var data = {
+          from: from,
+          friend: friend,
+          verb: verbs[currentVerbIndex],
+          reason: document.getElementById("personal-reason").value.trim().slice(0, REASON_MAX),
+        };
+
+        var encoded = btoa(encodeURIComponent(JSON.stringify(data)));
+        // var url = "https://torontogamesweek.com/index.html#invite=" + encoded;
+
+        // var url = "http://localhost:5500/index.html#invite=" + encoded;
+
+        navigator.clipboard.writeText(url).then(function () {
+          var btn = document.getElementById("gen-btn");
+          var confirmEl = document.getElementById("copy-confirm");
+
+          btn.textContent = "Link copied!";
+          confirmEl.classList.add("visible");
+
+          setTimeout(function () {
+            btn.textContent = "Generate & Copy Invite Link";
+            confirmEl.classList.remove("visible");
+          }, 4000);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ball & People Position Mapper</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #1a1a1a;
+        color: #fff;
+        overflow: hidden;
+        /* background: white; */
+      }
+
+      #controls {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 15px;
+        z-index: 1000;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      #controls button {
+        padding: 10px 20px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      #controls button:hover {
+        background: #45a049;
+      }
+
+      #controls button:active {
+        transform: scale(0.98);
+      }
+
+      #controls select {
+        padding: 8px 12px;
+        background: #333;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      #controls label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      #controls input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      #info {
+        flex-grow: 1;
+        font-size: 13px;
+        color: #aaa;
+      }
+
+      #container {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+      }
+
+      #posterWrapper {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+      }
+
+      #poster {
+        display: block;
+        width: 1400px;
+        height: auto;
+        border: 2px solid #444;
+      }
+
+      .draggable {
+        position: absolute;
+        cursor: move;
+        border: 2px solid transparent;
+        transition: border-color 0.2s;
+        user-select: none;
+        -webkit-user-select: none;
+        object-fit: contain;
+        background-color: rgba(255, 255, 0, 0.371);
+      }
+
+      .draggable:hover {
+        border-color: rgba(76, 175, 80, 0.5);
+      }
+
+      .draggable.selected {
+        border-color: #4caf50;
+        border-width: 3px;
+        box-shadow: 0 0 15px rgba(76, 175, 80, 1);
+      }
+
+      .draggable.hidden {
+        opacity: 0.1;
+      }
+
+      .resize-handle {
+        position: absolute;
+        bottom: -8px;
+        right: -8px;
+        width: 20px;
+        height: 20px;
+        background: #4caf50;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        cursor: nwse-resize;
+        display: none;
+        z-index: 100;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      .draggable.selected .resize-handle {
+        display: block;
+      }
+
+      .resize-handle:hover {
+        background: #45a049;
+        transform: scale(1.3);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+      }
+
+      #output {
+        position: fixed;
+        top: 70px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.95);
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        max-width: 400px;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+        font-family: monospace;
+        font-size: 12px;
+        white-space: pre;
+        display: none;
+        z-index: 999;
+        border: 1px solid #444;
+      }
+
+      #output.show {
+        display: block;
+      }
+
+      .label {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: #4caf50;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        pointer-events: none;
+        white-space: nowrap;
+        top: -20px;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="controls">
+      <button id="exportBtn">Export Positions</button>
+      <button id="copyBtn" style="background: #2196f3">Copy Code</button>
+      <button id="resetBtn" style="background: #f44336">Reset All</button>
+
+      <label>
+        <input type="checkbox" id="showBalls" checked />
+        Show Balls
+      </label>
+
+      <label>
+        <input type="checkbox" id="showPeople" checked />
+        Show People
+      </label>
+
+      <label>
+        <input type="checkbox" id="showOther" checked />
+        Show Other
+      </label>
+
+      <label>
+        <input type="checkbox" id="showLabels" checked />
+        Show Labels
+      </label>
+
+      <select id="itemSelect">
+        <option value="">Jump to item...</option>
+      </select>
+
+      <div id="info">Selected: None | Use arrow keys for fine adjustments (1px) | Click item to select | Drag to move</div>
+    </div>
+
+    <div id="container">
+      <div id="posterWrapper">
+        <img id="poster" src="../images/2026/tgwposterforsitelargeclear2.png" alt="Poster" />
+      </div>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+      // Configuration
+      const BALL_COUNT = 39;
+      const PEOPLE_COUNT = 29;
+      const OTHER_COUNT = 14;
+      const items = [];
+      let selectedItem = null;
+      let isDragging = false;
+      let isResizing = false;
+      let dragOffset = { x: 0, y: 0 };
+      let resizeStartSize = { width: 0, height: 0 };
+      let resizeStartMouse = { x: 0, y: 0 };
+
+      const poster = document.getElementById("poster");
+      const posterWrapper = document.getElementById("posterWrapper");
+      const output = document.getElementById("output");
+      const info = document.getElementById("info");
+      const itemSelect = document.getElementById("itemSelect");
+
+      // Wait for poster to load
+      poster.onload = function () {
+        console.log("Poster width:", poster.width);
+        console.log("Poster offsetWidth:", poster.offsetWidth);
+        console.log("Poster clientWidth:", poster.clientWidth);
+        console.log("Poster naturalWidth:", poster.naturalWidth);
+        initializeItems();
+      };
+
+      // If poster is already loaded (cached)
+      if (poster.complete) {
+        initializeItems();
+      }
+
+      // Your positioned data (percentage-based)
+      const positions = {
+        ball_1: { x: 62.9, y: 66.69, size: 5.59 },
+        ball_2: { x: 2.79, y: 78.73, size: 5.66 },
+        ball_3: { x: 6.52, y: 57.48, size: 3.22 },
+        ball_4: { x: 70.13, y: 3.12, size: 5.59 },
+        ball_5: { x: 38.61, y: 10.73, size: 15.54 },
+        ball_6: { x: 2.15, y: 51.7, size: 3.22 },
+        ball_7: { x: 3.8, y: 48.82, size: 3.22 },
+        ball_8: { x: 36.25, y: 42.08, size: 29.94 },
+        ball_9: { x: 5.99, y: 51.75, size: 3.3 },
+        ball_10: { x: 2.72, y: 90.02, size: 6.16 },
+        ball_11: { x: 18.84, y: 23.38, size: 15.54 },
+        ball_12: { x: 85.56, y: 0.69, size: 5.44 },
+        ball_13: { x: 35.38, y: 30.05, size: 16.12 },
+        ball_14: { x: 36.39, y: 42.21, size: 29.8 },
+        ball_15: { x: 31.59, y: 67.64, size: 17.48 },
+        ball_16: { x: 11.17, y: 54.55, size: 3.44 },
+        ball_17: { x: 76.65, y: 5.67, size: 5.59 },
+        ball_18: { x: 65.19, y: 86.85, size: 5.52 },
+        ball_19: { x: 7.38, y: 24.0, size: 5.58 },
+        ball_20: { x: 0.86, y: 16.71, size: 5.8 },
+        ball_21: { x: 54.36, y: 87.75, size: 5.38 },
+        ball_22: { x: 4.23, y: 2.43, size: 12.18 },
+        ball_23: { x: 79.8, y: 2.19, size: 3.08 },
+        ball_24: { x: 88.23, y: 21.64, size: 10.82 },
+        ball_25: { x: 83.74, y: 4.37, size: 2.72 },
+        ball_26: { x: 35.53, y: 1.05, size: 7.02 },
+        ball_27: { x: 64.54, y: 12.03, size: 9.81 },
+        ball_28: { x: 0.43, y: 62.28, size: 15.76 },
+        ball_29: { x: 13.69, y: 86.28, size: 10.67 },
+        ball_30: { x: 70.99, y: 64.4, size: 28.58 },
+        ball_31: { x: 73.57, y: 42.95, size: 10.82 },
+        ball_32: { x: 86.53, y: 34.67, size: 10.6 },
+        ball_33: { x: 23.78, y: 80.48, size: 13.47 },
+        ball_34: { x: 51.36, y: 66.73, size: 14.47 },
+        ball_35: { x: 59.81, y: 83.83, size: 5.59 },
+        ball_36: { x: 9.46, y: 57.54, size: 3.22 },
+        ball_37: { x: 92.4, y: 3.56, size: 5.52 },
+        ball_38: { x: 70.49, y: 11.84, size: 22.21 },
+        ball_39: { x: 7.88, y: 54.72, size: 3.18 },
+        ppl_1: { x: 23.64, y: 12.66, size: 8.81 },
+        ppl_2: { x: 68.33, y: 48.51, size: 6.23 },
+        ppl_3: { x: 46.63, y: 78.35, size: 7.59 },
+        ppl_4: { x: 69.56, y: 63.4, size: 4.3 },
+        ppl_5: { x: 34.24, y: 91.84, size: 4.58 },
+        ppl_6: { x: 56.59, y: 39.25, size: 5.66 },
+        ppl_7: { x: 58.81, y: 18.08, size: 5.66 },
+        ppl_8: { x: 40.27, y: 4.3, size: 7.74 },
+        ppl_9: { x: 21.92, y: 61.38, size: 14.9 },
+        ppl_10: { x: 79.63, y: 90.93, size: 5.66 },
+        ppl_11: { x: 84.82, y: 90.32, size: 6.38 },
+        ppl_12: { x: 50.63, y: 20.23, size: 8.95 },
+        ppl_13: { x: 23.42, y: 12.49, size: 9.03 },
+        ppl_14: { x: 34.81, y: 41.83, size: 4.8 },
+        ppl_15: { x: 26.58, y: 37.84, size: 5.23 },
+        ppl_16: { x: 56.09, y: 9.23, size: 6.66 },
+        ppl_17: { x: 17.41, y: 5.05, size: 6.02 },
+        ppl_18: { x: 54.87, y: 29.42, size: 5.52 },
+        ppl_19: { x: 19.55, y: 59.58, size: 7.09 },
+        ppl_20: { x: 45.77, y: 86.59, size: 9.89 },
+        ppl_21: { x: 36.46, y: 24.13, size: 9.53 },
+        ppl_22: { x: 32.88, y: 7.8, size: 7.38 },
+        ppl_23: { x: 90.04, y: 88.78, size: 6.3 },
+        ppl_24: { x: 75.5, y: 34.85, size: 5.52 },
+        ppl_25: { x: 74.02, y: 89.27, size: 5.73 },
+        ppl_26: { x: 26.29, y: 37.66, size: 5.66 },
+        ppl_27: { x: 39.04, y: 83.36, size: 8.81 },
+        ppl_28: { x: 47.13, y: 1.75, size: 6.45 },
+        ppl_29: { x: 85.39, y: 43.64, size: 12.32 },
+        o_1: { x: -1.07, y: 27.11, size: 37.17 },
+        o_2: { x: 2.08, y: 68.2, size: 24.57 },
+        o_3: { x: 85.24, y: 30.05, size: 15.4 },
+        o_4: { x: 69.27, y: 47.51, size: 27.0 },
+        o_5: { x: 49.64, y: 22.69, size: 28.58 },
+        o_6: { x: 29.66, y: 15.52, size: 12.1 },
+        o_7: { x: 13.69, y: -2.06, size: 22.5 },
+        o_8: { x: 39.26, y: 6.31, size: 5.37 },
+        o_9: { x: 51.8, y: -0.87, size: 15.33 },
+        o_10: { x: 87.18, y: 7.43, size: 15.97 },
+        o_11: { x: 6.52, y: 11.42, size: 16.69 },
+        o_12: { x: 53.58, y: 16.65, size: 6.94 },
+        o_13: { x: 38.97, y: 91.99, size: 3.87 },
+        o_14: { x: 53.8, y: 82.14, size: 5.16 },
+      };
+
+      function initializeItems() {
+        // Create balls
+        for (let i = 1; i <= BALL_COUNT; i++) {
+          createDraggableItem(`../images/2026/single-images/balls/ball_${i}.png`, `ball_${i}`, "ball");
+        }
+
+        // Create people
+        for (let i = 1; i <= PEOPLE_COUNT; i++) {
+          createDraggableItem(`../images/2026/single-images/ppl/ppl_${i}.png`, `ppl_${i}`, "person");
+        }
+
+        // Create other items
+        for (let i = 1; i <= OTHER_COUNT; i++) {
+          createDraggableItem(`../images/2026/single-images/other/o_${i}.png`, `o_${i}`, "other");
+        }
+
+        // Populate select dropdown
+        items.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item.filename;
+          option.textContent = item.filename;
+          itemSelect.appendChild(option);
+        });
+      }
+
+      function createDraggableItem(src, filename, type) {
+        // Create wrapper container
+        const wrapper = document.createElement("div");
+        wrapper.className = "draggable";
+        wrapper.dataset.filename = filename;
+        wrapper.dataset.type = type;
+
+        // Get position data for this item
+        const posData = positions[filename];
+
+        // Wait for poster to load to get actual dimensions
+        const posterWidth = poster.width || poster.naturalWidth || 1396;
+        const posterHeight = poster.height || poster.naturalHeight || 1606;
+
+        // Convert percentage to pixels
+        const initialX = (posData.x / 100) * posterWidth;
+        const initialY = (posData.y / 100) * posterHeight;
+        const initialSize = (posData.size / 100) * posterWidth;
+
+        wrapper.style.left = initialX + "px";
+        wrapper.style.top = initialY + "px";
+        wrapper.style.width = initialSize + "px";
+        wrapper.style.height = initialSize + "px";
+
+        // Calculate scale based on base size
+        const baseSize = type === "person" ? 30 : 45; // balls and others use 45
+        const scale = initialSize / baseSize;
+
+        // Create image
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "contain";
+        img.style.display = "block";
+        img.style.pointerEvents = "none";
+        wrapper.appendChild(img);
+
+        // Create label
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = filename;
+        wrapper.appendChild(label);
+
+        // Create resize handle
+        const resizeHandle = document.createElement("div");
+        resizeHandle.className = "resize-handle";
+        resizeHandle.addEventListener("mousedown", startResize);
+        wrapper.appendChild(resizeHandle);
+
+        // Event listeners
+        wrapper.addEventListener("mousedown", startDrag);
+        wrapper.addEventListener("click", selectItem);
+
+        posterWrapper.appendChild(wrapper);
+
+        items.push({
+          element: wrapper,
+          filename: filename,
+          type: type,
+          x: initialX,
+          y: initialY,
+          scale: scale,
+          width: initialSize,
+          height: initialSize,
+          baseSize: baseSize,
+        });
+      }
+
+      function startDrag(e) {
+        if (e.button !== 0) return; // Only left mouse button
+        if (e.target.className === "resize-handle") return; // Don't drag when resizing
+
+        e.preventDefault();
+        e.stopPropagation();
+        isDragging = true;
+
+        // Find the wrapper (could be the target itself or a parent)
+        let wrapper = e.target;
+        if (!wrapper.classList.contains("draggable")) {
+          wrapper = wrapper.closest(".draggable");
+        }
+
+        const item = items.find((i) => i.element === wrapper);
+        if (item) {
+          selectedItem = item;
+          updateSelection();
+
+          const rect = item.element.getBoundingClientRect();
+          const posterRect = posterWrapper.getBoundingClientRect();
+
+          dragOffset.x = e.clientX - rect.left;
+          dragOffset.y = e.clientY - rect.top;
+
+          document.addEventListener("mousemove", drag);
+          document.addEventListener("mouseup", stopDrag);
+        }
+      }
+
+      function startResize(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        isResizing = true;
+
+        // Find the parent wrapper element
+        const wrapper = e.target.parentElement;
+        const item = items.find((i) => i.element === wrapper);
+
+        if (item) {
+          selectedItem = item;
+          updateSelection();
+
+          resizeStartSize.width = item.width;
+          resizeStartSize.height = item.height;
+          resizeStartMouse.x = e.clientX;
+          resizeStartMouse.y = e.clientY;
+
+          document.addEventListener("mousemove", resize);
+          document.addEventListener("mouseup", stopResize);
+        }
+      }
+
+      function resize(e) {
+        if (!isResizing || !selectedItem) return;
+
+        e.preventDefault();
+
+        const deltaX = e.clientX - resizeStartMouse.x;
+        const deltaY = e.clientY - resizeStartMouse.y;
+        const delta = Math.max(deltaX, deltaY); // Use the larger change
+
+        let newWidth = Math.max(20, resizeStartSize.width + delta);
+        let newHeight = Math.max(20, resizeStartSize.height + delta);
+
+        // Keep aspect ratio
+        const aspectRatio = resizeStartSize.width / resizeStartSize.height;
+        if (newWidth / newHeight > aspectRatio) {
+          newHeight = newWidth / aspectRatio;
+        } else {
+          newWidth = newHeight * aspectRatio;
+        }
+
+        selectedItem.width = newWidth;
+        selectedItem.height = newHeight;
+        selectedItem.scale = newWidth / selectedItem.baseSize;
+
+        selectedItem.element.style.width = newWidth + "px";
+        selectedItem.element.style.height = newHeight + "px";
+
+        updateInfo();
+      }
+
+      function stopResize() {
+        isResizing = false;
+        document.removeEventListener("mousemove", resize);
+        document.removeEventListener("mouseup", stopResize);
+      }
+
+      function drag(e) {
+        if (!isDragging || !selectedItem) return;
+
+        e.preventDefault();
+
+        const posterRect = posterWrapper.getBoundingClientRect();
+        let newX = e.clientX - posterRect.left - dragOffset.x;
+        let newY = e.clientY - posterRect.top - dragOffset.y;
+
+        // No constraints - items can go anywhere!
+
+        selectedItem.x = newX;
+        selectedItem.y = newY;
+        selectedItem.element.style.left = newX + "px";
+        selectedItem.element.style.top = newY + "px";
+
+        updateInfo();
+      }
+
+      function stopDrag() {
+        isDragging = false;
+        document.removeEventListener("mousemove", drag);
+        document.removeEventListener("mouseup", stopDrag);
+      }
+
+      function selectItem(e) {
+        if (isDragging) return;
+
+        let wrapper = e.target;
+        if (!wrapper.classList.contains("draggable")) {
+          wrapper = wrapper.closest(".draggable");
+        }
+
+        const item = items.find((i) => i.element === wrapper);
+        if (item) {
+          selectedItem = item;
+          updateSelection();
+          updateInfo();
+        }
+      }
+
+      function updateSelection() {
+        items.forEach((item) => {
+          item.element.classList.toggle("selected", item === selectedItem);
+        });
+      }
+
+      function updateInfo() {
+        if (selectedItem) {
+          info.textContent = `Selected: ${selectedItem.filename} | Position: (${Math.round(selectedItem.x)}, ${Math.round(selectedItem.y)}) | Scale: ${selectedItem.scale.toFixed(2)}x | Use arrow keys for fine adjustments`;
+        } else {
+          info.textContent =
+            "Selected: None | Use arrow keys for fine adjustments (1px) | Click item to select | Drag to move | Drag corner to resize";
+        }
+      }
+
+      // Keyboard controls
+      document.addEventListener("keydown", function (e) {
+        if (!selectedItem) return;
+
+        let moved = false;
+        const posterRect = poster.getBoundingClientRect();
+
+        switch (e.key) {
+          case "ArrowLeft":
+            selectedItem.x = Math.max(0, selectedItem.x - 1);
+            moved = true;
+            break;
+          case "ArrowRight":
+            selectedItem.x = Math.min(poster.width - selectedItem.width, selectedItem.x + 1);
+            moved = true;
+            break;
+          case "ArrowUp":
+            selectedItem.y = Math.max(0, selectedItem.y - 1);
+            moved = true;
+            break;
+          case "ArrowDown":
+            selectedItem.y = Math.min(poster.height - selectedItem.height, selectedItem.y + 1);
+            moved = true;
+            break;
+        }
+
+        if (moved) {
+          e.preventDefault();
+          selectedItem.element.style.left = selectedItem.x + "px";
+          selectedItem.element.style.top = selectedItem.y + "px";
+          updateInfo();
+        }
+      });
+
+      // Export functionality
+      document.getElementById("exportBtn").addEventListener("click", function () {
+        let result = "POSITION DATA\n";
+        result += "=".repeat(70) + "\n\n";
+        result += `Poster dimensions: ${poster.width}x${poster.height}\n`;
+        result += `Total items: ${items.length}\n\n`;
+
+        // Absolute pixel positions
+        result += "ABSOLUTE PIXEL POSITIONS (for reference):\n";
+        result += "=".repeat(70) + "\n";
+        result += "BALLS:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "ball")
+          .forEach((item) => {
+            result += `${item.filename}: (${Math.round(item.x)}, ${Math.round(item.y)}) scale: ${item.scale.toFixed(2)}x\n`;
+          });
+
+        result += "\nPEOPLE:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "person")
+          .forEach((item) => {
+            result += `${item.filename}: (${Math.round(item.x)}, ${Math.round(item.y)}) scale: ${item.scale.toFixed(2)}x\n`;
+          });
+
+        result += "\nOTHER:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "other")
+          .forEach((item) => {
+            result += `${item.filename}: (${Math.round(item.x)}, ${Math.round(item.y)}) scale: ${item.scale.toFixed(2)}x\n`;
+          });
+
+        // Percentage-based positions (works at any scale!)
+        result += "\n\n" + "=".repeat(70) + "\n";
+        result += "PERCENTAGE-BASED POSITIONS (works at any poster size!):\n";
+        result += "=".repeat(70) + "\n";
+        result += "Format: x%, y%, size% (of poster width)\n";
+        result += "Usage: x_pos = (x%/100) * poster_width\n";
+        result += "       y_pos = (y%/100) * poster_height\n";
+        result += "       size = (size%/100) * poster_width\n\n";
+
+        result += "BALLS:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "ball")
+          .forEach((item) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `${item.filename}: x=${xPercent}%, y=${yPercent}%, size=${sizePercent}%\n`;
+          });
+
+        result += "\nPEOPLE:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "person")
+          .forEach((item) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `${item.filename}: x=${xPercent}%, y=${yPercent}%, size=${sizePercent}%\n`;
+          });
+
+        result += "\nOTHER:\n" + "-".repeat(70) + "\n";
+        items
+          .filter((i) => i.type === "other")
+          .forEach((item) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `${item.filename}: x=${xPercent}%, y=${yPercent}%, size=${sizePercent}%\n`;
+          });
+
+        output.textContent = result;
+        output.classList.add("show");
+      });
+
+      document.getElementById("copyBtn").addEventListener("click", async function () {
+        let result = "const positions = {\n";
+
+        // Add balls
+        items
+          .filter((i) => i.type === "ball")
+          .forEach((item, index, arr) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `    ${item.filename}: {x: ${xPercent}, y: ${yPercent}, size: ${sizePercent}}`;
+            result += ",\n";
+          });
+
+        // Add people
+        items
+          .filter((i) => i.type === "person")
+          .forEach((item, index, arr) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `    ${item.filename}: {x: ${xPercent}, y: ${yPercent}, size: ${sizePercent}}`;
+            result += ",\n";
+          });
+
+        // Add other items
+        items
+          .filter((i) => i.type === "other")
+          .forEach((item, index, arr) => {
+            const xPercent = ((item.x / poster.width) * 100).toFixed(2);
+            const yPercent = ((item.y / poster.height) * 100).toFixed(2);
+            const actualSize = item.baseSize * item.scale;
+            const sizePercent = ((actualSize / poster.width) * 100).toFixed(2);
+            result += `    ${item.filename}: {x: ${xPercent}, y: ${yPercent}, size: ${sizePercent}}`;
+            if (index < arr.length - 1) {
+              result += ",\n";
+            } else {
+              result += "\n";
+            }
+          });
+
+        result += "};";
+
+        try {
+          await navigator.clipboard.writeText(result);
+          this.textContent = "Copied!";
+          this.style.background = "#4CAF50";
+          setTimeout(() => {
+            this.textContent = "Copy Code";
+            this.style.background = "#2196F3";
+          }, 2000);
+        } catch (err) {
+          alert("Failed to copy to clipboard: " + err);
+        }
+      });
+
+      document.getElementById("resetBtn").addEventListener("click", function () {
+        if (confirm("Reset all positions to your saved positions?")) {
+          items.forEach((item) => {
+            const posData = positions[item.filename];
+            const posterWidth = poster.width || 1396;
+            const posterHeight = poster.height || 1606;
+
+            item.x = (posData.x / 100) * posterWidth;
+            item.y = (posData.y / 100) * posterHeight;
+            const size = (posData.size / 100) * posterWidth;
+            item.width = size;
+            item.height = size;
+            item.scale = size / item.baseSize;
+
+            item.element.style.left = item.x + "px";
+            item.element.style.top = item.y + "px";
+            item.element.style.width = size + "px";
+            item.element.style.height = size + "px";
+          });
+          selectedItem = null;
+          updateSelection();
+          updateInfo();
+          output.classList.remove("show");
+        }
+      });
+
+      // Toggle visibility
+      document.getElementById("showBalls").addEventListener("change", function () {
+        items
+          .filter((i) => i.type === "ball")
+          .forEach((item) => {
+            item.element.classList.toggle("hidden", !this.checked);
+          });
+      });
+
+      document.getElementById("showPeople").addEventListener("change", function () {
+        items
+          .filter((i) => i.type === "person")
+          .forEach((item) => {
+            item.element.classList.toggle("hidden", !this.checked);
+          });
+      });
+
+      document.getElementById("showOther").addEventListener("change", function () {
+        items
+          .filter((i) => i.type === "other")
+          .forEach((item) => {
+            item.element.classList.toggle("hidden", !this.checked);
+          });
+      });
+
+      document.getElementById("showLabels").addEventListener("change", function () {
+        document.querySelectorAll(".label").forEach((label) => {
+          label.style.display = this.checked ? "block" : "none";
+        });
+      });
+
+      // Jump to item
+      itemSelect.addEventListener("change", function () {
+        if (!this.value) return;
+
+        const item = items.find((i) => i.filename === this.value);
+        if (item) {
+          selectedItem = item;
+          updateSelection();
+          updateInfo();
+
+          // Scroll to item
+          item.element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Flash the item
+          item.element.style.border = "3px solid #ff0";
+          setTimeout(() => {
+            item.element.style.border = "";
+          }, 500);
+        }
+
+        this.value = "";
+      });
+    </script>
+  </body>
+</html>
