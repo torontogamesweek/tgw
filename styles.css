@@ -2925,7 +2925,7 @@ canvas#canvas {
 @media (max-width: 768px) {
   canvas#canvas {
     position: absolute;
-    top: 130px;
+    top: 230px;
     left: 0;
     z-index: 1;
     background: transparent;
