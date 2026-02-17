@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -7,23 +7,34 @@
     <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
     <title>Toronto Games Week Calendar</title>
 
+    <!-- Meta Tags -->
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
     <meta name="description" content="Celebrating games in Toronto, Canada" />
 
-    <meta property="og:title" content="Toronto Games Week" />
-    <meta property="og:description" content="Celebrating games in Toronto, Canada" />
-
-    <meta property="og:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" />
-
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week — June 11–17, 2026" />
+    <meta property="og:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+    <meta property="og:image" content="https://torontogamesweek.com/images/2026/tgw-poster.png" />
     <meta property="og:url" content="https://torontogamesweek.com" />
-    <meta property="og:type" content="webpage" />
+    <meta property="og:type" content="website" />
 
-    <meta name="twitter:title" content="Toronto Games Week" />
-    <meta name="twitter:description" content="Celebrating games in Toronto, Canada" />
-    <meta name="twitter:image" content="https://torontogamesweek.com/images/TGW_Poster_Assets_2025/smPoster.png" />
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week — June 11–17, 2026" />
+    <meta name="twitter:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/2026/tgw-poster.png" id="indexImage" />
     <meta name="twitter:card" content="summary_large_image" />
-  </head>
 
+    <!-- Image Specifications -->
+    <meta
+      property="og:image:alt"
+      content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around " />
+
+    <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
+  </head>
 
   <style>
     .calendar-container {
@@ -49,13 +60,13 @@
     }
 
     #calendar {
-    max-width: 90%;
-    margin: 2rem auto;
-    background-color: var(--lightGrey);
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Major Mono Display', monospace;
+      max-width: 90%;
+      margin: 2rem auto;
+      background-color: var(--lightGrey);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      font-family: "Major Mono Display", monospace;
     }
 
     .calendar-header,
@@ -73,7 +84,6 @@
       padding: 0.5rem 0;
       color: var(--accentDark);
       margin-bottom: 1rem;
-
     }
 
     .calendar-day {
@@ -96,28 +106,28 @@
 
   <body>
     <header>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-        <label for="nav-toggle" class="nav-toggle-label">
-          <span></span>
-        </label>
-  
-        <div>
-          <a href=""><img alt="" /></a>
-        </div>
-        <nav id="primary-navigation">
-          <ul>
-            <li>
-              <a href="/index.html">Home</a>
-            </li>
-            <li>
-              <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
-            </li>
-            <li>
-              <a href="/about.html" id="aboutNav">About</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+      </label>
+
+      <div>
+        <a href=""><img alt="" /></a>
+      </div>
+      <nav id="primary-navigation">
+        <ul>
+          <li>
+            <a href="/index.html">Home</a>
+          </li>
+          <li>
+            <!-- <a href="schedule.html" id="scheduleNav">Schedule</a> -->
+          </li>
+          <li>
+            <a href="/about.html" id="aboutNav">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <main>
       <div>
@@ -127,12 +137,12 @@
         <div id="calendar"></div>
 
         <!-- <section class="contentContainer"> -->
-          <div class="calendar-container">
-            <iframe
-              src="https://calendar.google.com/calendar/embed?src=642094f75197b3b8113d17477797d5dfd74db3216e88d0a6f09a7d1c5580b571%40group.calendar.google.com&ctz=America%2FToronto"
-              frameborder="0"
-              scrolling="no"></iframe>
-          </div>
+        <div class="calendar-container">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=642094f75197b3b8113d17477797d5dfd74db3216e88d0a6f09a7d1c5580b571%40group.calendar.google.com&ctz=America%2FToronto"
+            frameborder="0"
+            scrolling="no"></iframe>
+        </div>
       </div>
       <br />
       <br />
@@ -140,82 +150,83 @@
 
     <script>
       console.log("hoi");
-      
+
       async function fetchCalendarEvents() {
-    const response = await fetch('https://torontogamesweek.netlify.app/.netlify/functions/getCalendarEvents');
-    const data = await response.json();
-    return data.items || [];
-}
+        const response = await fetch("https://torontogamesweek.netlify.app/.netlify/functions/getCalendarEvents");
+        const data = await response.json();
+        return data.items || [];
+      }
 
-function createCalendar(year, month, events) {
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = ''; // Clear previous content
+      function createCalendar(year, month, events) {
+        const calendar = document.getElementById("calendar");
+        calendar.innerHTML = ""; // Clear previous content
 
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const startDay = new Date(year, month, 11).getDay(); // Get the day of the week for June 11
-    const endDay = 17;
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const startDay = new Date(year, month, 11).getDay(); // Get the day of the week for June 11
+        const endDay = 17;
 
-    // Create header with days of the week (only showing the relevant ones)
-    const header = document.createElement('div');
-    header.classList.add('calendar-header');
-    for (let i = startDay; i <= 6; i++) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('calendar-day');
-        dayElement.textContent = daysOfWeek[i];
-        header.appendChild(dayElement);
-    }
-    for (let i = 0; i <= endDay - 7; i++) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('calendar-day');
-        dayElement.textContent = daysOfWeek[i];
-        header.appendChild(dayElement);
-    }
-    calendar.appendChild(header);
+        // Create header with days of the week (only showing the relevant ones)
+        const header = document.createElement("div");
+        header.classList.add("calendar-header");
+        for (let i = startDay; i <= 6; i++) {
+          const dayElement = document.createElement("div");
+          dayElement.classList.add("calendar-day");
+          dayElement.textContent = daysOfWeek[i];
+          header.appendChild(dayElement);
+        }
+        for (let i = 0; i <= endDay - 7; i++) {
+          const dayElement = document.createElement("div");
+          dayElement.classList.add("calendar-day");
+          dayElement.textContent = daysOfWeek[i];
+          header.appendChild(dayElement);
+        }
+        calendar.appendChild(header);
 
-    // Create days for June 11-17
-    const daysContainer = document.createElement('div');
-    daysContainer.classList.add('calendar-days');
+        // Create days for June 11-17
+        const daysContainer = document.createElement("div");
+        daysContainer.classList.add("calendar-days");
 
-    for (let day = 11; day <= endDay; day++) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('calendar-day');
-        dayElement.textContent = day;
+        for (let day = 11; day <= endDay; day++) {
+          const dayElement = document.createElement("div");
+          dayElement.classList.add("calendar-day");
+          dayElement.textContent = day;
 
-        // Check if this day has an event
-        const eventDate = new Date(year, month, day).toISOString().split('T')[0];
-        const event = events.find(e => {
-            const startDate = e.start.date || e.start.dateTime.split('T')[0]; // Get the date part from dateTime if it exists
+          // Check if this day has an event
+          const eventDate = new Date(year, month, day).toISOString().split("T")[0];
+          const event = events.find((e) => {
+            const startDate = e.start.date || e.start.dateTime.split("T")[0]; // Get the date part from dateTime if it exists
             return startDate === eventDate;
-        });
+          });
 
-        if (event) {
-            const eventElement = document.createElement('div');
-            eventElement.classList.add('calendar-event');
+          if (event) {
+            const eventElement = document.createElement("div");
+            eventElement.classList.add("calendar-event");
             eventElement.textContent = event.summary; // Display event title
             dayElement.appendChild(eventElement);
+          }
+
+          daysContainer.appendChild(dayElement);
         }
 
-        daysContainer.appendChild(dayElement);
-    }
+        calendar.appendChild(daysContainer);
+      }
 
-    calendar.appendChild(daysContainer);
-}
-
-// Initialize the calendar for June 11-17, 2025, with events
-fetchCalendarEvents().then(events => {
-    createCalendar(2025, 5, events); // June is month 5 in JavaScript Date
-});
-
+      // Initialize the calendar for June 11-17, 2025, with events
+      fetchCalendarEvents().then((events) => {
+        createCalendar(2025, 5, events); // June is month 5 in JavaScript Date
+      });
     </script>
-        <script>document.addEventListener('DOMContentLoaded', function() {
-          const navToggle = document.getElementById('nav-toggle');
-          const primaryNav = document.getElementById('primary-navigation');
-          
-          navToggle.addEventListener('click', function() {
-            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-            navToggle.setAttribute('aria-expanded', !isExpanded);
-            primaryNav.classList.toggle('expanded');
-          });
-        });</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
   </body>
 </html>
