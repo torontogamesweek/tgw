@@ -1260,7 +1260,7 @@ header {
   font-family: "Alegreya", sans-serif;
   font-weight: bold;
 
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   z-index: 1000;
   top: 0;
@@ -2996,7 +2996,7 @@ canvas#canvas {
 }
 @media (min-width: 767px) {
   #logo-wrapper {
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 15px 3px 0 3px;
   }
 }
