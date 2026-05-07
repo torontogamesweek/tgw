@@ -952,7 +952,7 @@
             const incomplete = rowData["Status"];
             const startTime = rowData["Event Start Time"].slice(0, -3) || "";
             const endTime = rowData["Event End Time"].slice(0, -3) || "";
-            const icon = rowData["Icon"] || "";
+            let icon = rowData["Icon"] || "";
             const iconAlt = rowData["Alttext"] || "";
             const categories = rowData["Target Audience"]
               ? rowData["Target Audience"].split(",")
@@ -961,6 +961,19 @@
 
             if (!link.startsWith("http") || link.startsWith("www")) {
               link = "";
+            }
+
+            if (icon == "") {
+              const iconFolder = ["balls", "ppl"];
+              const range = 29;
+
+              const randomIconFolder =
+                iconFolder[Math.floor(Math.random() * iconFolder.length)];
+
+              const randomIconPrefix =
+                randomIconFolder === "balls" ? "ball" : "ppl";
+
+              icon = `${randomIconFolder}/${randomIconPrefix}_${Math.floor(Math.random() * range) + 1}.png`;
             }
 
             if (incomplete !== "complete") continue;
@@ -1015,7 +1028,7 @@
           eventDiv.innerHTML = `
                   <section class="textBox2025">
 
-                    <img id="img2025" src="/images/TGW_Poster_Assets_2025/${event.icon}" alt="${event.icon}" class="eventIcon" />
+                    <img id="img2025" src="/images/2026/single-images/${event.icon}" alt="${event.icon}" class="eventIcon" />
                     <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
                     ${
                       event.gcalLink
