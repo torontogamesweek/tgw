@@ -891,6 +891,7 @@
           iconAlt,
           categories,
           gcalLink,
+          dateForSorting,
         ) {
           this.name = name;
           this.hook = hook;
@@ -905,6 +906,7 @@
           this.iconAlt = iconAlt;
           this.categories = categories;
           this.gcalLink = gcalLink;
+          this.dateForSorting = dateForSorting;
         }
       }
 
@@ -958,6 +960,7 @@
               ? rowData["Target Audience"].split(",")
               : [];
             const gcalLink = rowData["Gcal"] || "";
+            const dateForSorting = rowData["Date for sorting"] || "";
 
             if (!link.startsWith("http") || link.startsWith("www")) {
               link = "";
@@ -999,6 +1002,7 @@
                 iconAlt,
                 categories,
                 gcalLink,
+                dateForSorting,
               ),
             );
           }
@@ -1017,6 +1021,13 @@
         } else {
           currentDisplayingEvents = events; // Update the current displaying events
         }
+
+        // Sort by date
+        events.sort((a, b) => {
+          const dateA = new Date(a.dateForSorting);
+          const dateB = new Date(b.dateForSorting);
+          return dateA - dateB;
+        });
 
         const container = document.getElementById("schedule-container");
         container.innerHTML = ""; // Clear previous content
