@@ -7,40 +7,70 @@
 
     <!-- Stylesheets -->
     <link href="styles.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
 
-   
     <!-- Meta Tags -->
     <meta name="author" content="Marie Claire LeBlanc Flanagan" />
     <meta name="description" content="Celebrating games in Toronto, Canada" />
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Toronto Games Week — June 11–17, 2026" />
-    <meta property="og:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
-    <meta property="og:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png" />
+    <meta
+      property="og:description"
+      content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026."
+    />
+    <meta
+      property="og:image"
+      content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png"
+    />
     <meta property="og:url" content="https://torontogamesweek.com" />
     <meta property="og:type" content="website" />
 
     <!-- Twitter Tags -->
-    <meta name="twitter:title" content="Toronto Games Week — June 11–17, 2026" />
-    <meta name="twitter:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
-    <meta name="twitter:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png" id="indexImage" />
+    <meta
+      name="twitter:title"
+      content="Toronto Games Week — June 11–17, 2026"
+    />
+    <meta
+      name="twitter:description"
+      content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026."
+    />
+    <meta
+      name="twitter:image"
+      content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png"
+      id="indexImage"
+    />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Image Specifications -->
     <meta
       property="og:image:alt"
-      content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around " />
+      content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around "
+    />
 
-    <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/2026/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/images/2026/favicon/favicon.svg"
+    />
     <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/2026/favicon/apple-touch-icon.png"
+    />
     <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
 
     <style>
-      
-
       .image-container {
         position: relative;
         top: 0;
@@ -150,7 +180,6 @@
         width: 100vw;
       }
 
-    
       .contentContainer {
         position: relative;
         z-index: 1;
@@ -332,13 +361,10 @@
         color: white;
       }
 
-    
-        canvas {
-          position: absolute;
-          /* Reset for desktop */
-        }
-
-    
+      canvas {
+        position: absolute;
+        /* Reset for desktop */
+      }
     </style>
   </head>
 
@@ -376,7 +402,8 @@
           landing.insertBefore(banner, landing.firstChild);
         }
 
-        document.title = data.friend + ", you are invited to Toronto Games Week!";
+        document.title =
+          data.friend + ", you are invited to Toronto Games Week!";
       } catch (e) {}
     })();
   </script>
@@ -385,16 +412,44 @@
     <header>
       <div id="logo-wrapper">
         <picture>
-          <source media="(max-width: 767px)" srcset="images/2026/special/mobile-logo.webp" />
-          <img src="images/2026/special/desktop-logo.webp" alt="Logo" id="logo" />
-          <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
-          <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
-          <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
-          <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
+          <source
+            media="(max-width: 767px)"
+            srcset="images/2026/special/mobile-logo.webp"
+          />
+          <img
+            src="images/2026/special/desktop-logo.webp"
+            alt="Logo"
+            id="logo"
+          />
+          <button
+            class="logo-ball-btn"
+            data-game="1"
+            aria-label="Connect Game"
+          ></button>
+          <button
+            class="logo-ball-btn"
+            data-game="2"
+            aria-label="Pop Game"
+          ></button>
+          <button
+            class="logo-ball-btn"
+            data-game="3"
+            aria-label="Bounce Game"
+          ></button>
+          <button
+            class="logo-ball-btn"
+            data-game="4"
+            aria-label="Brush Game"
+          ></button>
         </picture>
       </div>
 
-      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+      <button
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        class="nav-toggle-button"
+      >
         <span class="sr-only">Menu</span>
         <span class="icon"></span>
       </button>
@@ -407,7 +462,7 @@
               <span class="sr-only">Home</span>
             </a>
           </li>
-           <!-- <li>
+          <!-- <li>
             <a href="schedule.html" id="scheduleNav">
               <img src="images/2026/nav/schedule.png" alt="Schedule" />
               <span class="sr-only">Schedule</span>
@@ -419,7 +474,7 @@
               <span class="sr-only">About</span>
             </a>
           </li>
-              <li>
+          <li>
             <a href="get-involved.html" id="getInvolvedNav">
               <img src="images/2026/nav/get-involved.png" alt="get involved" />
               <span class="sr-only">Get Involved</span>
@@ -431,7 +486,11 @@
 
     <!-- Poster that fades out -->
     <div class="poster-container" id="posterContainer">
-      <img src="images/2026/tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+      <img
+        src="images/2026/tgwposterforsitelargeclear2.webp"
+        alt="Toronto Games Week"
+        id="posterImage"
+      />
     </div>
 
     <!-- Game name display -->
@@ -442,95 +501,172 @@
     <main class="no-pointer-events" id="main2025">
       <div id="topboxcontainer2025">
         <section class="textBox2025" id="topbox2025">
-          <h2>Coming this spring!</h2>
+          <h2>Toronto Games Week Schedule (June 11-17, 2026)</h2>
+          <p>
+            Come explore the many events, gatherings, and happenings of Toronto
+            Games Week 2026!
+          </p>
+          <p>Use the buttons below to check out specific days!</p>
+          <section class="textBox-btn" id="daySelector">
+            <button
+              role="button"
+              href="#day1"
+              class="btn-d1 weekendColorOne"
+              data-day="Thu 12"
+            >
+              Th<br />
+              12
+            </button>
+            <button
+              role="button"
+              href="#day2"
+              class="btn-d2 weekendColorOne"
+              data-day="Fri 13"
+            >
+              Fr<br />13
+            </button>
+            <button
+              role="button"
+              href="#day3"
+              class="btn-d3 weekendColorTwo"
+              data-day="Sat 14"
+            >
+              Sa<br />14
+            </button>
+            <button
+              role="button"
+              href="#day4"
+              class="btn-d4 weekendColorTwo"
+              data-day="Sun 15"
+            >
+              Su<br />15
+            </button>
+            <button
+              role="button"
+              href="#day5"
+              class="btn-d5 weekendColorThree"
+              data-day="Mon 16"
+            >
+              Mo<br />16
+            </button>
+            <button
+              role="button"
+              href="#day6"
+              class="btn-d6 weekendColorThree"
+              data-day="Tue 17"
+            >
+              Tu<br />17
+            </button>
+            <button
+              role="button"
+              href="#day7"
+              class="btn-d7 weekendColorThree"
+              data-day="Wed 18"
+            >
+              We<br />18
+            </button>
 
-          <p>Be the first to get the schedule by subscribing to our newsletter:</p>
-          <div id="newsletterSignup">
-            <script
-              async
-              data-form="be714392-42fd-11ef-8cf4-057b9b18e38a"
-              src="https://eocampaign1.com/form/be714392-42fd-11ef-8cf4-057b9b18e38a.js"></script>
-          </div><p></p>
-<a href="https://torontogamesweek.com/archive/2025-schedule.html">Check out last year's schedule for a sense of the program.</a>
-          <p style="margin-bottom: 2rem; background-color: white"></p>
-
-          <!-- <h2>Toronto Games Week Schedule (June 12-18, 2025)</h2> -->
-          <!-- <p>Come explore the many events, gatherings, and happenings of Toronto Games Week 2025!</p> -->
-          <!-- <p>
-          You can add the full schedule to your calendar (<a
-            href="https://calendar.google.com/calendar/u/0/r?cid=torontogamesweek@gmail.com">Gcal link</a>) or add
-          individual events using the calendar icons.
-        </p> -->
-          <!-- <p>Use the buttons below to check out specific days!</p> -->
-          <!-- <section class="textBox-btn" id="daySelector">
-          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 12">
-            Th<br />
-            12
-          </button>
-          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri 13">Fr<br />13</button>
-          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat 14">Sa<br />14</button>
-          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun 15">Su<br />15</button>
-          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon 16">Mo<br />16</button>
-          <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue 17">Tu<br />17</button>
-          <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed 18">We<br />18</button>
-
-          <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All"
-            id="allDaysButton">All<br />Days</button>
-        </section> -->
+            <button
+              role="button"
+              class="btn-d1 btn-all weekendColorThree"
+              data-day="All"
+              id="allDaysButton"
+              style="
+                border: 3px solid white;
+                outline: rgb(95, 50, 243) solid 6px;
+              "
+            >
+              All<br />Days
+            </button>
+          </section>
         </section>
       </div>
-      <!-- <div id="schedule-container"></div> -->
 
-      <!-- <div class="footer-content">
-      <div class="social-horizontal">
-        <a href="https://www.facebook.com/profile.php?id=61568893716436" target="_blank" rel="noopener"
-          class="social-icon facebook" aria-label="Follow us on Facebook">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-          </svg>
-        </a>
+      <div id="schedule-container"></div>
 
-        <a href="https://bsky.app/profile/torontogamesweek.com" target="_blank" rel="noopener"
-          class="social-icon bluesky" aria-label="Follow us on Bluesky">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
-          </svg>
-        </a>
+      <div class="footer-content">
+        <div class="social-horizontal">
+          <a
+            href="https://www.facebook.com/profile.php?id=61568893716436"
+            target="_blank"
+            rel="noopener"
+            class="social-icon facebook"
+            aria-label="Follow us on Facebook"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+          </a>
 
-        <a href="https://www.instagram.com/torontogamesweek/" target="_blank" rel="noopener"
-          class="social-icon instagram" aria-label="Follow us on Instagram">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-          </svg>
-        </a>
+          <a
+            href="https://bsky.app/profile/torontogamesweek.com"
+            target="_blank"
+            rel="noopener"
+            class="social-icon bluesky"
+            aria-label="Follow us on Bluesky"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z"
+              />
+            </svg>
+          </a>
 
-        <a href="https://www.tiktok.com/@torontogamesweek" target="_blank" rel="noopener" class="social-icon tiktok"
-          aria-label="Follow us on TikTok">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-          </svg>
-        </a>
+          <a
+            href="https://www.instagram.com/torontogamesweek/"
+            target="_blank"
+            rel="noopener"
+            class="social-icon instagram"
+            aria-label="Follow us on Instagram"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
+            </svg>
+          </a>
 
-        <a href="https://torontogamesweek.eo.page/76xn9" target="_blank" rel="noopener" class="social-icon newsletter"
-          aria-label="Subscribe to our newsletter">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-          </svg>
-        </a>
+          <a
+            href="https://www.tiktok.com/@torontogamesweek"
+            target="_blank"
+            rel="noopener"
+            class="social-icon tiktok"
+            aria-label="Follow us on TikTok"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"
+              />
+            </svg>
+          </a>
+
+          <a
+            href="https://torontogamesweek.eo.page/76xn9"
+            target="_blank"
+            rel="noopener"
+            class="social-icon newsletter"
+            aria-label="Subscribe to our newsletter"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="footer-credit">
+          <p>
+            site by
+            <a href="http://marieflanagan.com/" target="_blank"
+              >Marie LeBlanc Flanagan</a
+            >
+          </p>
+        </div>
       </div>
-
-      <div class="footer-credit">
-        <p>site by <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a></p>
-      </div>
-    </div> -->
     </main>
-
-    
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -579,7 +715,9 @@
 
         function updateLogos() {
           const visibleCount = getVisibleCount();
-          const selected = [...logoData].sort(() => Math.random() - 0.5).slice(0, visibleCount);
+          const selected = [...logoData]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, visibleCount);
 
           slots.forEach((slot) => {
             const currentLogo = slot.querySelector("img");
@@ -712,7 +850,10 @@
             continue;
           }
 
-          if ((char === "\n" || (char === "\r" && nextChar === "\n")) && !insideQuotes) {
+          if (
+            (char === "\n" || (char === "\r" && nextChar === "\n")) &&
+            !insideQuotes
+          ) {
             // End of row
             row.push(currentValue);
             result.push(row);
@@ -736,7 +877,22 @@
       };
 
       class Event {
-        constructor(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories, gcalLink) {
+        constructor(
+          name,
+          hook,
+          description,
+          date,
+          location,
+          linkInfo,
+          link,
+          startTime,
+          endTime,
+          icon,
+          iconAlt,
+          categories,
+          gcalLink,
+          dateForSorting,
+        ) {
           this.name = name;
           this.hook = hook;
           this.description = description;
@@ -750,11 +906,12 @@
           this.iconAlt = iconAlt;
           this.categories = categories;
           this.gcalLink = gcalLink;
+          this.dateForSorting = dateForSorting;
         }
       }
 
       const events = [];
-      const SHEET_ID = "1nfs459EuPLSICm9QbCI9EcQoyJ9T6hfXQPzogEYaW_4";
+      const SHEET_ID = "1pKPSoBWaRSHKII06bB49AuX-XStVC4kVU9ZiwyV7ND8";
       const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
       // Helper function to convert row to object
@@ -768,9 +925,15 @@
 
       async function fetchSheetData() {
         try {
+          console.log("fetching sheet data ...");
           const response = await fetch(SHEET_URL);
+
+          console.log("sheet data fetched");
           const csvText = await response.text();
-          let semicolonCsv = csvText.replace(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/g, ";");
+          let semicolonCsv = csvText.replace(
+            /,(?=(?:(?:[^"]*"){2})*[^"]*$)/g,
+            ";",
+          );
 
           const rows = parseCSV(semicolonCsv);
           if (rows.length === 0) return [];
@@ -784,19 +947,39 @@
             const name = rowData["Event Name"] || "";
             const hook = rowData["The hook!"] || "";
             const description = rowData["Short Event Description"] || "";
-            const date = rowData["Event Date (start)"] || "";
-            const location = rowData["Event Venue"] || "";
-            const linkInfo = rowData["Ticket / Pricing Details"] || "";
-            const link = rowData["Event link"] || "";
+            const date = rowData["Event Date(s)"] || "";
+            const location = rowData["Venue Name"] || "";
+            let linkInfo = rowData["Registration"] || "";
+            let link = rowData["Event link"] || "";
             const incomplete = rowData["Status"];
-            const startTime = rowData["Event Time"];
-            const endTime = rowData["Event End Time"];
-            const icon = rowData["Icon"];
-            const iconAlt = rowData["Alttext"];
-            const categories = rowData["Target Audience"] ? rowData["Target Audience"].split(",") : [];
+            const startTime = rowData["Event Start Time"].slice(0, -3) || "";
+            const endTime = rowData["Event End Time"].slice(0, -3) || "";
+            let icon = rowData["Icon"] || "";
+            const iconAlt = rowData["Alttext"] || "";
+            const categories = rowData["Target Audience"]
+              ? rowData["Target Audience"].split(",")
+              : [];
             const gcalLink = rowData["Gcal"] || "";
+            const dateForSorting = rowData["Date for sorting"] || "";
 
-            if (incomplete !== "Live") continue;
+            if (!link.startsWith("http") || link.startsWith("www")) {
+              link = "";
+            }
+
+            if (icon == "") {
+              const iconFolder = ["balls", "ppl"];
+              const range = 29;
+
+              const randomIconFolder =
+                iconFolder[Math.floor(Math.random() * iconFolder.length)];
+
+              const randomIconPrefix =
+                randomIconFolder === "balls" ? "ball" : "ppl";
+
+              icon = `${randomIconFolder}/${randomIconPrefix}_${Math.floor(Math.random() * range) + 1}.png`;
+            }
+
+            if (incomplete !== "complete") continue;
             if (events.some((event) => event.name === name)) {
               const existingEvent = events.find((event) => event.name === name);
               existingEvent.date += `, ${date}`;
@@ -804,7 +987,24 @@
             }
             if (!name || name === "Incomplete") continue;
 
-            events.push(new Event(name, hook, description, date, location, linkInfo, link, startTime, endTime, icon, iconAlt, categories, gcalLink));
+            events.push(
+              new Event(
+                name,
+                hook,
+                description,
+                date,
+                location,
+                linkInfo,
+                link,
+                startTime,
+                endTime,
+                icon,
+                iconAlt,
+                categories,
+                gcalLink,
+                dateForSorting,
+              ),
+            );
           }
 
           return events;
@@ -822,6 +1022,13 @@
           currentDisplayingEvents = events; // Update the current displaying events
         }
 
+        // Sort by date
+        events.sort((a, b) => {
+          const dateA = new Date(a.dateForSorting);
+          const dateB = new Date(b.dateForSorting);
+          return dateA - dateB;
+        });
+
         const container = document.getElementById("schedule-container");
         container.innerHTML = ""; // Clear previous content
 
@@ -830,48 +1037,50 @@
           eventDiv.className = "event";
 
           eventDiv.innerHTML = `
-            <section class="textBox2025">
-              
-              <img id="img2025" src="/images/TGW_Poster_Assets_2025/${event.icon}" alt="${event.icon}" class="eventIcon" />
-              <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3> 
-              ${
-                event.gcalLink
-                  ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
-                  : ""
-              }
-             
-      
-              <div class="DescAndImg">
-                <div class="desc">
-                  <h2 class="title" id="title2025">${event.name}</h2>
-                  <p class="details" id="description2025">
-                    ${event.description}
+                  <section class="textBox2025">
 
-                    <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
-                    </span>
-                  </p>
-                </div>
-              </div>
+                    <img id="img2025" src="/images/2026/single-images/${event.icon}" alt="${event.icon}" class="eventIcon" />
+                    <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
+                    ${
+                      event.gcalLink
+                        ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
+                        : ""
+                    }
 
-              <p class="location"><span aria-hidden="true">📍</span>
-                <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}" 
-                  target="_blank" 
-                  title="View on Google Maps">
-                  ${event.location}
-                </a>
-              </p>
 
-              <p class="categoryContainer2025">
-                ${event.categories
-                  ?.map((category) => {
-                    return `<span class="category2025">${category}</span>`;
-                  })
-                  .join("")}
-                
-              </p>
-              
-            </section>
-          `;
+                    <div class="DescAndImg">
+                      <div class="desc">
+                        <h2 class="title" id="title2025">${event.name}</h2>
+                        <p class="details" id="description2025">
+                          ${event.description}
+
+                          <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
+                          </span>
+
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <p class="location"><span aria-hidden="true">📍</span>
+                      <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}"
+                        target="_blank"
+                        title="View on Google Maps">
+                        ${event.location}
+                      </a>
+                    </p>
+
+                    <p class="categoryContainer2025">
+                      ${event.categories
+                        ?.map((category) => {
+                          return `<span class="category2025">${category}</span>`;
+                        })
+                        .join("")}
+
+                    </p>
+
+                  </section>
+                `;
           container.appendChild(eventDiv);
         });
 
@@ -913,7 +1122,9 @@
             }
 
             // Rerender events for the selected day
-            const filteredEvents = events.filter((event) => event.date.includes(dayShort));
+            const filteredEvents = events.filter((event) =>
+              event.date.includes(dayShort),
+            );
 
             displayEvents(filteredEvents);
           });
@@ -936,9 +1147,12 @@
 
         saveButtons.forEach((button) => {
           button.addEventListener("click", (event) => {
-            const eventName = event.currentTarget.getAttribute("data-event-name");
+            const eventName =
+              event.currentTarget.getAttribute("data-event-name");
 
-            const savedEvents = localStorage.getItem("savedEvents") ? JSON.parse(localStorage.getItem("savedEvents")) : [];
+            const savedEvents = localStorage.getItem("savedEvents")
+              ? JSON.parse(localStorage.getItem("savedEvents"))
+              : [];
 
             if (savedEvents.includes(eventName)) {
               savedEvents.splice(savedEvents.indexOf(eventName), 1);
@@ -955,14 +1169,18 @@
       }
 
       function showSavedEvents() {
-        const savedEvents = localStorage.getItem("savedEvents") ? JSON.parse(localStorage.getItem("savedEvents")) : [];
+        const savedEvents = localStorage.getItem("savedEvents")
+          ? JSON.parse(localStorage.getItem("savedEvents"))
+          : [];
 
         if (savedEvents.length === 0) {
           const saveEventButton = document.getElementById("showSavedEvents");
           return;
         }
 
-        const filteredEvents = events.filter((event) => savedEvents.includes(event.name));
+        const filteredEvents = events.filter((event) =>
+          savedEvents.includes(event.name),
+        );
 
         displayEvents(filteredEvents);
       }
