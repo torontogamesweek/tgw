@@ -86,7 +86,8 @@ class Event {
         categories,
         gcalLink,
         dateForSorting,
-        eventTypes
+        eventTypes,
+        addressLink
     ) {
         this.name = name;
         this.hook = hook;
@@ -103,6 +104,7 @@ class Event {
         this.gcalLink = gcalLink;
         this.dateForSorting = dateForSorting;
         this.eventTypes = eventTypes;
+        this.addressLink = addressLink;
     }
 }
 
@@ -156,6 +158,7 @@ async function fetchSheetData() {
             const dateForSorting = rowData["Date for sorting"] || "";
             const eventType1 = rowData["Primary type of event"] || "";
             const eventType2 = rowData["Additional type of event"] || "";
+            const addressLink = rowData["Address Link"] || "";
 
             const eventTypes = [eventType1, eventType2].filter((type) => type !== "");
 
@@ -180,12 +183,11 @@ async function fetchSheetData() {
             }
 
             if (incomplete !== "complete") continue;
-            if (events.some((event) => event.name === name)) {
-                const existingEvent = events.find((event) => event.name === name);
-                existingEvent.date += `, ${date}`;
-                continue;
-            }
+
             if (!name || name === "Incomplete") continue;
+
+            const allDates = date.split(",").map((d) => d.trim());
+            if (allDates.length > 1) { console.log(allDates); }
 
             events.push(
                 new Event(
@@ -203,7 +205,8 @@ async function fetchSheetData() {
                     categories,
                     gcalLink,
                     dateForSorting,
-                    eventTypes
+                    eventTypes,
+                    addressLink
                 ),
             );
         }
@@ -261,10 +264,11 @@ function displayEvents(events) {
                     </div>
 
                     <p class="location"><span aria-hidden="true">📍</span>
-                      <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}"
+                      <a href="https://www.google.com/maps/search/${encodeURIComponent(event.addressLink)}"
                         target="_blank"
                         title="View on Google Maps">
-                        ${event.location}
+                        <span>${event.location} - <span>
+                        <span>${event.addressLink}</span>
                       </a>
                     </p>
 
