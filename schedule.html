@@ -145,11 +145,9 @@
 
     #topbox2025 {
       font-size: 1.5rem;
-      padding-top: 20px;
-      opacity: 1;
+      padding-top: 1px;
+      opacity: 0.97;
       width: 100vw;
-
-      
     }
 
     .contentContainer {
@@ -177,6 +175,7 @@
     }
 
     .textBox2025 {
+      border-top: 1px solid #4285f4;
       /* max-width: 85vw; */
       position: relative;
       min-width: 100%;
@@ -226,11 +225,24 @@
       margin: 0.25rem 0.25rem;
     }
 
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      background-color: hsla(0, 0%, 100%, 0.95);
+      width: 100vw;
+      margin-top: -2rem;
+      opacity: 0.97;
+      pointer-events: all;
+      border-bottom: 1px solid #4285f4;
+    }
+
     #daySelector {
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
+      padding: 0.5rem;
     }
 
     @media (min-width: 768px) {
@@ -297,6 +309,11 @@
 
     #schedule-container {
       width: 100%;
+    }
+
+    #scheduleHeading {
+      margin-top: 0;
+      padding-top: 1rem;
     }
 
     @media (min-width: 768px) {
@@ -441,68 +458,71 @@
   <main class="no-pointer-events" id="main2025">
     <div id="topboxcontainer2025">
       <section class="textBox2025" id="topbox2025">
-        <h2>Toronto Games Week Schedule (June 11-17, 2026)</h2>
+        <h2 id="scheduleHeading">Toronto Games Week Schedule (June 11-17, 2026)</h2>
         <p>
           Come explore the many events, gatherings, and happenings of Toronto
           Games Week 2026!
         </p>
         <p>Use the buttons below to check out specific days!</p>
-        <section class="textBox-btn" id="daySelector">
-          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu" data-display="Thu 11">
-            Th<br />
-            12
-          </button>
-          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri" data-display="Fri 12">
-            Fr<br />13
-          </button>
-          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat" data-display="Sat 13">
-            Sa<br />14
-          </button>
-          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun" data-display="Sun 14">
-            Su<br />15
-          </button>
-          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon" data-display="Mon 15">
-            Mo<br />16
-          </button>
-          <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue" data-display="Tue 16">
-            Tu<br />17
-          </button>
-          <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed" data-display="Wed 17">
-            We<br />18
-          </button>
+      </section>
+    </div>
 
-          <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All" id="allDaysButton" style="
+    <section class="filters">
+      <section class="textBox-btn" id="daySelector">
+        <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu" data-display="Thu 11">
+          Th<br />
+          12
+        </button>
+        <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri" data-display="Fri 12">
+          Fr<br />13
+        </button>
+        <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat" data-display="Sat 13">
+          Sa<br />14
+        </button>
+        <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun" data-display="Sun 14">
+          Su<br />15
+        </button>
+        <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon" data-display="Mon 15">
+          Mo<br />16
+        </button>
+        <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue" data-display="Tue 16">
+          Tu<br />17
+        </button>
+        <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed" data-display="Wed 17">
+          We<br />18
+        </button>
+
+        <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All" id="allDaysButton"
+          data-display="All" style="
                 border: 3px solid white;
                 outline: rgb(95, 50, 243) solid 6px;
               ">
-            All<br />Days
-          </button>
-        </section>
+          All<br />Days
+        </button>
+      </section>
 
 
-        <section class="textBox-btn" id="daySelector">
-          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-type="Showcase"
-            data-display="Showcase">
-            Showcase
-          </button>
-          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-type="Social" data-display="Social">
-            Social
-          </button>
-          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-type="Workshop"
-            data-display="Workshop">
-            Workshop
-          </button>
-          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-type="Game" data-display="Game">
-            Game
-          </button>
-          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-type="Talk" data-display="Talk">
-            Talk
-          </button>
-        </section>
-    </div>
+      <section class="textBox-btn" id="daySelector">
+        <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-type="Showcase" data-display="Showcase">
+          Showcase
+        </button>
+        <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-type="Social" data-display="Social">
+          Social
+        </button>
+        <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-type="Workshop" data-display="Workshop">
+          Workshop
+        </button>
+        <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-type="Game" data-display="Game">
+          Game
+        </button>
+        <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-type="Talk" data-display="Talk">
+          Talk
+        </button>
+      </section>
+    </section>
 
+    
     <div id="schedule-container"></div>
-
     <div class="footer-content">
       <div class="social-horizontal">
         <a href="https://www.facebook.com/profile.php?id=61568893716436" target="_blank" rel="noopener"

@@ -364,20 +364,10 @@ function registerFilterSelectors() {
                 return true; // If event matches all filters, include it
             });
 
-            // // Otherwise, filter by the selected day
-            // const dayShort = day.split(" ")[0];
-            // const targetId = `#day${dayShort}`;
-            // const targetElement = document.querySelector(targetId);
-            // if (targetElement) {
-            //     targetElement.scrollIntoView({ behavior: "smooth" });
-            // }
-
-            // Rerender events for the selected day
-            // const filteredEvents = events.filter((event) =>
-            //     event.date.includes(dayShort),
-            // );
-
-            displayEvents(filteredEvents);
+            const container = document.getElementById("schedule-container");
+            const stickyBar = document.querySelector(".filters");
+            const offset = container.getBoundingClientRect().top + window.scrollY - (stickyBar ? stickyBar.offsetHeight : 0);
+            window.scrollTo({ top: offset, behavior: "smooth" });
         });
     });
 

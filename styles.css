@@ -769,9 +769,9 @@ btn:focus {
   .btn-d7 {
     font-size: 0;
     /* Hides the original text */
-    padding: 15px 23px;
+    padding: 2x 2px;
     /* Adjust padding to fit the full day name */
-    margin: 10px 10px;
+    margin: 8px 8px;
   }
 
   .btn-d1::after,
