@@ -1,1210 +1,730 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Toronto Games Week</title>
 
-    <!-- Stylesheets -->
-    <link href="styles.css" rel="stylesheet" type="text/css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toronto Games Week</title>
 
-    <!-- Meta Tags -->
-    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
-    <meta name="description" content="Celebrating games in Toronto, Canada" />
+  <!-- Stylesheets -->
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
 
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Toronto Games Week — June 11–17, 2026" />
-    <meta
-      property="og:description"
-      content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026."
-    />
-    <meta
-      property="og:image"
-      content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png"
-    />
-    <meta property="og:url" content="https://torontogamesweek.com" />
-    <meta property="og:type" content="website" />
+  <!-- Meta Tags -->
+  <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+  <meta name="description" content="Celebrating games in Toronto, Canada" />
 
-    <!-- Twitter Tags -->
-    <meta
-      name="twitter:title"
-      content="Toronto Games Week — June 11–17, 2026"
-    />
-    <meta
-      name="twitter:description"
-      content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026."
-    />
-    <meta
-      name="twitter:image"
-      content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png"
-      id="indexImage"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Toronto Games Week — June 11–17, 2026" />
+  <meta property="og:description"
+    content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+  <meta property="og:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png" />
+  <meta property="og:url" content="https://torontogamesweek.com" />
+  <meta property="og:type" content="website" />
 
-    <!-- Image Specifications -->
-    <meta
-      property="og:image:alt"
-      content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around "
-    />
+  <!-- Twitter Tags -->
+  <meta name="twitter:title" content="Toronto Games Week — June 11–17, 2026" />
+  <meta name="twitter:description"
+    content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+  <meta name="twitter:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png"
+    id="indexImage" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-    <link
-      rel="icon"
-      type="image/png"
-      href="/images/2026/favicon/favicon-96x96.png"
-      sizes="96x96"
-    />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/images/2026/favicon/favicon.svg"
-    />
-    <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/images/2026/favicon/apple-touch-icon.png"
-    />
-    <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
+  <!-- Image Specifications -->
+  <meta property="og:image:alt"
+    content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around " />
 
-    <style>
-      .image-container {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: calc(1000px * (9 / 16));
-        /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
-      }
+  <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
 
-      .gcal-icon {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+  <style>
+    .image-container {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(1000px * (9 / 16));
+      /* Assuming 16:9 aspect ratio, adjust to match actual image ratio */
+    }
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5rem;
-        text-decoration: none;
-        z-index: 10;
-        border-radius: 50%;
-        padding: 1rem;
-        border: 2px solid #c0d4e9;
-        background-color: rgba(248, 251, 255, 0.81);
-        color: #4285f4;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .gcal-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
 
-        width: 3rem;
-        height: 3rem;
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      text-decoration: none;
+      z-index: 10;
+      border-radius: 50%;
+      padding: 1rem;
+      border: 2px solid #c0d4e9;
+      background-color: rgba(248, 251, 255, 0.81);
+      color: #4285f4;
+      cursor: pointer;
+      transition: all 0.3s ease;
 
-      /* Hover state */
-      .gcal-icon:hover {
-        background-color: #c0d4e9;
-        color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
+      width: 3rem;
+      height: 3rem;
+    }
 
-      /* Focus state for accessibility */
-      .gcal-icon:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.4);
-      }
+    /* Hover state */
+    .gcal-icon:hover {
+      background-color: #c0d4e9;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
 
-      main {
-        position: relative;
-        z-index: 1;
-        margin-top: 0;
-        background-color: none;
+    /* Focus state for accessibility */
+    .gcal-icon:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.4);
+    }
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        padding: 10px 5px;
-        background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
-        background-repeat: repeat-y;
-        background-position: center top;
-        background-size: 100% auto;
-        background-attachment: fixed;
-      }
+    main {
+      position: relative;
+      z-index: 1;
+      margin-top: 0;
+      background-color: none;
 
-      header {
-        margin-top: 0;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 10px 5px;
+      background-image: url("images/TGW_Poster_Assets_2025/clouds.png");
+      background-repeat: repeat-y;
+      background-position: center top;
+      background-size: 100% auto;
+      background-attachment: fixed;
+    }
 
-      #linkBold2025 {
-        font-weight: bold;
-        color: #5f32f3;
-      }
+    header {
+      margin-top: 0;
+    }
 
+    #linkBold2025 {
+      font-weight: bold;
+      color: #5f32f3;
+    }
+
+    #main2025 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 10px 5px;
+      background-repeat: repeat-y;
+      background-position: center top;
+      background-size: 100% auto;
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 768px) {
       #main2025 {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        padding: 10px 5px;
-        background-repeat: repeat-y;
-        background-position: center top;
-        background-size: 100% auto;
-        background-attachment: fixed;
+        /* padding: 0 2rem 8rem ; */
       }
+    }
 
-      @media (min-width: 768px) {
-        #main2025 {
-          /* padding: 0 2rem 8rem ; */
-        }
-      }
+    #topboxcontainer2025 {
+      margin-top: 15rem;
+      /* margin: 0 2px; */
+    }
 
+    @media (min-width: 768px) {
       #topboxcontainer2025 {
-        margin-top: 15rem;
-        /* margin: 0 2px; */
+        /* margin: 0 15rem; */
       }
+    }
 
-      @media (min-width: 768px) {
-        #topboxcontainer2025 {
-          /* margin: 0 15rem; */
-        }
-      }
+    #topbox2025 {
+      font-size: 1.5rem;
+      padding-top: 1px;
+      opacity: 0.97;
+      width: 100vw;
+    }
 
-      #topbox2025 {
-        font-size: 1.5rem;
-        padding-top: 20px;
-        opacity: 1;
-        width: 100vw;
-      }
+    .contentContainer {
+      position: relative;
+      z-index: 1;
+    }
 
-      .contentContainer {
-        position: relative;
-        z-index: 1;
-      }
+    /* Content container setup */
+    .contentContainer,
+    .sponsorBox {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
 
-      /* Content container setup */
-      .contentContainer,
-      .sponsorBox {
-        position: relative;
-        z-index: 1;
-        pointer-events: none;
-      }
+    .headerImgDiv {
+      z-index: 1;
+      pointer-events: none;
+      background-color: transparent;
+    }
 
-      .headerImgDiv {
-        z-index: 1;
-        pointer-events: none;
-        background-color: transparent;
-      }
+    /* Main content areas */
+    .content {
+      pointer-events: none;
+    }
 
-      /* Main content areas */
-      .content {
-        pointer-events: none;
-      }
+    .textBox2025 {
+      border-top: 1px solid #4285f4;
+      /* max-width: 85vw; */
+      position: relative;
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto 0 auto;
+      /* padding: 1.5rem; */
+      /* padding: 0 2rem 2rem 3rem; */
+      padding: 0;
+      border-radius: 10px;
+      background-color: hsla(0, 0%, 100%, 0.95);
+      pointer-events: none;
+      text-align: center;
+      align-items: center;
+      /* max-width: 98vw; */
+      /* padding: 4rem 10rem; */
+    }
 
+    @media (min-width: 768px) {
       .textBox2025 {
-        /* max-width: 85vw; */
-        position: relative;
-        min-width: 100%;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto 0 auto;
-        /* padding: 1.5rem; */
-        /* padding: 0 2rem 2rem 3rem; */
+        padding: 8rem 2rem;
         padding: 0;
-        border-radius: 10px;
-        background-color: hsla(0, 0%, 100%, 0.95);
-        pointer-events: none;
-        text-align: center;
-        align-items: center;
-        /* max-width: 98vw; */
+      }
+    }
+
+    button:hover {
+      /* expand a bit */
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .categoryContainer2025 {
+      margin: 1rem 0 0;
+    }
+
+    .category2025 {
+      text-transform: lowercase;
+      /* margin: 2rem 0 1rem 1rem; */
+      background: rgba(221, 213, 230, 0.9);
+      color: #5f32f3;
+      padding: 0.15rem 0.3rem;
+      border-radius: 13px;
+      font-size: 0.9rem;
+      display: inline-block;
+      /* keep the background color wrapped tight */
+      font-family: "Alegreya", sans-serif;
+      margin: 0.25rem 0.25rem;
+    }
+
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      background-color: hsla(0, 0%, 100%, 0.95);
+      width: 100vw;
+      margin-top: -2rem;
+      opacity: 0.97;
+      pointer-events: all;
+      border-bottom: 1px solid #4285f4;
+    }
+
+    #daySelector {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      padding: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      #daySelector {
+        justify-content: center;
+      }
+    }
+
+    #daySelectorSelected {
+      background-color: rgba(218, 194, 247, 0.3);
+      color: #bbbbbb;
+      font-weight: bold;
+    }
+
+    .weekendColorOne {
+      /* light-medium blue */
+      background-color: #4c8bb8;
+    }
+
+    .weekendColorTwo {
+      /* Deep Blue */
+      /* background-color: #045888; */
+      background-color: #4c8bb8;
+    }
+
+    .weekendColorThree {
+      /* Medium Blue */
+      background-color: #4f8cc9;
+    }
+
+    .saveEvent {
+      background-color: #4c8bb8;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      /* Fix to top right */
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    #img2025 {
+      max-height: 8rem;
+    }
+
+    #title2025 {
+      font-size: 2rem;
+    }
+
+    #description2025 {
+      font-size: 1rem;
+    }
+
+    a {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    #schedule-container {
+      width: 100%;
+    }
+
+    #scheduleHeading {
+      margin-top: 0;
+      padding-top: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      #schedule-container {
+        /* 3 per row in the grid with them all the same size */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 2rem;
+      }
+    }
+
+    #date2025 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    @media (min-width: 768px) {
+      .textBox2025 {
         /* padding: 4rem 10rem; */
       }
+    }
 
-      @media (min-width: 768px) {
-        .textBox2025 {
-          padding: 8rem 2rem;
-          padding: 0;
-        }
-      }
+    /* Re-enable pointer events for specific interactive elements */
+    .contentContainer>* .headerImgDiv img,
+    .btn,
+    .floatingBtn,
+    .textBox2025>* {
+      pointer-events: all;
+      z-index: 2;
+    }
 
-      button:hover {
-        /* expand a bit */
-        transform: scale(1.1);
-        transition: transform 0.2s ease-in-out;
-      }
+    #allDaysButton {
+      background-color: #800077;
+      color: white;
+    }
 
-      .categoryContainer2025 {
-        margin: 1rem 0 0;
-      }
+    canvas {
+      position: absolute;
+      /* Reset for desktop */
+    }
+  </style>
+</head>
 
-      .category2025 {
-        text-transform: lowercase;
-        /* margin: 2rem 0 1rem 1rem; */
-        background: rgba(221, 213, 230, 0.9);
-        color: #5f32f3;
-        padding: 0.15rem 0.3rem;
-        border-radius: 13px;
-        font-size: 0.9rem;
-        display: inline-block;
-        /* keep the background color wrapped tight */
-        font-family: "Alegreya", sans-serif;
-        margin: 0.25rem 0.25rem;
-      }
+<script>
+  (function () {
+    var hash = location.hash;
+    if (!hash.startsWith("#invite=")) return;
+    try {
+      var encoded = hash.slice("#invite=".length);
+      var data = JSON.parse(decodeURIComponent(atob(encoded)));
+      if (!data.friend) return;
 
-      #daySelector {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-      }
-
-      @media (min-width: 768px) {
-        #daySelector {
-          justify-content: center;
-        }
-      }
-
-      #daySelectorSelected {
-        background-color: rgba(218, 194, 247, 0.3);
-        color: #bbbbbb;
-        font-weight: bold;
-      }
-
-      .weekendColorOne {
-        /* light-medium blue */
-        background-color: #4c8bb8;
-      }
-
-      .weekendColorTwo {
-        /* Deep Blue */
-        /* background-color: #045888; */
-        background-color: #4c8bb8;
-      }
-
-      .weekendColorThree {
-        /* Medium Blue */
-        background-color: #4f8cc9;
-      }
-
-      .saveEvent {
-        background-color: #4c8bb8;
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        /* Fix to top right */
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-      }
-
-      #img2025 {
-        max-height: 8rem;
-      }
-
-      #title2025 {
-        font-size: 2rem;
-      }
-
-      #description2025 {
-        font-size: 1rem;
-      }
-
-      a {
-        font-size: 1rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-
-      #schedule-container {
-        width: 100%;
-      }
-
-      @media (min-width: 768px) {
-        #schedule-container {
-          /* 3 per row in the grid with them all the same size */
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-          gap: 2rem;
-        }
-      }
-
-      #date2025 {
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
-
-      @media (min-width: 768px) {
-        .textBox2025 {
-          /* padding: 4rem 10rem; */
-        }
-      }
-
-      /* Re-enable pointer events for specific interactive elements */
-      .contentContainer > * .headerImgDiv img,
-      .btn,
-      .floatingBtn,
-      .textBox2025 > * {
-        pointer-events: all;
-        z-index: 2;
-      }
-
-      #allDaysButton {
-        background-color: #800077;
-        color: white;
-      }
-
-      canvas {
-        position: absolute;
-        /* Reset for desktop */
-      }
-    </style>
-  </head>
-
-  <script>
-    (function () {
-      var hash = location.hash;
-      if (!hash.startsWith("#invite=")) return;
-      try {
-        var encoded = hash.slice("#invite=".length);
-        var data = JSON.parse(decodeURIComponent(atob(encoded)));
-        if (!data.friend) return;
-
-        var banner = document.createElement("div");
-        banner.className = "content";
-        banner.innerHTML =
-          '<section class="textBox">' +
-          "<h2>Hey " +
-          data.friend +
-          ", you are invited!</h2>" +
-          "<p><strong>" +
+      var banner = document.createElement("div");
+      banner.className = "content";
+      banner.innerHTML =
+        '<section class="textBox">' +
+        "<h2>Hey " +
+        data.friend +
+        ", you are invited!</h2>" +
+        "<p><strong>" +
+        data.from +
+        "</strong> wants you at Toronto Games Week.</p>" +
+        (data.reason
+          ? '<blockquote style="border-left:3px solid #271b18; padding-left:1rem; margin:1rem 0; font-style:italic;">' +
+          data.reason +
+          "</blockquote>" +
+          "<p>-- " +
           data.from +
-          "</strong> wants you at Toronto Games Week.</p>" +
-          (data.reason
-            ? '<blockquote style="border-left:3px solid #271b18; padding-left:1rem; margin:1rem 0; font-style:italic;">' +
-              data.reason +
-              "</blockquote>" +
-              "<p>-- " +
-              data.from +
-              "</p>"
-            : "") +
-          "</section>";
+          "</p>"
+          : "") +
+        "</section>";
 
-        var landing = document.getElementById("landingPage");
-        if (landing && landing.firstChild) {
-          landing.insertBefore(banner, landing.firstChild);
-        }
+      var landing = document.getElementById("landingPage");
+      if (landing && landing.firstChild) {
+        landing.insertBefore(banner, landing.firstChild);
+      }
 
-        document.title =
-          data.friend + ", you are invited to Toronto Games Week!";
-      } catch (e) {}
-    })();
-  </script>
+      document.title =
+        data.friend + ", you are invited to Toronto Games Week!";
+    } catch (e) { }
+  })();
+</script>
 
-  <body>
-    <header>
-      <div id="logo-wrapper">
-        <picture>
-          <source
-            media="(max-width: 767px)"
-            srcset="images/2026/special/mobile-logo.webp"
-          />
-          <img
-            src="images/2026/special/desktop-logo.webp"
-            alt="Logo"
-            id="logo"
-          />
-          <button
-            class="logo-ball-btn"
-            data-game="1"
-            aria-label="Connect Game"
-          ></button>
-          <button
-            class="logo-ball-btn"
-            data-game="2"
-            aria-label="Pop Game"
-          ></button>
-          <button
-            class="logo-ball-btn"
-            data-game="3"
-            aria-label="Bounce Game"
-          ></button>
-          <button
-            class="logo-ball-btn"
-            data-game="4"
-            aria-label="Brush Game"
-          ></button>
-        </picture>
-      </div>
-
-      <button
-        id="nav-toggle"
-        aria-expanded="false"
-        aria-controls="primary-navigation"
-        class="nav-toggle-button"
-      >
-        <span class="sr-only">Menu</span>
-        <span class="icon"></span>
-      </button>
-
-      <nav id="primary-navigation" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html">
-              <img src="images/2026/nav/home.png" alt="Home" />
-              <span class="sr-only">Home</span>
-            </a>
-          </li>
-          <!-- <li>
-            <a href="schedule.html" id="scheduleNav">
-              <img src="images/2026/nav/schedule.png" alt="Schedule" />
-              <span class="sr-only">Schedule</span>
-            </a>
-          </li> -->
-          <li>
-            <a href="about.html" id="aboutNav">
-              <img src="images/2026/nav/about.png" alt="About" />
-              <span class="sr-only">About</span>
-            </a>
-          </li>
-          <li>
-            <a href="get-involved.html" id="getInvolvedNav">
-              <img src="images/2026/nav/get-involved.png" alt="get involved" />
-              <span class="sr-only">Get Involved</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Poster that fades out -->
-    <div class="poster-container" id="posterContainer">
-      <img
-        src="images/2026/tgwposterforsitelargeclear2.webp"
-        alt="Toronto Games Week"
-        id="posterImage"
-      />
+<body>
+  <header>
+    <div id="logo-wrapper">
+      <picture>
+        <source media="(max-width: 767px)" srcset="images/2026/special/mobile-logo.webp" />
+        <img src="images/2026/special/desktop-logo.webp" alt="Logo" id="logo" />
+        <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
+        <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
+        <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
+        <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
+      </picture>
     </div>
 
-    <!-- Game name display -->
-    <div class="game-name" id="gameName">o</div>
+    <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+      <span class="sr-only">Menu</span>
+      <span class="icon"></span>
+    </button>
 
-    <canvas id="canvas"></canvas>
+    <nav id="primary-navigation" aria-label="Main navigation">
+      <ul>
+        <li>
+          <a href="index.html">
+            <img src="images/2026/nav/home.png" alt="Home" />
+            <span class="sr-only">Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="schedule.html" id="scheduleNav">
+            <img src="images/2026/nav/schedule.png" alt="Schedule" />
+            <span class="sr-only">Schedule</span>
+          </a>
+        </li>
+        <li>
+          <a href="about.html" id="aboutNav">
+            <img src="images/2026/nav/about.png" alt="About" />
+            <span class="sr-only">About</span>
+          </a>
+        </li>
+        <li>
+          <a href="get-involved.html" id="getInvolvedNav">
+            <img src="images/2026/nav/get-involved.png" alt="get involved" />
+            <span class="sr-only">Get Involved</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-    <main class="no-pointer-events" id="main2025">
-      <div id="topboxcontainer2025">
-        <section class="textBox2025" id="topbox2025">
-          <h2>Toronto Games Week Schedule (June 11-17, 2026)</h2>
-          <p>
-            Come explore the many events, gatherings, and happenings of Toronto
-            Games Week 2026!
-          </p>
-          <p>Use the buttons below to check out specific days!</p>
-          <section class="textBox-btn" id="daySelector">
-            <button
-              role="button"
-              href="#day1"
-              class="btn-d1 weekendColorOne"
-              data-day="Thu 12"
-            >
-              Th<br />
-              12
-            </button>
-            <button
-              role="button"
-              href="#day2"
-              class="btn-d2 weekendColorOne"
-              data-day="Fri 13"
-            >
-              Fr<br />13
-            </button>
-            <button
-              role="button"
-              href="#day3"
-              class="btn-d3 weekendColorTwo"
-              data-day="Sat 14"
-            >
-              Sa<br />14
-            </button>
-            <button
-              role="button"
-              href="#day4"
-              class="btn-d4 weekendColorTwo"
-              data-day="Sun 15"
-            >
-              Su<br />15
-            </button>
-            <button
-              role="button"
-              href="#day5"
-              class="btn-d5 weekendColorThree"
-              data-day="Mon 16"
-            >
-              Mo<br />16
-            </button>
-            <button
-              role="button"
-              href="#day6"
-              class="btn-d6 weekendColorThree"
-              data-day="Tue 17"
-            >
-              Tu<br />17
-            </button>
-            <button
-              role="button"
-              href="#day7"
-              class="btn-d7 weekendColorThree"
-              data-day="Wed 18"
-            >
-              We<br />18
-            </button>
+  <!-- Poster that fades out -->
+  <div class="poster-container" id="posterContainer">
+    <img src="images/2026/tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+  </div>
 
-            <button
-              role="button"
-              class="btn-d1 btn-all weekendColorThree"
-              data-day="All"
-              id="allDaysButton"
-              style="
+  <!-- Game name display -->
+  <div class="game-name" id="gameName">o</div>
+
+  <canvas id="canvas"></canvas>
+
+  <main class="no-pointer-events" id="main2025">
+    <div id="topboxcontainer2025">
+      <section class="textBox2025" id="topbox2025">
+        <h2 id="scheduleHeading">Toronto Games Week Schedule (June 11-17, 2026)</h2>
+        <p>
+          Come explore the many events, gatherings, and happenings of Toronto
+          Games Week 2026!
+        </p>
+        <p>Use the buttons below to check out specific days!</p>
+      </section>
+    </div>
+
+    <section class="filters">
+      <section class="textBox-btn" id="daySelector">
+        <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu" data-display="Thu 11">
+          Th<br />
+          12
+        </button>
+        <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri" data-display="Fri 12">
+          Fr<br />13
+        </button>
+        <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat" data-display="Sat 13">
+          Sa<br />14
+        </button>
+        <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun" data-display="Sun 14">
+          Su<br />15
+        </button>
+        <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon" data-display="Mon 15">
+          Mo<br />16
+        </button>
+        <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue" data-display="Tue 16">
+          Tu<br />17
+        </button>
+        <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed" data-display="Wed 17">
+          We<br />18
+        </button>
+
+        <button role="button" class="btn-d1 btn-all weekendColorThree" data-day="All" id="allDaysButton"
+          data-display="All" style="
                 border: 3px solid white;
                 outline: rgb(95, 50, 243) solid 6px;
-              "
-            >
-              All<br />Days
-            </button>
-          </section>
-        </section>
+              ">
+          All<br />Days
+        </button>
+      </section>
+
+
+      <section class="textBox-btn" id="daySelector">
+        <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-type="Showcase" data-display="Showcase">
+          Showcase
+        </button>
+        <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-type="Social" data-display="Social">
+          Social
+        </button>
+        <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-type="Workshop" data-display="Workshop">
+          Workshop
+        </button>
+        <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-type="Game" data-display="Game">
+          Game
+        </button>
+        <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-type="Talk" data-display="Talk">
+          Talk
+        </button>
+      </section>
+    </section>
+
+    
+    <div id="schedule-container"></div>
+    <div class="footer-content">
+      <div class="social-horizontal">
+        <a href="https://www.facebook.com/profile.php?id=61568893716436" target="_blank" rel="noopener"
+          class="social-icon facebook" aria-label="Follow us on Facebook">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+
+        <a href="https://bsky.app/profile/torontogamesweek.com" target="_blank" rel="noopener"
+          class="social-icon bluesky" aria-label="Follow us on Bluesky">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
+          </svg>
+        </a>
+
+        <a href="https://www.instagram.com/torontogamesweek/" target="_blank" rel="noopener"
+          class="social-icon instagram" aria-label="Follow us on Instagram">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+          </svg>
+        </a>
+
+        <a href="https://www.tiktok.com/@torontogamesweek" target="_blank" rel="noopener" class="social-icon tiktok"
+          aria-label="Follow us on TikTok">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+          </svg>
+        </a>
+
+        <a href="https://torontogamesweek.eo.page/76xn9" target="_blank" rel="noopener" class="social-icon newsletter"
+          aria-label="Subscribe to our newsletter">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
+        </a>
       </div>
 
-      <div id="schedule-container"></div>
-
-      <div class="footer-content">
-        <div class="social-horizontal">
-          <a
-            href="https://www.facebook.com/profile.php?id=61568893716436"
-            target="_blank"
-            rel="noopener"
-            class="social-icon facebook"
-            aria-label="Follow us on Facebook"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-              />
-            </svg>
-          </a>
-
-          <a
-            href="https://bsky.app/profile/torontogamesweek.com"
-            target="_blank"
-            rel="noopener"
-            class="social-icon bluesky"
-            aria-label="Follow us on Bluesky"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z"
-              />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.instagram.com/torontogamesweek/"
-            target="_blank"
-            rel="noopener"
-            class="social-icon instagram"
-            aria-label="Follow us on Instagram"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-              />
-            </svg>
-          </a>
-
-          <a
-            href="https://www.tiktok.com/@torontogamesweek"
-            target="_blank"
-            rel="noopener"
-            class="social-icon tiktok"
-            aria-label="Follow us on TikTok"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"
-              />
-            </svg>
-          </a>
-
-          <a
-            href="https://torontogamesweek.eo.page/76xn9"
-            target="_blank"
-            rel="noopener"
-            class="social-icon newsletter"
-            aria-label="Subscribe to our newsletter"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-              />
-            </svg>
-          </a>
-        </div>
-
-        <div class="footer-credit">
-          <p>
-            site by
-            <a href="http://marieflanagan.com/" target="_blank"
-              >Marie LeBlanc Flanagan</a
-            >
-          </p>
-        </div>
+      <div class="footer-credit">
+        <p>
+          site by
+          <a href="http://marieflanagan.com/" target="_blank">Marie LeBlanc Flanagan</a>
+        </p>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const navToggle = document.getElementById("nav-toggle");
-        const primaryNav = document.getElementById("primary-navigation");
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const navToggle = document.getElementById("nav-toggle");
+      const primaryNav = document.getElementById("primary-navigation");
 
-        navToggle.addEventListener("click", function () {
-          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
-          navToggle.setAttribute("aria-expanded", !isExpanded);
-          primaryNav.classList.toggle("expanded");
-        });
+      navToggle.addEventListener("click", function () {
+        const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", !isExpanded);
+        primaryNav.classList.toggle("expanded");
       });
-    </script>
+    });
+  </script>
 
-    <script>
-      function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-          const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-          };
+  <script>
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
           clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
+          func(...args);
         };
-      }
-
-      function setupSponsors() {
-        const slots = document.querySelectorAll(".logo-slot");
-        const sourceLinks = [...document.querySelectorAll(".logo-source a")];
-
-        // Extract data but don't keep the images in DOM
-        const logoData = sourceLinks.map((a) => ({
-          href: a.href,
-          src: a.querySelector("img").getAttribute("src"),
-          alt: a.querySelector("img").getAttribute("alt"),
-        }));
-
-        // Remove the source div entirely so browsers don't preload images
-        const sourceDiv = document.querySelector(".logo-source");
-        if (sourceDiv) sourceDiv.remove();
-
-        function getVisibleCount() {
-          return window.innerWidth <= 768 ? 3 : 6;
-        }
-
-        function updateLogos() {
-          const visibleCount = getVisibleCount();
-          const selected = [...logoData]
-            .sort(() => Math.random() - 0.5)
-            .slice(0, visibleCount);
-
-          slots.forEach((slot) => {
-            const currentLogo = slot.querySelector("img");
-            if (currentLogo) currentLogo.classList.remove("visible");
-          });
-
-          setTimeout(() => {
-            slots.forEach((slot, i) => {
-              slot.innerHTML = "";
-              if (selected[i]) {
-                const a = document.createElement("a");
-                a.href = selected[i].href;
-                a.target = "_blank";
-                const img = document.createElement("img");
-                img.src = selected[i].src;
-                img.alt = selected[i].alt;
-                img.className = "logo logo-big";
-                img.loading = "lazy";
-                a.appendChild(img);
-                slot.appendChild(a);
-                requestAnimationFrame(() => img.classList.add("visible"));
-              }
-            });
-          }, 1200);
-        }
-
-        updateLogos();
-        setInterval(updateLogos, 6000);
-        window.addEventListener(
-          "resize",
-          debounce(() => updateLogos(), 250),
-        );
-      }
-
-      document.addEventListener("DOMContentLoaded", setupSponsors);
-    </script>
-
-    <script>
-      // Random Activities and Guests Script
-      document.addEventListener("DOMContentLoaded", function () {
-        // All possible activities
-        const allActivities = [
-          "Play massive videogames projected on concrete silos at the waterfront!",
-          "Scour High Park for fungi and butterflies in scavenger hunts!",
-          "Frolic in a flickering forest pop-up arcade after dark!",
-          "Level up your industry knowledge and contacts!",
-          "Brew a DIY blend at a tea party in the park!",
-          "Wheel down dark forest paths to the Night Parkcade!",
-          "Rediscover your love of playing with giant parachutes!",
-          "Learn open source game tools!",
-        ];
-
-        // All possible guests (with HTML for links)
-        const allGuests = [
-          '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
-          '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
-          '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
-          '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
-          '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
-          '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
-        ];
-
-        // Function to get random items from an array
-        function getRandomItems(array, count) {
-          const shuffled = [...array].sort(() => Math.random() - 0.5);
-          return shuffled.slice(0, count);
-        }
-
-        // Function to populate a list with items
-        function populateList(listId, items, useHTML = false) {
-          const list = document.getElementById(listId);
-          if (!list) return;
-
-          list.innerHTML = "";
-
-          items.forEach((item) => {
-            const li = document.createElement("li");
-            if (useHTML) {
-              li.innerHTML = item;
-            } else {
-              li.textContent = item;
-            }
-            list.appendChild(li);
-          });
-        }
-
-        // Populate the activities list with 5 random activities
-        const randomActivities = getRandomItems(allActivities, 5);
-        populateList("activitiesList", randomActivities);
-
-        // Populate the guests list with 3 random guests
-        const randomGuests = getRandomItems(allGuests, 3);
-        populateList("guestsList", randomGuests, true); // true because guests contain HTML links
-      });
-    </script>
-
-    <script src="images/2026/sprites/sprite-manifest.js"></script>
-    <script src="2026-sprite-assets.js"></script>
-    <script src="2026-play.js"></script>
-
-    <script>
-      // Parse CSV with proper handling of newlines in quoted fields
-      const parseCSV = (csvText) => {
-        const result = [];
-        let row = [];
-        let currentValue = "";
-        let insideQuotes = false;
-
-        for (let i = 0; i < csvText.length; i++) {
-          const char = csvText[i];
-          const nextChar = csvText[i + 1];
-
-          if (char === '"' && (!insideQuotes || nextChar !== '"')) {
-            // Toggle quote state (but not for escaped quotes)
-            insideQuotes = !insideQuotes;
-            continue;
-          }
-
-          if (char === '"' && nextChar === '"') {
-            // Handle escaped quotes (double quotes)
-            currentValue += '"';
-            i++; // Skip the next quote
-            continue;
-          }
-
-          if (char === ";" && !insideQuotes) {
-            // End of field
-            row.push(currentValue);
-            currentValue = "";
-            continue;
-          }
-
-          if (
-            (char === "\n" || (char === "\r" && nextChar === "\n")) &&
-            !insideQuotes
-          ) {
-            // End of row
-            row.push(currentValue);
-            result.push(row);
-            row = [];
-            currentValue = "";
-            if (char === "\r") i++; // Skip \n if we encountered \r\n
-            continue;
-          }
-
-          // Regular character, add to current value
-          currentValue += char;
-        }
-
-        // Don't forget the last row/value if file doesn't end with newline
-        if (currentValue !== "" || row.length > 0) {
-          row.push(currentValue);
-          result.push(row);
-        }
-
-        return result;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
       };
+    }
 
-      class Event {
-        constructor(
-          name,
-          hook,
-          description,
-          date,
-          location,
-          linkInfo,
-          link,
-          startTime,
-          endTime,
-          icon,
-          iconAlt,
-          categories,
-          gcalLink,
-          dateForSorting,
-        ) {
-          this.name = name;
-          this.hook = hook;
-          this.description = description;
-          this.date = date;
-          this.location = location;
-          this.linkInfo = linkInfo;
-          this.link = link;
-          this.startTime = startTime;
-          this.endTime = endTime;
-          this.icon = icon;
-          this.iconAlt = iconAlt;
-          this.categories = categories;
-          this.gcalLink = gcalLink;
-          this.dateForSorting = dateForSorting;
-        }
+    function setupSponsors() {
+      const slots = document.querySelectorAll(".logo-slot");
+      const sourceLinks = [...document.querySelectorAll(".logo-source a")];
+
+      // Extract data but don't keep the images in DOM
+      const logoData = sourceLinks.map((a) => ({
+        href: a.href,
+        src: a.querySelector("img").getAttribute("src"),
+        alt: a.querySelector("img").getAttribute("alt"),
+      }));
+
+      // Remove the source div entirely so browsers don't preload images
+      const sourceDiv = document.querySelector(".logo-source");
+      if (sourceDiv) sourceDiv.remove();
+
+      function getVisibleCount() {
+        return window.innerWidth <= 768 ? 3 : 6;
       }
 
-      const events = [];
-      const SHEET_ID = "1pKPSoBWaRSHKII06bB49AuX-XStVC4kVU9ZiwyV7ND8";
-      const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+      function updateLogos() {
+        const visibleCount = getVisibleCount();
+        const selected = [...logoData]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, visibleCount);
 
-      // Helper function to convert row to object
-      function rowToObject(headers, row) {
-        const obj = {};
-        headers.forEach((header, index) => {
-          obj[header.trim()] = row[index] || "";
+        slots.forEach((slot) => {
+          const currentLogo = slot.querySelector("img");
+          if (currentLogo) currentLogo.classList.remove("visible");
         });
-        return obj;
+
+        setTimeout(() => {
+          slots.forEach((slot, i) => {
+            slot.innerHTML = "";
+            if (selected[i]) {
+              const a = document.createElement("a");
+              a.href = selected[i].href;
+              a.target = "_blank";
+              const img = document.createElement("img");
+              img.src = selected[i].src;
+              img.alt = selected[i].alt;
+              img.className = "logo logo-big";
+              img.loading = "lazy";
+              a.appendChild(img);
+              slot.appendChild(a);
+              requestAnimationFrame(() => img.classList.add("visible"));
+            }
+          });
+        }, 1200);
       }
 
-      async function fetchSheetData() {
-        try {
-          console.log("fetching sheet data ...");
-          const response = await fetch(SHEET_URL);
+      updateLogos();
+      setInterval(updateLogos, 6000);
+      window.addEventListener(
+        "resize",
+        debounce(() => updateLogos(), 250),
+      );
+    }
 
-          console.log("sheet data fetched");
-          const csvText = await response.text();
-          let semicolonCsv = csvText.replace(
-            /,(?=(?:(?:[^"]*"){2})*[^"]*$)/g,
-            ";",
-          );
+    document.addEventListener("DOMContentLoaded", setupSponsors);
+  </script>
 
-          const rows = parseCSV(semicolonCsv);
-          if (rows.length === 0) return [];
+  <script>
+    // Random Activities and Guests Script
+    document.addEventListener("DOMContentLoaded", function () {
+      // All possible activities
+      const allActivities = [
+        "Play massive videogames projected on concrete silos at the waterfront!",
+        "Scour High Park for fungi and butterflies in scavenger hunts!",
+        "Frolic in a flickering forest pop-up arcade after dark!",
+        "Level up your industry knowledge and contacts!",
+        "Brew a DIY blend at a tea party in the park!",
+        "Wheel down dark forest paths to the Night Parkcade!",
+        "Rediscover your love of playing with giant parachutes!",
+        "Learn open source game tools!",
+      ];
 
-          const headers = rows[0].map((header) => header.trim());
+      // All possible guests (with HTML for links)
+      const allGuests = [
+        '<a href="https://terrycavanaghgames.com/" target="_blank">Terry Cavanagh</a> (Super Hexagon, VVVVVV), wildly prolific game designer and IndieCade award winner from Ireland!',
+        '<a href="https://finji.co/about.html" target="_blank">Adam and Rebekah Saltsman</a>, founders of Finji (Night in the Woods, Tunic) from the USA!',
+        '<a href="https://www.hollygramazio.net/" target="_blank">Holly Gramazio</a> (Now Play This, 99 Tiny Games), game designer/curator and NYT bestselling novelist from Australia!',
+        '<a href="https://www.molleindustria.org/" target="_blank">Paolo Pedercini</a> (Every Day the Same Dream, New York Times Simulator), political game designer and DIY curator from Pittsburgh!',
+        '<a href="https://www.linkedin.com/in/osamadorias/" target="_blank">Osama Dorias</a> (ex-Blizzard, Warner Brothers, Ubisoft, Gameloft), gameplay designer and co-host of The Habibis podcast from Montreal!',
+        '<a href="https://en.wikipedia.org/wiki/Sherwin_Tjia" target="_blank">Sherwin Tjia</a> (You Are a Cat, Strip Spelling Bee), choose-your-own-adventure creator and quirky event organizer from Montreal!',
+      ];
 
-          // Process data rows
-          for (let i = 1; i < rows.length; i++) {
-            const rowData = rowToObject(headers, rows[i]);
+      // Function to get random items from an array
+      function getRandomItems(array, count) {
+        const shuffled = [...array].sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, count);
+      }
 
-            const name = rowData["Event Name"] || "";
-            const hook = rowData["The hook!"] || "";
-            const description = rowData["Short Event Description"] || "";
-            const date = rowData["Event Date(s)"] || "";
-            const location = rowData["Venue Name"] || "";
-            let linkInfo = rowData["Registration"] || "";
-            let link = rowData["Event link"] || "";
-            const incomplete = rowData["Status"];
-            const startTime = rowData["Event Start Time"].slice(0, -3) || "";
-            const endTime = rowData["Event End Time"].slice(0, -3) || "";
-            let icon = rowData["Icon"] || "";
-            const iconAlt = rowData["Alttext"] || "";
-            const categories = rowData["Target Audience"]
-              ? rowData["Target Audience"].split(",")
-              : [];
-            const gcalLink = rowData["Gcal"] || "";
-            const dateForSorting = rowData["Date for sorting"] || "";
+      // Function to populate a list with items
+      function populateList(listId, items, useHTML = false) {
+        const list = document.getElementById(listId);
+        if (!list) return;
 
-            if (!link.startsWith("http") || link.startsWith("www")) {
-              link = "";
-            }
+        list.innerHTML = "";
 
-            if (icon == "") {
-              const iconFolder = ["balls", "ppl"];
-              const range = 29;
-
-              const randomIconFolder =
-                iconFolder[Math.floor(Math.random() * iconFolder.length)];
-
-              const randomIconPrefix =
-                randomIconFolder === "balls" ? "ball" : "ppl";
-
-              icon = `${randomIconFolder}/${randomIconPrefix}_${Math.floor(Math.random() * range) + 1}.png`;
-            }
-
-            if (incomplete !== "complete") continue;
-            if (events.some((event) => event.name === name)) {
-              const existingEvent = events.find((event) => event.name === name);
-              existingEvent.date += `, ${date}`;
-              continue;
-            }
-            if (!name || name === "Incomplete") continue;
-
-            events.push(
-              new Event(
-                name,
-                hook,
-                description,
-                date,
-                location,
-                linkInfo,
-                link,
-                startTime,
-                endTime,
-                icon,
-                iconAlt,
-                categories,
-                gcalLink,
-                dateForSorting,
-              ),
-            );
+        items.forEach((item) => {
+          const li = document.createElement("li");
+          if (useHTML) {
+            li.innerHTML = item;
+          } else {
+            li.textContent = item;
           }
-
-          return events;
-        } catch (error) {
-          console.error("Error fetching sheet data:", error);
-          return [];
-        }
-      }
-
-      let currentDisplayingEvents = events;
-      function displayEvents(events) {
-        if (!events) {
-          events = currentDisplayingEvents;
-        } else {
-          currentDisplayingEvents = events; // Update the current displaying events
-        }
-
-        // Sort by date
-        events.sort((a, b) => {
-          const dateA = new Date(a.dateForSorting);
-          const dateB = new Date(b.dateForSorting);
-          return dateA - dateB;
-        });
-
-        const container = document.getElementById("schedule-container");
-        container.innerHTML = ""; // Clear previous content
-
-        events.forEach((event) => {
-          const eventDiv = document.createElement("div");
-          eventDiv.className = "event";
-
-          eventDiv.innerHTML = `
-                  <section class="textBox2025">
-
-                    <img id="img2025" src="/images/2026/single-images/${event.icon}" alt="${event.icon}" class="eventIcon" />
-                    <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
-                    ${
-                      event.gcalLink
-                        ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
-                        : ""
-                    }
-
-
-                    <div class="DescAndImg">
-                      <div class="desc">
-                        <h2 class="title" id="title2025">${event.name}</h2>
-                        <p class="details" id="description2025">
-                          ${event.description}
-
-                          <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
-                          </span>
-
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-
-                    <p class="location"><span aria-hidden="true">📍</span>
-                      <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}"
-                        target="_blank"
-                        title="View on Google Maps">
-                        ${event.location}
-                      </a>
-                    </p>
-
-                    <p class="categoryContainer2025">
-                      ${event.categories
-                        ?.map((category) => {
-                          return `<span class="category2025">${category}</span>`;
-                        })
-                        .join("")}
-
-                    </p>
-
-                  </section>
-                `;
-          container.appendChild(eventDiv);
-        });
-
-        registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
-      }
-
-      function registerDaySelectors() {
-        // Add event listeners to buttons
-        const buttons = document.querySelectorAll("[role='button']");
-        buttons.forEach((button) => {
-          button.addEventListener("click", (event) => {
-            // Prevent default link behavior
-            event.preventDefault();
-
-            // Remove selected styling from all buttons
-            buttons.forEach((btn) => {
-              btn.style.border = "none";
-              btn.style.outline = "none";
-            });
-
-            // Set selected styling to the clicked button
-            event.currentTarget.style.border = "2px solid white";
-            event.currentTarget.style.outline = "2px solid #4f8cc9";
-
-            // Check if this is the All Days button
-            const day = event.currentTarget.getAttribute("data-day");
-            if (day === "All") {
-              // Show all events
-              displayEvents(events);
-              return;
-            }
-
-            // Otherwise, filter by the selected day
-            const dayShort = day.split(" ")[0];
-            const targetId = `#day${dayShort}`;
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-              targetElement.scrollIntoView({ behavior: "smooth" });
-            }
-
-            // Rerender events for the selected day
-            const filteredEvents = events.filter((event) =>
-              event.date.includes(dayShort),
-            );
-
-            displayEvents(filteredEvents);
-          });
-        });
-
-        // Set All Days button as selected by default
-        const allDaysButton = document.querySelector("[data-day='All']");
-        if (allDaysButton) {
-          allDaysButton.style.border = "3px solid white";
-          allDaysButton.style.outline = "6px solid #5f32f3";
-        }
-      }
-
-      function registerSaveEventButtons() {
-        const saveButtons = document.querySelectorAll("button.saveEvent");
-        // Remove existing listeners to avoid duplicates
-        saveButtons.forEach((button) => {
-          button.removeEventListener("click", () => {});
-        });
-
-        saveButtons.forEach((button) => {
-          button.addEventListener("click", (event) => {
-            const eventName =
-              event.currentTarget.getAttribute("data-event-name");
-
-            const savedEvents = localStorage.getItem("savedEvents")
-              ? JSON.parse(localStorage.getItem("savedEvents"))
-              : [];
-
-            if (savedEvents.includes(eventName)) {
-              savedEvents.splice(savedEvents.indexOf(eventName), 1);
-              localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-            } else {
-              savedEvents.push(eventName);
-              localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-            }
-
-            displayEvents(); // Rerender events to reflect changes
-            registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
-          });
+          list.appendChild(li);
         });
       }
 
-      function showSavedEvents() {
-        const savedEvents = localStorage.getItem("savedEvents")
-          ? JSON.parse(localStorage.getItem("savedEvents"))
-          : [];
+      // Populate the activities list with 5 random activities
+      const randomActivities = getRandomItems(allActivities, 5);
+      populateList("activitiesList", randomActivities);
 
-        if (savedEvents.length === 0) {
-          const saveEventButton = document.getElementById("showSavedEvents");
-          return;
-        }
+      // Populate the guests list with 3 random guests
+      const randomGuests = getRandomItems(allGuests, 3);
+      populateList("guestsList", randomGuests, true); // true because guests contain HTML links
+    });
+  </script>
 
-        const filteredEvents = events.filter((event) =>
-          savedEvents.includes(event.name),
-        );
+  <script src="images/2026/sprites/sprite-manifest.js"></script>
+  <script src="2026-sprite-assets.js"></script>
+  <script src="2026-play.js"></script>
+  <script src="schedule.js"></script>
+</body>
 
-        displayEvents(filteredEvents);
-      }
-
-      function handleLoaded() {
-        fetchSheetData()
-          .then((events) => {
-            displayEvents(events);
-            registerDaySelectors();
-            registerSaveEventButtons();
-
-            // const saveEventButton = document.getElementById("showSavedEvents");
-            // saveEventButton.addEventListener("click", (event) => {
-            //   event.preventDefault(); // Prevent default link behavior
-            //   showSavedEvents();
-            // });
-          })
-          .catch((error) => {
-            console.error("Error displaying events:", error);
-          });
-      }
-
-      // Call the function when the page loads
-      document.addEventListener("DOMContentLoaded", handleLoaded);
-    </script>
-  </body>
 </html>
