@@ -841,7 +841,10 @@
             const randomIconPrefix =
               randomIconFolder === "balls" ? "ball" : "ppl";
 
-            icon = `${randomIconFolder}/${randomIconPrefix}_${Math.floor(Math.random() * range) + 1}.png`;
+            let randomNumber = Math.floor(Math.random() * range) + 1;
+            if (randomNumber == 6) randomNumber = 7;
+
+            icon = `${randomIconFolder}/${randomIconPrefix}_${randomNumber}.png`;
           }
 
           if (incomplete !== "complete") continue;
@@ -910,8 +913,6 @@
             ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
             : ""
           }
-
-
                     <div class="DescAndImg">
                       <div class="desc">
                         <h2 class="title" id="title2025">${event.name}</h2>
