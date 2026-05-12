@@ -1,5 +1,14 @@
 const events = [];
 const filters = [];
+
+const to12Hour = (time) => {
+    if (!time) return "";
+    const [h, m] = time.split(":").map(Number);
+    const suffix = h < 12 ? "am" : "pm";
+    const hour = h % 12 || 12;
+    return `${hour}:${String(m).padStart(2, "0")}${suffix}`;
+};
+
 // filter struct = { type: "day", value "Monday" } or { type: "eventType", value: "Workshop" }
 const SHEET_ID = "1pKPSoBWaRSHKII06bB49AuX-XStVC4kVU9ZiwyV7ND8";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
@@ -232,7 +241,7 @@ function displayEvents(events) {
                   <section class="textBox2025">
 
                     <img id="img2025" src="/images/2026/single-images/${event.icon}" alt="${event.icon}" class="eventIcon" />
-                    <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
+                    <h3 class="date" id="date2025">${event.date}, ${to12Hour(event.startTime)}-${to12Hour(event.endTime)}</h3>
                     ${event.gcalLink
                 ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
                 : ""
@@ -364,10 +373,13 @@ function registerFilterSelectors() {
                 return true; // If event matches all filters, include it
             });
 
+
             const container = document.getElementById("schedule-container");
             const stickyBar = document.querySelector(".filters");
             const offset = container.getBoundingClientRect().top + window.scrollY - (stickyBar ? stickyBar.offsetHeight : 0);
             window.scrollTo({ top: offset, behavior: "smooth" });
+
+            displayEvents(filteredEvents);
         });
     });
 
