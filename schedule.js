@@ -87,7 +87,8 @@ class Event {
         gcalLink,
         dateForSorting,
         eventTypes,
-        addressLink
+        addressLink,
+        price
     ) {
         this.name = name;
         this.hook = hook;
@@ -105,6 +106,7 @@ class Event {
         this.dateForSorting = dateForSorting;
         this.eventTypes = eventTypes;
         this.addressLink = addressLink;
+        this.price = price;
     }
 }
 
@@ -159,6 +161,7 @@ async function fetchSheetData() {
             const eventType1 = rowData["Primary type of event"] || "";
             const eventType2 = rowData["Additional type of event"] || "";
             const addressLink = rowData["Address Link"] || "";
+            const price = rowData["Price"] || "";
 
             const eventTypes = [eventType1, eventType2].filter((type) => type !== "");
 
@@ -206,7 +209,8 @@ async function fetchSheetData() {
                     gcalLink,
                     dateForSorting,
                     eventTypes,
-                    addressLink
+                    addressLink,
+                    price
                 ),
             );
         }
@@ -257,6 +261,8 @@ function displayEvents(events) {
 
                           <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
                           </span>
+
+                          <span id="linkBold2025"> ${event.price} </span>
 
                           </span>
                         </p>
