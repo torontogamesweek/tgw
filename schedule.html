@@ -148,6 +148,8 @@
       padding-top: 20px;
       opacity: 1;
       width: 100vw;
+
+      
     }
 
     .contentContainer {
@@ -404,12 +406,12 @@
             <span class="sr-only">Home</span>
           </a>
         </li>
-        <!-- <li>
-            <a href="schedule.html" id="scheduleNav">
-              <img src="images/2026/nav/schedule.png" alt="Schedule" />
-              <span class="sr-only">Schedule</span>
-            </a>
-          </li> -->
+        <li>
+          <a href="schedule.html" id="scheduleNav">
+            <img src="images/2026/nav/schedule.png" alt="Schedule" />
+            <span class="sr-only">Schedule</span>
+          </a>
+        </li>
         <li>
           <a href="about.html" id="aboutNav">
             <img src="images/2026/nav/about.png" alt="About" />
@@ -446,26 +448,26 @@
         </p>
         <p>Use the buttons below to check out specific days!</p>
         <section class="textBox-btn" id="daySelector">
-          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu 11">
+          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-day="Thu" data-display="Thu 11">
             Th<br />
             12
           </button>
-          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri 12">
+          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-day="Fri" data-display="Fri 12">
             Fr<br />13
           </button>
-          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat 13">
+          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-day="Sat" data-display="Sat 13">
             Sa<br />14
           </button>
-          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun 14">
+          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-day="Sun" data-display="Sun 14">
             Su<br />15
           </button>
-          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon 15">
+          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-day="Mon" data-display="Mon 15">
             Mo<br />16
           </button>
-          <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue 16">
+          <button role="button" href="#day6" class="btn-d6 weekendColorThree" data-day="Tue" data-display="Tue 16">
             Tu<br />17
           </button>
-          <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed 17">
+          <button role="button" href="#day7" class="btn-d7 weekendColorThree" data-day="Wed" data-display="Wed 17">
             We<br />18
           </button>
 
@@ -476,7 +478,27 @@
             All<br />Days
           </button>
         </section>
-      </section>
+
+
+        <section class="textBox-btn" id="daySelector">
+          <button role="button" href="#day1" class="btn-d1 weekendColorOne" data-type="Showcase"
+            data-display="Showcase">
+            Showcase
+          </button>
+          <button role="button" href="#day2" class="btn-d2 weekendColorOne" data-type="Social" data-display="Social">
+            Social
+          </button>
+          <button role="button" href="#day3" class="btn-d3 weekendColorTwo" data-type="Workshop"
+            data-display="Workshop">
+            Workshop
+          </button>
+          <button role="button" href="#day4" class="btn-d4 weekendColorTwo" data-type="Game" data-display="Game">
+            Game
+          </button>
+          <button role="button" href="#day5" class="btn-d5 weekendColorThree" data-type="Talk" data-display="Talk">
+            Talk
+          </button>
+        </section>
     </div>
 
     <div id="schedule-container"></div>
@@ -682,395 +704,7 @@
   <script src="images/2026/sprites/sprite-manifest.js"></script>
   <script src="2026-sprite-assets.js"></script>
   <script src="2026-play.js"></script>
-
-  <script>
-    // Parse CSV with proper handling of newlines in quoted fields
-    const parseCSV = (csvText) => {
-      const result = [];
-      let row = [];
-      let currentValue = "";
-      let insideQuotes = false;
-
-      for (let i = 0; i < csvText.length; i++) {
-        const char = csvText[i];
-        const nextChar = csvText[i + 1];
-
-        if (char === '"' && (!insideQuotes || nextChar !== '"')) {
-          // Toggle quote state (but not for escaped quotes)
-          insideQuotes = !insideQuotes;
-          continue;
-        }
-
-        if (char === '"' && nextChar === '"') {
-          // Handle escaped quotes (double quotes)
-          currentValue += '"';
-          i++; // Skip the next quote
-          continue;
-        }
-
-        if (char === ";" && !insideQuotes) {
-          // End of field
-          row.push(currentValue);
-          currentValue = "";
-          continue;
-        }
-
-        if (
-          (char === "\n" || (char === "\r" && nextChar === "\n")) &&
-          !insideQuotes
-        ) {
-          // End of row
-          row.push(currentValue);
-          result.push(row);
-          row = [];
-          currentValue = "";
-          if (char === "\r") i++; // Skip \n if we encountered \r\n
-          continue;
-        }
-
-        // Regular character, add to current value
-        currentValue += char;
-      }
-
-      // Don't forget the last row/value if file doesn't end with newline
-      if (currentValue !== "" || row.length > 0) {
-        row.push(currentValue);
-        result.push(row);
-      }
-
-      return result;
-    };
-
-    class Event {
-      constructor(
-        name,
-        hook,
-        description,
-        date,
-        location,
-        linkInfo,
-        link,
-        startTime,
-        endTime,
-        icon,
-        iconAlt,
-        categories,
-        gcalLink,
-        dateForSorting,
-      ) {
-        this.name = name;
-        this.hook = hook;
-        this.description = description;
-        this.date = date;
-        this.location = location;
-        this.linkInfo = linkInfo;
-        this.link = link;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.icon = icon;
-        this.iconAlt = iconAlt;
-        this.categories = categories;
-        this.gcalLink = gcalLink;
-        this.dateForSorting = dateForSorting;
-      }
-    }
-
-    const events = [];
-    const SHEET_ID = "1pKPSoBWaRSHKII06bB49AuX-XStVC4kVU9ZiwyV7ND8";
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
-
-    // Helper function to convert row to object
-    function rowToObject(headers, row) {
-      const obj = {};
-      headers.forEach((header, index) => {
-        obj[header.trim()] = row[index] || "";
-      });
-      return obj;
-    }
-
-    async function fetchSheetData() {
-      try {
-        console.log("fetching sheet data ...");
-        const response = await fetch(SHEET_URL);
-        console.log("sheet data fetched");
-
-        const csvText = await response.text();
-        let semicolonCsv = csvText.replace(
-          /,(?=(?:(?:[^"]*"){2})*[^"]*$)/g,
-          ";",
-        );
-
-        const rows = parseCSV(semicolonCsv);
-        if (rows.length === 0) return [];
-
-        const headers = rows[0].map((header) => header.trim());
-
-        // Process data rows
-        for (let i = 1; i < rows.length; i++) {
-          const rowData = rowToObject(headers, rows[i]);
-
-          const name = rowData["Event Name"] || "";
-          const hook = rowData["The hook!"] || "";
-          const description = rowData["Short Event Description"] || "";
-          const date = rowData["Event Date(s)"] || "";
-          const location = rowData["Venue Name"] || "";
-          let linkInfo = rowData["Registration"] || "";
-          let link = rowData["Event link"] || "";
-          const incomplete = rowData["Status"];
-          const startTime = rowData["Event Start Time"].slice(0, -3) || "";
-          const endTime = rowData["Event End Time"].slice(0, -3) || "";
-          let icon = rowData["Icon"] || "";
-          const iconAlt = rowData["Alttext"] || "";
-          const categories = rowData["Target Audience"]
-            ? rowData["Target Audience"].split(",")
-            : [];
-          const gcalLink = rowData["Gcal"] || "";
-          const dateForSorting = rowData["Date for sorting"] || "";
-
-          if (!link.startsWith("http") || link.startsWith("www")) {
-            link = "";
-          }
-
-          if (icon == "") {
-            const iconFolder = ["balls", "ppl"];
-            const range = 29;
-
-            const randomIconFolder =
-              iconFolder[Math.floor(Math.random() * iconFolder.length)];
-
-            const randomIconPrefix =
-              randomIconFolder === "balls" ? "ball" : "ppl";
-
-            let randomNumber = Math.floor(Math.random() * range) + 1;
-            if (randomNumber == 6) randomNumber = 7;
-
-            icon = `${randomIconFolder}/${randomIconPrefix}_${randomNumber}.png`;
-          }
-
-          if (incomplete !== "complete") continue;
-          if (events.some((event) => event.name === name)) {
-            const existingEvent = events.find((event) => event.name === name);
-            existingEvent.date += `, ${date}`;
-            continue;
-          }
-          if (!name || name === "Incomplete") continue;
-
-          events.push(
-            new Event(
-              name,
-              hook,
-              description,
-              date,
-              location,
-              linkInfo,
-              link,
-              startTime,
-              endTime,
-              icon,
-              iconAlt,
-              categories,
-              gcalLink,
-              dateForSorting,
-            ),
-          );
-        }
-
-        return events;
-      } catch (error) {
-        console.error("Error fetching sheet data:", error);
-        return [];
-      }
-    }
-
-    let currentDisplayingEvents = events;
-    function displayEvents(events) {
-      if (!events) {
-        events = currentDisplayingEvents;
-      } else {
-        currentDisplayingEvents = events; // Update the current displaying events
-      }
-
-      // Sort by date
-      events.sort((a, b) => {
-        const dateA = new Date(a.dateForSorting);
-        const dateB = new Date(b.dateForSorting);
-        return dateA - dateB;
-      });
-
-      const container = document.getElementById("schedule-container");
-      container.innerHTML = ""; // Clear previous content
-
-      events.forEach((event) => {
-        const eventDiv = document.createElement("div");
-        eventDiv.className = "event";
-
-        eventDiv.innerHTML = `
-                  <section class="textBox2025">
-
-                    <img id="img2025" src="/images/2026/single-images/${event.icon}" alt="${event.icon}" class="eventIcon" />
-                    <h3 class="date" id="date2025">${event.date}, ${event.startTime}-${event.endTime}</h3>
-                    ${event.gcalLink
-            ? `<a href="${event.gcalLink}" target="_blank" class="gcal-icon" title="Add to Google Calendar" aria-label="Add to Google Calendar">📅</a>`
-            : ""
-          }
-                    <div class="DescAndImg">
-                      <div class="desc">
-                        <h2 class="title" id="title2025">${event.name}</h2>
-                        <p class="details" id="description2025">
-                          ${event.description}
-
-                          <span id="linkBold2025"> ${event.link ? `<a href="${event.link}" target="_blank">${event.linkInfo}</a>` : `${event.linkInfo}`}
-                          </span>
-
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-
-                    <p class="location"><span aria-hidden="true">📍</span>
-                      <a href="https://www.google.com/maps/search/${encodeURIComponent(event.location)}"
-                        target="_blank"
-                        title="View on Google Maps">
-                        ${event.location}
-                      </a>
-                    </p>
-
-                    <p class="categoryContainer2025">
-                      ${event.categories
-            ?.map((category) => {
-              return `<span class="category2025">${category}</span>`;
-            })
-            .join("")}
-
-                    </p>
-
-                  </section>
-                `;
-        container.appendChild(eventDiv);
-      });
-
-      registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
-    }
-
-    function registerDaySelectors() {
-      // Add event listeners to buttons
-      const buttons = document.querySelectorAll("[role='button']");
-      buttons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-          // Prevent default link behavior
-          event.preventDefault();
-
-          // Remove selected styling from all buttons
-          buttons.forEach((btn) => {
-            btn.style.border = "none";
-            btn.style.outline = "none";
-          });
-
-          // Set selected styling to the clicked button
-          event.currentTarget.style.border = "2px solid white";
-          event.currentTarget.style.outline = "2px solid #4f8cc9";
-
-          // Check if this is the All Days button
-          const day = event.currentTarget.getAttribute("data-day");
-          if (day === "All") {
-            // Show all events
-            displayEvents(events);
-            return;
-          }
-
-          // Otherwise, filter by the selected day
-          const dayShort = day.split(" ")[0];
-          const targetId = `#day${dayShort}`;
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            targetElement.scrollIntoView({ behavior: "smooth" });
-          }
-
-          // Rerender events for the selected day
-          const filteredEvents = events.filter((event) =>
-            event.date.includes(dayShort),
-          );
-
-          displayEvents(filteredEvents);
-        });
-      });
-
-      // Set All Days button as selected by default
-      const allDaysButton = document.querySelector("[data-day='All']");
-      if (allDaysButton) {
-        allDaysButton.style.border = "3px solid white";
-        allDaysButton.style.outline = "6px solid #5f32f3";
-      }
-    }
-
-    function registerSaveEventButtons() {
-      const saveButtons = document.querySelectorAll("button.saveEvent");
-      // Remove existing listeners to avoid duplicates
-      saveButtons.forEach((button) => {
-        button.removeEventListener("click", () => { });
-      });
-
-      saveButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-          const eventName =
-            event.currentTarget.getAttribute("data-event-name");
-
-          const savedEvents = localStorage.getItem("savedEvents")
-            ? JSON.parse(localStorage.getItem("savedEvents"))
-            : [];
-
-          if (savedEvents.includes(eventName)) {
-            savedEvents.splice(savedEvents.indexOf(eventName), 1);
-            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-          } else {
-            savedEvents.push(eventName);
-            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-          }
-
-          displayEvents(); // Rerender events to reflect changes
-          registerSaveEventButtons(); // Re-register buttons to ensure they work after DOM update
-        });
-      });
-    }
-
-    function showSavedEvents() {
-      const savedEvents = localStorage.getItem("savedEvents")
-        ? JSON.parse(localStorage.getItem("savedEvents"))
-        : [];
-
-      if (savedEvents.length === 0) {
-        const saveEventButton = document.getElementById("showSavedEvents");
-        return;
-      }
-
-      const filteredEvents = events.filter((event) =>
-        savedEvents.includes(event.name),
-      );
-
-      displayEvents(filteredEvents);
-    }
-
-    function handleLoaded() {
-      fetchSheetData()
-        .then((events) => {
-          displayEvents(events);
-          registerDaySelectors();
-          registerSaveEventButtons();
-
-          // const saveEventButton = document.getElementById("showSavedEvents");
-          // saveEventButton.addEventListener("click", (event) => {
-          //   event.preventDefault(); // Prevent default link behavior
-          //   showSavedEvents();
-          // });
-        })
-        .catch((error) => {
-          console.error("Error displaying events:", error);
-        });
-    }
-
-    // Call the function when the page loads
-    document.addEventListener("DOMContentLoaded", handleLoaded);
-  </script>
+  <script src="schedule.js"></script>
 </body>
 
 </html>
