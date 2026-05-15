@@ -205,12 +205,14 @@ async function fetchSheetData() {
                 const startDt = `${ymd}T${toGcalTime(startTime)}`;
                 const endDt = `${ymd}T${toGcalTime(endTime)}`;
 
+                const details = [description, price, link ? `${linkInfo}: ${link}` : ""].filter(Boolean).join("\n\n");
+
                 const locationStr = [location, address].filter(Boolean).join(", ");
                 const params = new URLSearchParams({
                     action: "TEMPLATE",
                     text: name,
                     dates: `${startDt}/${endDt}`,
-                    details: description || hook,
+                    details: details,
                     location: locationStr,
                 });
                 gcalLink = `https://www.google.com/calendar/render?${params.toString()}`;
