@@ -88,7 +88,8 @@ class Event {
         dateForSorting,
         eventTypes,
         addressLink,
-        price
+        price,
+        address
     ) {
         this.name = name;
         this.hook = hook;
@@ -107,6 +108,7 @@ class Event {
         this.eventTypes = eventTypes;
         this.addressLink = addressLink;
         this.price = price;
+        this.address = address;
     }
 }
 
@@ -146,6 +148,7 @@ async function fetchSheetData() {
             const description = rowData["Short Event Description"] || "";
             const date = rowData["Event Date(s)"] || "";
             const location = rowData["Venue Name"] || "";
+            const address = rowData["Address"] || "";
             let linkInfo = rowData["Registration"] || "";
             let link = rowData["Event link"] || "";
             const incomplete = rowData["Status"];
@@ -156,7 +159,7 @@ async function fetchSheetData() {
             const categories = rowData["Target Audience"]
                 ? rowData["Target Audience"].split(",")
                 : [];
-            const gcalLink = rowData["Gcal"] || "";
+            let gcalLink = rowData["Gcal"] || "";
             const dateForSorting = rowData["Date for sorting"] || "";
             const eventType1 = rowData["Primary type of event"] || "";
             const eventType2 = rowData["Additional type of event"] || "";
@@ -192,6 +195,27 @@ async function fetchSheetData() {
             const allDates = date.split(",").map((d) => d.trim());
             if (allDates.length > 1) { console.log(allDates); }
 
+            if (!gcalLink) {
+                const dateStart = new Date(2026, 5, date.split(" ")[2], startTime.split(":")[0], startTime.split(":")[1]);
+
+                const pad = (n) => String(n).padStart(2, "0");
+                const toGcalTime = (t) => t.replace(":", "") + "00";
+
+                const ymd = `${dateStart.getFullYear()}${pad(dateStart.getMonth() + 1)}${pad(dateStart.getDate())}`;
+                const startDt = `${ymd}T${toGcalTime(startTime)}`;
+                const endDt = `${ymd}T${toGcalTime(endTime)}`;
+
+                const locationStr = [location, address].filter(Boolean).join(", ");
+                const params = new URLSearchParams({
+                    action: "TEMPLATE",
+                    text: name,
+                    dates: `${startDt}/${endDt}`,
+                    details: description || hook,
+                    location: locationStr,
+                });
+                gcalLink = `https://www.google.com/calendar/render?${params.toString()}`;
+            }
+
             events.push(
                 new Event(
                     name,
@@ -210,7 +234,8 @@ async function fetchSheetData() {
                     dateForSorting,
                     eventTypes,
                     addressLink,
-                    price
+                    price,
+                    address
                 ),
             );
         }
@@ -270,11 +295,11 @@ function displayEvents(events) {
                     </div>
 
                     <p class="location"><span aria-hidden="true">📍</span>
+                    <span>${event.location}<span>
                       <a href="https://www.google.com/maps/search/${encodeURIComponent(event.addressLink)}"
                         target="_blank"
                         title="View on Google Maps">
-                        <span>${event.location} - <span>
-                        <span>${event.addressLink}</span>
+                        <p>${event.address}</p>
                       </a>
                     </p>
 
