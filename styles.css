@@ -227,7 +227,14 @@ ul {
 blockquote,
 q {
   quotes: none;
+  font-size: 1rem;
+  margin-top: 10px;
 }
+
+blockquote {
+    margin: 1rem;
+}
+
 
 blockquote:before,
 blockquote:after,
