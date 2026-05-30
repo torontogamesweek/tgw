@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Press Release</title>
+
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet" />
+
+    <!-- Meta Tags -->
+    <meta name="author" content="Marie Claire LeBlanc Flanagan" />
+    <meta name="description" content="Celebrating games in Toronto, Canada" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Toronto Games Week — June 11–17, 2026" />
+    <meta property="og:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+    <meta property="og:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png" />
+    <meta property="og:url" content="https://torontogamesweek.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:title" content="Toronto Games Week — June 11–17, 2026" />
+    <meta name="twitter:description" content="A week-long celebration of playful arts and games culture in Toronto, Canada. June 11–17, 2026." />
+    <meta name="twitter:image" content="https://torontogamesweek.com/images/2026/tgw-poster-social-aspect-ratio.png" id="indexImage" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Image Specifications -->
+    <meta
+      property="og:image:alt"
+      content="Poster for TGW - an illustration with many hand-illustrated tiny characters, creatures, and balls bouncing around " />
+
+    <link rel="icon" type="image/png" href="/images/2026/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/2026/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/2026/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/2026/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
+  </head>
+
+  <body>
+    <header>
+      <div id="logo-wrapper">
+        <picture>
+          <source media="(max-width: 767px)" srcset="images/2026/special/mobile-logo.webp" />
+          <img src="images/2026/special/desktop-logo.webp" alt="Logo" id="logo" />
+          <button class="logo-ball-btn" data-game="1" aria-label="Connect Game"></button>
+          <button class="logo-ball-btn" data-game="2" aria-label="Pop Game"></button>
+          <button class="logo-ball-btn" data-game="3" aria-label="Bounce Game"></button>
+          <button class="logo-ball-btn" data-game="4" aria-label="Brush Game"></button>
+        </picture>
+      </div>
+
+      <button id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" class="nav-toggle-button">
+        <span class="sr-only">Menu</span>
+        <span class="icon"></span>
+      </button>
+
+      <nav id="primary-navigation" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">
+              <img src="images/2026/nav/home.png" alt="Home" />
+              <span class="sr-only">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" id="scheduleNav">
+              <img src="images/2026/nav/schedule.png" alt="Schedule" />
+              <span class="sr-only">Schedule</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.html" id="aboutNav">
+              <img src="images/2026/nav/about.png" alt="About" />
+              <span class="sr-only">About</span>
+            </a>
+          </li>
+          <li>
+            <a href="get-involved.html" id="getInvolvedNav">
+              <img src="images/2026/nav/get-involved.png" alt="get involved" />
+              <span class="sr-only">Get Involved</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Poster that fades out -->
+    <div class="poster-container" id="posterContainer">
+      <img src="images/2026/tgwposterforsitelargeclear2.webp" alt="Toronto Games Week" id="posterImage" />
+    </div>
+
+    <!-- Game name display -->
+    <div class="game-name" id="gameName">o</div>
+
+    <canvas id="canvas"></canvas>
+
+    <main class="container">
+      <div class="content">
+        <section class="textBox">
+          <h2>TGW Press Release 2026</h2>
+
+          <p>
+            <strong>TORONTO, ON</strong> — Toronto Games Week (TGW) returns June 11–17, 2026, transforming the city into a vibrant playground of
+            videogames, tabletop experiences, interactive art, live performances, workshops, community gatherings, and competitive gaming. Featuring
+            independently organized events hosted throughout Toronto, TGW continues its mission of celebrating games as culture, creativity, and
+            connection.
+          </p>
+
+          <p>
+            Presented through a collaborative city-wide model, Toronto Games Week brings together developers, artists, community organizers,
+            performers, and players of all kinds for seven days of inclusive and experimental programming.
+          </p>
+
+          <blockquote>
+            "With 50+ event organizers, we're transforming parks, silos, bars, parking lots, and underground spaces into pop-up arcades and playful
+            takeovers. Chase us through the PATH, play with a parachute in the park, and follow clues to cooperative games in a secret location after
+            dark. Toronto is a playground. You should join us!" — Marie LeBlanc Flanagan, co-founder of Toronto Games Week
+          </blockquote>
+
+          <p>
+            Following an <a href="https://youtu.be/lNf-NZxcwX0">incredible TGW 2025</a> that welcomed more than 4,200 attendees, Toronto Games Week
+            returns with more unforgettable events.
+          </p>
+
+          <h2>Highlight Events</h2>
+
+          <ul class="controllerList" id="activitiesList">
+            <li>
+              <strong>Giant Video Games &amp; TGW Kickoff</strong> — a waterfront celebration featuring massive playable game projections on the
+              historic Canada Malting Silos.
+            </li>
+            <li>
+              <strong>Hand Eye Society x Luminato</strong> — Torontron arcade cabinets featuring indie games by local developers and artists are
+              coming to Luminato at Sankofa Square.
+            </li>
+            <li><strong>Rocket League Cup 2026</strong> — a soccer-adjacent video game tournament featuring high-flying cars and teamplay.</li>
+            <li>
+              <strong>Out of Bounds Torontrois</strong> — Lady Arcaders' third annual speedrunning event featuring two days of exceptional gameplay
+              and programming.
+            </li>
+            <li>
+              <strong>NextGen Showcase</strong> — a curated exhibition spotlighting emerging game creators from Toronto's game development scene with
+              Jenny Windom.
+            </li>
+            <li><strong>The Beautiful Game</strong> — a playable history of soccer video games spanning 50 years of gaming history.</li>
+            <li>
+              <strong>Pokémon Proxy Party</strong> — a laid-back art anthology for Pokémon fans and creators to contribute to a community-built
+              collection of 151 custom Pokémon designs.
+            </li>
+            <li>
+              <strong>Live Video Game Orchestra</strong> — Join a twelve piece jazz orchestra for classic video music from Pokémon, Zelda, Undertale
+              and more.
+            </li>
+            <li>
+              <strong>TGW Closing Party</strong> — the event series finale with help from Interactive Ontario featuring performances, music,
+              socializing, and interactive installations.
+            </li>
+          </ul>
+
+          <h2>Special Guests</h2>
+
+          <p>
+            You also have the chance to spot three special guests throughout the city during the event. <strong>Julián Cordero</strong>, creator of
+            the acclaimed hand-drawn game Despelote, will appear at Stoppage Time to play the game live. <strong>Jenny Windom</strong>, managing
+            partner at Wholesome Games, will talk at Bonus Stage as well as highlight emerging creators at NextGen Showcase. Joining them is
+            <strong>Eric Zimmerman</strong>, co-author of Rules of Play and founding faculty member of the NYU Game Center in New York City. Eric will
+            be at the opening night kickoff as well as the Night Parkcade.
+          </p>
+
+          <h2>Additional Programming</h2>
+
+          <ul class="controllerList" id="">
+            <li>Game jams and prototype workshops</li>
+            <li>Interactive public art experiences</li>
+            <li>Board game socials and design jams</li>
+            <li>Indie game markets and exhibitions</li>
+            <li>Talks on storytelling, sound design, and game culture</li>
+            <li>Experimental performances and playable installations</li>
+            <li>Family-friendly activities and outdoor adventures</li>
+          </ul>
+
+          <h2>Community Drives Toronto Games Week</h2>
+
+          <p>
+            Toronto Games Week's decentralized format encourages participation from organizations and creators across the city, with events taking
+            place in libraries, parks, galleries, maker spaces, community venues, cultural hubs, and independent businesses.
+          </p>
+
+          <p>
+            The event series remains committed to accessibility, inclusivity, and community-driven participation, with most events offered free of
+            charge or pay-what-you-can.
+          </p>
+
+          <p>
+            TGW continues to demonstrate the rapid growth of gaming from niche hobby to universal language of play. From family-friendly activities
+            like the Pokémon Proxy Party to competitive gaming at the Rocket League Cup 2026, Toronto Games Week has something for everyone.
+          </p>
+
+          <p>Find the full Toronto Games Week 2026 schedule at <a href="https://torontogamesweek.com/schedule">TorontoGamesWeek.com/schedule</a>.</p>
+
+          <h2>Inquiries and Media</h2>
+
+          <p>
+            For media inquiries, creator participation, volunteer opportunities, or sponsorship information, visit
+            <a href="https://torontogamesweek.com">TorontoGamesWeek.com</a> or email
+            <a href="mailto:info@torontogamesweek.com">info@torontogamesweek.com</a>.
+          </p>
+
+          <h2>About Toronto Games Week</h2>
+
+          <p>
+            Toronto Games Week is a collective coordination of events organized independently by dozens of organizations, curators, companies,
+            creators, and communities. Coordinated by Marie LeBlanc Flanagan and Jim Munroe, TGW demonstrates that when communities organize around
+            shared joy, the results exceed anything corporate planning could achieve.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const primaryNav = document.getElementById("primary-navigation");
+
+        navToggle.addEventListener("click", function () {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          primaryNav.classList.toggle("expanded");
+        });
+      });
+    </script>
+
+    <script src="images/2026/sprites/sprite-manifest.js"></script>
+    <script src="2026-sprite-assets.js"></script>
+    <script src="2026-play.js"></script>
+  </body>
+</html>
