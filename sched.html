@@ -65,7 +65,6 @@
       .tgw-share,
       .tgw-action,
       .tgw-addr-link,
-      .tgw-mini-reg,
       .tgw-clear-all { pointer-events: auto; }
 
       #main-schedule {
@@ -78,7 +77,7 @@
         padding: 0;
       }
       @media (max-width: 767px) {
-        #main-schedule { margin-top: 11rem; }
+        #main-schedule { margin-top: 7rem; }
       }
 
  
@@ -87,7 +86,7 @@
       .tgw-now { width: 100%; display: flex; justify-content: center; padding: 0 1rem; }
       .tgw-now:empty { display: none; }
       .tgw-now-inner {
-        margin-top: 4.5rem;
+        margin-top: 4rem;
         width: 100%;
         max-width: 820px;
         display: flex;
@@ -99,8 +98,7 @@
         padding: 1.1rem 1.35rem;
         box-shadow: 0 4px 16px rgba(252, 111, 68, 0.08);
       }
-      .tgw-now--before .tgw-now-inner,
-      .tgw-now--after .tgw-now-inner {
+      .tgw-now--before .tgw-now-inner {
         background: rgba(255, 255, 255, 0.85);
         border-color: var(--tgw-purple-line);
         box-shadow: none;
@@ -109,46 +107,11 @@
         align-items: center;
         gap: 0.2rem;
       }
-      .tgw-now-col { flex: 1 1 240px; min-width: 0; }
-      .tgw-now-kicker {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-family: "Alegreya", sans-serif;
-        font-weight: bold;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--tgw-ink-faint);
-        margin-bottom: 0.5rem;
-      }
-      .tgw-now-kicker--live { color: var(--tgw-coral); }
-      .tgw-now-big {
-        display: block;
-        font-family: "Alegreya", sans-serif;
-        font-weight: bold;
-        font-size: 2rem;
-        line-height: 1.1;
-        background: #5e87f0;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 0.1rem 0;
-      }
-      .tgw-now-sub {
-        display: block;
-        font-family: "Merriweather", serif;
-        font-size: 0.85rem;
-        line-height: 1.6;
-        color: var(--tgw-ink-soft);
-        max-width: 520px;
-      }
 
       /* ── COUNTDOWN (before the festival) ───────────────────── */
       .tgw-now--before .tgw-now-inner.tgw-countdown {
         background: #fffaf3;
         border: 2px solid rgba(252, 111, 68, 0.4);
-        box-shadow: 0 6px 22px rgba(252, 111, 68, 0.12);
         gap: 0.6rem;
         padding: 1.4rem 1.35rem 1.25rem;
       }
@@ -202,53 +165,74 @@
         font-size: 0.82rem;
         color: var(--tgw-ink-soft);
       }
-      .tgw-mini-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-      .tgw-mini {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 0 0.6rem;
-        padding: 0.55rem 0.7rem;
-        border-radius: 9px;
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid var(--tgw-purple-soft);
-      }
-      .tgw-mini-time {
-        grid-column: 1 / 2;
-        font-family: "Alegreya", sans-serif;
-        font-weight: bold;
-        font-size: 0.72rem;
-        letter-spacing: 0.04em;
-        color: var(--tgw-ink-faint);
-        text-transform: uppercase;
-      }
-      .tgw-mini-title {
-        grid-column: 1 / 2;
-        font-family: "Alegreya", sans-serif;
-        font-weight: bold;
-        font-size: 1.05rem;
-        color: rgba(85, 45, 155, 0.95);
-        line-height: 1.2;
-      }
-      .tgw-mini-venue {
-        grid-column: 1 / 2;
-        font-family: "Merriweather", serif;
-        font-size: 0.75rem;
-        color: var(--tgw-ink-soft);
-      }
-      .tgw-mini-reg {
-        grid-column: 2 / 3;
-        grid-row: 1 / 4;
-        align-self: center;
-        font-family: "Alegreya", sans-serif;
-        font-weight: bold;
-        font-size: 0.78rem;
-        white-space: nowrap;
-        color: var(--tgw-purple);
-        text-decoration: none;
-      }
-      .tgw-mini-reg:hover { text-decoration: underline; }
 
-      /* shared live dot */
+      /* ── "WE'VE BEGUN" celebration (first minute of the festival) ── */
+      .tgw-now--begun .tgw-now-inner.tgw-begun {
+        position: relative;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.35rem;
+        background: #fffaf3;
+        border: 2px solid rgba(252, 111, 68, 0.55);
+        box-shadow: 0 8px 28px rgba(252, 111, 68, 0.16);
+        padding: 1.6rem 1.35rem 1.5rem;
+        animation: tgw-begun-pop 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+      }
+      .tgw-begun-kicker {
+        font-family: "Alegreya", sans-serif;
+        font-weight: bold;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--tgw-coral);
+        animation: tgw-begun-rise 0.5s ease 0.05s both;
+      }
+      .tgw-begun-title {
+        font-family: "Alegreya", sans-serif;
+        font-weight: bold;
+        font-size: 2.1rem;
+        line-height: 1.1;
+        margin: 0;
+        color: var(--tgw-purple);
+        animation: tgw-begun-rise 0.5s ease 0.12s both;
+      }
+      .tgw-begun-sub {
+        font-family: "Merriweather", serif;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--tgw-ink-soft);
+        margin: 0;
+        max-width: 460px;
+        animation: tgw-begun-rise 0.5s ease 0.19s both;
+      }
+      .tgw-begun-spark {
+        position: absolute;
+        top: 0.9rem;
+        font-size: 1.1rem;
+        color: var(--tgw-coral);
+        animation: tgw-begun-twinkle 1.6s ease-in-out infinite;
+      }
+      .tgw-begun-spark--l { left: 1.1rem; }
+      .tgw-begun-spark--r { right: 1.1rem; animation-delay: 0.8s; }
+      @keyframes tgw-begun-pop {
+        from { opacity: 0; transform: scale(0.94) translateY(8px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      @keyframes tgw-begun-rise {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes tgw-begun-twinkle {
+        0%, 100% { opacity: 0.35; transform: scale(0.85); }
+        50%      { opacity: 1; transform: scale(1.15); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tgw-now--begun .tgw-now-inner.tgw-begun,
+        .tgw-begun-kicker, .tgw-begun-title, .tgw-begun-sub,
+        .tgw-begun-spark { animation: none; }
+      }
       .tgw-live-dot {
         width: 8px; height: 8px; border-radius: 50%;
         background: var(--tgw-coral);
@@ -344,7 +328,21 @@
       .tgw-day-pill.is-active .tgw-pill-date,
       .tgw-day-pill.is-active .tgw-pill-count { color: #fff; }
       .tgw-day-pill.is-empty { opacity: 0.4; cursor: default; }
-      .tgw-day-pill--all { flex: 0 0 auto; padding-left: 0.7rem; padding-right: 0.7rem; }
+.tgw-day-pill--all {
+        flex: 0 0 auto;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+        border: 1.5px dashed var(--tgw-purple-line);
+        background: rgba(255, 255, 255, 0.55);
+      }
+      .tgw-day-pill--all.is-active { border-style: solid; }
+      .tgw-day-pill--all .tgw-pill-top { flex-direction: row; }
+      .tgw-day-pill--all .tgw-pill-top::before {
+        content: "↺";
+        margin-right: 0.25rem;
+        color: var(--tgw-purple);
+      }
+      .tgw-day-pill--all.is-active .tgw-pill-top::before { color: #fff; }      .tgw-all-short { display: none; }
 
       /* TYPE CHIPS — secondary, lighter refinement */
       .tgw-type-wrap { margin-top: 0.7rem; }
@@ -372,6 +370,15 @@
       .tgw-type-chip.is-active {
         background: var(--tgw-purple-soft);
         border-color: rgba(95, 50, 243, 0.55);
+        color: var(--tgw-purple);
+      }
+      .tgw-type-chip--all {
+        border-style: dashed;
+        background: rgba(255, 255, 255, 0.55);
+      }
+      .tgw-type-chip--all::before {
+        content: "↺";
+        margin-right: 0.25rem;
         color: var(--tgw-purple);
       }
       .tgw-type-chip--all.is-active {
@@ -510,8 +517,8 @@
       }
       /* shared via link → thin yellow emphasis */
       .tgw-card--shared {
-        border: 6px solid #f5c542;
-        border-left: 6px solid #f5c542;
+        border: 2px solid #f5c542;
+        border-left: 3px solid #f5c542;
         box-shadow: 0 0 0 3px rgba(245, 197, 66, 0.18);
       }
 
@@ -745,6 +752,29 @@
         cursor: pointer;
       }
 
+      .tgw-tag-reset {
+        display: flex;
+        justify-content: center;
+        margin: 0.5rem 0;
+      }
+      .tgw-tag-reset-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        font-family: "Merriweather", serif;
+        font-size: 0.85rem;
+        color: var(--tgw-ink-soft);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.3rem 0.4rem;
+        text-decoration: underline dotted rgba(95, 50, 243, 0.4);
+        text-underline-offset: 3px;
+        transition: color 0.12s ease;
+      }
+      .tgw-tag-reset-link:hover { color: var(--tgw-purple); }
+      .tgw-tag-reset-link span { color: var(--tgw-purple); font-weight: bold; }
+
       /* ── DESKTOP TWEAKS ────────────────────────────────────── */
       @media (min-width: 768px) {
         .tgw-day-num { font-size: 3rem; }
@@ -755,17 +785,26 @@
 
       /* ── MOBILE ────────────────────────────────────────────── */
       @media (max-width: 767px) {
-        /* The segmented day track scrolls horizontally instead of wrapping,
-           so all seven days stay reachable with a swipe. */
+        /* tighter vertical rhythm up top */
+        .tgw-now { padding: 0 0.6rem; }
+        .tgw-now-inner.tgw-countdown { margin-top: 0; padding: 1.1rem 0.9rem 1rem; }
+        .tgw-controls-inner { padding: 0.4rem 0.5rem 0.5rem; }
+
+        /* All seven days fit in the track without sideways scroll: no gap,
+           minimal padding, pills share the width evenly. */
         .tgw-day-row {
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
           scrollbar-width: none;
           flex-wrap: nowrap;
+          gap: 0;
+          padding: 0.22rem;
         }
         .tgw-day-row::-webkit-scrollbar { display: none; }
-        .tgw-day-pill { flex: 0 0 auto; min-width: 3rem; }
-        .tgw-day-pill--all { min-width: auto; }
+        .tgw-day-pill { flex: 1 1 0; min-width: 0; padding-left: 0; padding-right: 0; }
+        .tgw-day-pill--all { flex: 0 0 auto; padding-left: 5px; padding-right: 5px; }
+        .tgw-all-full { display: none; }
+        .tgw-all-short { display: inline; }
 
         /* Day pills stack the abbreviation over the date and drop the event
            count, so "THU / 11" fits without crowding. */
@@ -778,11 +817,15 @@
         .tgw-day-pill .tgw-pill-count { display: none; }
 
         /* Type + quick filters are always visible on mobile — they're compact
-           enough that hiding them behind a toggle wasn't worth the friction. */
-        .tgw-type-row { display: flex; }
+           enough that hiding them behind a toggle wasn't worth the friction.
+           Tighten the gaps and shrink the chips so they pack in neatly. */
+        .tgw-type-row { display: flex; gap: 0.3rem; }
+        .tgw-quick-row { gap: 0.3rem; }
+        .tgw-type-chip { font-size: 0.85rem; padding: 0.15rem 0.55rem; }
 
         .tgw-now-inner { flex-direction: column; }
-        .tgw-now-big { font-size: 1.6rem; }
+        .tgw-begun-title { font-size: 1.6rem; }
+        .tgw-begun-sub { font-size: 0.85rem; }
 
         /* Card: only the header (avatar + title) shares a row; the body runs
            full width below, so the avatar no longer shoves the text over. */
@@ -853,13 +896,12 @@
       <!-- Sticky controls -->
       <div id="tgw-controls">
         <div class="tgw-controls-inner">
-          <span class="tgw-control-label">Choose a day to explore the schedule</span>
+          <span class="tgw-control-label">Choose a day</span>
           <div class="tgw-day-row" id="tgw-day-row" role="group" aria-label="Filter by day"></div>
 
           <div class="tgw-type-wrap" id="tgw-type-wrap">
             <span class="tgw-control-label tgw-type-label">Filter by type</span>
             <div class="tgw-type-row" id="tgw-type-row" role="group" aria-label="Filter by type"></div>
-            <div class="tgw-quick-row" id="tgw-quick-row" role="group" aria-label="Quick filters"></div>
           </div>
         </div>
       </div>

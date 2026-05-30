@@ -1,7 +1,7 @@
 /* ===================================================================
    Toronto Games Week — Schedule
    Rewritten for:
-     • time-aware "now" band (countdown → happening-now → archive)
+     • time-aware "now" band (countdown → brief "we've begun" → hidden)
      • DAY = single-select filter (prominent timeline)
      • TYPE = multi-select chips (secondary refinement)
      • redesigned event cards (left avatar, footer actions, live state)
@@ -116,6 +116,16 @@ function countdownParts(now) {
   const m = Math.floor(diff / 60000); diff -= m * 60000;
   const s = Math.floor(diff / 1000);
   return { d, h, m, s };
+}
+
+// How long the celebratory "we've begun" banner stays up (ms).
+const BEGUN_WINDOW_MS = 60000;
+
+// True for the first minute after the festival opens.
+function justBegun(now) {
+  const start = new Date(FESTIVAL_YEAR, FESTIVAL_MONTH, 11, 0, 0, 0);
+  const since = now - start;
+  return since >= 0 && since < BEGUN_WINDOW_MS;
 }
 
 function todayAbbr(now) {
@@ -372,6 +382,10 @@ function matchesStar(e) {
   return !state.starredOnly || state.stars.has(eventId(e));
 }
 
+function tagFiltersActive() {
+  return state.types.size > 0 || state.freeOnly || state.starredOnly;
+}
+
 function filteredEvents() {
   return sortByStart(
     events.filter((e) => matchesDay(e) && matchesType(e) && matchesFree(e) && matchesStar(e))
@@ -601,6 +615,24 @@ function renderSchedule() {
     if (DAYS.some((d) => d.abbr === a)) return;
     grouped[a].forEach((e) => container.appendChild(buildCard(e, state.now)));
   });
+
+  // if tag filters are on (easy to forget), offer a reset
+  if (tagFiltersActive()) {
+    const footer = document.createElement("div");
+    footer.className = "tgw-tag-reset";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tgw-tag-reset-link";
+    btn.innerHTML = `<span aria-hidden="true">↺</span>Show ALL events on this day?`;
+    btn.addEventListener("click", () => {
+      state.types.clear();
+      state.freeOnly = false;
+      state.starredOnly = false;
+      renderAll();
+    });
+    footer.appendChild(btn);
+    container.appendChild(footer);
+  }
 }
 
 /* ---------- controls: day timeline + type chips ---------- */
@@ -614,7 +646,7 @@ function renderControls() {
   const allPill = document.createElement("button");
   allPill.type = "button";
   allPill.className = "tgw-day-pill tgw-day-pill--all" + (state.day === null ? " is-active" : "");
-  allPill.innerHTML = `<span class="tgw-pill-top">All days</span><span class="tgw-pill-count">${counts.__all || 0} events</span>`;
+  allPill.innerHTML = `<span class="tgw-pill-top"><span class="tgw-all-full">All days</span><span class="tgw-all-short">All</span></span><span class="tgw-pill-count">${counts.__all || 0} events</span>`;
   allPill.addEventListener("click", () => { state.day = null; renderAll(); });
   dayRow.appendChild(allPill);
 
@@ -640,8 +672,13 @@ function renderControls() {
   const allTypes = document.createElement("button");
   allTypes.type = "button";
   allTypes.className = "tgw-type-chip tgw-type-chip--all" + (state.types.size === 0 ? " is-active" : "");
-  allTypes.textContent = "All types";
-  allTypes.addEventListener("click", () => { state.types.clear(); state.freeOnly = false; state.starredOnly = false; renderAll(); });
+  allTypes.textContent = "All";
+  allTypes.addEventListener("click", () => {
+    state.types.clear();
+    state.freeOnly = false;
+    state.starredOnly = false;
+    renderAll();
+  });
   typeRow.appendChild(allTypes);
 
   TYPES.forEach((t) => {
@@ -658,14 +695,13 @@ function renderControls() {
   });
 
   // Quick filters: Free + Starred (live alongside the type chips)
-  const quickRow = document.getElementById("tgw-quick-row");
+const quickRow = document.getElementById("tgw-type-row");
   if (quickRow) {
-    quickRow.innerHTML = "";
 
     const freeChip = document.createElement("button");
     freeChip.type = "button";
     freeChip.className = "tgw-type-chip tgw-type-chip--free" + (state.freeOnly ? " is-active" : "");
-    freeChip.innerHTML = `<span aria-hidden="true"></span> Free events`;
+    freeChip.innerHTML = `<span aria-hidden="true">✦</span> free`;
     freeChip.addEventListener("click", () => {
       state.freeOnly = !state.freeOnly;
       renderAll();
@@ -676,7 +712,7 @@ function renderControls() {
     const starChip = document.createElement("button");
     starChip.type = "button";
     starChip.className = "tgw-type-chip tgw-type-chip--star" + (state.starredOnly ? " is-active" : "");
-    starChip.innerHTML = `<span aria-hidden="true">★</span> my favs${starCount ? ` (${starCount})` : ""}`;
+    starChip.innerHTML = `<span aria-hidden="true">★</span> Starred${starCount ? ` (${starCount})` : ""}`;
     starChip.addEventListener("click", () => {
       state.starredOnly = !state.starredOnly;
       renderAll();
@@ -687,19 +723,19 @@ function renderControls() {
 
 /* ---------- the time-aware "now" band ---------- */
 
-function miniRow(e, label) {
-  const meta = dayMetaFromDate(e.date);
-  const reg = e.link
-    ? `<a href="${e.link}" target="_blank" rel="noopener" class="tgw-mini-reg">${e.linkInfo || "Details"} ↗</a>`
-    : "";
-  return `
-    <li class="tgw-mini">
-      ${label ? `<span class="tgw-mini-label">${label}</span>` : ""}
-      <span class="tgw-mini-time">${formatTimeRange(e.startTime, e.endTime)} · ${meta.label}</span>
-      <span class="tgw-mini-title">${e.name}</span>
-      <span class="tgw-mini-venue">${e.location || ""}</span>
-      ${reg}
-    </li>`;
+// Schedule a single re-render for the moment the "begun" banner should vanish,
+// so the band disappears right on cue rather than waiting for the minute tick.
+let begunHideScheduled = false;
+function scheduleBegunHide(now) {
+  if (begunHideScheduled) return;
+  begunHideScheduled = true;
+  const start = new Date(FESTIVAL_YEAR, FESTIVAL_MONTH, 11, 0, 0, 0);
+  const remaining = BEGUN_WINDOW_MS - (now - start);
+  setTimeout(() => {
+    state.now = nowInToronto();
+    state.phase = festivalPhase(state.now);
+    renderNowBand();
+  }, Math.max(500, remaining));
 }
 
 function renderNowBand() {
@@ -715,6 +751,7 @@ function renderNowBand() {
       const pad = (n) => String(n).padStart(2, "0");
       band.innerHTML = `
         <div class="tgw-now-inner tgw-countdown">
+          <span class="tgw-cd-kicker">the games begin in…</span>
           <div class="tgw-cd-grid" id="tgw-cd-grid" aria-live="off">
             <div class="tgw-cd-unit"><span class="tgw-cd-num" id="tgw-cd-d">${d}</span><span class="tgw-cd-lab">${d === 1 ? "day" : "days"}</span></div>
             <span class="tgw-cd-colon" aria-hidden="true">:</span>
@@ -728,42 +765,28 @@ function renderNowBand() {
       return;
     }
 
-    if (phase === "after") {
+    // The festival just opened — show a brief, celebratory banner, then the
+    // whole band removes itself (see the hide timer below). For the rest of the
+    // festival, and after it ends, there's no band at all: the schedule below
+    // (with its live badges) carries the "what's on" job.
+    if (justBegun(now)) {
+      band.className = "tgw-now tgw-now--begun";
       band.innerHTML = `
-        <div class="tgw-now-inner tgw-after">
-          <span class="tgw-now-kicker">That's a wrap</span>
+        <div class="tgw-now-inner tgw-begun">
+          <span class="tgw-begun-spark tgw-begun-spark--l" aria-hidden="true">✦</span>
+          <span class="tgw-begun-spark tgw-begun-spark--r" aria-hidden="true">✦</span>
+          <span class="tgw-begun-kicker">It's on</span>
+          <h2 class="tgw-begun-title">Toronto Games Week has begun!</h2>
+          <p class="tgw-begun-sub">Doors are open June 11–17 — dive into the schedule below.</p>
         </div>`;
+      scheduleBegunHide(now);
       return;
     }
 
-    // during
-    const liveNow = sortByStart(events.filter((e) => isLive(e, now)));
-    const upcomingToday = sortByStart(
-      events.filter((e) => {
-        const tAbbr = todayAbbr(now);
-        return eventDayAbbrs(e).includes(tAbbr) && eventStart(e) > now;
-      })
-    ).slice(0, 3);
-
-    let html = `<div class="tgw-now-inner">`;
-    if (liveNow.length) {
-      html += `<div class="tgw-now-col">
-        <span class="tgw-now-kicker tgw-now-kicker--live"><span class="tgw-live-dot"></span>Happening now</span>
-        <ul class="tgw-mini-list">${liveNow.slice(0, 4).map((e) => miniRow(e, "")).join("")}</ul>
-      </div>`;
-    }
-    if (upcomingToday.length) {
-      html += `<div class="tgw-now-col">
-        <span class="tgw-now-kicker">Up next today</span>
-        <ul class="tgw-mini-list">${upcomingToday.map((e) => miniRow(e, "")).join("")}</ul>
-      </div>`;
-    }
-    if (!liveNow.length && !upcomingToday.length) {
-      html += `<div class="tgw-now-col"><span class="tgw-now-kicker">Today</span>
-        <span class="tgw-now-sub">No more events scheduled today — see the rest of the week below.</span></div>`;
-    }
-    html += `</div>`;
-    band.innerHTML = html;
+    // During (past the opening minute) and after: collapse the band entirely.
+    band.className = "tgw-now tgw-now--empty";
+    band.innerHTML = "";
+    return;
   } catch (err) {
     console.error("now-band error", err);
     band.innerHTML = ""; // never block the schedule
@@ -777,6 +800,13 @@ function tickCountdown() {
   const grid = document.getElementById("tgw-cd-grid");
   if (!grid) return;
   const { d, h, m, s } = countdownParts(nowInToronto());
+  // Reached zero → the festival just opened. Flip phase and re-render now
+  // instead of waiting for the next minute-interval tick.
+  if (d === 0 && h === 0 && m === 0 && s === 0) {
+    state.now = nowInToronto();
+    state.phase = festivalPhase(state.now);
+    if (state.phase !== "before") { renderAll(); return; }
+  }
   const pad = (n) => String(n).padStart(2, "0");
   const set = (id, val) => {
     const el = document.getElementById(id);
@@ -839,7 +869,14 @@ function applyDeepLink() {
   });
 }
 
+let bootTimers = [];
 function boot() {
+  // boot() is safe to re-run; clear prior timers + flags so intervals don't
+  // stack and the "begun" banner can replay.
+  bootTimers.forEach(clearInterval);
+  bootTimers = [];
+  begunHideScheduled = false;
+
   state.now = nowInToronto();
   state.phase = festivalPhase(state.now);
   // Time-aware default: open on TODAY during the festival, full week otherwise.
@@ -855,10 +892,10 @@ function boot() {
 
   // Live countdown: tick every second while we're in the "before" phase.
   tickCountdown();
-  setInterval(tickCountdown, 1000);
+  bootTimers.push(setInterval(tickCountdown, 1000));
 
   // refresh "now" awareness every minute while the page is open
-  setInterval(() => {
+  bootTimers.push(setInterval(() => {
     state.now = nowInToronto();
     const newPhase = festivalPhase(state.now);
     const phaseChanged = newPhase !== state.phase;
@@ -866,7 +903,7 @@ function boot() {
     renderNowBand();
     if (phaseChanged) renderAll();
     else renderSchedule(); // refresh live badges
-  }, 60000);
+  }, 60000));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
