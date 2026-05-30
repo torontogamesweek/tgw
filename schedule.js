@@ -665,7 +665,7 @@ function renderControls() {
     const freeChip = document.createElement("button");
     freeChip.type = "button";
     freeChip.className = "tgw-type-chip tgw-type-chip--free" + (state.freeOnly ? " is-active" : "");
-    freeChip.innerHTML = `<span aria-hidden="true">✦</span> Free only`;
+    freeChip.innerHTML = `<span aria-hidden="true"></span> Free events`;
     freeChip.addEventListener("click", () => {
       state.freeOnly = !state.freeOnly;
       renderAll();
@@ -676,7 +676,7 @@ function renderControls() {
     const starChip = document.createElement("button");
     starChip.type = "button";
     starChip.className = "tgw-type-chip tgw-type-chip--star" + (state.starredOnly ? " is-active" : "");
-    starChip.innerHTML = `<span aria-hidden="true">★</span> My stars${starCount ? ` (${starCount})` : ""}`;
+    starChip.innerHTML = `<span aria-hidden="true">★</span> my favs${starCount ? ` (${starCount})` : ""}`;
     starChip.addEventListener("click", () => {
       state.starredOnly = !state.starredOnly;
       renderAll();
