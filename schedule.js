@@ -423,14 +423,8 @@ function eventUrl(e) {
   return location.origin + location.pathname + "#" + eventId(e);
 }
 
-// Share handler — uses the native share sheet where available, else copies.
-function shareEvent(e, btn) {
-  const url = eventUrl(e);
-  const data = { title: e.name, text: `${e.name} — Toronto Games Week`, url };
-  if (navigator.share) {
-    navigator.share(data).catch(() => {});
-    return;
-  }
+// Copy a URL to the clipboard, with the "Link copied!" feedback on the button.
+function copyEventLink(url, btn) {
   const done = () => {
     if (!btn) return;
     const label = btn.querySelector(".tgw-share-label");
@@ -448,6 +442,97 @@ function shareEvent(e, btn) {
   } else {
     window.prompt("Copy this link:", url);
   }
+}
+
+// Remove any share menu that's currently open.
+function closeShareMenu() {
+  const open = document.querySelector(".tgw-share-menu");
+  if (open) open.remove();
+}
+
+// Share handler — opens a small menu. "Share…" (the native share sheet with
+// all your social apps, messages, etc.) shows where the device supports it,
+// and "Copy link" is always there so you can just grab the URL.
+function shareEvent(e, btn) {
+  // A second click on the same Share button closes the menu.
+  if (document.querySelector(".tgw-share-menu")) {
+    closeShareMenu();
+    return;
+  }
+
+  const url = eventUrl(e);
+  const data = { title: e.name, text: `${e.name} — Toronto Games Week`, url };
+
+  const menu = document.createElement("div");
+  menu.className = "tgw-share-menu";
+  menu.style.cssText =
+    "position:fixed;z-index:9999;min-width:170px;padding:0.3rem;background:#fff;" +
+    "border:1.5px solid var(--tgw-purple-line);border-radius:12px;" +
+    "box-shadow:0 8px 28px rgba(14,8,42,0.18);display:flex;flex-direction:column;" +
+    "gap:0.15rem;font-family:'Alegreya',sans-serif;";
+
+  let cleanup = () => {};
+
+  const addItem = (labelHtml, onClick) => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "tgw-share-menu-item";
+    item.innerHTML = labelHtml;
+    item.style.cssText =
+      "display:flex;align-items:center;gap:0.5rem;width:100%;text-align:left;" +
+      "font:inherit;font-weight:bold;font-size:0.9rem;color:var(--tgw-purple);" +
+      "background:transparent;border:none;border-radius:8px;padding:0.5rem 0.7rem;cursor:pointer;";
+    item.addEventListener("mouseenter", () => { item.style.background = "var(--tgw-purple-soft)"; });
+    item.addEventListener("mouseleave", () => { item.style.background = "transparent"; });
+    item.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      cleanup();
+      onClick();
+    });
+    menu.appendChild(item);
+  };
+
+  // Native share ("share to socials") — only where the device supports it.
+  if (navigator.share) {
+    addItem(`<span aria-hidden="true">📤</span> Share…`, () => navigator.share(data).catch(() => {}));
+  }
+  // Copy link — always available.
+  addItem(`<span aria-hidden="true">🔗</span> Copy link`, () => copyEventLink(url, btn));
+
+  document.body.appendChild(menu);
+
+  // Position the menu just under the Share button, right-aligned, and nudge it
+  // back on-screen if it would spill off either edge.
+  const r = btn.getBoundingClientRect();
+  const mw = menu.offsetWidth;
+  let left = r.right - mw;
+  if (left < 8) left = 8;
+  if (left + mw > window.innerWidth - 8) left = window.innerWidth - 8 - mw;
+  menu.style.top = `${r.bottom + 6}px`;
+  menu.style.left = `${left}px`;
+
+  // Close on outside click, Escape, scroll, or resize.
+  const onDocClick = (ev) => {
+    if (menu.contains(ev.target)) return;              // clicks inside the menu = handled by its items
+    if (btn.contains(ev.target)) ev.stopPropagation(); // re-click on Share just closes (no reopen)
+    cleanup();
+  };
+  const onKey = (ev) => { if (ev.key === "Escape") cleanup(); };
+  const onMove = () => cleanup();
+  cleanup = () => {
+    closeShareMenu();
+    document.removeEventListener("click", onDocClick, true);
+    document.removeEventListener("keydown", onKey, true);
+    window.removeEventListener("scroll", onMove, true);
+    window.removeEventListener("resize", onMove, true);
+  };
+  setTimeout(() => {
+    document.addEventListener("click", onDocClick, true);
+    document.addEventListener("keydown", onKey, true);
+    window.addEventListener("scroll", onMove, true);
+    window.addEventListener("resize", onMove, true);
+  }, 0);
 }
 
 // Star handler — toggles, persists, and updates the UI in place.
