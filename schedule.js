@@ -560,6 +560,158 @@ function toggleStar(e, btn) {
   renderControls(); // refresh the "Starred (n)" filter count
 }
 
+/* ---------- "Add to calendar" menu (Google + iCalendar .ics) ---------- */
+
+function pad2(n) { return String(n).padStart(2, "0"); }
+
+// Local wall-clock stamp (floating time), e.g. 20260611T200000 — matches the
+// Google Calendar link, which also uses Toronto local time without a zone.
+function icsStampLocal(d) {
+  return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}` +
+         `T${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
+}
+// UTC stamp with trailing Z (used for DTSTAMP).
+function icsStampUTC(d) {
+  return `${d.getUTCFullYear()}${pad2(d.getUTCMonth() + 1)}${pad2(d.getUTCDate())}` +
+         `T${pad2(d.getUTCHours())}${pad2(d.getUTCMinutes())}${pad2(d.getUTCSeconds())}Z`;
+}
+function icsEscape(s) {
+  return String(s || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+// Build a .ics file for one event and trigger a download.
+function downloadICS(e) {
+  // Derive the day number by splitting the date string on spaces — this mirrors
+  // the Google Calendar link builder and is robust to a comma after the weekday
+  // (e.g. "Thursday, June 11"), which the other date parser chokes on.
+  let dayNum = parseInt(String(e.date || "").split(" ")[2], 10);
+  let month = FESTIVAL_MONTH;
+  let year = FESTIVAL_YEAR;
+  if (isNaN(dayNum)) {
+    const ds = new Date(e.dateForSorting);
+    if (!isNaN(ds)) { dayNum = ds.getDate(); month = ds.getMonth(); year = ds.getFullYear(); }
+  }
+  const [sh, sm] = String(e.startTime || "00:00").split(":").map(Number);
+  const [eh, em] = String(e.endTime || e.startTime || "00:00").split(":").map(Number);
+  const start = new Date(year, month, dayNum, sh || 0, sm || 0);
+  const end = new Date(year, month, dayNum, eh || 0, em || 0);
+
+  const details = [e.description, e.price, e.link ? `${e.linkInfo}: ${e.link}` : ""]
+    .filter(Boolean).join("\n\n");
+  const locationStr = [e.location, e.address].filter(Boolean).join(", ");
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Toronto Games Week//Schedule//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    "UID:" + eventId(e) + "@torontogamesweek.com",
+    "DTSTAMP:" + icsStampUTC(new Date()),
+    "DTSTART:" + icsStampLocal(start),
+    "DTEND:" + icsStampLocal(end),
+    "SUMMARY:" + icsEscape(e.name),
+    "DESCRIPTION:" + icsEscape(details),
+    "LOCATION:" + icsEscape(locationStr),
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ];
+  const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (eventId(e) || "event") + ".ics";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Generic pop-up menu anchored under a button (same look + behaviour as the
+// share menu). `items` is an array of { label (HTML), onClick }.
+function closeActionMenu() {
+  const open = document.querySelector(".tgw-action-menu");
+  if (open) open.remove();
+}
+
+function openActionMenu(btn, items) {
+  if (document.querySelector(".tgw-action-menu")) { closeActionMenu(); return; }
+
+  const menu = document.createElement("div");
+  menu.className = "tgw-action-menu";
+  menu.style.cssText =
+    "position:fixed;z-index:9999;min-width:190px;padding:0.3rem;background:#fff;" +
+    "border:1.5px solid var(--tgw-purple-line);border-radius:12px;" +
+    "box-shadow:0 8px 28px rgba(14,8,42,0.18);display:flex;flex-direction:column;" +
+    "gap:0.15rem;font-family:'Alegreya',sans-serif;";
+
+  let cleanup = () => {};
+
+  items.forEach((it) => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "tgw-action-menu-item";
+    item.innerHTML = it.label;
+    item.style.cssText =
+      "display:flex;align-items:center;gap:0.5rem;width:100%;text-align:left;" +
+      "font:inherit;font-weight:bold;font-size:0.9rem;color:var(--tgw-purple);" +
+      "background:transparent;border:none;border-radius:8px;padding:0.5rem 0.7rem;cursor:pointer;";
+    item.addEventListener("mouseenter", () => { item.style.background = "var(--tgw-purple-soft)"; });
+    item.addEventListener("mouseleave", () => { item.style.background = "transparent"; });
+    item.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      cleanup();
+      it.onClick();
+    });
+    menu.appendChild(item);
+  });
+
+  document.body.appendChild(menu);
+
+  const r = btn.getBoundingClientRect();
+  const mw = menu.offsetWidth;
+  let left = r.right - mw;
+  if (left < 8) left = 8;
+  if (left + mw > window.innerWidth - 8) left = window.innerWidth - 8 - mw;
+  menu.style.top = `${r.bottom + 6}px`;
+  menu.style.left = `${left}px`;
+
+  const onDocClick = (ev) => {
+    if (menu.contains(ev.target)) return;
+    if (btn.contains(ev.target)) ev.stopPropagation();
+    cleanup();
+  };
+  const onKey = (ev) => { if (ev.key === "Escape") cleanup(); };
+  const onMove = () => cleanup();
+  cleanup = () => {
+    closeActionMenu();
+    document.removeEventListener("click", onDocClick, true);
+    document.removeEventListener("keydown", onKey, true);
+    window.removeEventListener("scroll", onMove, true);
+    window.removeEventListener("resize", onMove, true);
+  };
+  setTimeout(() => {
+    document.addEventListener("click", onDocClick, true);
+    document.addEventListener("keydown", onKey, true);
+    window.addEventListener("scroll", onMove, true);
+    window.addEventListener("resize", onMove, true);
+  }, 0);
+}
+
+// "Add to calendar" — offers Google Calendar or an iCalendar (.ics) download.
+function openCalendarMenu(e, btn) {
+  openActionMenu(btn, [
+    { label: `<span aria-hidden="true">📆</span> Google Calendar`,
+      onClick: () => window.open(e.gcalLink, "_blank", "noopener") },
+    { label: `<span aria-hidden="true">📥</span> iCalendar (.ics)`,
+      onClick: () => downloadICS(e) },
+  ]);
+}
+
 function buildCard(e, now) {
   const live = isLive(e, now);
   const id = eventId(e);
@@ -587,7 +739,7 @@ function buildCard(e, now) {
   const rightActions = [
     `<button type="button" class="tgw-action tgw-share" title="Share this event"><span aria-hidden="true">🔗</span> <span class="tgw-share-label">Share</span></button>`,
     e.gcalLink
-      ? `<a class="tgw-action tgw-cal" href="${e.gcalLink}" target="_blank" rel="noopener" title="Add to Google Calendar"><span aria-hidden="true">📅</span> Add to calendar</a>`
+      ? `<button type="button" class="tgw-action tgw-cal" title="Add to calendar"><span aria-hidden="true">📅</span> Add to calendar</button>`
       : "",
   ].filter(Boolean).join("");
 
@@ -636,6 +788,11 @@ function buildCard(e, now) {
   if (shareBtn) shareBtn.addEventListener("click", (ev) => {
     ev.preventDefault();
     shareEvent(e, ev.currentTarget);
+  });
+  const calBtn = card.querySelector(".tgw-cal");
+  if (calBtn) calBtn.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    openCalendarMenu(e, ev.currentTarget);
   });
 
   return card;
