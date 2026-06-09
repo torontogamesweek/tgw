@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sponsors</title>
+
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    background:#e9e9ee;            /* grey margin = clear crop edge */
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .slide{
+    background:#ffffff;
+    width:min(100%, 1280px);
+    aspect-ratio:16 / 9;           /* matches a standard Google Slide */
+    padding:clamp(18px, 2.6vw, 40px);
+    display:grid;
+    grid-template-columns:repeat(10, 1fr);
+    grid-template-rows:repeat(5, 1fr);
+    gap:clamp(8px, 1.2vw, 18px);
+    place-items:center;
+  }
+  .slide img{
+    max-width:88%;
+    max-height:88%;
+    object-fit:contain;
+  }
+</style>
+</head>
+<body>
+  <section class="slide" id="grid"></section>
+<script>
+  // [sponsor name, exact file name]
+  const SPONSORS = [
+    ["AMD", "TGW26_LogoSm_AMD.png"],
+    ["Baby Ghosts", "TGW26_LogoSm_Baby-Ghosts.png"],
+    ["Bonus Stage", "TGW26_LogoSm_Bonus-Stage.png"],
+    ["Broken Games Collective", "TGW26_LogoSm_Broken-Games-Collective.png"],
+    ["City of Toronto", "TGW26_LogoSm_City-of-Toronto.png"],
+    ["CrowdParty", "TGW26_LogoSm_CrowdParty.png"],
+    ["CWA Canada / CODE-CANADA", "TGW26_LogoSm_CODE-CWA.png"],
+    ["Demo Room", "TGW26_LogoSm_Demo-Room.png"],
+    ["Dirty Rectangles", "TGW26_LogoSm_Dirty-Rectangles.png"],
+    ["Drinkbox Games", "TGW26_LogoSm_Drinkbox-Studios.png"],
+    ["Droqen", "TGW26_LogoSm_droqen.png"],
+    ["Funland", "TGW26_LogoSm_Funland.png"],
+    ["GAIN", "TGW26_LogoSm_GAIN.png"],
+    ["GamerELLA", "TGW26_LogoSm_Gamerella.png"],
+    ["George Brown College", "TGW26_LogoSm_George-Brown-College.png"],
+    ["Get Set Games", "TGW26_LogoSm_GetSetGames.png"],
+    ["Hand Eye Society", "TGW26_LogoSm_Hand-Eye-Society.png"],
+    ["Hypergame Storytime", "TGW26_LogoSm_Hypergame-Storytime.png"],
+    ["IGDA Toronto", "TGW26_LogoSm_IGDA.png"],
+    ["InterAccess", "TGW26_LogoSm_Interaccess.png"],
+    ["Interactive Ontario", "TGW26_LogoSm_Interactive-Ontario.png"],
+    ["Kitten Cup Studio", "TGW26_LogoSm_Kitten-Cup-Studio.png"],
+    ["Lady Arcaders", "TGW26_LogoSm_Lady-Arcaders.png"],
+    ["Level Up", "TGW26_LogoSm-Level-Up-Showcase.png"],
+    ["Morty", "TGW26_LogoSm_Morty.png"],
+    ["Music Publishers Canada", "TGW26_LogoSm_Music-Publishers-Canada.png"],
+    ["OCADU", "TGW26_LogoSm_OCADU.png"],
+    ["Ontario Creates", "TGW26_LogoSm_Ontario-Creates.png"],
+    ["Ravine Studio", "TGW26_LogoSm_RavineStudio.png"],
+    ["Red Bull", "TGW26_LogoSm_Red-Bull-Gaming-Hub.png"],
+    ["ROM (Royal Ontario Museum)", "TGW26_LogoSm_ROM.png"],
+    ["Sago Mini", "TGW26_LogoSm_SagoMini.png"],
+    ["Screen Composers Guild of Canada", "TGW26_LogoSm_Screen-Composers-Guild-Canada.png"],
+    ["Team Hero Coder", "TGW26_LogoSm_Team-Hero-Coder.png"],
+    ["The G.R.I.D.", "TGW26_LogoSm_GRID.png"],
+    ["TO Jam", "TGW26_LogoSm_TO-Jam.png"],
+    ["Toronto Escape Room Meetup", "TGW26_LogoSm_Toronto-Escape-Room-Meetup.png"],
+    ["Toronto Game Audio Collective", "TGW26_LogoSm_Toronto-Game-Audio-Collective.png"],
+    ["Toronto Metropolitan University", "TGW26_LogoSm_TMU.png"],
+    ["Toronto Public Library", "TGW26_LogoSm_Toronto-Public-Library.png"],
+    ["Trainwreck Labs", "TGW26_LogoSm_Trainwreck-Labs.png"],
+    ["TTL Makerspace", "TGW26_LogoSm_TTL-Makerspace.png"],
+    ["Unity", "TGW26_LogoSm_Unity-Color.png"],
+    ["University of Toronto Electronic Music Studio", "TGW26_LogoSm_UofT-Music.png"],
+    ["Unreal Education / EPIC", "TGW26_LogoSm_Epic-Games.png"],
+    ["UTM Library", "TGW26_LogoSm_UTM-Library.png"],
+    ["Vivid Foundry", "TGW26_LogoSm_Vivid-Foundry.png"],
+    ["Wero", "TGW26_LogoSm_wero.png"],
+    ["XP Gaming Inc.", "TGW26_LogoSm_XP-Gaming.png"],
+    ["York University", "TGW26_LogoSm_YorkU.png"]
+  ];
+
+  SPONSORS.sort((a, b) => a[0].localeCompare(b[0], "en", { sensitivity: "base" }));
+
+  const grid = document.getElementById("grid");
+  SPONSORS.forEach(([name, file]) => {
+    const img = document.createElement("img");
+    img.src = "images/logos/2026/" + encodeURIComponent(file);
+    img.alt = name;
+    img.loading = "lazy";
+    grid.appendChild(img);
+  });
+</script>
+</body>
+</html>
