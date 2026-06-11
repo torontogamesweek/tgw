@@ -1196,3 +1196,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(() => boot())
     .catch((error) => console.error("Error displaying events:", error));
 });
+
+
+// const logo = document.getElementById('logo');
+// const main = document.getElementById('main-schedule');
+// const sync = () => main.style.marginTop = (logo.offsetHeight + 16) + 'px';
+// logo.complete ? sync() : logo.addEventListener('load', sync);
+// addEventListener('resize', sync);

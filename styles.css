@@ -3146,6 +3146,7 @@ canvas#canvas {
   width: 100%;
   display: block;
   /* NO margin or padding here anymore */
+  max-width: 1500px;
 }
 
 #logo-wrapper {

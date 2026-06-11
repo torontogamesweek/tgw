@@ -76,9 +76,7 @@
         align-items: center;
         padding: 0;
       }
-      @media (max-width: 767px) {
-        #main-schedule { margin-top: 7rem; }
-      }
+
 
  
 
@@ -252,7 +250,7 @@
         top: 0;
         z-index: 100;
         width: 100%;
-        margin-top: 4.25rem;
+        margin-top: 1.25rem;
         margin-bottom: 1rem;
         background: rgba(184, 216, 240, 0.96);
         backdrop-filter: blur(6px);
@@ -834,6 +832,16 @@
         .tgw-avatar { width: 2.6rem; height: 2.6rem; }
         .tgw-actions-right { justify-content: flex-start; }
       }
+
+#logo-wrapper,
+#logo { pointer-events: none; }
+
+#main-schedule { margin-top: calc(11vw + 1rem); }       /* desktop logo */
+
+@media (max-width: 767px) {
+  #main-schedule { margin-top: calc(27vw + 1rem); }     /* taller mobile logo */
+}
+
     </style>
   </head>
 
