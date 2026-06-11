@@ -26,13 +26,7 @@
     <link rel="manifest" href="/images/2026/favicon/site.webmanifest" />
 
     <style>
-      /* ====================================================================
-         SCHEDULE PAGE — scoped with .tgw- prefixes to avoid clashing with
-         the shared styles.css (.event / .title / .date etc).
-         Palette + fonts inherited from the site: Alegreya (display),
-         Merriweather (body), purple #5f32f3, blue wash #b8d8f0.
-         ==================================================================== */
-
+  
       :root {
         --tgw-purple: #5f32f3;
         --tgw-purple-soft: rgba(95, 50, 243, 0.12);
@@ -47,7 +41,9 @@
 
       /* Page sits right below the logo header (no full-screen poster here) */
       #posterContainer,
-      canvas#canvas { display: none !important; }
+      canvas#canvas {
+        display: none !important;
+      }
 
       /* Safety net: this page has no poster/canvas overlay, so all schedule
          content must be interactive even if #main-schedule ever carries the
@@ -65,7 +61,9 @@
       .tgw-share,
       .tgw-action,
       .tgw-addr-link,
-      .tgw-clear-all { pointer-events: auto; }
+      .tgw-clear-all {
+        pointer-events: auto;
+      }
 
       #main-schedule {
         position: relative;
@@ -77,12 +75,16 @@
         padding: 0;
       }
 
-
- 
-
       /* ── TIME-AWARE "NOW" BAND ─────────────────────────────── */
-      .tgw-now { width: 100%; display: flex; justify-content: center; padding: 0 1rem; }
-      .tgw-now:empty { display: none; }
+      .tgw-now {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem;
+      }
+      .tgw-now:empty {
+        display: none;
+      }
       .tgw-now-inner {
         margin-top: 4rem;
         width: 100%;
@@ -212,36 +214,72 @@
         color: var(--tgw-coral);
         animation: tgw-begun-twinkle 1.6s ease-in-out infinite;
       }
-      .tgw-begun-spark--l { left: 1.1rem; }
-      .tgw-begun-spark--r { right: 1.1rem; animation-delay: 0.8s; }
+      .tgw-begun-spark--l {
+        left: 1.1rem;
+      }
+      .tgw-begun-spark--r {
+        right: 1.1rem;
+        animation-delay: 0.8s;
+      }
       @keyframes tgw-begun-pop {
-        from { opacity: 0; transform: scale(0.94) translateY(8px); }
-        to   { opacity: 1; transform: scale(1) translateY(0); }
+        from {
+          opacity: 0;
+          transform: scale(0.94) translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
       }
       @keyframes tgw-begun-rise {
-        from { opacity: 0; transform: translateY(6px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       @keyframes tgw-begun-twinkle {
-        0%, 100% { opacity: 0.35; transform: scale(0.85); }
-        50%      { opacity: 1; transform: scale(1.15); }
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         .tgw-now--begun .tgw-now-inner.tgw-begun,
-        .tgw-begun-kicker, .tgw-begun-title, .tgw-begun-sub,
-        .tgw-begun-spark { animation: none; }
+        .tgw-begun-kicker,
+        .tgw-begun-title,
+        .tgw-begun-sub,
+        .tgw-begun-spark {
+          animation: none;
+        }
       }
       .tgw-live-dot {
-        width: 8px; height: 8px; border-radius: 50%;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
         background: var(--tgw-coral);
         box-shadow: 0 0 0 0 rgba(252, 111, 68, 0.6);
         animation: tgw-pulse 1.8s infinite;
         display: inline-block;
       }
       @keyframes tgw-pulse {
-        0% { box-shadow: 0 0 0 0 rgba(252, 111, 68, 0.55); }
-        70% { box-shadow: 0 0 0 7px rgba(252, 111, 68, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(252, 111, 68, 0); }
+        0% {
+          box-shadow: 0 0 0 0 rgba(252, 111, 68, 0.55);
+        }
+        70% {
+          box-shadow: 0 0 0 7px rgba(252, 111, 68, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(252, 111, 68, 0);
+        }
       }
 
       /* ── STICKY CONTROLS ───────────────────────────────────── */
@@ -294,7 +332,10 @@
         background: transparent;
         cursor: pointer;
         font-family: "Alegreya", sans-serif;
-        transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+        transition:
+          transform 0.12s ease,
+          background 0.15s ease,
+          border-color 0.15s ease;
       }
       .tgw-day-pill:hover:not(.is-active):not(:disabled) {
         background: rgba(255, 255, 255, 0.95);
@@ -315,8 +356,13 @@
         letter-spacing: 0.02em;
         white-space: nowrap;
       }
-      .tgw-day-pill .tgw-pill-abbr { text-transform: uppercase; }
-      .tgw-day-pill .tgw-pill-date { color: var(--tgw-ink-soft); font-weight: bold; }
+      .tgw-day-pill .tgw-pill-abbr {
+        text-transform: uppercase;
+      }
+      .tgw-day-pill .tgw-pill-date {
+        color: var(--tgw-ink-soft);
+        font-weight: bold;
+      }
       .tgw-day-pill .tgw-pill-count {
         font-size: 0.72rem;
         font-weight: bold;
@@ -324,26 +370,42 @@
       }
       .tgw-day-pill.is-active .tgw-pill-top,
       .tgw-day-pill.is-active .tgw-pill-date,
-      .tgw-day-pill.is-active .tgw-pill-count { color: #fff; }
-      .tgw-day-pill.is-empty { opacity: 0.4; cursor: default; }
-.tgw-day-pill--all {
+      .tgw-day-pill.is-active .tgw-pill-count {
+        color: #fff;
+      }
+      .tgw-day-pill.is-empty {
+        opacity: 0.4;
+        cursor: default;
+      }
+      .tgw-day-pill--all {
         flex: 0 0 auto;
         padding-left: 0.7rem;
         padding-right: 0.7rem;
         border: 1.5px dashed var(--tgw-purple-line);
         background: rgba(255, 255, 255, 0.55);
       }
-      .tgw-day-pill--all.is-active { border-style: solid; }
-      .tgw-day-pill--all .tgw-pill-top { flex-direction: row; }
+      .tgw-day-pill--all.is-active {
+        border-style: solid;
+      }
+      .tgw-day-pill--all .tgw-pill-top {
+        flex-direction: row;
+      }
       .tgw-day-pill--all .tgw-pill-top::before {
         content: "↺";
         margin-right: 0.25rem;
         color: var(--tgw-purple);
       }
-      .tgw-day-pill--all.is-active .tgw-pill-top::before { color: #fff; }      .tgw-all-short { display: none; }
+      .tgw-day-pill--all.is-active .tgw-pill-top::before {
+        color: #fff;
+      }
+      .tgw-all-short {
+        display: none;
+      }
 
       /* TYPE CHIPS — secondary, lighter refinement */
-      .tgw-type-wrap { margin-top: 0.7rem; }
+      .tgw-type-wrap {
+        margin-top: 0.7rem;
+      }
       .tgw-type-row {
         display: flex;
         justify-content: center;
@@ -364,7 +426,10 @@
         transition: all 0.12s ease;
         letter-spacing: 0.01em;
       }
-      .tgw-type-chip:hover { border-color: var(--tgw-purple); color: var(--tgw-purple); }
+      .tgw-type-chip:hover {
+        border-color: var(--tgw-purple);
+        color: var(--tgw-purple);
+      }
       .tgw-type-chip.is-active {
         background: var(--tgw-purple-soft);
         border-color: rgba(95, 50, 243, 0.55);
@@ -453,7 +518,9 @@
         border-bottom: 2px solid var(--tgw-purple-line);
         scroll-margin-top: 150px;
       }
-      .tgw-day-sep:first-child { margin-top: 0.5rem; }
+      .tgw-day-sep:first-child {
+        margin-top: 0.5rem;
+      }
       .tgw-day-num {
         font-family: "Alegreya", sans-serif;
         font-weight: bold;
@@ -464,7 +531,10 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-      .tgw-day-text { display: flex; flex-direction: column; }
+      .tgw-day-text {
+        display: flex;
+        flex-direction: column;
+      }
       .tgw-day-name {
         font-family: "Alegreya", sans-serif;
         font-weight: bold;
@@ -490,7 +560,10 @@
       }
 
       /* ── EVENT CARD ────────────────────────────────────────── */
-      .tgw-event { margin-bottom: 1rem; scroll-margin-top: 150px; }
+      .tgw-event {
+        margin-bottom: 1rem;
+        scroll-margin-top: 150px;
+      }
       .tgw-card {
         position: relative;
         display: flex;
@@ -502,7 +575,10 @@
         border-radius: 12px;
         padding: 1.25rem 1.35rem;
         text-align: left;
-        transition: border-color 0.2s ease, border-left-color 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          border-color 0.2s ease,
+          border-left-color 0.2s ease,
+          box-shadow 0.2s ease;
       }
       .tgw-card:hover {
         border-left-color: rgba(95, 50, 243, 0.55);
@@ -531,7 +607,9 @@
         min-width: 0;
         padding-right: 2.2rem; /* clears the star button */
       }
-      .tgw-card-body { margin-top: 0.65rem; }
+      .tgw-card-body {
+        margin-top: 0.65rem;
+      }
 
       /* star / save button — top-right corner */
       .tgw-star {
@@ -551,12 +629,23 @@
         line-height: 1;
         color: var(--tgw-ink-faint);
         border-radius: 50%;
-        transition: transform 0.12s ease, color 0.12s ease, background 0.12s ease;
+        transition:
+          transform 0.12s ease,
+          color 0.12s ease,
+          background 0.12s ease;
         z-index: 2;
       }
-      .tgw-star:hover { background: rgba(245, 197, 66, 0.16); color: #e0a81e; transform: scale(1.12); }
-      .tgw-star.is-starred { color: #f0b400; }
-      .tgw-star.is-starred .tgw-star-glyph { filter: drop-shadow(0 1px 1px rgba(224, 168, 30, 0.45)); }
+      .tgw-star:hover {
+        background: rgba(245, 197, 66, 0.16);
+        color: #e0a81e;
+        transform: scale(1.12);
+      }
+      .tgw-star.is-starred {
+        color: #f0b400;
+      }
+      .tgw-star.is-starred .tgw-star-glyph {
+        filter: drop-shadow(0 1px 1px rgba(224, 168, 30, 0.45));
+      }
 
       /* mascot avatar — circle frame, image fully visible (not cropped) */
       .tgw-avatar {
@@ -584,7 +673,9 @@
         margin-bottom: 0.3rem;
         font-size: 1rem;
       }
-      .tgw-sep { color: var(--tgw-purple-line); }
+      .tgw-sep {
+        color: var(--tgw-purple-line);
+      }
       .tgw-live {
         display: inline-flex;
         align-items: center;
@@ -601,9 +692,18 @@
         color: rgba(85, 45, 155, 0.95);
         margin: 0 0 0.5rem;
       }
-      @media (min-width: 600px) { .tgw-title { font-size: 1.55rem; } }
+      @media (min-width: 600px) {
+        .tgw-title {
+          font-size: 1.55rem;
+        }
+      }
 
-      .tgw-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.6rem; }
+      .tgw-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-bottom: 0.6rem;
+      }
       .tgw-chip-tag {
         font-family: "Alegreya", sans-serif;
         font-weight: bold;
@@ -622,7 +722,10 @@
         color: rgba(14, 8, 42, 0.68);
         margin: 0;
       }
-      .tgw-desc a { color: var(--tgw-purple); font-weight: bold; }
+      .tgw-desc a {
+        color: var(--tgw-purple);
+        font-weight: bold;
+      }
 
       .tgw-loc {
         font-family: "Merriweather", serif;
@@ -635,7 +738,9 @@
         gap: 0.15rem 0.4rem;
         line-height: 1.4;
       }
-      .tgw-addr-link { text-decoration: none; }
+      .tgw-addr-link {
+        text-decoration: none;
+      }
       .tgw-addr {
         font-size: 0.76rem;
         color: var(--tgw-ink-faint);
@@ -664,11 +769,17 @@
         gap: 0.5rem;
         min-width: 0;
       }
-      .tgw-actions-left { justify-content: flex-start; }
-      .tgw-actions-right { justify-content: flex-end; }
+      .tgw-actions-left {
+        justify-content: flex-start;
+      }
+      .tgw-actions-right {
+        justify-content: flex-end;
+      }
       /* if either cluster is empty it shouldn't claim a flex slot */
       .tgw-actions-left:empty,
-      .tgw-actions-right:empty { display: none; }
+      .tgw-actions-right:empty {
+        display: none;
+      }
 
       .tgw-action {
         font-family: "Alegreya", sans-serif;
@@ -693,7 +804,10 @@
         text-align: center;
         max-width: 100%;
       }
-      .tgw-register:hover { filter: brightness(1.08); color: #fff; }
+      .tgw-register:hover {
+        filter: brightness(1.08);
+        color: #fff;
+      }
       .tgw-share,
       .tgw-cal {
         border: 1.5px solid var(--tgw-purple-line);
@@ -701,7 +815,9 @@
         background: rgba(255, 255, 255, 0.8);
       }
       .tgw-share:hover,
-      .tgw-cal:hover { background: var(--tgw-purple-soft); }
+      .tgw-cal:hover {
+        background: var(--tgw-purple-soft);
+      }
       .tgw-share.is-copied {
         border-color: rgba(103, 204, 94, 0.6);
         background: rgba(103, 204, 94, 0.18);
@@ -729,7 +845,10 @@
         color: var(--tgw-ink-soft);
         white-space: nowrap;
       }
-      .tgw-price.is-free { background: rgba(103, 204, 94, 0.18); color: #2f7a2a; }
+      .tgw-price.is-free {
+        background: rgba(103, 204, 94, 0.18);
+        color: #2f7a2a;
+      }
 
       /* empty state */
       .tgw-empty {
@@ -770,23 +889,45 @@
         text-underline-offset: 3px;
         transition: color 0.12s ease;
       }
-      .tgw-tag-reset-link:hover { color: var(--tgw-purple); }
-      .tgw-tag-reset-link span { color: var(--tgw-purple); font-weight: bold; }
+      .tgw-tag-reset-link:hover {
+        color: var(--tgw-purple);
+      }
+      .tgw-tag-reset-link span {
+        color: var(--tgw-purple);
+        font-weight: bold;
+      }
 
       /* ── DESKTOP TWEAKS ────────────────────────────────────── */
       @media (min-width: 768px) {
-        .tgw-day-num { font-size: 3rem; }
-        .tgw-day-name { font-size: 1.75rem; }
-        .tgw-avatar { width: 3.5rem; height: 3.5rem; }
-        .tgw-card { padding: 1.5rem 1.6rem; gap: 1.25rem; }
+        .tgw-day-num {
+          font-size: 3rem;
+        }
+        .tgw-day-name {
+          font-size: 1.75rem;
+        }
+        .tgw-avatar {
+          width: 3.5rem;
+          height: 3.5rem;
+        }
+        .tgw-card {
+          padding: 1.5rem 1.6rem;
+          gap: 1.25rem;
+        }
       }
 
       /* ── MOBILE ────────────────────────────────────────────── */
       @media (max-width: 767px) {
         /* tighter vertical rhythm up top */
-        .tgw-now { padding: 0 0.6rem; }
-        .tgw-now-inner.tgw-countdown { margin-top: 0; padding: 1.1rem 0.9rem 1rem; }
-        .tgw-controls-inner { padding: 0.4rem 0.5rem 0.5rem; }
+        .tgw-now {
+          padding: 0 0.6rem;
+        }
+        .tgw-now-inner.tgw-countdown {
+          margin-top: 0;
+          padding: 1.1rem 0.9rem 1rem;
+        }
+        .tgw-controls-inner {
+          padding: 0.4rem 0.5rem 0.5rem;
+        }
 
         /* All seven days fit in the track without sideways scroll: no gap,
            minimal padding, pills share the width evenly. */
@@ -798,11 +939,26 @@
           gap: 0;
           padding: 0.22rem;
         }
-        .tgw-day-row::-webkit-scrollbar { display: none; }
-        .tgw-day-pill { flex: 1 1 0; min-width: 0; padding-left: 0; padding-right: 0; }
-        .tgw-day-pill--all { flex: 0 0 auto; padding-left: 5px; padding-right: 5px; }
-        .tgw-all-full { display: none; }
-        .tgw-all-short { display: inline; }
+        .tgw-day-row::-webkit-scrollbar {
+          display: none;
+        }
+        .tgw-day-pill {
+          flex: 1 1 0;
+          min-width: 0;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .tgw-day-pill--all {
+          flex: 0 0 auto;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+        .tgw-all-full {
+          display: none;
+        }
+        .tgw-all-short {
+          display: inline;
+        }
 
         /* Day pills stack the abbreviation over the date and drop the event
            count, so "THU / 11" fits without crowding. */
@@ -812,36 +968,66 @@
           gap: 0;
           line-height: 1.1;
         }
-        .tgw-day-pill .tgw-pill-count { display: none; }
+        .tgw-day-pill .tgw-pill-count {
+          display: none;
+        }
 
         /* Type + quick filters are always visible on mobile — they're compact
            enough that hiding them behind a toggle wasn't worth the friction.
            Tighten the gaps and shrink the chips so they pack in neatly. */
-        .tgw-type-row { display: flex; gap: 0.3rem; }
-        .tgw-quick-row { gap: 0.3rem; }
-        .tgw-type-chip { font-size: 0.85rem; padding: 0.15rem 0.55rem; }
+        .tgw-type-row {
+          display: flex;
+          gap: 0.3rem;
+        }
+        .tgw-quick-row {
+          gap: 0.3rem;
+        }
+        .tgw-type-chip {
+          font-size: 0.85rem;
+          padding: 0.15rem 0.55rem;
+        }
 
-        .tgw-now-inner { flex-direction: column; }
-        .tgw-begun-title { font-size: 1.6rem; }
-        .tgw-begun-sub { font-size: 0.85rem; }
+        .tgw-now-inner {
+          flex-direction: column;
+        }
+        .tgw-begun-title {
+          font-size: 1.6rem;
+        }
+        .tgw-begun-sub {
+          font-size: 0.85rem;
+        }
 
         /* Card: only the header (avatar + title) shares a row; the body runs
            full width below, so the avatar no longer shoves the text over. */
-        .tgw-card { padding: 1.1rem; }
-        .tgw-card-head { gap: 0.7rem; }
-        .tgw-avatar { width: 2.6rem; height: 2.6rem; }
-        .tgw-actions-right { justify-content: flex-start; }
+        .tgw-card {
+          padding: 1.1rem;
+        }
+        .tgw-card-head {
+          gap: 0.7rem;
+        }
+        .tgw-avatar {
+          width: 2.6rem;
+          height: 2.6rem;
+        }
+        .tgw-actions-right {
+          justify-content: flex-start;
+        }
       }
 
-#logo-wrapper,
-#logo { pointer-events: none; }
+      #logo-wrapper,
+      #logo {
+        pointer-events: none;
+      }
 
-#main-schedule { margin-top: calc(11vw + 1rem); }       /* desktop logo */
+      #main-schedule {
+        margin-top: calc(11vw + 1rem);
+      } /* desktop logo */
 
-@media (max-width: 767px) {
-  #main-schedule { margin-top: calc(27vw + 1rem); }     /* taller mobile logo */
-}
-
+      @media (max-width: 767px) {
+        #main-schedule {
+          margin-top: calc(27vw + 1rem);
+        } /* taller mobile logo */
+      }
     </style>
   </head>
 
@@ -896,8 +1082,6 @@
     <canvas id="canvas"></canvas>
 
     <main id="main-schedule">
-   
-
       <!-- Time-aware band: countdown → happening-now → archive (filled by schedule.js) -->
       <div id="tgw-now" class="tgw-now"></div>
 
@@ -924,20 +1108,59 @@
 
       <div class="footer-content">
         <div class="social-horizontal">
-          <a href="https://www.facebook.com/profile.php?id=61568893716436" target="_blank" rel="noopener" class="social-icon facebook" aria-label="Follow us on Facebook">
-            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
+          <a
+            href="https://www.facebook.com/profile.php?id=61568893716436"
+            target="_blank"
+            rel="noopener"
+            class="social-icon facebook"
+            aria-label="Follow us on Facebook">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
           </a>
-          <a href="https://bsky.app/profile/torontogamesweek.com" target="_blank" rel="noopener" class="social-icon bluesky" aria-label="Follow us on Bluesky">
-            <svg viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" /></svg>
+          <a
+            href="https://bsky.app/profile/torontogamesweek.com"
+            target="_blank"
+            rel="noopener"
+            class="social-icon bluesky"
+            aria-label="Follow us on Bluesky">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 2.104.139 3.097.139 5.283.139 7.993c0 1.454.213 2.995.64 4.29.854 2.588 2.925 4.518 5.566 4.518.468 0 .914-.133 1.283-.38.442 4.303 1.167 7.529 4.372 7.529s3.93-3.226 4.372-7.529c.37.247.815.38 1.283.38 2.641 0 4.712-1.93 5.566-4.518.427-1.295.64-2.836.64-4.29 0-2.71 0-4.896-.763-5.889C22.439 1.266 21.434.944 18.798 2.805 16.046 4.747 13.087 8.686 12 10.8z" />
+            </svg>
           </a>
-          <a href="https://www.instagram.com/torontogamesweek/" target="_blank" rel="noopener" class="social-icon instagram" aria-label="Follow us on Instagram">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+          <a
+            href="https://www.instagram.com/torontogamesweek/"
+            target="_blank"
+            rel="noopener"
+            class="social-icon instagram"
+            aria-label="Follow us on Instagram">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
           </a>
-          <a href="https://www.tiktok.com/@torontogamesweek" target="_blank" rel="noopener" class="social-icon tiktok" aria-label="Follow us on TikTok">
-            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+          <a
+            href="https://www.tiktok.com/@torontogamesweek"
+            target="_blank"
+            rel="noopener"
+            class="social-icon tiktok"
+            aria-label="Follow us on TikTok">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+            </svg>
           </a>
-          <a href="https://torontogamesweek.eo.page/76xn9" target="_blank" rel="noopener" class="social-icon newsletter" aria-label="Subscribe to our newsletter">
-            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
+          <a
+            href="https://torontogamesweek.eo.page/76xn9"
+            target="_blank"
+            rel="noopener"
+            class="social-icon newsletter"
+            aria-label="Subscribe to our newsletter">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
           </a>
         </div>
         <div class="footer-credit">
