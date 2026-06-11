@@ -875,6 +875,49 @@ function renderSchedule() {
     footer.appendChild(btn);
     container.appendChild(footer);
   }
+
+  if (state.day) {
+    const d = DAYS.find((x) => x.abbr === state.day);
+    const isToday = state.phase === "during" && todayAbbr(state.now) === state.day;
+    const dayLabel = isToday ? "today's" : (d ? d.weekday + "'s" : "this day's");
+
+    const endNote = document.createElement("div");
+    endNote.className = "tgw-day-end";
+    endNote.style.cssText =
+      "text-align:center;margin-top:2.5rem;padding-top:1.75rem;" +
+      "border-top:2px solid var(--tgw-purple-line);";
+    endNote.innerHTML =
+      `<p style="font-family:'Merriweather',serif;font-size:0.95rem;` +
+      `color:var(--tgw-ink-soft);margin:0 0 0.9rem;">` +
+      `You've reached the end of ${dayLabel} events.</p>` +
+      `<button type="button" class="tgw-clear-all tgw-day-end-btn">` +
+      `See all upcoming events <span aria-hidden="true">↗</span></button>`;
+    endNote.querySelector(".tgw-day-end-btn").addEventListener("click", () => {
+      const prevDay = state.day;          // remember the day they were viewing
+      state.day = null;
+      state.types.clear();
+      state.freeOnly = false;
+      state.starredOnly = false;
+      renderAll();
+
+
+      requestAnimationFrame(() => {
+        const idx = DAYS.findIndex((x) => x.abbr === prevDay);
+        let target = null;
+        for (let i = idx + 1; i < DAYS.length; i++) {
+          const el = document.getElementById("day-" + DAYS[i].abbr.toLowerCase());
+          if (el) { target = el; break; }
+        }
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          // They were on the last day with events — just go to the foot.
+          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+      });
+    });
+    container.appendChild(endNote);
+  }
 }
 
 /* ---------- controls: day timeline + type chips ---------- */
