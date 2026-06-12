@@ -1980,7 +1980,7 @@ class BrushGame extends BaseGame {
     };
     this.colours = ["#64B5F6", "#81C784", "#FFB74D", "#F06292", "#BA68C8", "#4DD0E1"];
 
-    const brushBallCount = Config.NUM_BALL_IMAGES * 3;
+    const brushBallCount = 25;
     for (let i = 0; i < brushBallCount; i++) {
       this.balls.push(
         this.createBall({
