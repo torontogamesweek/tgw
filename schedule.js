@@ -220,17 +220,40 @@ function rowToObject(headers, row) {
   return obj;
 }
 
+const NEXTCLOUD_GRID_URL = "/schedule-data.json";
+
+function wantsNextcloudSource() {
+  return new URLSearchParams(window.location.search).get("source") === "nc";
+}
+
+async function loadGvizGrid() {
+  const response = await fetch(SHEET_URL);
+  const csvText = await response.text();
+  const semicolonCsv = csvText.replace(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/g, ";");
+  const rows = parseCSV(semicolonCsv);
+  if (rows.length === 0) return { headers: [], rows: [] };
+  return { headers: rows[0].map((header) => header.trim()), rows: rows.slice(1) };
+}
+
+async function loadNextcloudGrid() {
+  const response = await fetch(NEXTCLOUD_GRID_URL, { cache: "no-store" });
+  if (!response.ok) throw new Error(`schedule-data.json returned ${response.status}`);
+  const grid = await response.json();
+  return { headers: grid.headers, rows: grid.rows };
+}
+
+async function loadScheduleGrid() {
+  const source = wantsNextcloudSource() ? "nextcloud" : "gviz";
+  const grid = source === "nextcloud" ? await loadNextcloudGrid() : await loadGvizGrid();
+  console.log(`schedule source: ${source}, rows: ${grid.rows.length}`);
+  return grid;
+}
+
 async function fetchSheetData() {
   try {
-    const response = await fetch(SHEET_URL);
-    const csvText = await response.text();
-    const semicolonCsv = csvText.replace(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/g, ";");
-    const rows = parseCSV(semicolonCsv);
-    if (rows.length === 0) return [];
+    const { headers, rows } = await loadScheduleGrid();
 
-    const headers = rows[0].map((header) => header.trim());
-
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 0; i < rows.length; i++) {
       const rowData = rowToObject(headers, rows[i]);
 
       const name = rowData["Event Name"] || "";
@@ -242,8 +265,8 @@ async function fetchSheetData() {
       const linkInfo = rowData["Registration"] || "";
       let link = rowData["Event link"] || "";
       const incomplete = rowData["Status"];
-      const startTime = rowData["Event Start Time"].slice(0, -3) || "";
-      const endTime = rowData["Event End Time"].slice(0, -3) || "";
+      const startTime = (rowData["Event Start Time"] || "").slice(0, -3);
+      const endTime = (rowData["Event End Time"] || "").slice(0, -3);
       let icon = rowData["Icon"] || "";
       const iconAlt = rowData["Alttext"] || "";
       const categories = rowData["Target Audience"] ? rowData["Target Audience"].split(",") : [];
