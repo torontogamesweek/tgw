@@ -1,0 +1,1104 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Toronto Games Week//Schedule//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Toronto Games Week
+X-WR-TIMEZONE:America/Toronto
+BEGIN:VTIMEZONE
+TZID:America/Toronto
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:f91e3c03140cec932c6d7502a4aca905fb59630f@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260611T200000
+DTEND;TZID=America/Toronto:20260611T230000
+SUMMARY:Giant Video Games & TGW Kickoff
+LOCATION:Canada Malting Silos\, 9 Eireann Quay
+DESCRIPTION:Come celebrate the beginning of Toronto Games Week outdoors at 
+ the waterfront! Meet some new folks and get hyped for the big event at sun
+ down: massive playable projected Toronto video games on the historic Canad
+ a Malting Silos\, an arcade of locally made video games for you to explore
+  and food stalls with marvellous snacks.  Made possible by Unity\, OCAD Un
+ iversity and Interactive Ontario. Presented by the City of Toronto.\nPrice
+ : Free\, just show up!\nRegistration: More info here.\nLink: https://www.t
+ oronto.ca/explore-enjoy/festivals-events/video-game-month/?event_id=491b10
+ 6a-724e-4837-b514-3f0b87ed3c32&event_name=Giant%20Video%20Games%20%26%20To
+ ronto%20Games%20Week%20Kickoff&calendar_date=2026-06-11T20:00:00-04:00\nMa
+ p: P1 Express Park
+URL:https://www.toronto.ca/explore-enjoy/festivals-events/video-game-month/
+ ?event_id=491b106a-724e-4837-b514-3f0b87ed3c32&event_name=Giant%20Video%20
+ Games%20%26%20Toronto%20Games%20Week%20Kickoff&calendar_date=2026-06-11T20
+ :00:00-04:00
+END:VEVENT
+BEGIN:VEVENT
+UID:a2161b6e1e8c28d3be3e9de5df744db9d332505c@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260611T110000
+DTEND;TZID=America/Toronto:20260611T160000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nRegistration: 
+ Tickets required.\nLink: https://tickets.rom.on.ca/en/shop\nMap: 100 Queen
+ 's Park
+URL:https://tickets.rom.on.ca/en/shop
+END:VEVENT
+BEGIN:VEVENT
+UID:6633b8ae6ac1051b79668d5d0a16ddda49ee399f@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260611T170000
+DTEND;TZID=America/Toronto:20260611T190000
+SUMMARY:Journalling for Your Games and Creative Work
+LOCATION:Fort York Public Library\, 190 Fort York Blvd.
+DESCRIPTION:There are many challenges to bring a project to life\, includin
+ g in technical\, creative\, and business processes. Join Tanya Kan from th
+ e game studio Vivid Foundry in a journalling workshop to reflect on your g
+ oals and priorities. Whether you’re working on a 1-month art piece or a 
+ 4-year game\, let’s be motivated in our human-first creative journey!\nD
+ ates/times: I would like to request 2 hours if possible\, though 1.5 hours
+  minimum can still work! Plus\, a 30 min networking space after the sessio
+ n will be grand. I think the latter is even more important.\nPrice: PWYC.\
+ nRegistration: Registration required.\nLink: https://www.eventbrite.ca/e/j
+ ournalling-for-your-games-and-creative-work-tickets-1989288265753\nMap: 19
+ 0 Fort York Blvd
+URL:https://www.eventbrite.ca/e/journalling-for-your-games-and-creative-wor
+ k-tickets-1989288265753
+END:VEVENT
+BEGIN:VEVENT
+UID:87db1eaa4be639da9bf8cf4bbe6a68f2f5092b8a@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260611T180000
+DTEND;TZID=America/Toronto:20260611T200000
+SUMMARY:An Intro to DaggerHeart
+LOCATION:Port Union Public Library\, 5450 Lawrence Ave. E.
+DESCRIPTION:Come learn the ins and outs of the tabletop roleplaying phenome
+ non known as DaggerHeart. Players will fall into the roles of our heroic a
+ dventurers and prove they have the strength\, skills\, knowledge and brave
+ ry to become the Games Week Champions! No prior TTRPG experience required.
+ \nPrice: Free!\nRegistration: Registration required.\nLink: https://tpl.bi
+ bliocommons.com/v2/events/69d6a557c1cf6f9a758407d0\nMap: 5450 Lawrence Ave
+  E
+URL:https://tpl.bibliocommons.com/v2/events/69d6a557c1cf6f9a758407d0
+END:VEVENT
+BEGIN:VEVENT
+UID:2bc60b84f2f8d63bf23919e0d2845a86c1d68e7d@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260611T190000
+DTEND;TZID=America/Toronto:20260611T200000
+SUMMARY:Secrets of MUDs and MUSHes from a Werewolf Elder
+LOCATION:Fort York Public Library\, 190 Fort York Blvd.
+DESCRIPTION:Come learn about the history of MUDs and MUSHes from a longtime
+  RetroMUX community Storyteller! Find out how the very first online rolepl
+ aying games persist after more than 45 years\, plus\, come play (bring a l
+ aptop\, tablet\, or phone!) on a noob-friendly MUSH set in cyberpunk Toron
+ to specially designed for TGW.\nPrice: Free\, just show up!\nMap: 190 Fort
+  York Blvd
+END:VEVENT
+BEGIN:VEVENT
+UID:e4f6d5a15f6d242b26fa6dcb7a9373d214178c70@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T110000
+DTEND;TZID=America/Toronto:20260612T160000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nPrice: Include
+ d with ROM ticket entry.\nRegistration: Tickets required.\nLink: https://t
+ ickets.rom.on.ca/en/shop\nMap: 100 Queen's Park
+URL:https://tickets.rom.on.ca/en/shop
+END:VEVENT
+BEGIN:VEVENT
+UID:cb528a1103b93582f9d7c9650afb3ee6841b7d56@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T130000
+DTEND;TZID=America/Toronto:20260612T210000
+SUMMARY:Hand Eye Society x Luminato at Sankofa Square
+LOCATION:Sankofa Square\, 1 Dundas St E.
+DESCRIPTION:As part of Luminato at Sankofa Square\, Hand Eye Society will p
+ resent the Torontron arcade cabinets featuring indie games by local develo
+ pers and game artists. The event invites indie game devs to meet up and ex
+ perience newly created video games\, alongside special performances by Lum
+ inato artists. Games\, circuses\, and concerts\, oh my!\nPrice: Free\, jus
+ t show up!\nRegistration: More info here.\nLink: https://www.luminatofesti
+ val.com/luminato-at-sankofa-square\nMap: 1 Dundas St E
+URL:https://www.luminatofestival.com/luminato-at-sankofa-square
+END:VEVENT
+BEGIN:VEVENT
+UID:71968a160f6652d9d191cd0d427c0419fb5043cc@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T160000
+DTEND;TZID=America/Toronto:20260612T210000
+SUMMARY:The G.R.I.D.
+LOCATION:George Brown Polytechnic WaterFront Campus\, 3 Lower Jarvis St.
+DESCRIPTION:The G.R.I.D. is a welcoming\, behind-the-scenes space where ind
+ ie devs\, studios\, and solo creators can show off their games\, get hones
+ t\, helpful feedback\, and keep improving - no matter what stage the game
+ ’s in. It’s all about structure\, support\, and moving your project fo
+ rward with fresh eyes and solid input. Registration required for playteste
+ rs or developers.\nPrice: Free!\nRegistration: Registration required.\nLin
+ k: https://playthegrid.games\nMap: 3 Lower Jarvis St
+URL:https://playthegrid.games
+END:VEVENT
+BEGIN:VEVENT
+UID:e6aa5244b243817e81763e259fc79b5a29692458@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T180000
+DTEND;TZID=America/Toronto:20260612T203000
+SUMMARY:No Bosses! Real talk from Toronto's cooperative game studios
+LOCATION:North York Central Auditorium\, 5120 Yonge St.
+DESCRIPTION:Meet Toronto indie game studios building a different kind of in
+ dustry -- one rooted in workers' rights\, sustainability\, and cooperation
+ . In this roundtable\, studio members share what they're learning as they 
+ build cooperative game studios from the ground up. Stick around to mingle 
+ after.\nPrice: Free!\nRegistration: Registration required.\nLink: https://
+ babyghosts.fund/events/no-bosses\nMap: 5120 Yonge St
+URL:https://babyghosts.fund/events/no-bosses
+END:VEVENT
+BEGIN:VEVENT
+UID:db74df116b26fa66c67a892a243496d88eb998b3@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T180000
+DTEND;TZID=America/Toronto:20260612T200000
+SUMMARY:The Sounds That Shape Play: A Toronto Game Audio Roundtable
+LOCATION:Lillian H. Smith Public Library\, 239 College St\, lower level
+DESCRIPTION:Hosted by the Toronto Game Audio Collective (TGAC)\, this inter
+ active roundtable session will bring together game audio creatives from ac
+ ross the GTA to connect to\, learn from\, and inspire one another. At this
+  roundtable\, we will explore how composers and audio artists can lead a g
+ ame’s creative direction through sound. This session is open to all prof
+ essional\, aspiring and enthusiasts of video game audio!\nPrice: Free!\nRe
+ gistration: FULL\, waitlist here.\nLink: https://torontogameaudioroundtabl
+ e.eventbrite.com\nMap: 239 College St
+URL:https://torontogameaudioroundtable.eventbrite.com
+END:VEVENT
+BEGIN:VEVENT
+UID:ce142773a942afe3ad1f3c5d6d71caf410d60d82@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T183000
+DTEND;TZID=America/Toronto:20260612T203000
+SUMMARY:Stoppage Time: A Despelote Live Play With Creator Julián Cordero
+LOCATION:U of T Bahen Centre\, 40 St. George St.\, 1160 Adel Sedra Auditori
+ um
+DESCRIPTION:IGF winner and Game Awards nom Despelote explores 2001 Ecuador\
+ , as the community is captivated by high stakes soccer. An autobiographica
+ l game\, you play as eight year old Julián Cordero\, witnessing a world l
+ ocked in anticipation. FUNLAND Zine proudly welcomes Cordero to an intimat
+ e\, in-person live play of the game\, where he will give insights into its
+  creation.\nPrice: Free\, just show up!\nMap: 40 St George St
+END:VEVENT
+BEGIN:VEVENT
+UID:0f56b26af2e929902739e6964a6ece4019e2987f@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T203000
+DTEND;TZID=America/Toronto:20260612T230000
+SUMMARY:Get Social @ FreePlay
+LOCATION:FreePlay Toronto Retro Arcade Bar\, 300 College St.
+DESCRIPTION:End the night playing games and sipping bevvies with fellow TGW
+  attendees at this local arcade bar! Trade stories and maybe go head to he
+ ad with new pals. All are welcome! Entry fee includes unlimited games and 
+ pinball machines.\nPrice: $10\nRegistration: Cover at the door.\nMap: 300 
+ College St
+END:VEVENT
+BEGIN:VEVENT
+UID:04a9873b7cf66b93912a0bb7f32467fc520e247d@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260612T204500
+DTEND;TZID=America/Toronto:20260612T235900
+SUMMARY:Toronto Escape Room Meetup and Many Happy Returns Kick-off Party
+LOCATION:Casa Loma\, 1 Austin Terrace
+DESCRIPTION:Every month\, the Toronto Escape Room Meetup hits up an escape 
+ room followed by a hangout at a nearby pub. This month\, join us as we do 
+ a one-hour escape room and then go to a pub to celebrate the kickoff of ou
+ r organizer’s immersive show (Many Happy Returns) coming to Toronto Frin
+ ge 2026! Join the Meetup group to register\, pre-pay\, and for pub timing.
+ \nDates/times: Escape rooms will be 1 hour each and start around 8\; we wi
+ ll then go to the afterparty location at a pub in the Annex (TBD) and be t
+ here until the crowd dissipates or the venue closes for the night.\nPrice:
+  $60\nRegistration: Registration required.\nLink: https://www.meetup.com/t
+ oronto-escape-rooms/\nMap: 1 Austin Terrace
+URL:https://www.meetup.com/toronto-escape-rooms/
+END:VEVENT
+BEGIN:VEVENT
+UID:1d6f8a5e95aa2959121e81768961602eccb5969d@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T100000
+DTEND;TZID=America/Toronto:20260613T160000
+SUMMARY:Open World Map: Digital Sovereignty for Game Creators
+LOCATION:Lillian H. Smith Public Library\, 239 College St.
+DESCRIPTION:Enshittified platforms and proprietary tools are not only makin
+ g the world worse\, but they make it harder for game creators to connect w
+ ith an audience. But as tech-savvy systems thinkers\, game creators are un
+ iquely positioned to push back in a number of ways. Join us for an inspiri
+ ng day of discussion\, demos\, and workshops featuring: open source game d
+ ev tool alternatives from Matt Hammill (Lovers in a Dangerous Spacetime)\,
+  Mastodon tips and tricks from Rob Gehl (Move Slowly and Build Bridges fro
+ m Oxford Press)\, playing with open protocols with Christine Lemmer-Webber
+  and David Thompson (ActivityPub and Spritely Foundation)\, and liberating
+  D&D data with Cousin Vagabond!\nPrice: Free!\nRegistration: Registration 
+ required.\nLink: https://luma.com/8nvmyatm\nMap: 239 College St
+URL:https://luma.com/8nvmyatm
+END:VEVENT
+BEGIN:VEVENT
+UID:5bfcc44443dd4ac60044e80ede55038c94b6b9fd@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T100000
+DTEND;TZID=America/Toronto:20260613T120000
+SUMMARY:Gym Game Gauntlet
+LOCATION:Riverdale Park East\, 550 Broadview Ave.
+DESCRIPTION:Think Mario Party\, but with classic gym class games from child
+ hood! Outdoor favourites like Fishes and Minnows\, Duck Duck Goose\, Freez
+ e Tag\, and more! All this and a six-foot high soccer ball in play\, too!\
+ nPrice: Free\, just show up!\nMap: 550 Broadview Ave
+END:VEVENT
+BEGIN:VEVENT
+UID:e7db97e7b9994280fb5da1c006f33d80cd0618cc@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T110000
+DTEND;TZID=America/Toronto:20260613T160000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nPrice: Include
+ d with ROM ticket entry.\nRegistration: Tickets required.\nLink: https://t
+ ickets.rom.on.ca/en/shop\nMap: 100 Queen's Park
+URL:https://tickets.rom.on.ca/en/shop
+END:VEVENT
+BEGIN:VEVENT
+UID:89cce70f072925bae3f56e53e8c613c982e98ada@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T110000
+DTEND;TZID=America/Toronto:20260613T213000
+SUMMARY:Hand Eye Society x Luminato at Harbourfront
+LOCATION:Harbourfront\, 235 Queens Quay W.
+DESCRIPTION:Hand Eye Society brings Torontron arcade cabinets to Luminato a
+ t Harbourfront\, featuring indie games by local developers and game artist
+ s. Blending arcade play with local game art\, the installation offers fest
+ ival-goers a fun and accessible way to experience video games as art.\nPri
+ ce: Free\, just show up!\nMap: 235 Queens Quay West
+END:VEVENT
+BEGIN:VEVENT
+UID:847ca0804c78bcdfed27f917aa7b8b048ee18320@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T120000
+DTEND;TZID=America/Toronto:20260613T140000
+SUMMARY:nonsensitive workshop
+LOCATION:U of T Bahen Centre\, 40 St. George St.
+DESCRIPTION:In this cognitive imagination workshop\, literally and figurati
+ vely map your internal world\, crafting abstracted artifacts generated thr
+ ough a poetic reimagining of psychological profiling and journaling keepsa
+ ke games. Materials provided\, though you may bring your own journal or sk
+ etchbook. Part of the <a href="https://dmgregory.ca/tgw/">“Play Outside 
+ the Box”</a> event series.\nPrice: Free!\nRegistration: Registration req
+ uired.\nLink: https://www.eventbrite.ca/e/nonsensitive-workshop-tickets-19
+ 87182082101\nMap: 40 St George St
+URL:https://www.eventbrite.ca/e/nonsensitive-workshop-tickets-1987182082101
+END:VEVENT
+BEGIN:VEVENT
+UID:205728d273154a7f43efaf0c081d049ae9b9eda4@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T120000
+DTEND;TZID=America/Toronto:20260613T180000
+SUMMARY:Pokémon Proxy Party
+LOCATION:Mad Merchant Cards and Games\, Splendid China Mall - 4675 Steeles 
+ Ave. E Unit 1D20\, 1D22\, & 1D25
+DESCRIPTION:A laid-back art anthology for Pokémon fans and creators. In ju
+ st two hours\, you’ll contribute to a massive\, community-built collecti
+ on of the original 151 custom proxy designs. No pressure to be perfect. Th
+ e $20 fee includes a drink\, art supplies\, and a custom card.\nDates/time
+ s: We will be having multiple six different 2 hour sessions:\n\nSat June 1
+ 3th @ 12pm - 2pm\nSat June 13 @ 2pm - 4pm \nSat June 13 @ 4pm - 6pm \nSun 
+ June 14 @ 12pm - 2pm \nSun June 14 @ 2pm - 4pm\nSun June 14 @ 2pm - 6pm\nP
+ rice: $20\nRegistration: Registration required.\nLink: https://www.eventbr
+ ite.com/e/pokemon-proxy-party-tickets-1989100554303?aff=oddtdtcreator\nMap
+ : 4675 Steeles Ave E
+URL:https://www.eventbrite.com/e/pokemon-proxy-party-tickets-1989100554303?
+ aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:81d44f5ebac112f0363846243e637f7fc938a105@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T130000
+DTEND;TZID=America/Toronto:20260613T180000
+SUMMARY:CTRL-ALT-DELICIOUS
+LOCATION:U of T Bahen Centre\, 40 St. George St.
+DESCRIPTION:A playful exhibition of alternative control games: ones that do
+  something unconventional at the interface between players\, audience\, an
+ d game system (think custom controllers or games you play with your body).
+  Stop by and play some games you won't find online! Part of the <a href="h
+ ttps://dmgregory.ca/tgw/">“Play Outside the Box”</a> event series.\nPr
+ ice: Free!\nRegistration: More info here.\nLink: https://dmgregory.ca/tgw/
+ \nMap: 40 St George St
+URL:https://dmgregory.ca/tgw/
+END:VEVENT
+BEGIN:VEVENT
+UID:e907e8916c7cd74ee0428fa1eb1fa18ed5d5490c@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T130000
+DTEND;TZID=America/Toronto:20260613T170000
+SUMMARY:Kick-Off & Play: Soccer Board Game Fest
+LOCATION:Twilight Cafe & Bar (North York)\, 16 Park Home Ave.
+DESCRIPTION:Join us for a free soccer-themed board game event! Enjoy games 
+ like Counter Attack\, Superclub and UND1C1. Whether you're a hardcore stra
+ tegist or just curious\, there’s something for everyone. Just show up\, 
+ learn new games\, and connect with fellow soccer and board game fans in a 
+ fun\, relaxed setting.\nDates/times: NA\nPrice: Free!\nRegistration: Regis
+ tration required.\nLink: https://www.meetup.com/board-games-social/events/
+ 314232234/\nMap: 16 Park Home Ave
+URL:https://www.meetup.com/board-games-social/events/314232234/
+END:VEVENT
+BEGIN:VEVENT
+UID:4b0705e23d521dd338da051c72dcde6b17f0b9f9@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T130000
+DTEND;TZID=America/Toronto:20260613T160000
+SUMMARY:Fight and Ye Shall Receive: How Game Worker Unions Win!
+LOCATION:TacoTaco\, 319 Augusta Ave.
+DESCRIPTION:Game workers from across the continent will discuss the histori
+ c rise of the game industry labour movement\, how unions are making change
+ s in our industry\, and visions for the future! If you've  wondered how un
+ ionization could change your workplace and our whole industry\, this talk 
+ is for you! A Q&A session and mixer with snacks will follow!\nPrice: Free!
+ \nRegistration: Registration required.\nLink: https://actionnetwork.org/ev
+ ents/ask-and-ye-shall-receive-how-game-worker-union-campaigns-are-chaning-
+ the-industry?source=direct_link&\nMap: 319 Augusta Ave
+URL:https://actionnetwork.org/events/ask-and-ye-shall-receive-how-game-work
+ er-union-campaigns-are-chaning-the-industry?source=direct_link&
+END:VEVENT
+BEGIN:VEVENT
+UID:989ee920de10aeb991318a8c6726e1cfbf53b1d5@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T130000
+DTEND;TZID=America/Toronto:20260613T153000
+SUMMARY:Vector Festival Gamemaking Residency: Open Studios
+LOCATION:InterAccess\, 32 Lisgar St.
+DESCRIPTION:Join our Gamemakers-in-Residence for a peek into their in-progr
+ ess\, experimental video games\, created as part of "Where are your guts?"
+ \, the Vector Festival Gamemaking Residency\, curated by Bracy Appeikumoh.
+  Games are focused on cyborg-forward game mechanics\, symbiotic systems\, 
+ and reconciliations between bodies and bots.  Also: Do you want to be a co
+ g in your own machine? Join artist Tristan Sauer for a mixed-media generat
+ ive performance exploring how digital layers of LLMs\, digital avatars\, a
+ nd digital communication devices abstract\, co-opt\, and reinterpret human
+  communication.\nPrice: Free!\nRegistration: Registration requested\nLink:
+  https://www.interaccess.org/vector-festival/vf26/vf26-gamemaking-residenc
+ y-application\nMap: 32 Lisgar St
+URL:https://www.interaccess.org/vector-festival/vf26/vf26-gamemaking-reside
+ ncy-application
+END:VEVENT
+BEGIN:VEVENT
+UID:f29a44d13e4f2a3c1e7bd479661b23a353236f40@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T140000
+DTEND;TZID=America/Toronto:20260613T160000
+SUMMARY:Intro to the Torontrons Workshop
+LOCATION:U of T Bahen Centre\, 40 St. George St.
+DESCRIPTION:Step inside the Torontrons\, Hand Eye Society’s custom arcade
+  cabinets\, and learn how to get your game arcade-ready. This hands-on wor
+ kshop introduces game developers to the Torontrons and shows them how to p
+ repare their games for arcade-style exhibition.  Part of the <a href="http
+ s://dmgregory.ca/tgw/">“Play Outside the Box”</a> event series.\nPrice
+ : Free!\nRegistration: FULL. Waitlist here\nLink: https://www.eventbrite.c
+ a/e/intro-to-the-torontrons-tickets-1987078720945?aff=ebdsoporgprofile\nMa
+ p: 40 St George St
+URL:https://www.eventbrite.ca/e/intro-to-the-torontrons-tickets-19870787209
+ 45?aff=ebdsoporgprofile
+END:VEVENT
+BEGIN:VEVENT
+UID:16667fc3c0eb4cf640910df14c12b09c35ee1d9b@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T150000
+DTEND;TZID=America/Toronto:20260613T210000
+SUMMARY:Kitten Cup Studio Tea Party: BYOD Bring Your Own Demo
+LOCATION:Allan Gardens Children's Conservatory\, 160 Gerrard St. E.
+DESCRIPTION:Play games\, drink tea\, and meet local devs at the beautiful b
+ otanical Allan Gardens Conservatory! Making a game or curious to check out
+  works-in-progress? This year\, the Kitten Cup Tea Party invites you to Br
+ ing Your Own Demo! Plus\, we'll have lots of exclusive goodies and giveawa
+ ys\, so mark your calendars and pack your favourite picnic blanket!\nPrice
+ : Free\, just show up!\nMap: 160 Gerrard St E
+END:VEVENT
+BEGIN:VEVENT
+UID:d7f7af475f027d534a711eb9d488f8958182f78d@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T160000
+DTEND;TZID=America/Toronto:20260613T210000
+SUMMARY:Indie Game Emporium
+LOCATION:Allan Gardens Children's Conservatory\, 160 Gerrard St. E.
+DESCRIPTION:Meet indies making eclectic games in your city! Peruse their ga
+ mes\, zines\, cyberware and DIY merch without the alienation of screens an
+ d algorithms. Happening right next door to the Kitten Cup Tea Party!\nPric
+ e: Free\, just show up!\nMap: 160 Gerrard St E
+END:VEVENT
+BEGIN:VEVENT
+UID:a09448a953756947e5935e2fc9996bd22080f4a7@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T160000
+DTEND;TZID=America/Toronto:20260613T200000
+SUMMARY:King of the Game
+LOCATION:Red Bull Gaming Hub at Toronto Metropolitan University\, Rogers Co
+ mmunication Centre (RCC 229)\, 80 Gould Street
+DESCRIPTION:Indie gamemakers are invited to bring their own game to this  h
+ igh-energy elimination tournament across genres. Unlike traditional tourna
+ ments focused on a single title\, King of the Game challenges participants
+  across a variety of game genres\, testing adaptability\, skill\, strategy
+ \, and quick thinking in every round.\nPrice: $4+\nRegistration: Info and 
+ Tickets here.\nLink: https://www.eventbrite.ca/e/king-of-the-game-tickets-
+ 1991020574134
+URL:https://www.eventbrite.ca/e/king-of-the-game-tickets-1991020574134
+END:VEVENT
+BEGIN:VEVENT
+UID:a0d53a9c1113cc6109be2f51a2869751908c64d6@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T160000
+DTEND;TZID=America/Toronto:20260613T210000
+SUMMARY:Rabbit.Hole.exe
+LOCATION:Allan Gardens Children's Conservatory\, 160 Gerrard St. E.
+DESCRIPTION:Jump into the rabbit hole and discover games from a city on the
+  other side of the planet! Part game portal\, part digital playground\, an
+ d part reflection of a city you call home. Rabbit.Hole.Exe brings together
+  works from two cities — Toronto and Shenzhen —  through a curated web
+ site featuring indie games\, interactive objects\, old websites\, and hidd
+ en encounters inspired by early internet worlds and game culture. Access t
+ he portal from our pop-up spots in both cities\, or log in from anywhere w
+ ith an internet connection…if you have the key.\nDates/times: 16:00 - 21
+ :00 CST (UTC+8)\nPrice: Free\, just show up!\nLink: rabbitholeexe.com\nMap
+ : Allan Gardens Children's Conservatory
+END:VEVENT
+BEGIN:VEVENT
+UID:65025b34f7451051a834586f46b2d8d7d47b271a@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T163000
+DTEND;TZID=America/Toronto:20260613T190000
+SUMMARY:Custom Controller Design & Build Workshop
+LOCATION:U of T Bahen Centre\, 40 St. George St.
+DESCRIPTION:A hands-on design workshop: Learn how to design\, program\, and
+  manufacture custom game controllers\, and build a customized controller. 
+ During the workshop\, you will learn how to design a custom game controlle
+ r using open-source software\, and take home a custom Toronto Games Week B
+ adge that doubles as a USB game controller. Part of the <a href="https://d
+ mgregory.ca/tgw/">“Play Outside the Box”</a> event series.\nPrice: $28
+ \nRegistration: Info and Tickets here.\nLink: https://www.eventbrite.ca/e/
+ custom-controller-design-build-workshop-play-outside-the-box-2026-tickets-
+ 1989350172919?aff=oddtdtcreator
+URL:https://www.eventbrite.ca/e/custom-controller-design-build-workshop-pla
+ y-outside-the-box-2026-tickets-1989350172919?aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:887ee6784d2553f91cc6aa4f2fd7b8928c336ef0@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260613T200000
+DTEND;TZID=America/Toronto:20260613T230000
+SUMMARY:Night Parkcade
+LOCATION:~SECRET LOCATION~
+DESCRIPTION:Our legendary pop up arcade at a park after dark! Enjoy swordpl
+ ay and games under the night sky! Become part of a new co-op project by th
+ e developer of the shouty Spaceteam. Feeling brave? Playtest your life! To
+  get the clues to the secret location the day of\, subscribe to our email 
+ newsletter...\nPrice: Free\, just show up!\nRegistration: Clues to the loc
+ ation\nLink: https://eocampaign1.com/web-version?p=ad3ac4ac-66a2-11f1-9989
+ -87be81b413b1&pt=campaign&t=1781301412&s=8540c48818173d0f7169736c65d711425
+ c4bedfd31912b2fcbee713a915e790c
+URL:https://eocampaign1.com/web-version?p=ad3ac4ac-66a2-11f1-9989-87be81b41
+ 3b1&pt=campaign&t=1781301412&s=8540c48818173d0f7169736c65d711425c4bedfd319
+ 12b2fcbee713a915e790c
+END:VEVENT
+BEGIN:VEVENT
+UID:120d00d2d1edeb4b6d4a49f0d4b402940ab37233@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T100000
+DTEND;TZID=America/Toronto:20260614T170000
+SUMMARY:Rat Race: Soccer Fever Edition
+LOCATION:Union Station\, 65 Front Street W. (inside by the clock tower)
+DESCRIPTION:Navigate Toronto’s legendary underground network as fast as y
+ ou can — solving clues and collecting bonus points as you go. If you tho
+ ught last year's challenge was tough\, wait until you see what we have in 
+ store for you this year. With the world's most popular sport coming to tow
+ n\, we are adding a little footie action this year. Gooooooal!!!!!!!\nPric
+ e: PWYC\nRegistration: Registration required.\nLink: https://www.eventbrit
+ e.ca/e/rat-race-world-cup-edition-tickets-1984174054008?utm-campaign=socia
+ l&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-sour
+ ce=wsa&aff=ebdsshwebmobile\nMap: 65 Front Street West
+URL:https://www.eventbrite.ca/e/rat-race-world-cup-edition-tickets-19841740
+ 54008?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&u
+ tm-term=listing&utm-source=wsa&aff=ebdsshwebmobile
+END:VEVENT
+BEGIN:VEVENT
+UID:4a45efc30e1d6719619a69c4fbc455cf9c50261c@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T100000
+DTEND;TZID=America/Toronto:20260614T160000
+SUMMARY:[cancelled due to weather] Globle: Live
+LOCATION:High Park\, 1873 Bloor St. W.\, South of the North Gates
+DESCRIPTION:[event cancelled] High Park has been transformed into planet Ea
+ rth! Grab a teammate\, open the web app on your phone\, and race to find e
+ very country playing in this year's biggest international soccer tournamen
+ t. Follow the rotating 3D globe\, stamp your passport\, and win prizes bas
+ ed on how many countries you collect. Smartphone required.\nDates/times: P
+ eople can arrive any time in the window\nPrice: Free!\nRegistration: More 
+ info here.\nLink: https://globle.live\nMap: 1873 Bloor St W
+URL:https://globle.live
+END:VEVENT
+BEGIN:VEVENT
+UID:84ede526fd0f815d729699cfe04cc8248bdd4b39@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T110000
+DTEND;TZID=America/Toronto:20260614T160000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nPrice: Include
+ d with ROM ticket entry.\nRegistration: Tickets required.\nLink: https://t
+ ickets.rom.on.ca/en/shop\nMap: 100 Queen's Park
+URL:https://tickets.rom.on.ca/en/shop
+END:VEVENT
+BEGIN:VEVENT
+UID:37f105afc6afffeec63b54b058c46b700a607ce7@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T110000
+DTEND;TZID=America/Toronto:20260614T220000
+SUMMARY:Hand Eye Society x Luminato at Harbourfront
+LOCATION:Harbourfront\, 235 Queens Quay W.
+DESCRIPTION:Hand Eye Society brings Torontron arcade cabinets to Luminato a
+ t Harbourfront\, featuring indie games by local developers and game artist
+ s. Blending arcade play with local game art\, the installation offers fest
+ ival-goers a fun and accessible way to experience video games as art.\nPri
+ ce: Free\, just show up!\nMap: 235 Queens Quay West
+END:VEVENT
+BEGIN:VEVENT
+UID:91c4d78348436988358b564169ed6d77c3af01d7@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T110000
+DTEND;TZID=America/Toronto:20260614T120000
+SUMMARY:[cancelled due to weather] Flowr Choir
+LOCATION:Grange Park\, Beverley St & McCaul Street
+DESCRIPTION:What if a whole room could heal together? Flowr Choir brings fa
+ milies\, kids\, and curious humans of all ages into a shared somatic exper
+ ience — phones in hand\, voices raised\, growing a living digital garden
+  through breath and sound. It’s part concert\, part science\, part magic
+ .\nDates/times: n/a\nPrice: Free\, just show up!\nRegistration: More info 
+ here.\nLink: thegatagames.com\nMap: MJ25+W2 Toronto\, Ontario
+END:VEVENT
+BEGIN:VEVENT
+UID:7744e8ca447ce9291e67bec7e811ac06a10928a0@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T120000
+DTEND;TZID=America/Toronto:20260614T235900
+SUMMARY:Out of Bounds Torontrois
+LOCATION:TacoTaco\, 319 Augusta Ave.
+DESCRIPTION:Lady Arcaders: Out of Bounds Torontrois is an in-person women &
+  femme speedrunning event! Folks will play games as quickly as possible\, 
+ showing off their talents and challenging themselves. The event will also 
+ be broadcast online to our Twitch channel. Everyone’s welcome to join th
+ e fun!\nDates/times: Sunday June 14th 12pm-12am (doors open at 11:30am)\nM
+ onday June 15th 12pm-12am (doors open at 11:30am)\nPrice: PWYC\nRegistrati
+ on: No registration required\, more info here\nLink: https://ldy.gg/oob3\n
+ Map: 319 Augusta Ave
+URL:https://ldy.gg/oob3
+END:VEVENT
+BEGIN:VEVENT
+UID:c33c78146ed35c2d8684e1316c7c07b60ec8376b@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T120000
+DTEND;TZID=America/Toronto:20260614T180000
+SUMMARY:Art Of The Concept
+LOCATION:George Brown College\, 3 Lower Jarvis St.\, North Gallery
+DESCRIPTION:Collecting amazing artwork from several of Toronto’s beloved 
+ indie game studios\, this concept art showcase celebrates the creative pro
+ cess of bringing games to life featuring a series of poster collages colle
+ cting artwork from notable local studios like BancyCo\, Cococucumber\, Num
+ izmatic\, Soft Rains\, Alientrap\, Kitten Cup\, Hilltop Studios\, Mighty Y
+ ell\, and Capybara. At 3pm\, showcase curator Gavin McCarthy will be hosti
+ ng a Q&A with some of the artists in attendance. (Artwork will be on displ
+ ay from June 11- 17.)\nPrice: Free\, just show up!\nRegistration: More inf
+ o here\nLink: https://bsky.app/profile/artoftheconcept.bsky.social\nMap: 3
+  Lower Jarvis St
+URL:https://bsky.app/profile/artoftheconcept.bsky.social
+END:VEVENT
+BEGIN:VEVENT
+UID:3fd23a77f894ceafa6501a78404bed67fcb57c37@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T120000
+DTEND;TZID=America/Toronto:20260614T150000
+SUMMARY:[cancelled due to rain] Toronto Tamagotchi Picnic
+LOCATION:Grange Park\, Beverley St & McCaul Street
+DESCRIPTION:[cancelled] Touch grass with us! Join the Toronto Tamagotchi Cl
+ ub for an outdoor meetup. Meet Tamagotchi-themed vendors\, enjoy outdoor a
+ ctivities\, and connect with other Tamagotchi enthusiasts. We welcome the 
+ Tamagotchi-curious. Bring your own picnic blanket!\nPrice: Free\, just sho
+ w up!\nRegistration: More info here\nLink: https://torontotamagotchiclub.n
+ eocities.org\nMap: Grange Park
+URL:https://torontotamagotchiclub.neocities.org
+END:VEVENT
+BEGIN:VEVENT
+UID:185fd15b0064170253e8f955b27194e99636356e@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T120000
+DTEND;TZID=America/Toronto:20260614T180000
+SUMMARY:Pokémon Proxy Party
+LOCATION:Mad Merchant Cards and Games\, Splendid China Mall - 4675 Steeles 
+ Ave E Unit 1D20\, 1D22\, & 1D25
+DESCRIPTION:A laid-back art anthology for Pokémon fans and creators. In ju
+ st two hours\, you’ll contribute to a massive\, community-built collecti
+ on of the original 151 custom proxy designs. No pressure to be perfect.\nD
+ ates/times: We will be having multiple six different 2 hour sessions:\n\nS
+ at June 13th @ 12pm - 2pm\nSat June 13 @ 2pm - 4pm \nSat June 13 @ 4pm - 6
+ pm \nSun June 14 @ 12pm - 2pm \nSun June 14 @ 2pm - 4pm\nSun June 14 @ 2pm
+  - 6pm\nPrice: $20\, includes a drink\, art supplies\, and a custom card\n
+ Registration: Tickets required.\nLink: https://www.eventbrite.com/e/pokemo
+ n-proxy-party-tickets-1989100554303?aff=oddtdtcreator\nMap: 4675 Steeles A
+ ve E
+URL:https://www.eventbrite.com/e/pokemon-proxy-party-tickets-1989100554303?
+ aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:83a4f6ae7cb5bc3c31d1388494c5dcd882529387@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T130000
+DTEND;TZID=America/Toronto:20260614T200000
+SUMMARY:Dream Game Inc.
+LOCATION:Hideaway Studios\, 1586 Dupont St
+DESCRIPTION:Back for our second year\, join us at Hideaway Studios for a co
+ llaborative art hangout where you make the art\, and we make the game a re
+ ality! We’ll have art supplies on hand for you to draw and colour game a
+ ssets\, and our team will program everyone’s art together into a playabl
+ e game prototype. Drop in anytime\, we’ll refresh the game with new art 
+ every hour!\nPrice: Free/Pay-What-You-Want\nRegistration: No registration 
+ required\, more info here.\nLink: https://dreamgame.ca/\nMap: 1586 Dupont 
+ St
+URL:https://dreamgame.ca/
+END:VEVENT
+BEGIN:VEVENT
+UID:69401676e3a2ff39045aabb62fae04f28505a396@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T130000
+DTEND;TZID=America/Toronto:20260614T180000
+SUMMARY:Learn to Code with Team Hero Coder
+LOCATION:George Brown College\, 3 Lower Jarvis St.\, WFD 203
+DESCRIPTION:Are you a coding curious gamer? Learn as you play in a one-hour
+  workshop where you code AI solutions for a team of heroes battling in a c
+ lassic\, RPG inspired\, battle system. PseudoC\, drop-down-menu scripting\
+ , provides a comfortable starting point. A tight metagame and the option t
+ o use C# and VS Code will scratch your esport/meta gamer itch.\nPrice: Fre
+ e!\nRegistration: Registration requested\nLink: https://forms.gle/qZrJA37p
+ 9CDofhbw6\nMap: 3 Lower Jarvis St
+URL:https://forms.gle/qZrJA37p9CDofhbw6
+END:VEVENT
+BEGIN:VEVENT
+UID:886fe99b630a68f5c1b9472cb41fa72777a00493@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T150000
+DTEND;TZID=America/Toronto:20260614T200000
+SUMMARY:Rocket League Cup 2026
+LOCATION:Red Bull Gaming Hub at Toronto Metropolitan University\, Rogers Co
+ mmunication Centre (RCC 229)\, 80 Gould Street
+DESCRIPTION:Join us for a rocket-fueled tournament with everyone's favourit
+ e vehicular soccer game!  While the city has its eyes on the ball\, here's
+  a soccer game you could actually win! Beginners welcome. Sign up and be a
+ dded to one of our 15 randomly selected teams and get a chance to win some
+  fun soccer-themed prizes.\nPrice: $20\nRegistration: Tickets required.\nL
+ ink: https://www.eventbrite.com/e/toronto-game-week-presents-rocket-league
+ -cup-2026-tickets-1989230311410?aff=oddtdtcreator\nMap: 80 Gould Street
+URL:https://www.eventbrite.com/e/toronto-game-week-presents-rocket-league-c
+ up-2026-tickets-1989230311410?aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:58026b975f036e04d8acab02951dc374efaf8b88@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T203000
+DTEND;TZID=America/Toronto:20260614T223000
+SUMMARY:Live Video Game Orchestra
+LOCATION:Hugh's Room Live\, 296 Broadview Ave.
+DESCRIPTION:The Live Video Game Orchestra is a professional 12 piece jazz o
+ rchestra focused around performing novel arrangements of video game music\
+ , from classics like Pokemon & Zelda\, to modern games like Undertale and 
+ Hollow Knight. Witness some of Toronto's top musicians interpreting game t
+ hemes we all know and love with a modern twist.\nDates/times: First event 
+ will open at 5pm\, if that sells out then we'll have a late show at 8pm\nP
+ rice: $35\nRegistration: Tickets required.\nLink: https://www.eventbrite.c
+ a/e/the-music-of-indie-games-live-video-game-orchestra-late-show-tickets-1
+ 990450781870\nMap: Hugh's Room Live
+URL:https://www.eventbrite.ca/e/the-music-of-indie-games-live-video-game-or
+ chestra-late-show-tickets-1990450781870
+END:VEVENT
+BEGIN:VEVENT
+UID:116757e1fbeea381502a912cc485105b5e8818a3@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T173000
+DTEND;TZID=America/Toronto:20260614T213000
+SUMMARY:Official Dead By Daylight 10 Year Anniversary Toronto Watch Party
+LOCATION:Twist Gallery\, 1100 Queen St. W.
+DESCRIPTION:Celebrating 10 years of Dead by Daylight\, Twitch Community Mee
+ tUps are bringing fans together in person across 10 global city creator-le
+ d watch parties and pre-events\, Powered by Twitch and Conjured by Dead by
+  Daylight\, to experience the anniversary broadcast\, connect with fellow 
+ Survivors and Killers\, and celebrate a decade in The Fog.\nPrice: Free!\n
+ Registration: Registration required.\nLink: https://meetups.twitch.tv/even
+ ts/details/twitch-toronto-presents-official-dead-by-daylight-10-year-anniv
+ ersary-toronto-watch-party-community-meetup-powered-by-twitch/\nMap: 1100 
+ Queen St W
+URL:https://meetups.twitch.tv/events/details/twitch-toronto-presents-offici
+ al-dead-by-daylight-10-year-anniversary-toronto-watch-party-community-meet
+ up-powered-by-twitch/
+END:VEVENT
+BEGIN:VEVENT
+UID:31426410a33acd691ad1fa0ba7f0f9fd569ecfce@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260614T200000
+DTEND;TZID=America/Toronto:20260615T020000
+SUMMARY:5ifth Gen Func
+LOCATION:See-Scape\, 347 Keele St.
+DESCRIPTION:N64\, PS1\, and a Sega all the way from Saturn. This function w
+ ill function as a space to wiggle and play a set of songs and hot-cued sav
+ e states from the consoles that introduced the freedom of fully formed aud
+ io files in games. Expect jungley breakbeats\, acidic house\, industrial t
+ echno and groovy cyberdelic func! Half the door to Food Not Bombs! NOTAFLO
+ F!\nPrice: PWYC at the door.\nRegistration: More info here.\nLink: https:/
+ /shader.sight.systems\nMap: 347 Keele St
+URL:https://shader.sight.systems
+END:VEVENT
+BEGIN:VEVENT
+UID:41a5764f0431fe4bf31413b3c322077164302877@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T120000
+DTEND;TZID=America/Toronto:20260615T235900
+SUMMARY:Out of Bounds Torontrois
+LOCATION:TacoTaco\, 319 Augusta Ave.
+DESCRIPTION:Lady Arcaders: Out of Bounds Torontrois is an in-person women &
+  femme speedrunning event! Folks will play games as quickly as possible\, 
+ showing off their talents and challenging themselves. The event will also 
+ be broadcast online to our Twitch channel. Everyone’s welcome to join th
+ e fun!\nDates/times: Sunday June 14th 12pm-12am (doors open at 11:30am)\nM
+ onday June 15th 12pm-12am (doors open at 11:30am)\nPrice: PWYC.\nRegistrat
+ ion: No Registration required.\, more info here.\nLink: https://ldy.gg/oob
+ 3\nMap: 319 Augusta Ave
+URL:https://ldy.gg/oob3
+END:VEVENT
+BEGIN:VEVENT
+UID:248310a1ee022b85f65025446ec0a35fc4de1edd@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T140000
+DTEND;TZID=America/Toronto:20260615T180000
+SUMMARY:An Afternoon With Sago Mini
+LOCATION:Sago Mini Studio\, 171 John St.\, Floor 5
+DESCRIPTION:Get an exclusive\, behind-the-scenes look at the Sago Mini stud
+ io during Toronto Games Week! Join this in-person event to learn about the
+  art\, tech and playful creative process behind designing Sago Mini’s fi
+ rst 3D single-player adventure game\, Jinja’s Garden.\nPrice: Free/Pay-W
+ hat-You-Want..\nRegistration: Registration required.\nLink: https://luma.c
+ om/faoflx6e\nMap: 171 John St
+URL:https://luma.com/faoflx6e
+END:VEVENT
+BEGIN:VEVENT
+UID:8ebd9bc75b4ef4255186e417045b3072bb1125de@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T180000
+DTEND;TZID=America/Toronto:20260615T223000
+SUMMARY:DEI or DIE v2: DEI Harder
+LOCATION:Toronto Metropolitan University\, 341 Yonge St\, The Sky - 8th flo
+ or
+DESCRIPTION:DEI or DIE is a platform which invites local Queer and Marginal
+ ized game developers to show off their latest projects\, give micro talks 
+ and more on the subject of DEI. Join us for a post-show reception: a few h
+ ours dedicated to discussing\, connecting\, and playing games\, alongside 
+ demo stations featuring our presenters' work.\nPrice: Free.\nRegistration:
+  No registration required\, more info here.\nLink: https://luma.com/hvj6wv
+ el\nMap: 341 Yonge St
+URL:https://luma.com/hvj6wvel
+END:VEVENT
+BEGIN:VEVENT
+UID:b581d8812da4a4b1d2578fc160211bb0d3a8a1f6@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T183000
+DTEND;TZID=America/Toronto:20260615T203000
+SUMMARY:Drawing from Within: Create Your Own Personal Oracle Cards
+LOCATION:Caversham Booksellers\, 262b Geary Ave.
+DESCRIPTION:Explore your intuition through creative play! In this interacti
+ ve workshop\, you’ll craft a personalized oracle card using imagery and 
+ symbols that resonate with you. Then\, enjoy a group reading where partici
+ pants share and interpret each card’s story. All materials provided. All
+  levels welcome.\nPrice: $12\nRegistration: FULL\, waitlist available here
+ .\nLink: https://luma.com/nsvinkbt\nMap: 262 B Geary Ave
+URL:https://luma.com/nsvinkbt
+END:VEVENT
+BEGIN:VEVENT
+UID:cd52156593f61eb65b481b166092c4f704ada596@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T183000
+DTEND;TZID=America/Toronto:20260615T223000
+SUMMARY:Video Game Disco Trivia Night!
+LOCATION:The Black Pony\, 1481 Gerrard St. E.
+DESCRIPTION:Do you know video games? Do you like trivia? Do you enjoy RPGs?
+  Do you LOVE disco? If you answered yes to any of these questions\, this a
+ n event for you. Gather your party of adventurers. Slay monsters by answer
+ ing video game trivia. Consume the refreshments provided by the hosts. Win
+  prizes! Dance to disco!\nPrice: Free!\nRegistration: Registration require
+ d.\nLink: https://www.eventbrite.com/e/video-game-trivia-rpg-disco-pub-nig
+ ht-toronto-games-week-tickets-1989700823725?aff=oddtdtcreator\nMap: 1481 G
+ errard St E
+URL:https://www.eventbrite.com/e/video-game-trivia-rpg-disco-pub-night-toro
+ nto-games-week-tickets-1989700823725?aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:a6202e4bc363d375139feb40b0221153c6af7a19@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T190000
+DTEND;TZID=America/Toronto:20260615T210000
+SUMMARY:NextGen Showcase
+LOCATION:CSI Spadina\, 192 Spadina Ave.
+DESCRIPTION:A curated showcase\, selected by international curator Jenny Wi
+ ndom\, highlighting games by emerging creators from Toronto’s game devel
+ opment and game education scene. Snacks provided. Supported by Unreal\, AM
+ D\, and Toronto Tool Library.\nPrice: Free\, just show up!\nRegistration: 
+ More info here.\nLink: https://nextgenshow.carrd.co/\nMap: 192 Spadina Ave
+ .
+URL:https://nextgenshow.carrd.co/
+END:VEVENT
+BEGIN:VEVENT
+UID:c401e8c23c2d7259f9f936cdf07ca1482a6d8451@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260615T190000
+DTEND;TZID=America/Toronto:20260615T230000
+SUMMARY:Budokai Bashment
+LOCATION:The Harmony Cafe and Bar\, 75 Nassau St.
+DESCRIPTION:Bringing together gaming\, music\, and community for a night of
+  tournaments\, live DJ sets\, and socializing. Enter the brackets for Stre
+ et Fighter III: 3rd Strike and SF6\, or come through to spectate\, enjoy t
+ he music\, and hang out. After the tournaments\, stick around to dance\, p
+ arty to dancehall and afrobeats sets\, and check out the free play arcade.
+ \nPrice: Free entry\, $10 tourney fee.\nRegistration: Info and Tickets her
+ e.\nLink: https://www.start.gg/tournament/budokai-bashment-vol-2/details\n
+ Map: 75 Nassau St
+URL:https://www.start.gg/tournament/budokai-bashment-vol-2/details
+END:VEVENT
+BEGIN:VEVENT
+UID:4538465be3f638c09a0155c0ed2fc952979a8a71@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T110000
+DTEND;TZID=America/Toronto:20260616T200000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nPrice: Free\, 
+ from 5.30 to 8.30 PM.\nRegistration: Tickets required.\nLink: https://www.
+ rom.on.ca/whats-on/events/third-tuesday-nights-free-third-tuesday-night-fr
+ ee-5\nMap: 100 Queen's Park
+URL:https://www.rom.on.ca/whats-on/events/third-tuesday-nights-free-third-t
+ uesday-night-free-5
+END:VEVENT
+BEGIN:VEVENT
+UID:640dd2bccc223c4499c1c336c24b40e97881439a@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T180000
+DTEND;TZID=America/Toronto:20260616T200000
+SUMMARY:For the Fans! Fan Merch Workshop
+LOCATION:Fort York Public Library\, 190 Fort York Blvd.
+DESCRIPTION:Buying physical merch for your fandom? In this economy?? Fret n
+ ot because this beginner-friendly workshop will provide the supplies and g
+ uidance for creating your very own fan merch! Come make ribbon badges\, pi
+ ns\, zines\, and more while learning about fan merch etiquette and history
+ .\nPrice: Free!\nRegistration: Registration required.\nLink: https://www.e
+ ventbrite.com/e/for-the-fans-toronto-games-week-tickets-1989742649828?aff=
+ oddtdtcreator\nMap: Toronto Public Library - Fort York Branch
+URL:https://www.eventbrite.com/e/for-the-fans-toronto-games-week-tickets-19
+ 89742649828?aff=oddtdtcreator
+END:VEVENT
+BEGIN:VEVENT
+UID:3d540e1103044c8fa5c36ccaf00b14c2196e65dc@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T180000
+DTEND;TZID=America/Toronto:20260616T200000
+SUMMARY:An Intro to DaggerHeart
+LOCATION:Port Union Public Library\, 5450 Lawrence Ave. E.
+DESCRIPTION:Come learn the ins and outs of the tabletop roleplaying phenome
+ non known as DaggerHeart. Players will fall into the roles of our heroic a
+ dventurers and prove they have the strength\, skills\, knowledge and brave
+ ry to become the Games Week Champions! No prior TTRPG experience required.
+ \nPrice: Free!\nRegistration: Registration required.\nLink: https://tpl.bi
+ bliocommons.com/v2/events/69d6a557c1cf6f9a758407d0\nMap: 5450 Lawrence Ave
+  E
+URL:https://tpl.bibliocommons.com/v2/events/69d6a557c1cf6f9a758407d0
+END:VEVENT
+BEGIN:VEVENT
+UID:abb8dc355c5e19cc022025b6b44a6f0151b59144@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T183000
+DTEND;TZID=America/Toronto:20260616T193000
+SUMMARY:Parachute Club
+LOCATION:Christie Pits Park (Southeast)\, 750 Bloor St. W.
+DESCRIPTION:You know those massive\, multicoloured silk parachutes you play
+ ed with in gym class or summer camp? Have you tried playing with one as a 
+ grown up? It's REALLY FUN! Come along and suggest/invent new games we can 
+ play together in a big circle\, or just marvel at how cool it looks. No pr
+ evious parachute experience necessary.\nPrice: Free\, just show up!\nLink:
+  https://www.facebook.com/share/1FKxF8AR7e/\nMap: 750 Bloor St W
+URL:https://www.facebook.com/share/1FKxF8AR7e/
+END:VEVENT
+BEGIN:VEVENT
+UID:bacfe02a4e9b76a665c80d901e4bef89433f177c@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T190000
+DTEND;TZID=America/Toronto:20260616T220000
+SUMMARY:Seriously Fun: Showcase & Social
+LOCATION:Danu Social House\, 1237 Queen St W.
+DESCRIPTION:Seriously Fun: Showcase & Social brings together the local comm
+ unity of serious game enthusiasts and creators for a free mini-showcase. E
+ veryone interested in games being used for educational\, instructive or po
+ litical purposes is welcome! It also includes games and awards for the acc
+ essibility focused game jam\, You Can Play This Game Jam!\nPrice: Free!\nR
+ egistration: More info here.\nLink: https://werocreative.com/seriouslyfun\
+ nMap: 1237 Queen St W
+URL:https://werocreative.com/seriouslyfun
+END:VEVENT
+BEGIN:VEVENT
+UID:dd3e519175a117092165eefa6da5e0dcedd2f821@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T190000
+DTEND;TZID=America/Toronto:20260616T230000
+SUMMARY:Bonus Stage
+LOCATION:TacoTaco\, 319 Augusta Ave.
+DESCRIPTION:Centred around micro talks given by local community members\, B
+ onus Stage is a long-running monthly social that gives people a space to m
+ ingle and get to know new people in the Toronto game dev scene. Featuring 
+ a talk by Jenny Windom\, Communications Director at Ivy Road and Managing 
+ Partner at Wholesome Games.\nPrice: Free\, just show up!\nRegistration: Mo
+ re info here.\nLink: https://bonusstage.carrd.co/\nMap: 319 Augusta Ave
+URL:https://bonusstage.carrd.co/
+END:VEVENT
+BEGIN:VEVENT
+UID:0492f792968dd86dcf6c00480b03fafbed3fff9f@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260616T190000
+DTEND;TZID=America/Toronto:20260616T230000
+SUMMARY:IGDA Trivia Night: The Entire History of Game Development
+LOCATION:Great Lakes Brewery\, 11 Lower Jarvis St.\, Units 5-8
+DESCRIPTION:Hosted by comedian and narrative designer (EA\, The Sims) Franc
+ i Dimitrovska\, this is a trivia night about the strangest\, funniest\, an
+ d most catastrophically ill-advised moments in game development! There's p
+ rizes\, comedy\, and bonus games that require no knowledge whatsoever\, be
+ cause the points are made up. Followed by our regular meet and mingle.\nPr
+ ice: Free!\nRegistration: Registration required.\nLink: https://www.eventb
+ rite.ca/e/igda-trivia-night-the-entire-history-of-game-development-more-or
+ -less-tickets-1989701169760\nMap: 11 Lower Jarvis St
+URL:https://www.eventbrite.ca/e/igda-trivia-night-the-entire-history-of-gam
+ e-development-more-or-less-tickets-1989701169760
+END:VEVENT
+BEGIN:VEVENT
+UID:4e9f64ab0a9986027fd05996517baecded59ce7a@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260617T110000
+DTEND;TZID=America/Toronto:20260617T160000
+SUMMARY:The Beautiful Game: A Playable History of Soccer Video Games
+LOCATION:Royal Ontario Museum\, 100 Queen's Park
+DESCRIPTION:The Beautiful Game presents a playable selection of soccer vide
+ o games spanning the last 50 years. The exhibit traces how the world’s m
+ ost popular sport has been imagined for players on screen. It invites visi
+ tors to celebrate soccer’s global history through play as the beautiful 
+ game comes home to Toronto.\nDates/times: Thursday\, June 11: 11am-4pm\nFr
+ iday\, June 12: 11am-4pm\nSaturday\, June 13: 11am-4pm\nSunday\, June 14: 
+ 11am-4pm\nMONDAY – ROM CLOSED\nTuesday\, June 16: 11am-8pm (free general
+  admission starting at 4pm)\nWednesday\, June 17: 11am-4pm\nPrice: Include
+ d with ROM ticket entry..\nRegistration: Tickets required.\nLink: https://
+ tickets.rom.on.ca/en/shop\nMap: 100 Queen's Park
+URL:https://tickets.rom.on.ca/en/shop
+END:VEVENT
+BEGIN:VEVENT
+UID:52c4d00b3e6e5b4f03deff41fd375c3a3978b147@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260617T160000
+DTEND;TZID=America/Toronto:20260617T180000
+SUMMARY:Curatorial Tour of Game On! at the Aga Khan Museum
+LOCATION:Aga Khan Museum\, 77 Wynford Drive
+DESCRIPTION:Join us for a guided curatorial tour of <a href="https://aga-kh
+ an-museum-assets.s3.amazonaws.com/uploads/2026/03/Game-On_Aga-Khan-Museum_
+ Press-Release_03.20.26_FINAL_V2.pdf">Game On!</a>\, a vibrant exhibition c
+ elebrating the art\, culture\, and spirit of games through time. From boar
+ d games to daring sports\, each piece invites you to explore how games con
+ nect people\, spark creativity and build communities. Get a special look a
+ t exhibit highlights with a guided tour from Bita Pourvash\, the exhibitio
+ n’s curator!\nPrice: Free!\nRegistration: Registration required.\nLink: 
+ https://docs.google.com/forms/d/1Rbfv5PmcRqpB5U-NfT-zgFeDVWDVmWYnbH6g9ADcj
+ yU/edit\nMap: 77 Wynford Drive
+URL:https://docs.google.com/forms/d/1Rbfv5PmcRqpB5U-NfT-zgFeDVWDVmWYnbH6g9A
+ DcjyU/edit
+END:VEVENT
+BEGIN:VEVENT
+UID:f6f296d64f2bd3b3e59cf0beeb934b23935004a6@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260617T161500
+DTEND;TZID=America/Toronto:20260617T200000
+SUMMARY:Walkin' with Droqen... on the Island
+LOCATION:Jack Layton Ferry Terminal\, 9 Queens Quay W.
+DESCRIPTION:Come take a stroll & chat with other attendees in a relaxing na
+ ture environment! We're going to arrive early for the 4:30 ferry to Hanlan
+ 's Point (don't be late or you'll miss it!)\, walk to Ward's Island\, and 
+ - hopefully - get back right in time for the TGW Closing Party. Round trip
+  ferry tickets are ~$10/adult. (P.S. Be prepared for 2-3 hours of walking\
+ , with breaks.)\nPrice: Free\, just show up!\nMap: 9 Queens Quay West
+END:VEVENT
+BEGIN:VEVENT
+UID:963a767025d50288fbdbeb42100cf389fe307564@torontogamesweek.com
+DTSTAMP:20261127T033536Z
+DTSTART;TZID=America/Toronto:20260617T200000
+DTEND;TZID=America/Toronto:20260617T235900
+SUMMARY:TGW Closing Party
+LOCATION:Demo Room\, 307 Lakeshore Blvd. E.
+DESCRIPTION:Close out TGW 2026 with one final adventure\, with support from
+  Interactive Ontario as part of their 25th Anniversary celebrations!  In a
+ ddition to a 20 game retrospective for Toronto Game Jam's 20th year\, we h
+ ave an awesome finale performance from HyperGame StoryTime -- but oh no\, 
+ wait! The Bad Vibes Wizard has shown up to wreck our fun! He's trapped the
+  various instruments needed to launch us into Party Time: can you help the
+  Aerialist Angel free them? Or\, help out by making Dream Game drawings to
+  attack the Bad Vibes Wizard and banish him for good! All these shenanigan
+ s plus drinks\, music\, networking\, a game showcase in a Dirty RecRoom\, 
+ and a raffle for a Nintendo Switch 2 provided by our joyful tech supporter
+ s\, CrowdParty! (19+).\nPrice: $10-25.\nRegistration: Tickets required.\nL
+ ink: https://luma.com/ccsakubc\nMap: 307 Lakeshore Blvd E
+URL:https://luma.com/ccsakubc
+END:VEVENT
+END:VCALENDAR
